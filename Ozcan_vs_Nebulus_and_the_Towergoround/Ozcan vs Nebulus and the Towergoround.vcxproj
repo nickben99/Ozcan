@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BA2F01FF-1054-4872-AC89-02F51156B664}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/Ozcan vs Nebulus and the Towergoround.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>USE_SHADERS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\Debug/Ozcan vs Nebulus and the Towergoround.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(ProjectDir)/code</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0809</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>glew-1.12.0\lib\Release\Win32\glew32.lib;dxguid.lib;dinput8.lib;winmm.lib;OpenGL32.lib;GLu32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/Ozcan vs Nebulus and the Towergoround.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/Ozcan vs Nebulus and the Towergoround.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(ProjectDir)/code</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/Ozcan vs Nebulus and the Towergoround.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>USE_SHADERS;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\Release/Ozcan vs Nebulus and the Towergoround.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalIncludeDirectories>$(ProjectDir)/code</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0809</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>glew-1.12.0\lib\Release\Win32\glew32.lib;dxguid.lib;dinput8.lib;winmm.lib;OpenGL32.lib;GLu32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/Ozcan vs Nebulus and the Towergoround.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\Release/Ozcan vs Nebulus and the Towergoround.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(ProjectDir)/code</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="code\Audio\PlatformSpecific\Windows\SoundWindows.cpp" />
+    <ClCompile Include="code\Camera\CameraActiveTypes.cpp" />
+    <ClCompile Include="code\Camera\CameraLerp.cpp" />
+    <ClCompile Include="code\Camera\CameraLerpDistanceElevation.cpp" />
+    <ClCompile Include="code\Camera\CameraLinks.cpp" />
+    <ClCompile Include="code\Camera\CameraPriorityTypes.cpp" />
+    <ClCompile Include="code\Camera\CameraTransform.cpp" />
+    <ClCompile Include="code\Camera\CameraTransition.cpp" />
+    <ClCompile Include="code\Camera\CameraTransitionCollision.cpp" />
+    <ClCompile Include="code\Camera\CamTypeCircleFollow.cpp" />
+    <ClCompile Include="code\Camera\CamTypeReplay.cpp" />
+    <ClCompile Include="code\Camera\CamTypeTunnel.cpp" />
+    <ClCompile Include="code\Camera\CCamera.cpp" />
+    <ClCompile Include="code\Camera\DebugCam.cpp" />
+    <ClCompile Include="code\Camera\EularLerp.cpp" />
+    <ClCompile Include="code\Debug\DebugMenu.cpp" />
+    <ClCompile Include="code\Debug\DebugRendering.cpp" />
+    <ClCompile Include="code\Debug\PlatformSpecific\Windows\DebugWindows.cpp" />
+    <ClCompile Include="code\FileReading\CTextFileReader.cpp" />
+    <ClCompile Include="code\FileReading\imageFileLoaders.cpp" />
+    <ClCompile Include="code\FileReading\texture.cpp" />
+    <ClCompile Include="code\Game\CBouncingSideToSideEnemy.cpp" />
+    <ClCompile Include="code\Game\CCollapsingStep.cpp" />
+    <ClCompile Include="code\Game\CExitScreen.cpp" />
+    <ClCompile Include="code\Game\CFireBall.cpp" />
+    <ClCompile Include="code\Game\CFlyAcrossEnemy.cpp" />
+    <ClCompile Include="code\Game\CFrustum.cpp" />
+    <ClCompile Include="code\Game\CHUD.cpp" />
+    <ClCompile Include="code\Game\CHUDFader.cpp" />
+    <ClCompile Include="code\Game\CLevel.cpp" />
+    <ClCompile Include="code\Game\CLift.cpp" />
+    <ClCompile Include="code\Game\CMainMenu.cpp" />
+    <ClCompile Include="code\Game\CMenu.cpp" />
+    <ClCompile Include="code\Game\CNebulus.cpp" />
+    <ClCompile Include="code\Game\COctree.cpp" />
+    <ClCompile Include="code\Game\CPowerUp.cpp" />
+    <ClCompile Include="code\Game\CPowerUpGrow.cpp" />
+    <ClCompile Include="code\Game\CPowerUpNoFriction.cpp" />
+    <ClCompile Include="code\Game\CPowerUpSpeed.cpp" />
+    <ClCompile Include="code\Game\CScene.cpp" />
+    <ClCompile Include="code\Game\CSideToSideEnemy.cpp" />
+    <ClCompile Include="code\Game\CSkyBoard.cpp" />
+    <ClCompile Include="code\Game\CSlippyStep.cpp" />
+    <ClCompile Include="code\Game\CSprite.cpp" />
+    <ClCompile Include="code\Game\CSpriteEngine.cpp" />
+    <ClCompile Include="code\Game\CTower.cpp" />
+    <ClCompile Include="code\Game\CTowerBottom.cpp" />
+    <ClCompile Include="code\Game\CTowerSprite.cpp" />
+    <ClCompile Include="code\Game\CTowerStep.cpp" />
+    <ClCompile Include="code\Game\CTowerTop.cpp" />
+    <ClCompile Include="code\Game\CTunnel.cpp" />
+    <ClCompile Include="code\Game\CUpDownEnemy.cpp" />
+    <ClCompile Include="code\Game\defines.cpp" />
+    <ClCompile Include="code\Game\Game.cpp" />
+    <ClCompile Include="code\Game\GameTime.cpp" />
+    <ClCompile Include="code\Game\Globals.cpp" />
+    <ClCompile Include="code\Game\intersections.cpp" />
+    <ClCompile Include="code\Game\main.cpp" />
+    <ClCompile Include="code\Game\Random.cpp" />
+    <ClCompile Include="code\Game\ReplayManager.cpp" />
+    <ClCompile Include="code\Input\PlatformSpecific\Windows\CKeyMapWindows.cpp" />
+    <ClCompile Include="code\Math\CMatrix.cpp" />
+    <ClCompile Include="code\Math\CQuaternion.cpp" />
+    <ClCompile Include="code\Math\CVector.cpp" />
+    <ClCompile Include="code\PlatformSetUp\winSetup.cpp" />
+    <ClCompile Include="code\Rendering\CModel.cpp" />
+    <ClCompile Include="code\Rendering\CModelLoader.cpp" />
+    <ClCompile Include="code\Rendering\CParticleSystem.cpp" />
+    <ClCompile Include="code\Rendering\MatrixStack.cpp" />
+    <ClCompile Include="code\Rendering\MeshBuffer.cpp" />
+    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.cpp" />
+    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.cpp" />
+    <ClCompile Include="code\Rendering\ShadowMapping.cpp" />
+    <ClCompile Include="code\Rendering\Text.cpp" />
+    <ClCompile Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.cpp" />
+    <ClCompile Include="code\Time\PlatformSpecific\Windows\CTimerWindows.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\Audio\Interfaces\SoundInterface.h" />
+    <ClInclude Include="code\Audio\PlatformSpecific\Windows\SoundWindows.h" />
+    <ClInclude Include="code\Audio\SoundsEnum.h" />
+    <ClInclude Include="code\Camera\CameraActiveTypes.h" />
+    <ClInclude Include="code\Camera\CameraLerp.h" />
+    <ClInclude Include="code\Camera\CameraLerpDistanceElevation.h" />
+    <ClInclude Include="code\Camera\CameraLinks.h" />
+    <ClInclude Include="code\Camera\CameraPriorityTypes.h" />
+    <ClInclude Include="code\Camera\CameraTransform.h" />
+    <ClInclude Include="code\Camera\CameraTransition.h" />
+    <ClInclude Include="code\Camera\CameraTransitionCollision.h" />
+    <ClInclude Include="code\Camera\CamType.h" />
+    <ClInclude Include="code\Camera\CamTypeCircleFollow.h" />
+    <ClInclude Include="code\Camera\CamTypeReplay.h" />
+    <ClInclude Include="code\Camera\CamTypeTunnel.h" />
+    <ClInclude Include="code\Camera\CCamera.h" />
+    <ClInclude Include="code\Camera\DebugCam.h" />
+    <ClInclude Include="code\Camera\EularLerp.h" />
+    <ClInclude Include="code\Debug\DebugMenu.h" />
+    <ClInclude Include="code\Debug\DebugRendering.h" />
+    <ClInclude Include="code\Debug\Interfaces\DebugInterface.h" />
+    <ClInclude Include="code\Debug\PlatformSpecific\Windows\DebugWindows.h" />
+    <ClInclude Include="code\FileReading\CTextFileReader.h" />
+    <ClInclude Include="code\FileReading\imageFileLoaders.H" />
+    <ClInclude Include="code\FileReading\TEXTURE.H" />
+    <ClInclude Include="code\Game\CBouncingSideToSideEnemy.h" />
+    <ClInclude Include="code\Game\CCollapsingStep.h" />
+    <ClInclude Include="code\Game\CExitScreen.h" />
+    <ClInclude Include="code\Game\CFireBall.h" />
+    <ClInclude Include="code\Game\CFlyAcrossEnemy.h" />
+    <ClInclude Include="code\Game\CFrustum.h" />
+    <ClInclude Include="code\Game\CHUD.h" />
+    <ClInclude Include="code\Game\CHUDFader.h" />
+    <ClInclude Include="code\Game\CLevel.h" />
+    <ClInclude Include="code\Game\CLift.h" />
+    <ClInclude Include="code\Game\CMainMenu.h" />
+    <ClInclude Include="code\Game\CMenu.h" />
+    <ClInclude Include="code\Game\CNebulus.h" />
+    <ClInclude Include="code\Game\COctree.h" />
+    <ClInclude Include="code\Game\CPowerUp.h" />
+    <ClInclude Include="code\Game\CPowerUpGrow.h" />
+    <ClInclude Include="code\Game\CPowerUpNoFriction.h" />
+    <ClInclude Include="code\Game\CPowerUpSpeed.h" />
+    <ClInclude Include="code\Game\CScene.h" />
+    <ClInclude Include="code\Game\CSideToSideEnemy.h" />
+    <ClInclude Include="code\Game\CSkyBoard.h" />
+    <ClInclude Include="code\Game\CSlippyStep.h" />
+    <ClInclude Include="code\Game\CSprite.h" />
+    <ClInclude Include="code\Game\CSpriteEngine.h" />
+    <ClInclude Include="code\Game\CTower.h" />
+    <ClInclude Include="code\Game\CTowerBottom.h" />
+    <ClInclude Include="code\Game\CTowerSprite.h" />
+    <ClInclude Include="code\Game\CTowerStep.h" />
+    <ClInclude Include="code\Game\CTowerTop.h" />
+    <ClInclude Include="code\Game\CTunnel.h" />
+    <ClInclude Include="code\Game\CUpDownEnemy.h" />
+    <ClInclude Include="code\Game\defines.h" />
+    <ClInclude Include="code\Game\Game.h" />
+    <ClInclude Include="code\Game\GameTime.h" />
+    <ClInclude Include="code\Game\Globals.h" />
+    <ClInclude Include="code\Game\intersections.h" />
+    <ClInclude Include="code\Game\main.h" />
+    <ClInclude Include="code\Game\Random.h" />
+    <ClInclude Include="code\Game\ReplayManager.h" />
+    <ClInclude Include="code\Input\CKeyCode.h" />
+    <ClInclude Include="code\Input\Interfaces\CKeyMapInterface.h" />
+    <ClInclude Include="code\Input\PlatformSpecific\Windows\CKeyMapWindows.h" />
+    <ClInclude Include="code\Math\CBox.h" />
+    <ClInclude Include="code\Math\CMatrix.h" />
+    <ClInclude Include="code\Math\CPlane.h" />
+    <ClInclude Include="code\Math\CQuaternion.h" />
+    <ClInclude Include="code\Math\CVector.h" />
+    <ClInclude Include="code\PlatformSetUp\resource.h" />
+    <ClInclude Include="code\Rendering\CModel.h" />
+    <ClInclude Include="code\Rendering\CModelLoader.h" />
+    <ClInclude Include="code\Rendering\CParticleSystem.h" />
+    <ClInclude Include="code\Rendering\Interfaces\OpenGLInterface.h" />
+    <ClInclude Include="code\Rendering\MatrixStack.h" />
+    <ClInclude Include="code\Rendering\MeshBuffer.h" />
+    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.h" />
+    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.h" />
+    <ClInclude Include="code\Rendering\ShadowMapping.h" />
+    <ClInclude Include="code\Rendering\Text.h" />
+    <ClInclude Include="code\Time\Interfaces\CHighPrecisionTimerInterface.h" />
+    <ClInclude Include="code\Time\Interfaces\CTimerInterface.h" />
+    <ClInclude Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.h" />
+    <ClInclude Include="code\Time\PlatformSpecific\Windows\CTimerWindows.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\nebulus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\cursor.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="code\PlatformSetUp\resource.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

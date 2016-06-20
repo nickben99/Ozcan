@@ -1,0 +1,165 @@
+// text file describing level 1 of Super Nebulus
+
+// the time (in seconds) this level lasts for
+180
+
+// the bitmap texture used as the level background
+"images/backGrounds/cloadsBackground.bmp"
+
+// the tower information.
+
+// rows, row height
+66 1
+
+// columns, column width
+16 3
+
+// Object placement - character indicates what object appears in which position 
+// on the tower (see legend below tower for description of what object each character represents)
+// NOTE - empty spaces indicate nothing to be drawn in that position
+
+................
+................
+................
+................
+=~~~L==... ....L
+=~~~J=.=..X.....
+=~~~~=..=. .....
+=~~~~=...==..=..
+====T=........LT
+................
+................
+................
+................
+......U.........
+................
+................
+..L==<=<=====...
+................
+..............T.
+.............U..
+.<T.............
+<...............
+...............< 
+.=~~~L===.S.S.=. 
+.=J~~~==.=~~~=.. 
+.=~~~~=...===...
+.=~~~~=.........
+.=L==T=.........
+................
+... ....... ....
+...#...U...#....
+... ....... ....
+--T=.....<==----
+.... ...<... ...
+....#..=....#...
+.... .<..... ...
+....==.....-==L.
+................
+................
+................ 
+S.S......S......
+~~~=L=--=~~=--T=
+===......==.....
+................
+................
+................
+...=..-====L....
+......-.........
+.....U-.........
+......-.........
+......-..U......
+....T==.........
+....=...........
+................
+................
+................
+.....==L===T....
+............>...
+. ....... ...=..
+.#.......#....=.
+. ....... .....=
+==.......L-.....
+..... ....... ..
+..N..#.......#..
+..... .T..... ..
+..=======T=..==.
+
+// Legend (key - spriteID, modelID, what it is?)
+25 // number of different sprite types
+
+// tower objects
+. 1		// tower segment
+= 2		//step
+~ 19	//buffer step
+- 3  	//collapsing step
+# 0 	//door 
+X 0 	//Level exit door
+^ 21	//level exit door screen
+> 4 	//slippy step (slip right)
+< 5 	//slippy step (slip left)
+T 6 	//lift bottom
+L 8 	//lift top
+O 9		//tunnel
+
+// player and non-player characters
+N 7		//Nebulus
+U 16	//Up down enemy
+S 17	//side to side enemy
+J 18	//bouncing side to side enemy
+//Bouncing ball enemy 
+
+// SPRITES USUALLY NOT FOUND IN PRE-SET POSITIONS
+F 15	// fire ball
+// power-ups
+a 11	// double speed power-up 
+b 12	// get bigger power-up
+c 13	// no friction power-up
+
+// non-player characters
+H 2	// helicopter
+B 1	// battleship
+@ 20	//fly around enemy
+// TO BE ASSIGNED	// birds
+* 10	// tower top
++ 14	// tower bottom
+
+// Level Models required
+22 // number of models
+
+// model filenames (Standard for each level - enemies, power-ups, nebulus sprite etc)
+// model filenames (Tower objects standard for each level - doors platforms etc)
+doorWay 		//0
+blankSpace		//1 
+step			//2
+collapsingStep		//3
+slipStepRight		//4
+slipStepLeft		//5
+liftBottom		//6
+nebulus			//7
+liftTop			//8
+tunnel			//9
+towerTop		//10
+powerUpDoubleSpd	//11
+powerUpBig		//12
+powerUpIce		//13
+towerBottom		//14
+fireball		//15
+upDownEnemy		//16
+sideToSideEnemy		//17
+bouncingSideToSideEnemy	//18
+bufferStep		//19
+flyAcrossEnemy		//20
+exitDoorScreen		//21
+// model filenames (this level specific)
+
+// number of non tower sprites to load
+5
+
+// Non-tower sprites to load (key - spriteID, amount)
+* 1 // tower top
++ 1 // tower bottom
+R 20 // random power-up
+F 1 // fire ball
+@ 1 // fly around enemy
+

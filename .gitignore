@@ -1,0 +1,18 @@
+Ozcan_vs_Nebulus_and_the_Towergoround/.vs/
+Ozcan_vs_Nebulus_and_the_Towergoround/Backup/
+Ozcan_vs_Nebulus_and_the_Towergoround/codeHistory/
+Ozcan_vs_Nebulus_and_the_Towergoround/Debug/
+Ozcan_vs_Nebulus_and_the_Towergoround/Release/
+
+# Ozcan_vs_Nebulus_and_the_Towergoround/code/
+# Ozcan_vs_Nebulus_and_the_Towergoround/images/
+# Ozcan_vs_Nebulus_and_the_Towergoround/levels/
+# Ozcan_vs_Nebulus_and_the_Towergoround/models/
+# Ozcan_vs_Nebulus_and_the_Towergoround/resources/
+# Ozcan_vs_Nebulus_and_the_Towergoround/sounds/
+
+*.sdf
+*.suo
+*.db
+*.user
+Ozcan_vs_Nebulus_and_the_Towergoround/Ozcan vs Nebulus and the Towergoround.vcxproj.filters

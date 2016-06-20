@@ -1,0 +1,9 @@
+#define ICON_NEBULUS	1000
+#define CUR_NEBULUS		1001
+
+#define MAIN_MENU		1002
+
+#define MENUID_EXIT		1004
+
+#define MENUID_ABOUT	1005
+
