@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{24cd9670-28f9-497f-ae3e-dbf260805eb5}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{c2e72099-2614-42a0-8a0e-7e5fb3f65605}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{d7eaaa41-6a4e-499b-8589-e5640c0d3a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{f8f4a1a3-4e91-4de7-b50c-9c4a3c272b8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlatformSetUp">
+      <UniqueIdentifier>{e1140ca9-b9aa-40c6-a066-cdb6d591fa50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{c5875ba1-b14f-4395-bea0-b0b0c026ce0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{85fa5dea-4d80-4d9e-ae4f-ea4e75d422d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{9cf7e804-f840-4bcc-9abc-ee8005551e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileReading">
+      <UniqueIdentifier>{7f0b397a-53da-46a1-9fa8-8100cfc0beb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{bb2cb603-6855-491b-8416-abf86cf94bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\PlatformSpecific">
+      <UniqueIdentifier>{9337530a-2c59-4f23-86ee-5e48b1196728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\PlatformSpecific\Windows">
+      <UniqueIdentifier>{d0b1e24d-3133-4200-ac39-b4f6f1d19ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Interfaces">
+      <UniqueIdentifier>{36f8dee0-2393-448b-8f31-36e6a678f80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Interfaces">
+      <UniqueIdentifier>{4cf03e1d-6ea2-480d-b0d8-b6c201391dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\PlatformSpecific">
+      <UniqueIdentifier>{6e69168a-b76d-44b8-aa09-9d6bdd3347e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\PlatformSpecific\Windows">
+      <UniqueIdentifier>{560cb711-b7b0-4ec9-9eb8-8a5ba55a11ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Interfaces">
+      <UniqueIdentifier>{8eb518ee-76c9-46a9-96d6-60bef0db2788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\PlatformSpecific">
+      <UniqueIdentifier>{5dde5a30-b97b-4717-9b7d-f12804bc52f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\PlatformSpecific\Windows">
+      <UniqueIdentifier>{93f4c05e-6a11-4b74-ab3a-e0e5e71c4e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{8786437a-816f-4853-8a11-3fff11de4992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time\Interfaces">
+      <UniqueIdentifier>{ed974494-63c4-423a-a61c-c375d1d37960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time\PlatformSpecific">
+      <UniqueIdentifier>{60dba525-b2a0-41a6-ab79-fbda9233309e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time\PlatformSpecific\Windows">
+      <UniqueIdentifier>{a2b79702-eb4c-4ffc-b763-f2e3d995d8c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\Interfaces">
+      <UniqueIdentifier>{14a334ab-6e9b-434a-bd1c-79f903a28360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\PlatformSpecific">
+      <UniqueIdentifier>{ec9f11b1-cd2e-4b13-ab2e-fdc2ca64632c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\PlatformSpecific\Windows">
+      <UniqueIdentifier>{c0e748c0-ae09-4209-ab32-388035bdec24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Interfaces">
+      <UniqueIdentifier>{f903581d-03b6-4227-a959-0d2caddb8794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\PlatformSpecific">
+      <UniqueIdentifier>{db63e4de-c49f-47e7-849c-68125300c4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\PlatformSpecific\Windows">
+      <UniqueIdentifier>{ca1232e8-bd58-43ed-9f94-0e53c97a6dec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileReading\Interfaces">
+      <UniqueIdentifier>{e5a44935-12dd-4e0f-b398-fe9a2d7ae97d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileReading\PlatformSpecific">
+      <UniqueIdentifier>{d5f393c0-47f4-4d95-879f-13b345892f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileReading\PlatformSpecific\Windows">
+      <UniqueIdentifier>{cbc9745b-46e1-412a-9aab-430324863b29}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="code\Camera\CameraPriorityTypes.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraLerp.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraLinks.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraTransition.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraTransitionCollision.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraActiveTypes.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\GameTime.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraTransform.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CamTypeCircleFollow.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CamTypeReplay.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CamTypeTunnel.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\DebugCam.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\EularLerp.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\PlatformSetUp\winSetup.cpp">
+      <Filter>PlatformSetUp</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\CModel.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\CModelLoader.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\CParticleSystem.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\FileReading\imageFileLoaders.cpp">
+      <Filter>FileReading</Filter>
+    </ClCompile>
+    <ClCompile Include="code\FileReading\texture.cpp">
+      <Filter>FileReading</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CBouncingSideToSideEnemy.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CCollapsingStep.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CExitScreen.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CFireBall.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CFlyAcrossEnemy.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CFrustum.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CHUD.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CHUDFader.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CLevel.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CLift.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CMenu.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CNebulus.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\COctree.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CPowerUp.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CPowerUpGrow.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CPowerUpNoFriction.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CPowerUpSpeed.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CSideToSideEnemy.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CSkyBoard.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CSlippyStep.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CSprite.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CSpriteEngine.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTower.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTowerBottom.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTowerSprite.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTowerStep.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTowerTop.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CTunnel.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CUpDownEnemy.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\defines.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\intersections.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\main.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\Random.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\ReplayManager.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\FileReading\CTextFileReader.cpp">
+      <Filter>FileReading</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Math\CMatrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Math\CQuaternion.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Math\CVector.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\Globals.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Input\PlatformSpecific\Windows\CKeyMapWindows.cpp">
+      <Filter>Input\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Audio\PlatformSpecific\Windows\SoundWindows.cpp">
+      <Filter>Audio\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.cpp">
+      <Filter>Time\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Time\PlatformSpecific\Windows\CTimerWindows.cpp">
+      <Filter>Time\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Game\CMainMenu.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.cpp">
+      <Filter>Rendering\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Debug\PlatformSpecific\Windows\DebugWindows.cpp">
+      <Filter>Debug\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Camera\CameraLerpDistanceElevation.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.cpp">
+      <Filter>Rendering\PlatformSpecific\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\MeshBuffer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\MatrixStack.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\Text.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Debug\DebugRendering.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\ShadowMapping.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Debug\DebugMenu.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\Camera\CameraPriorityTypes.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraLerp.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraLinks.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraTransition.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraTransitionCollision.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraActiveTypes.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\GameTime.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraTransform.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CamType.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CamTypeCircleFollow.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CamTypeReplay.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CamTypeTunnel.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\DebugCam.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\EularLerp.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\CModel.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\CModelLoader.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\CParticleSystem.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\FileReading\imageFileLoaders.H">
+      <Filter>FileReading</Filter>
+    </ClInclude>
+    <ClInclude Include="code\FileReading\TEXTURE.H">
+      <Filter>FileReading</Filter>
+    </ClInclude>
+    <ClInclude Include="code\PlatformSetUp\resource.h">
+      <Filter>PlatformSetUp</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CBouncingSideToSideEnemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CCollapsingStep.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CExitScreen.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CFireBall.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CFlyAcrossEnemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CFrustum.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CHUD.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CHUDFader.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CLevel.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CLift.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CMainMenu.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CMenu.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CNebulus.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\COctree.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CPowerUp.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CPowerUpGrow.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CPowerUpNoFriction.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CPowerUpSpeed.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CSideToSideEnemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CSkyBoard.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CSlippyStep.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CSprite.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CSpriteEngine.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTower.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTowerBottom.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTowerSprite.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTowerStep.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTowerTop.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CTunnel.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\CUpDownEnemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\defines.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\intersections.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\main.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\Random.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\ReplayManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\FileReading\CTextFileReader.h">
+      <Filter>FileReading</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\CMatrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\CPlane.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\CQuaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\CVector.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Game\Globals.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Input\Interfaces\CKeyMapInterface.h">
+      <Filter>Input\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Input\PlatformSpecific\Windows\CKeyMapWindows.h">
+      <Filter>Input\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Input\CKeyCode.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Audio\SoundsEnum.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Audio\Interfaces\SoundInterface.h">
+      <Filter>Audio\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Audio\PlatformSpecific\Windows\SoundWindows.h">
+      <Filter>Audio\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Time\Interfaces\CHighPrecisionTimerInterface.h">
+      <Filter>Time\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.h">
+      <Filter>Time\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Time\Interfaces\CTimerInterface.h">
+      <Filter>Time\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Time\PlatformSpecific\Windows\CTimerWindows.h">
+      <Filter>Time\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\Interfaces\OpenGLInterface.h">
+      <Filter>Rendering\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.h">
+      <Filter>Rendering\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Debug\Interfaces\DebugInterface.h">
+      <Filter>Debug\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Debug\PlatformSpecific\Windows\DebugWindows.h">
+      <Filter>Debug\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Camera\CameraLerpDistanceElevation.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.h">
+      <Filter>Rendering\PlatformSpecific\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\MeshBuffer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\MatrixStack.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\Text.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Debug\DebugRendering.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\ShadowMapping.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Debug\DebugMenu.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\CBox.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\nebulus.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\cursor.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="code\PlatformSetUp\resource.rc">
+      <Filter>PlatformSetUp</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
