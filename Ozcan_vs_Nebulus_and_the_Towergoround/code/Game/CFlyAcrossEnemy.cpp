@@ -85,7 +85,7 @@ CFlyAcrossEnemy::~CFlyAcrossEnemy()
 }
 
 // shrink or grow the sprite (whichever is required)
-void CFlyAcrossEnemy::shrinkOrGrow(int resizingRequired)
+void CFlyAcrossEnemy::shrinkOrGrow(int shrinkOrGrow)
 {
 	// get percentage of shrink or grow
 	float perCentageOfShrinkGrow = (shrinkGrowTimer / SHRINK_GROW_PERIOD);
@@ -98,7 +98,7 @@ void CFlyAcrossEnemy::shrinkOrGrow(int resizingRequired)
 	float currentScale = perCentageOfShrinkGrow*normalScale;
 
 	// switch on the action required
-	switch(resizingRequired)
+	switch(shrinkOrGrow)
 	{
 		case SHRINK:
 			// shrink sprite down to zero

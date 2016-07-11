@@ -45,7 +45,7 @@ void CCollapsingStep::initialise( void)
 
 	/*	set the radius a sphere would need to be to compleatly 
 		encapsulate the collapsing steps model */
-	boundingBoxRadius = width/( (2.0f*sqrt(3.0f)) / 3.0f );
+	boundingBoxRadius = width/( (2.0f*(float)sqrt(3.0f)) / 3.0f );
 
 	// so sprite will bedrawn in correct position after reinitialising
 	oldPosition = position;

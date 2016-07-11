@@ -65,8 +65,8 @@ inline float safeACos(float x)
 // input should be between 0 and 1
 inline float SlowFastSlowLerp(float input)
 {
-	// (sin((x-0.5)*3.14159)+1)/2 in graphic calculator
-	return (sin((input-0.5f)*PI)+1.0f)/2.0f;
+	// ((float)sin((x-0.5)*3.14159)+1)/2 in graphic calculator
+	return ((float)sin((input-0.5f)*PI)+1.0f)/2.0f;
 }
 
 namespace defines

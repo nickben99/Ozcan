@@ -59,7 +59,7 @@ void CPowerUpNoFriction::collisionResponse(	CSprite * collidedWith,
 										float perCentOfMoveComplete, 
 										CVector * polyintersectionPoint, 
 										CVector * spriteOldPosition, 
-										CVector * velocity) 
+										CVector * theVelocity) 
 {
 	if (ReplayManager::instance()->IsReplayingEndLevel())
 	{
@@ -78,7 +78,7 @@ void CPowerUpNoFriction::collisionResponse(	CSprite * collidedWith,
 				// call super class collision response
 				CPowerUp::collisionResponse(collidedWith, perCentOfMoveComplete, 
 											polyintersectionPoint, spriteOldPosition, 
-											velocity); 
+											theVelocity); 
 				
 				// record Nebulus's original surface friction
 				nebulusOriginalFrictionValue = actingUpon->surfaceFrictionConstant;

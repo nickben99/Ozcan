@@ -386,7 +386,7 @@ void CVector::reset()
 // get the length of the vector
 float CVector::getMagnitude() const
 {
-	return(sqrt(getMagnitudeSquared()));
+	return((float)sqrt(getMagnitudeSquared()));
 }
 
 // multiply this vector by a scaler
@@ -433,7 +433,7 @@ float CVector::getAngleBetween(CVector* otherVector) const
 	
 	float dotProduct = thisVector.dotProduct(&otherVect);
 
-	float angle = ( acos( dotProduct ) );
+	float angle = ((float)acos( dotProduct ) );
 
 	if( _isnan(angle) ){ // avoids -1.#IND0000000 NaN problems
 	return( 0.0f );} // dotProduct will be practically 1 so return an acos of 0 angle
@@ -452,7 +452,7 @@ float CVector::getAngleBetween(const CVector& otherVector)
 	
 	float dotProduct = thisVector.dotProduct(otherVect);
 
-	float angle = ( acos( dotProduct ) );
+	float angle = ((float)acos( dotProduct ) );
 
 	if( _isnan(angle) ){ // avoids -1.#IND0000000 NaN problems
 	return( 0.0f );} // dotProduct will be practically 1 so return an acos of 0 angle
@@ -586,9 +586,9 @@ bool CVector::fuzzyEquals(const CVector& v)
 // make all the vectors elements positive
 void CVector::makeVectorPositive()
 {
-	x = fabs(x);
-	y = fabs(y);
-	z = fabs(z);
+	x = (float)fabs(x);
+	y = (float)fabs(y);
+	z = (float)fabs(z);
 }
 
 bool CVector::IsNaN()

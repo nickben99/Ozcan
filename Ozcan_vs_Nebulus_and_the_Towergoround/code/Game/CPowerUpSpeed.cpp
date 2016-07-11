@@ -78,7 +78,7 @@ void CPowerUpSpeed::collisionResponse(	CSprite * collidedWith,
 										float perCentOfMoveComplete, 
 										CVector * polyintersectionPoint, 
 										CVector * spriteOldPosition, 
-										CVector * velocity) 
+										CVector * theVelocity) 
 {
 	if (ReplayManager::instance()->IsReplayingEndLevel())
 	{
@@ -97,7 +97,7 @@ void CPowerUpSpeed::collisionResponse(	CSprite * collidedWith,
 				// call super class collision response
 				CPowerUp::collisionResponse(collidedWith, perCentOfMoveComplete, 
 											polyintersectionPoint, spriteOldPosition, 
-											velocity); 
+											theVelocity); 
 				
 				// record original values
 				nebulusOriginalThrustValue = actingUpon->forwardThrust;

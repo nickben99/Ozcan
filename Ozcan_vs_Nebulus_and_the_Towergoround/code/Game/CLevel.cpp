@@ -173,19 +173,21 @@ bool CLevel::loadLevel(GLint theLevel)
 	if (!legendInformation){
 		return(false);} // memory allocation failed
 
-	char temp; // used to get char from file before casting as int
-	int tempInt = 0;
-	// put legend information into dynamic array
-	for (int legendCounter = 0; legendCounter < numberOfLegendItemsToLoad; 
-																legendCounter++)
 	{
-		 // get spriteID along with corresponding modelID
-		sscanf_s(fileReader.currentLineOfFile, "%c %d",	
-												&temp, 1,
-												&tempInt);
-		legendInformation[(legendCounter*2)+1] = tempInt;
-		legendInformation[legendCounter*2] = (int)temp; // cast to int
-		fileReader.getNextLine();
+		char temp; // used to get char from file before casting as int
+		int tempInt = 0;
+		// put legend information into dynamic array
+		for (int legendCounter = 0; legendCounter < numberOfLegendItemsToLoad;
+			legendCounter++)
+		{
+			// get spriteID along with corresponding modelID
+			sscanf_s(fileReader.currentLineOfFile, "%c %d",
+				&temp, 1,
+				&tempInt);
+			legendInformation[(legendCounter * 2) + 1] = tempInt;
+			legendInformation[legendCounter * 2] = (int)temp; // cast to int
+			fileReader.getNextLine();
+		}
 	}
 
 	DrawIntroScreenLoadingBar(theHUD, 0.4f);

@@ -363,9 +363,9 @@ void Text::SetText(float xPosIn, float yPosIn, HorizontalAlignment horizontalAli
 	SetText(currentText, xPosIn, yPosIn, horizontalAlignIn, virticalAlignIn, colIn, size);
 }
 
-void Text::SetText(float xPos, float yPos)
+void Text::SetText(float theXPos, float theYPos)
 {
-	SetText(currentText, xPos, yPos, horizontalAlign, virticalAlign, col, size);
+	SetText(currentText, theXPos, theYPos, horizontalAlign, virticalAlign, col, size);
 }
 
 void Text::SetText(float xPosIn, float yPosIn, const char* string, ...)

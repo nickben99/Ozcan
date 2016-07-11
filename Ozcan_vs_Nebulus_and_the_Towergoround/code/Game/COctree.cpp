@@ -275,15 +275,15 @@ void COctree::clearAllSpriteInNodeLists(COctree *node)
 }
 
 /*	find all the end nodes the bounding box falls into and populate the endNodesOccupying list */
-void COctree::putSpriteIntoEndNode(CVector *halfBoundingBox, CVector *centre, std::vector<COctree*>& endNodesOccupying)
+void COctree::putSpriteIntoEndNode(CVector *halfBoundingBox, CVector *theCentre, std::vector<COctree*>& endNodesOccupying)
 {
-	putSpriteIntoEndNode(halfBoundingBox, centre, this, endNodesOccupying);
+	putSpriteIntoEndNode(halfBoundingBox, theCentre, this, endNodesOccupying);
 }
 
 /*	find all the end nodes the sprite falls into and populates the 
 	sprite endNodesOccupying list */
 void COctree::putSpriteIntoEndNode(	CVector *halfBoundingBox,
-									CVector *centre, 
+									CVector *theCentre, 
 									COctree* node, 
 									std::vector<COctree*>& endNodesOccupying)
 {
@@ -291,21 +291,21 @@ void COctree::putSpriteIntoEndNode(	CVector *halfBoundingBox,
 
 	// if the sprite is in this node
 	if (axisAlignedBoxBoxIntersection(&node->centre, &node->nodeHalfWidths, 
-										centre, halfBoundingBox))
+										theCentre, halfBoundingBox))
 	{
 		if(node->subdivided) // if this is not a leaf node
 		{
 			// node->spritesCurrentlyInNode.push_back(aSprite); // this sprite is in this node
 
 			//	recurse to the bottom of these nodes and place the sprite in the end nodes 
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[TOP_LEFT_FRONT], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[TOP_LEFT_BACK], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[TOP_RIGHT_BACK], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[TOP_RIGHT_FRONT], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[BOTTOM_LEFT_FRONT], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[BOTTOM_LEFT_BACK], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[BOTTOM_RIGHT_BACK], endNodesOccupying);
-			putSpriteIntoEndNode(halfBoundingBox, centre, node->subNodes[BOTTOM_RIGHT_FRONT], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[TOP_LEFT_FRONT], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[TOP_LEFT_BACK], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[TOP_RIGHT_BACK], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[TOP_RIGHT_FRONT], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[BOTTOM_LEFT_FRONT], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[BOTTOM_LEFT_BACK], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[BOTTOM_RIGHT_BACK], endNodesOccupying);
+			putSpriteIntoEndNode(halfBoundingBox, theCentre, node->subNodes[BOTTOM_RIGHT_FRONT], endNodesOccupying);
 		}
 		else // this is an end node
 		{
@@ -348,7 +348,7 @@ void COctree::createNodeAndSubNodes(vector<int> *trianglesInNode, CVector *theCe
 	/*	compute the distence from the node cubes centre to a vertex,
 		so computing the radius a sphere would need to be to compleatly 
 		encompass the node */
-	sphereRadius = width/( (2.0f*sqrt(3.0f)) / 3.0f );
+	sphereRadius = width/( (2.0f*(float)sqrt(3.0f)) / 3.0f );
 
 	subDivisionLevel = currentSubDivisionLevel; // set the nodes sub division level
 

@@ -44,15 +44,15 @@ CQuaternion EularLerp::CalculateOrientation()
 		assert(false);
 	}
 
-	CVector forward(sin(yaw), 0.0f, cos(yaw));
+	CVector forward((float)sin(yaw), 0.0f, (float)cos(yaw));
 
 	if (forward.IsNaN())
 	{
 		assert(false);
 	}
 
-	forward *= cos(pitch);
-	forward.y = sin(pitch);
+	forward *= (float)cos(pitch);
+	forward.y = (float)sin(pitch);
 
 	CMatrix transform(forward);
 	return transform.matrixToQuaternion();

@@ -211,8 +211,8 @@ void CMatrix::createXYZRotationMatrix(CVector *v)
 //create a matrix which will rotate around the X axis
 void CMatrix::createXRotationMatrix(float angle)
 {
-	float Sin = (float)sin(angle);
-	float Cos = (float)cos(angle);
+	float Sin = (float)(float)sin(angle);
+	float Cos = (float)(float)cos(angle);
 	identity(); // set to identity
 	// create matrix
 	elements[5] = Cos; 
@@ -224,8 +224,8 @@ void CMatrix::createXRotationMatrix(float angle)
 //create a matrix which will rotate around the Y axis
 void CMatrix::createYRotationMatrix(float angle)
 {
-	float Sin = (float)sin(angle);
-	float Cos = (float)cos(angle);
+	float Sin = (float)(float)sin(angle);
+	float Cos = (float)(float)cos(angle);
 	identity(); // set to identity
 	// create matrix
 	elements[0] = Cos; 
@@ -237,8 +237,8 @@ void CMatrix::createYRotationMatrix(float angle)
 //create a matrix which will rotate around the Z axis
 void CMatrix::createZRotationMatrix(float angle)
 {
-	float Sin = (float)sin(angle);
-	float Cos = (float)cos(angle);
+	float Sin = (float)(float)sin(angle);
+	float Cos = (float)(float)cos(angle);
 	identity(); // set to identity
 	// create matrix
 	elements[0] = Cos; 
@@ -342,28 +342,28 @@ CQuaternion CMatrix::matrixToQuaternion()
 
     if ( T > 0.00000001f )
 	{
-      float S = sqrt(T) * 2.0f;
+      float S = (float)sqrt(T) * 2.0f;
       X = ( elements[6] - elements[9] ) / S;
       Y = ( elements[8] - elements[2] ) / S;
       Z = ( elements[1] - elements[4] ) / S;
       W = 0.25f * S;
 	}
     else if ( elements[0] > elements[5] && elements[0] > elements[10] )  {	// Column 0: 
-        float S = sqrt( 1.0f + elements[0] - elements[5] - elements[10] ) * 2.0f;
+        float S = (float)sqrt( 1.0f + elements[0] - elements[5] - elements[10] ) * 2.0f;
         X = 0.25f * S;
         Y = (elements[1] + elements[4] ) / S;
         Z = (elements[8] + elements[2] ) / S;
         W = (elements[6] - elements[9] ) / S;
 	
     } else if ( elements[5] > elements[10] ) {			// Column 1: 
-        float S  = sqrt( 1.0f + elements[5] - elements[0] - elements[10] ) * 2.0f;
+        float S  = (float)sqrt( 1.0f + elements[5] - elements[0] - elements[10] ) * 2.0f;
         X = (elements[1] + elements[4] ) / S;
         Y = 0.25f * S;
         Z = (elements[6] + elements[9] ) / S;
         W = (elements[8] - elements[2] ) / S;
 
     } else {						// Column 2:
-        float S  = sqrt( 1.0f + elements[10] - elements[0] - elements[5] ) * 2.0f;
+        float S  = (float)sqrt( 1.0f + elements[10] - elements[0] - elements[5] ) * 2.0f;
         X = (elements[8] + elements[2] ) / S;
         Y = (elements[6] + elements[9] ) / S;
         Z = 0.25f * S;

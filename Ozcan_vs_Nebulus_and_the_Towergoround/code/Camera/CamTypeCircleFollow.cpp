@@ -232,40 +232,40 @@ void CamTypeCircleFollow::GetOutput(CameraTransform& transform)
 	transform.SetOrientation(CMatrix(forward).matrixToQuaternion());
 	transform.SetDistanceFromLookAt((lookAt-GetPosition()).getMagnitude());
 
-#ifdef _DEBUG
-	static bool doRepeat = true;
-	while (doRepeat)
-	{
-		doRepeat = false;
-
-		CVector lookAt = GetLookAt();
-		CVector forward = lookAt-GetPosition();
-		forward.normalise();
-		//float length = forward.getMagnitude();
-		//UNUSED(length);
-		CMatrix newMat(forward);
-		CQuaternion quat = newMat.matrixToQuaternion();
-
-		CMatrix fromQuat(quat);
-		CVector forwardCpy = fromQuat.forward();
-		if (!CVector::SafeNormalizeXZ(forwardCpy))
-		{
-			assert(false);
-			//doRepeat = true;
-		}
-
-		CVector lookAt11 = GetLookAt();
-		CVector forward11 = lookAt11-GetPosition();
-		CMatrix newMat11(forward11);
-		CQuaternion quat11 = newMat11.matrixToQuaternion();
-
-		CMatrix fromQuat11(quat11);
-		CVector forwardCpy11 = fromQuat11.forward();
-		if (!CVector::SafeNormalizeXZ(forwardCpy11))
-		{
-			assert(false);
-			//doRepeat = true;
-		}		
-	}
-#endif
+//#ifdef _DEBUG
+//	static bool doRepeat = true;
+//	while (doRepeat)
+//	{
+//		doRepeat = false;
+//
+//		CVector lookAt = GetLookAt();
+//		CVector forward = lookAt-GetPosition();
+//		forward.normalise();
+//		//float length = forward.getMagnitude();
+//		//UNUSED(length);
+//		CMatrix newMat(forward);
+//		CQuaternion quat = newMat.matrixToQuaternion();
+//
+//		CMatrix fromQuat(quat);
+//		CVector forwardCpy = fromQuat.forward();
+//		if (!CVector::SafeNormalizeXZ(forwardCpy))
+//		{
+//			assert(false);
+//			//doRepeat = true;
+//		}
+//
+//		CVector lookAt11 = GetLookAt();
+//		CVector forward11 = lookAt11-GetPosition();
+//		CMatrix newMat11(forward11);
+//		CQuaternion quat11 = newMat11.matrixToQuaternion();
+//
+//		CMatrix fromQuat11(quat11);
+//		CVector forwardCpy11 = fromQuat11.forward();
+//		if (!CVector::SafeNormalizeXZ(forwardCpy11))
+//		{
+//			assert(false);
+//			//doRepeat = true;
+//		}		
+//	}
+//#endif
 }

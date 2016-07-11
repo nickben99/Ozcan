@@ -168,32 +168,34 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 
 #ifdef USE_SHADERS
 	// introScreenBuffer -----------------------------------------------------------------------------------------------------------
-	GLfloat vertexPositionArray[] = {
-		ToShaderUIX(0.0f), ToShaderUIY(0.0f), 0.0f,
-		ToShaderUIX(0.0f), ToShaderUIY(screenHeight), 0.0f,
-		ToShaderUIX(screenWidth), ToShaderUIY(screenHeight), 0.0f,
-		ToShaderUIX(screenWidth), ToShaderUIY(0.0f), 0.0f
-	};
-
-	introScreenBuffer.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
-	introScreenBuffer.SetColor(CVector4(1.0f, 1.0f, 1.0f, 1.0f));
-
-	float vertexTexCoordsArray[] = 
 	{
-		0.0f, 0.0f, 
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f
-	};
-	introScreenBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
-	introScreenBuffer.SetTexture(introScreenBackground);
+		GLfloat vertexPositionArray[] = {
+			ToShaderUIX(0.0f), ToShaderUIY(0.0f), 0.0f,
+			ToShaderUIX(0.0f), ToShaderUIY(screenHeight), 0.0f,
+			ToShaderUIX(screenWidth), ToShaderUIY(screenHeight), 0.0f,
+			ToShaderUIX(screenWidth), ToShaderUIY(0.0f), 0.0f
+		};
 
-	unsigned short vertexIndecisArray[] = 
-	{
-		0, 1, 2,
-		0, 2, 3
-	};
-	introScreenBuffer.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+		introScreenBuffer.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+		introScreenBuffer.SetColor(CVector4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		float vertexTexCoordsArray[] =
+		{
+			0.0f, 0.0f,
+			0.0f, 1.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f
+		};
+		introScreenBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+		introScreenBuffer.SetTexture(introScreenBackground);
+
+		unsigned short vertexIndecisArray[] =
+		{
+			0, 1, 2,
+			0, 2, 3
+		};
+		introScreenBuffer.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+	}
 
 	// loading Bar -----------------------------------------------------------------------------------------------------------
 	{
@@ -470,7 +472,7 @@ void CHUD::ReplayDraw()
 	float theTime = ((float)Globals::Instance().timer.time())*0.001f; // convert to seconds
 	const float kPeriod = 8.0f;
 	theTime *= kPeriod;
-	float alpha = (sin(theTime)+1.0f)/2.0f; // get normalized output from sin 
+	float alpha = ((float)sin(theTime)+1.0f)/2.0f; // get normalized output from sin 
 
 #ifdef USE_SHADERS
 	float	xPos = 0.5f*screenWidth,

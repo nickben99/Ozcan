@@ -39,7 +39,7 @@ int OpenGLShader::CheckGLError(char *file, int line)
 		}
 		else
 		{
-			sprintf_s(printOut, "GL Error # %d (no message available) in File %d at line: %d", glErr, file, line);	
+			sprintf_s(printOut, "GL Error # %d (no message available) in File %s at line: %d", glErr, file, line);	
 		}
 		OutputDebugString(printOut);
 

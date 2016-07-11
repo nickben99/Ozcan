@@ -124,11 +124,11 @@ class CMainMenu : public CMenu
 		int Load()
 		{
 			// load the main menus background and curser 
-			char background[400];
-			sprintf_s(background, "%simages/back2.bmp", GetDirectoryPath());
-			char curser[400];
-			sprintf_s(curser, "%simages/select.bmp", GetDirectoryPath());
-			return( CMenu::Load(background, curser));
+			char theBackground[400];
+			sprintf_s(theBackground, "%simages/back2.bmp", GetDirectoryPath());
+			char theCurser[400];
+			sprintf_s(theCurser, "%simages/select.bmp", GetDirectoryPath());
+			return( CMenu::Load(theBackground, theCurser));
 		}
 
 		void leaveMenu( void)

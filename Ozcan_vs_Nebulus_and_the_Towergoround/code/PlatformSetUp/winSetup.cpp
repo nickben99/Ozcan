@@ -36,7 +36,7 @@ char *className = "Ozcan vs Nebulus & The Towergoround";	// name of the window c
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// declaration for WndProc
 
 // If necessary, creates a 3-3-2 palette for the device context listed.
-HPALETTE GetOpenGLPalette(HDC hDC)
+HPALETTE GetOpenGLPalette(HDC theHDC)
 {
 	HPALETTE hRetPal = 0;	// handle to palette to be created
 	PIXELFORMATDESCRIPTOR pfd;	// pixel Format Descriptor
@@ -49,8 +49,8 @@ HPALETTE GetOpenGLPalette(HDC hDC)
 
 
 	// get the pixel format index and retrieve the pixel format description
-	nPixelFormat = GetPixelFormat(hDC);
-	DescribePixelFormat(hDC, nPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+	nPixelFormat = GetPixelFormat(theHDC);
+	DescribePixelFormat(theHDC, nPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 
 	/*	does this pixel format require a palette?  If not, do not create a
 		palette and just return 0 */
@@ -97,8 +97,8 @@ HPALETTE GetOpenGLPalette(HDC hDC)
 	hRetPal = CreatePalette(pPal);
 
 	// select and realize the palette for this device context
-	SelectPalette(hDC,hRetPal,FALSE);
-	RealizePalette(hDC);
+	SelectPalette(theHDC,hRetPal,FALSE);
+	RealizePalette(theHDC);
 
 	// Free the memory used for the logical palette structure
 	free(pPal);
@@ -343,7 +343,7 @@ BOOL CreateGameWindow()
 	return TRUE; // success
 }
 
-LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
+LRESULT CALLBACK WndProc(	HWND	theHWnd,			// Handle For This Window
 							UINT	uMsg,			// Message For This Window
 							WPARAM	wParam,			// Additional Message Information
 							LPARAM	lParam)			// Additional Message Information
@@ -389,7 +389,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 					PostQuitMessage(WM_QUIT); // post quit message
 					break;
 				case MENUID_ABOUT: // about info
-					MessageBox(hWnd,"Ben Nickson's 'Ozcan vs Nebulus & The Towergoround'\
+					MessageBox(theHWnd,"Ben Nickson's 'Ozcan vs Nebulus & The Towergoround'\
 					\n\n\tto contact Ben, e-mail ben_nickson@yahoo.co.uk","About",MB_OK);
 					break;
 				default: break;
@@ -409,7 +409,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 				// of palette entries modified.
 				nRet = RealizePalette(hDC);
 				// Repaint, forces remap of palette in current window
-				InvalidateRect(hWnd,0,FALSE);
+				InvalidateRect(theHWnd,0,FALSE);
 				return nRet;
 			}
 			break;
@@ -419,7 +419,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 		case WM_PALETTECHANGED:
 			// don't do anything if the palette does not exist, or if
 			// this is the window that changed the palette.
-			if((hPalette != 0) && ((HWND)wParam != hWnd))
+			if((hPalette != 0) && ((HWND)wParam != theHWnd))
 			{
 				// Select the palette into the device context
 				SelectPalette(hDC,hPalette,FALSE);
@@ -435,7 +435,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 		default: break;
 	}// end switch uMsg
 	// pass all unhandled messages to DefWindowProc
-	return DefWindowProc(hWnd,uMsg,wParam,lParam);
+	return DefWindowProc(theHWnd,uMsg,wParam,lParam);
 }
 
 void DrawTriangleWithShader(MSG&, BOOL&);

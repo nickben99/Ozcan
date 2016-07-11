@@ -36,7 +36,7 @@ bool solveQuadraticEquation(float a, float b, float c, float minRange, float max
 		return( false );} // no solution
 
 	// calculate the two roots (if radicand is equal to zero, the roots will be equal)
-	float	sqrtRad = sqrt(radicand),
+	float	sqrtRad = (float)sqrt(radicand),
 			root1 = ((-b) - sqrtRad) / (2*a),
 			root2 = ((-b) + sqrtRad) / (2*a);
 

@@ -101,7 +101,7 @@ void CPowerUpGrow::collisionResponse(	CSprite * collidedWith,
 										float perCentOfMoveComplete, 
 										CVector * polyintersectionPoint, 
 										CVector * spriteOldPosition, 
-										CVector * velocity) 
+										CVector * theVelocity) 
 {
 	if (ReplayManager::instance()->IsReplayingEndLevel())
 	{
@@ -120,7 +120,7 @@ void CPowerUpGrow::collisionResponse(	CSprite * collidedWith,
 				// call super class collision response
 				CPowerUp::collisionResponse(collidedWith, perCentOfMoveComplete, 
 											polyintersectionPoint, spriteOldPosition, 
-											velocity); 
+											theVelocity); 
 				// set nebulus's scale for collision detection to double size
 				actingUpon->scale = CVector(2.0f, 2.0f, 2.0f);
 				// set current bounding box and elipsoid radius vectors based on scale

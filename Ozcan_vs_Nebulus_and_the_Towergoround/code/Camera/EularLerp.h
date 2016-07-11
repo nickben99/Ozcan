@@ -24,14 +24,14 @@ public:
 	CQuaternion CalculateOrientation();
 	EularLerp operator-(const EularLerp& rhs) const; // this EularLerp minus another EularLerp
 
-	void SetYaw(float yaw)
+	void SetYaw(float inputYaw)
 	{
-		this->yaw = yaw;
+		this->yaw = inputYaw;
 	}
 
-	void SetPitch(float pitch)
+	void SetPitch(float inputPitch)
 	{
-		this->pitch = pitch;
+		this->pitch = inputPitch;
 	}
 
 	float GetYaw()

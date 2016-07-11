@@ -66,7 +66,7 @@ void CamTypeTunnel::initialise()
 
 	//orientation = 0.0f;
 
-	position = lookAt + offset; //lookAt + CVector(cos(orientation), 0.0f, sin(orientation)) * kGroundPlaneOffset; //offset;
+	position = lookAt + offset; //lookAt + CVector((float)cos(orientation), 0.0f, (float)sin(orientation)) * kGroundPlaneOffset; //offset;
 	position.y += kVirticalOffset;
 }
 

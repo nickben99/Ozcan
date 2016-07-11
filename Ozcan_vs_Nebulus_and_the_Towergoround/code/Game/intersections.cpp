@@ -267,8 +267,7 @@ bool sphereSphereIntersectionWithinVelocity(const CVector& sphere1Pos, float sph
 		return( false );}
 
 	// get the time the two spheres first make contact approaching each other
-	float t1 = ((-ADotB)-sqrt(radicand)) / 
-						BSquared;
+	float t1 = ((-ADotB)-(float)sqrt(radicand)) / BSquared;
 
 	// if the collision would occur out of the velocity range return no collision
 	if (t1 < 0.0f || t1 > 1.0f){
@@ -317,7 +316,7 @@ bool raySphereIntersection(CVector * rayOrigin, CVector * rayVectorNorm,
 		return (false);}
 
 	// if their was a collision, set the referance variables
-	distenceToClosestSphereIntersectionPoint = (v - sqrt(d));
+	distenceToClosestSphereIntersectionPoint = (v - (float)sqrt(d));
 	closestSphereIntersectionPoint = *rayOrigin + (*rayVectorNorm * distenceToClosestSphereIntersectionPoint);
 	// collision, return true
 	return(true);

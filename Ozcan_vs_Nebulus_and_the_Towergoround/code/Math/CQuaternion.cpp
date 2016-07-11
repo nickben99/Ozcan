@@ -103,7 +103,7 @@ CVector CQuaternion::eularAngleQuaternionRepresentation()
 	CVector euler;
 
 	sy = -elements[2];
-	cy = sqrt(1 - (sy * sy));
+	cy = (float)sqrt(1 - (sy * sy));
 	euler.y = (float)atan2(sy,cy);
 
 	if (sy != 1.0f && sy != -1.0f)	
@@ -134,8 +134,8 @@ CVector CQuaternion::eularAngleQuaternionRepresentation()
 void CQuaternion::makeQuaternionFromAngleAndAxis(float angle, const CVector& axis)
 {
 	float	radAngle = angle,
-			sin_a = sin( radAngle / 2.0f ),
-			cos_a = cos( radAngle / 2.0f );
+			sin_a = (float)sin( radAngle / 2.0f ),
+			cos_a = (float)cos( radAngle / 2.0f );
 
     v = axis * sin_a;
     n   = cos_a;
@@ -167,7 +167,7 @@ CQuaternion CQuaternion::getConjugate()
 	get the magnitude of a quaternion */
 float CQuaternion::getMagnitude()
 {
-	return( sqrt(dotProduct(this)));
+	return((float)sqrt(dotProduct(this)));
 }
 
 // dot product
@@ -191,14 +191,14 @@ void CQuaternion::makeQuaternionFromEularAngles(CVector * vect)
 	float		sr, sp, sy, cr, cp, cy;
 
 	angle = vect->getZ() * 0.5f;
-	sy = sin(angle);
-	cy = cos(angle);
+	sy = (float)sin(angle);
+	cy = (float)cos(angle);
 	angle = vect->getY() * 0.5f;
-	sp = sin(angle);
-	cp = cos(angle);
+	sp = (float)sin(angle);
+	cp = (float)cos(angle);
 	angle = vect->getX() * 0.5f;
-	sr = sin(angle);
-	cr = cos(angle);
+	sr = (float)sin(angle);
+	cr = (float)cos(angle);
 
 	v.setX( sr*cp*cy-cr*sp*sy); // X
 	v.setY( cr*sp*cy+sr*cp*sy); // Y
@@ -234,7 +234,7 @@ CVector CQuaternion::getRotationAxis()
 
 	/*	compute one over sine of the angle so mulitplication can be used below
 		rather than divides */
-	OneOverSinAng = 1.0f / sqrt(sineAngSquared);
+	OneOverSinAng = 1.0f / (float)sqrt(sineAngSquared);
 
 	return( v*OneOverSinAng );
 }
@@ -276,17 +276,17 @@ void CQuaternion::quaternionSlerp(CQuaternion * from, CQuaternion * to, float d)
 	else // cos is not very close to one
 	{
 		// sin^2(ang) + cos^2(ang) = 1.  This is used to find the sine
-		float sinOmega = sqrt(1.0f - cosOmega*cosOmega);
+		float sinOmega = (float)sqrt(1.0f - cosOmega*cosOmega);
 
 		// angle is derived from the sine and the cos
-		float omega = atan2(sinOmega, cosOmega);
+		float omega = (float)atan2(sinOmega, cosOmega);
 
 		// compute denominator to avoid divides
 		float oneOverSinOmega = 1.0f / sinOmega;
 
 		//compute interpolation parameters
-		k0 = sin((1.0f - d)*omega)*oneOverSinOmega;
-		k1 = sin(d*omega)*oneOverSinOmega;
+		k0 = (float)sin((1.0f - d)*omega)*oneOverSinOmega;
+		k1 = (float)sin(d*omega)*oneOverSinOmega;
 	}// end else cos is not very close to one
 	
 	// interpolation
