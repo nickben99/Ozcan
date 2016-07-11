@@ -1,0 +1,272 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3CA5ED8A1D330F930098F0FA /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5ED891D330F930098F0FA /* osxSetup.cpp */; };
+		3CA5ED8C1D33108E0098F0FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */; };
+		3CA5ED8E1D3310FD0098F0FA /* libGLEW.1.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */; };
+		3CA5ED901D3311120098F0FA /* libglfw3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3C6E0DBE1D330F060066B870 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3C6E0DC01D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Ozcan vs Nebulus and the Towergoround"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CA5ED891D330F930098F0FA /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
+		3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.13.0.dylib; path = ../../../../../usr/local/Cellar/glew/1.13.0/lib/libGLEW.1.13.0.dylib; sourceTree = "<group>"; };
+		3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3C6E0DBD1D330F060066B870 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CA5ED901D3311120098F0FA /* libglfw3.3.1.dylib in Frameworks */,
+				3CA5ED8E1D3310FD0098F0FA /* libGLEW.1.13.0.dylib in Frameworks */,
+				3CA5ED8C1D33108E0098F0FA /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3C6E0DB71D330F060066B870 = {
+			isa = PBXGroup;
+			children = (
+				3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */,
+				3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */,
+				3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */,
+				3C6E0DC21D330F060066B870 /* PlatformSetup */,
+				3C6E0DC11D330F060066B870 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3C6E0DC11D330F060066B870 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C6E0DC01D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C6E0DC21D330F060066B870 /* PlatformSetup */ = {
+			isa = PBXGroup;
+			children = (
+				3CA5ED891D330F930098F0FA /* osxSetup.cpp */,
+			);
+			name = PlatformSetup;
+			path = "Ozcan vs Nebulus and the Towergoround";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3C6E0DBF1D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C6E0DC71D330F060066B870 /* Build configuration list for PBXNativeTarget "Ozcan vs Nebulus and the Towergoround" */;
+			buildPhases = (
+				3C6E0DBC1D330F060066B870 /* Sources */,
+				3C6E0DBD1D330F060066B870 /* Frameworks */,
+				3C6E0DBE1D330F060066B870 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ozcan vs Nebulus and the Towergoround";
+			productName = "Ozcan vs Nebulus and the Towergoround";
+			productReference = 3C6E0DC01D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3C6E0DB81D330F060066B870 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Benjamin Nickson";
+				TargetAttributes = {
+					3C6E0DBF1D330F060066B870 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 3C6E0DBB1D330F060066B870 /* Build configuration list for PBXProject "Ozcan vs Nebulus and the Towergoround" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3C6E0DB71D330F060066B870;
+			productRefGroup = 3C6E0DC11D330F060066B870 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3C6E0DBF1D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3C6E0DBC1D330F060066B870 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CA5ED8A1D330F930098F0FA /* osxSetup.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3C6E0DC51D330F060066B870 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3C6E0DC61D330F060066B870 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3C6E0DC81D330F060066B870 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/1.13.0/lib,
+					/usr/local/Cellar/glfw3/3.1.2/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3C6E0DC91D330F060066B870 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/1.13.0/lib,
+					/usr/local/Cellar/glfw3/3.1.2/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3C6E0DBB1D330F060066B870 /* Build configuration list for PBXProject "Ozcan vs Nebulus and the Towergoround" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C6E0DC51D330F060066B870 /* Debug */,
+				3C6E0DC61D330F060066B870 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C6E0DC71D330F060066B870 /* Build configuration list for PBXNativeTarget "Ozcan vs Nebulus and the Towergoround" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C6E0DC81D330F060066B870 /* Debug */,
+				3C6E0DC91D330F060066B870 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3C6E0DB81D330F060066B870 /* Project object */;
+}
