@@ -2,6 +2,9 @@
 
 //system includes------------
 #include <math.h> // maths functions
+#ifdef _WINDOWS
+#include <float.h> // for _isnan
+#endif
 #include <cmath> // for std::isnan
 //---------------------------
 
@@ -96,7 +99,7 @@ template<typename T> inline T Clamp(const T& value, const T& min, const T& max)
 inline bool IsNaN(const float& num)
 {
 #ifdef _WINDOWS
-    return _isnan(num);
+    return 0 != _isnan(num);
 #endif
     
 #ifdef OSX
