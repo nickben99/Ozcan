@@ -5,6 +5,9 @@
 
 //--- Header files --------------------
 #include "Game/defines.h" // the header file
+
+#ifdef _WINDOWS
+
 #include "FileReading\CTextFileReader.h"
 #include "Game\Globals.h"
 //-------------------------------------
@@ -77,3 +80,5 @@ float ToShaderUIY(float coord)
 	float conversion = (Globals::Instance().windowHeight/2.0f);
 	return coord-conversion;
 }
+
+#endif

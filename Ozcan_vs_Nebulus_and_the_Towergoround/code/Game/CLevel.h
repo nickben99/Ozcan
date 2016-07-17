@@ -1,9 +1,7 @@
 //CLevel.h - header for the level class
 
 //system includes------------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include "Rendering/OpenGLInclude.h"
 #include <stdio.h>		// for sprintf_s
 //---------------------------
 

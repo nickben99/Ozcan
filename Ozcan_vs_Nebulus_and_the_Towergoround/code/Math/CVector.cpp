@@ -301,15 +301,15 @@ CVector CVector::operator/(const CVector *v)
 			newY = 	y/v->y, 
 			newZ = 	z/v->z;
 	// check the results are numbers (not +/- infinity etc)
-	if (_isnan(newX))
+    if (defines::IsNaN(newX))
 	{ 
 		newX = 0.0f;
 	}
-	if (_isnan(newY))
+	if (defines::IsNaN(newY))
 	{ 
 		newY = 0.0f;
 	}
-	if (_isnan(newZ))
+	if (defines::IsNaN(newZ))
 	{ 
 		newZ = 0.0f;
 	}
@@ -323,15 +323,15 @@ CVector CVector::operator/(const CVector& v)
 			newY = 	y/v.y, 
 			newZ = 	z/v.z;
 	// check the results are numbers (not +/- infinity etc)
-	if (_isnan(newX))
+	if (defines::IsNaN(newX))
 	{ 
 		newX = 0.0f;
 	}
-	if (_isnan(newY))
+	if (defines::IsNaN(newY))
 	{ 
 		newY = 0.0f;
 	}
-	if (_isnan(newZ))
+	if (defines::IsNaN(newZ))
 	{ 
 		newZ = 0.0f;
 	}
@@ -361,11 +361,15 @@ CVector CVector::operator/(float s)
 {
 	float multiplier = 1.0f/s; // compute one over s, for multiplies below
 	// a divide by zero above may make multiplier a NaN (not a number)
+#ifdef _WINDOWS
 	int floatClass = _fpclass(multiplier);
 	if (_FPCLASS_SNAN == floatClass ||
 		_FPCLASS_QNAN == floatClass ||
 		_FPCLASS_NINF == floatClass ||
-		_FPCLASS_PINF == floatClass ){ 
+		_FPCLASS_PINF == floatClass ){
+#elif OSX
+    if (defines::IsNaN(multiplier)) {
+#endif
 		multiplier = 0.0f;} // not a number, set to zero
 	return (*this*multiplier); 
 }
@@ -403,7 +407,7 @@ float CVector::dotProduct(CVector * productWith)
 							y*productWith->y +
 							z*productWith->z	);
 
-	if( _isnan(dotProduct) ){ // avoids -1.#IND0000000 NaN problems
+	if( defines::IsNaN(dotProduct) ){ // avoids -1.#IND0000000 NaN problems
 		return( 0.0f );}
 
 	return( dotProduct );
@@ -416,7 +420,7 @@ float CVector::dotProduct(const CVector& productWith) const
 							y*productWith.y +
 							z*productWith.z	);
 
-	if( _isnan(dotProduct) ){ // avoids -1.#IND0000000 NaN problems
+	if( defines::IsNaN(dotProduct) ){ // avoids -1.#IND0000000 NaN problems
 		return( 0.0f );}
 
 	return( dotProduct );
@@ -435,7 +439,7 @@ float CVector::getAngleBetween(CVector* otherVector) const
 
 	float angle = ((float)acos( dotProduct ) );
 
-	if( _isnan(angle) ){ // avoids -1.#IND0000000 NaN problems
+	if( defines::IsNaN(angle) ){ // avoids -1.#IND0000000 NaN problems
 	return( 0.0f );} // dotProduct will be practically 1 so return an acos of 0 angle
 
 	return( angle );
@@ -454,7 +458,7 @@ float CVector::getAngleBetween(const CVector& otherVector)
 
 	float angle = ((float)acos( dotProduct ) );
 
-	if( _isnan(angle) ){ // avoids -1.#IND0000000 NaN problems
+	if( defines::IsNaN(angle) ){ // avoids -1.#IND0000000 NaN problems
 	return( 0.0f );} // dotProduct will be practically 1 so return an acos of 0 angle
 
 	return( angle );

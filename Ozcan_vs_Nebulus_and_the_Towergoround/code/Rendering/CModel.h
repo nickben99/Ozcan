@@ -5,13 +5,13 @@ CODE BASED ON TUTORIAL AT http://rsn.gamedev.net/tutorials/ms3danim.asp
 //CModel.h, header file for CModel.cpp
 
 //system includes------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include "Rendering/OpenGLInclude.h"
 //---------------------
 
 #ifndef _CModel_h_
 #define _CModel_h_
+
+#ifdef _WINDOWS
 
 //header files---
 #include "CModel.h"
@@ -204,6 +204,8 @@ class CModel
 	int modelDisplayList; // a display list for the model if it does not have any bones
 //-----------------------------
 }; // class CModel
+
+#endif
 
 #endif // _CModel_h_
 

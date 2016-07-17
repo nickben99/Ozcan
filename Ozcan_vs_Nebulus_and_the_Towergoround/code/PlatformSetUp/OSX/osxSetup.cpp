@@ -8,6 +8,7 @@
 
 #include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
+#include "Audio/SoundsEnum.h"
 
 void display()
 {
@@ -25,6 +26,7 @@ void display()
     glEnd(); //End triangle coordinates
     
 }
+
 int main()
 {
     if (!glfwInit())
@@ -42,6 +44,7 @@ int main()
     
     glfwMakeContextCurrent(window);
     
+    //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
     while (!glfwWindowShouldClose(window))
     {
         display();
@@ -50,13 +53,5 @@ int main()
     }
     
     glfwTerminate(); //terminating glfw window
-    
-    //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
-//    while(running) // infinite loop to draw object again and again
-//    {              // because once object is draw then window is terminated
-//        display();
-//        running = glfwGetWindowParam( GLFW_OPENED ); //when glfw window is opened then it return true
-//        //if closed then return false
-//    }
     return 0;
 }

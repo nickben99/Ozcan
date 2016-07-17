@@ -2,10 +2,13 @@
 
 //system includes------------
 #include <math.h> // maths functions
+#include <cmath> // for std::isnan
 //---------------------------
 
 #ifndef _defines_h_
 #define _defines_h_
+
+#ifdef _WINDOWS
 
 //header files---------------
 #include "Random.h"
@@ -13,12 +16,14 @@
 
 #define UNUSED(expr) (void)(expr)
 
+#endif
 #define EPSILON 1.0e-5   // a very small value 
 
 // floating point equality check, within the bounds of a very small differance
 #define FLOAT_EQUALS(N1, N2) (fabs(N1 - (N2)) < EPSILON) ? true : false
 
 #define PI 3.141592654f
+#ifdef _WINDOWS
 
 // convert degrees to radians
 #define degToRad(degrees) degrees*(PI/180.0f)
@@ -49,6 +54,7 @@ float ToShaderUIX(float coord);
 
 float ToShaderUIY(float coord);
 
+#endif
 // make sure acos input is within range
 /*	BASED ON METHOD FROM 3D MATH PRIMER FOR GRAPHICS AND GAME DEVELOPMENT 
 	- DUNN AND PARBERRY */
@@ -72,21 +78,32 @@ inline float SlowFastSlowLerp(float input)
 namespace defines
 {
 
-template<typename T> inline T Min(T lhs, T rhs)
+template<typename T> inline T Min(const T& lhs, const T& rhs)
 {
 	return (lhs < rhs) ? lhs : rhs;
 }
 
-template<typename T> inline T Max(T lhs, T rhs)
+template<typename T> inline T Max(const T& lhs, const T& rhs)
 {
 	return (lhs > rhs) ? lhs : rhs;
 }
 
-template<typename T> inline T Clamp(T value, T min, T max)
+template<typename T> inline T Clamp(const T& value, const T& min, const T& max)
 {
 	return Min(max, Max(value, min));
 }
 
+inline bool IsNaN(const float& num)
+{
+#ifdef _WINDOWS
+    return _isnan(num);
+#endif
+    
+#ifdef OSX
+    return std::isnan(num);
+#endif
+}
+    
 }
 
-#endif // ifndef _defines_ 
+#endif // ifndef _defines_

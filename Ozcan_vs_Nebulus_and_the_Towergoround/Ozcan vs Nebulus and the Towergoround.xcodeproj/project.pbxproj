@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CA5ED8A1D330F930098F0FA /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CA5ED891D330F930098F0FA /* osxSetup.cpp */; };
 		3CA5ED8C1D33108E0098F0FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */; };
 		3CA5ED8E1D3310FD0098F0FA /* libGLEW.1.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */; };
 		3CA5ED901D3311120098F0FA /* libglfw3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */; };
+		3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFD61D3B36060003005B /* osxSetup.cpp */; };
+		3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE51D3B3E010003005B /* CMatrix.cpp */; };
+		3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */; };
+		3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEA1D3B3E010003005B /* CVector.cpp */; };
+		3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEF1D3B3E2B0003005B /* defines.cpp */; };
+		3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFF21D3B3F1D0003005B /* Random.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +32,27 @@
 
 /* Begin PBXFileReference section */
 		3C6E0DC01D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Ozcan vs Nebulus and the Towergoround"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CA5ED891D330F930098F0FA /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
 		3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.13.0.dylib; path = ../../../../../usr/local/Cellar/glew/1.13.0/lib/libGLEW.1.13.0.dylib; sourceTree = "<group>"; };
 		3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+		3CC2AFD61D3B36060003005B /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/OSX/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
+		3CC2AFD91D3B369E0003005B /* SoundsEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundsEnum.h; path = code/Audio/SoundsEnum.h; sourceTree = "<group>"; };
+		3CC2AFDD1D3B38250003005B /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = code/Game/main.h; sourceTree = "<group>"; };
+		3CC2AFE01D3B3B360003005B /* OpenGLInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLInclude.h; path = code/Rendering/OpenGLInclude.h; sourceTree = "<group>"; };
+		3CC2AFE11D3B3C200003005B /* CSpriteEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSpriteEngine.h; path = code/Game/CSpriteEngine.h; sourceTree = "<group>"; };
+		3CC2AFE21D3B3D680003005B /* CModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CModel.h; path = code/Rendering/CModel.h; sourceTree = "<group>"; };
+		3CC2AFE41D3B3E010003005B /* CBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBox.h; path = code/Math/CBox.h; sourceTree = "<group>"; };
+		3CC2AFE51D3B3E010003005B /* CMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMatrix.cpp; path = code/Math/CMatrix.cpp; sourceTree = "<group>"; };
+		3CC2AFE61D3B3E010003005B /* CMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMatrix.h; path = code/Math/CMatrix.h; sourceTree = "<group>"; };
+		3CC2AFE71D3B3E010003005B /* CPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPlane.h; path = code/Math/CPlane.h; sourceTree = "<group>"; };
+		3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CQuaternion.cpp; path = code/Math/CQuaternion.cpp; sourceTree = "<group>"; };
+		3CC2AFE91D3B3E010003005B /* CQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CQuaternion.h; path = code/Math/CQuaternion.h; sourceTree = "<group>"; };
+		3CC2AFEA1D3B3E010003005B /* CVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CVector.cpp; path = code/Math/CVector.cpp; sourceTree = "<group>"; };
+		3CC2AFEB1D3B3E010003005B /* CVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVector.h; path = code/Math/CVector.h; sourceTree = "<group>"; };
+		3CC2AFEF1D3B3E2B0003005B /* defines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = defines.cpp; path = code/Game/defines.cpp; sourceTree = "<group>"; };
+		3CC2AFF01D3B3E2B0003005B /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = defines.h; path = code/Game/defines.h; sourceTree = "<group>"; };
+		3CC2AFF21D3B3F1D0003005B /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Random.cpp; path = code/Game/Random.cpp; sourceTree = "<group>"; };
+		3CC2AFF31D3B3F1D0003005B /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Random.h; path = code/Game/Random.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +72,10 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3CC2AFE31D3B3DE60003005B /* Math */,
+				3CC2AFDE1D3B3AB00003005B /* Rendering */,
+				3CC2AFDA1D3B37FA0003005B /* Game */,
+				3CC2AFD81D3B365A0003005B /* Audio */,
 				3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */,
 				3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */,
 				3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */,
@@ -69,10 +95,63 @@
 		3C6E0DC21D330F060066B870 /* PlatformSetup */ = {
 			isa = PBXGroup;
 			children = (
-				3CA5ED891D330F930098F0FA /* osxSetup.cpp */,
+				3CC2AFD31D3B34FF0003005B /* OSX */,
 			);
 			name = PlatformSetup;
 			path = "Ozcan vs Nebulus and the Towergoround";
+			sourceTree = "<group>";
+		};
+		3CC2AFD31D3B34FF0003005B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AFD61D3B36060003005B /* osxSetup.cpp */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		3CC2AFD81D3B365A0003005B /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AFD91D3B369E0003005B /* SoundsEnum.h */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		3CC2AFDA1D3B37FA0003005B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AFF21D3B3F1D0003005B /* Random.cpp */,
+				3CC2AFF31D3B3F1D0003005B /* Random.h */,
+				3CC2AFEF1D3B3E2B0003005B /* defines.cpp */,
+				3CC2AFF01D3B3E2B0003005B /* defines.h */,
+				3CC2AFE11D3B3C200003005B /* CSpriteEngine.h */,
+				3CC2AFDD1D3B38250003005B /* main.h */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		3CC2AFDE1D3B3AB00003005B /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AFE21D3B3D680003005B /* CModel.h */,
+				3CC2AFE01D3B3B360003005B /* OpenGLInclude.h */,
+			);
+			name = Rendering;
+			sourceTree = "<group>";
+		};
+		3CC2AFE31D3B3DE60003005B /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AFE41D3B3E010003005B /* CBox.h */,
+				3CC2AFE51D3B3E010003005B /* CMatrix.cpp */,
+				3CC2AFE61D3B3E010003005B /* CMatrix.h */,
+				3CC2AFE71D3B3E010003005B /* CPlane.h */,
+				3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */,
+				3CC2AFE91D3B3E010003005B /* CQuaternion.h */,
+				3CC2AFEA1D3B3E010003005B /* CVector.cpp */,
+				3CC2AFEB1D3B3E010003005B /* CVector.h */,
+			);
+			name = Math;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,7 +210,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CA5ED8A1D330F930098F0FA /* osxSetup.cpp in Sources */,
+				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
+				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
+				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
+				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
+				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
+				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +252,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					OSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -207,6 +292,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = OSX;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -222,7 +308,10 @@
 		3C6E0DC81D330F060066B870 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/Users/benjaminnickson/Documents/Ozcan/Ozcan_vs_Nebulus_and_the_Towergoround/code,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glew/1.13.0/lib,
@@ -235,7 +324,10 @@
 		3C6E0DC91D330F060066B870 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/Users/benjaminnickson/Documents/Ozcan/Ozcan_vs_Nebulus_and_the_Towergoround/code,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glew/1.13.0/lib,
