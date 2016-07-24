@@ -3,6 +3,7 @@
 //system includes------------
 #include <math.h> // maths functions
 #ifdef _WINDOWS
+#include <windows.h>	// for strncpy_s
 #include <float.h> // for _isnan
 #endif
 #include <cmath> // for std::isnan
@@ -110,7 +111,7 @@ inline bool IsNaN(const float& num)
 inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numToCopy)
 {
 #ifdef _WINDOWS
-    strncpy_s(copyTo, copyToSize, copyFrom, copyFromSize);
+    strncpy_s(copyTo, copyToSize, copyFrom, numToCopy);
 #endif
     
 #ifdef OSX

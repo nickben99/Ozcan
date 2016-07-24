@@ -554,14 +554,14 @@ void CMatrix::SetUp(const CVector4& newUp)
 	elements[7] = newUp.w;
 }
 
-CMatrix CMatrix::CreateOrthographicProjection(float left, float right, float bottom, float top, float near, float far)
+CMatrix CMatrix::CreateOrthographicProjection(float left, float right, float bottom, float top, float nearPlane, float farPlane)
 {
     float a = 2.0f / (right - left);
     float b = 2.0f / (top - bottom);
-    float c = -2.0f / (far - near);
+    float c = -2.0f / (farPlane - nearPlane);
     float tx = (right + left) / (right - left);
     float ty = (top + bottom) / (top - bottom);
-    float tz = (far + near) / (far - near);
+    float tz = (farPlane + nearPlane) / (farPlane - nearPlane);
 
 	CMatrix m;
 	m.elements[0]=a;		m.elements[1]=0.0f;		m.elements[2]=0.0f;		m.elements[3]=tx;
@@ -578,14 +578,14 @@ CMatrix CMatrix::CreatePerspectiveProjection(float fov, float aspectRatio, float
 	return CreatePerspectiveProjection(-aspectRatio, aspectRatio, -fov, fov, nearClipPlane, farClipPlane);
 }
 
-CMatrix CMatrix::CreatePerspectiveProjection(float left, float right, float bottom, float top, float near, float far)
+CMatrix CMatrix::CreatePerspectiveProjection(float left, float right, float bottom, float top, float nearPlane, float farPlane)
 {
-    float a = 2 * near / (right - left);
-    float b = 2 * near / (top - bottom);
+    float a = 2 * nearPlane / (right - left);
+    float b = 2 * nearPlane / (top - bottom);
     float c = (right + left) / (right - left);
     float d = (top + bottom) / (top - bottom);
-    float e = - (far + near) / (far - near);
-    float f = -2 * far * near / (far - near);
+    float e = - (farPlane + nearPlane) / (farPlane - nearPlane);
+    float f = -2 * farPlane * nearPlane / (farPlane - nearPlane);
 
 	CMatrix m;
 	m.elements[0]=a;		m.elements[1]=0.0f;		m.elements[2]=0.0f;		m.elements[3]=0.0f;
