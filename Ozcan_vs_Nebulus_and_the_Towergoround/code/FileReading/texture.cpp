@@ -16,11 +16,10 @@
  */
 
 #include "texture.h"
-
+#include <Game/defines.h>
 #include "assert.h"
 
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include <Rendering/OpenGLInclude.h>
 
 #ifdef USE_SHADERS
 #include <Rendering\PlatformSpecific\Windows\OpenGLShader.h>
@@ -57,9 +56,9 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	GLenum      iHeightType = GL_TEXTURE_2D; // Texture type */
 	GLuint      texture,				/* Texture object */
 				uPixelFormat = GL_RGB;	// GL_RGBA / GL_RGB
-	unsigned __int16	uHeight = 256,		// height of the image
+	unsigned short	uHeight = 256,		// height of the image
 						uWidth = 256;			// width of the image
-	unsigned __int8		uBytesPerPixel = 4;
+	unsigned char		uBytesPerPixel = 4;
 
 	// determine what type of image this is based on the file extension
 	if ( strstr( filename, ".bmp" ) ) /*	if strstr doesn't return null, a ".bmp" 
@@ -84,9 +83,11 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 
 	// if bits is still null the file was neither a targa or a bitmap
 	if ( !bits ){
-		char errorMsg[256];
+#ifdef _WINDOWS
+        char errorMsg[256];
 		sprintf_s( errorMsg, "%s is an unsupported file type", filename );
-		MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
+        MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
+#endif
 		return( 0 );} // not a supported file type
 
 	// Figure out the type of texture... 
@@ -130,12 +131,22 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	}
     else if (iHeightType == GL_TEXTURE_1D)
 	{
+#ifdef _WINDOWS
         gluBuild1DMipmaps( iHeightType, uPixelFormat, uWidth, uPixelFormat, GL_UNSIGNED_BYTE, bits);
-		CHECK_GL_ERROR;
+#endif
+#ifdef OSX
+        glGenerateMipmap( iHeightType);
+#endif
+        CHECK_GL_ERROR;
 	}
     else
 	{
+#ifdef _WINDOWS
         gluBuild2DMipmaps( iHeightType, uPixelFormat, uWidth, uHeight, uPixelFormat, GL_UNSIGNED_BYTE, bits);
+#endif
+#ifdef OSX
+        glGenerateMipmap( iHeightType);
+#endif
 		CHECK_GL_ERROR;
 	}
 
@@ -148,7 +159,7 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 
 textureObject* FindExistingTexture(const char* filename)
 {
-	int totalTextures = textureObjects.size();
+	int totalTextures = (int)textureObjects.size();
 	
 	// go through vector
 	for (int tex = 0; tex < totalTextures; tex++)
@@ -172,7 +183,7 @@ textureObject* FindExistingTexture(const char* filename)
 int getTextureNumber(const char* filename)
 {
 	// get the amount of textures
-	int totalTextures = textureObjects.size();
+	int totalTextures = (int)textureObjects.size();
 	
 	// go through vector and find the first free slot
 	for (int tex = 0; tex < totalTextures; tex++)
@@ -181,9 +192,9 @@ int getTextureNumber(const char* filename)
 		textureObject &texture = textureObjects[tex];
 		if (texture.currentlyInUse == 0)
 		{
-			texture.currentlyInUse = 1; // the texture object is now in use 
-			strncpy_s(texture.texturePath, textureObject::MaxBuffer-1, filename, strlen(filename));
-			return(texture.ID); // free slot found
+			texture.currentlyInUse = 1; // the texture object is now in use
+            defines::strncpy(texture.texturePath, textureObject::MaxBuffer-1, filename, (int)strlen(filename));
+			return((int)texture.ID); // free slot found
 		}
 	}
 	// no free texture available, so must create a new one
@@ -193,7 +204,7 @@ int getTextureNumber(const char* filename)
 	textureObject &texture = textureObjects[totalTextures]; // referance variable
 	// set-up the texture object
 	texture.currentlyInUse = 1; // now in use
-	strncpy_s(texture.texturePath, textureObject::MaxBuffer-1, filename, strlen(filename));
+    defines::strncpy(texture.texturePath, textureObject::MaxBuffer-1, filename, (int)strlen(filename));
 	/*	assign ID as +1 e.g element 0 will have ID 1, 1 ID 2 and so on as 
 		texture objects start at 1 */
 	texture.ID = (totalTextures+1); 
@@ -207,7 +218,7 @@ void deleteTexture(int theTexture)
 	const GLuint textureToDelete = theTexture;
 
 	// get the amount of textures
-	unsigned int totalTextures = textureObjects.size();
+	unsigned int totalTextures = (int)textureObjects.size();
 
 	if( (textureToDelete <= InvalidTextureID) || 
 		(textureToDelete > (totalTextures))){

@@ -3,7 +3,7 @@
 #ifndef _main_h_
 #define _main_h_
 //---system includes---------
-#include "Rendering/OpenGLInclude.h"
+#include <Rendering/OpenGLInclude.h>
 //---------------------------
 
 //---header files------------

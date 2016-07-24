@@ -107,6 +107,21 @@ inline bool IsNaN(const float& num)
 #endif
 }
     
+inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numToCopy)
+{
+#ifdef _WINDOWS
+    strncpy_s(copyTo, copyToSize, copyFrom, copyFromSize);
+#endif
+    
+#ifdef OSX
+    int charactersToCopy = defines::Min(copyToSize, numToCopy);
+    for (int character = 0; character < charactersToCopy; ++character)
+    {
+        copyTo[character] = copyFrom[character];
+    }
+#endif
+}
+    
 }
 
 #endif // ifndef _defines_

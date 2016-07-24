@@ -16,6 +16,9 @@
 		3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEA1D3B3E010003005B /* CVector.cpp */; };
 		3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEF1D3B3E2B0003005B /* defines.cpp */; };
 		3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFF21D3B3F1D0003005B /* Random.cpp */; };
+		3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */; };
+		3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */; };
+		3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE81D3C40850005D3D0 /* texture.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +56,12 @@
 		3CC2AFF01D3B3E2B0003005B /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = defines.h; path = code/Game/defines.h; sourceTree = "<group>"; };
 		3CC2AFF21D3B3F1D0003005B /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Random.cpp; path = code/Game/Random.cpp; sourceTree = "<group>"; };
 		3CC2AFF31D3B3F1D0003005B /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Random.h; path = code/Game/Random.h; sourceTree = "<group>"; };
+		3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTextFileReader.cpp; path = code/FileReading/CTextFileReader.cpp; sourceTree = "<group>"; };
+		3CFD2DE31D3C381E0005D3D0 /* CTextFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTextFileReader.h; path = code/FileReading/CTextFileReader.h; sourceTree = "<group>"; };
+		3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imageFileLoaders.cpp; path = code/FileReading/imageFileLoaders.cpp; sourceTree = "<group>"; };
+		3CFD2DE61D3C3D090005D3D0 /* imageFileLoaders.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = imageFileLoaders.H; path = code/FileReading/imageFileLoaders.H; sourceTree = "<group>"; };
+		3CFD2DE81D3C40850005D3D0 /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture.cpp; path = code/FileReading/texture.cpp; sourceTree = "<group>"; };
+		3CFD2DE91D3C40850005D3D0 /* TEXTURE.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TEXTURE.H; path = code/FileReading/TEXTURE.H; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +81,7 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3CFD2DE11D3C38050005D3D0 /* FileReading */,
 				3CC2AFE31D3B3DE60003005B /* Math */,
 				3CC2AFDE1D3B3AB00003005B /* Rendering */,
 				3CC2AFDA1D3B37FA0003005B /* Game */,
@@ -154,6 +164,19 @@
 			name = Math;
 			sourceTree = "<group>";
 		};
+		3CFD2DE11D3C38050005D3D0 /* FileReading */ = {
+			isa = PBXGroup;
+			children = (
+				3CFD2DE81D3C40850005D3D0 /* texture.cpp */,
+				3CFD2DE91D3C40850005D3D0 /* TEXTURE.H */,
+				3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */,
+				3CFD2DE61D3C3D090005D3D0 /* imageFileLoaders.H */,
+				3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */,
+				3CFD2DE31D3C381E0005D3D0 /* CTextFileReader.h */,
+			);
+			name = FileReading;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -212,10 +235,13 @@
 			files = (
 				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
 				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
+				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
+				3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */,
 				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
 				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
+				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,11 +16,11 @@
  */
 
 #ifndef _TEXTURE_H_
-#  define _TEXTURE_H_
+#define _TEXTURE_H_
 
 #include <vector>		// include this to use the vector class
 
-#  include "imageFileLoaders.h"
+#include "imageFileLoaders.h"
 
 struct textureObject // struct describing each texture object
 {

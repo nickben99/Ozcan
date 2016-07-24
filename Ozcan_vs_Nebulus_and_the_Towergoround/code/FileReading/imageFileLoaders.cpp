@@ -17,9 +17,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#ifdef OSX
+#include <string.h> // for memcmp
+#endif
 
-
-#ifdef WIN32
 /*
  * 'LoadDIBitmap()' - Load a DIB/BMP file from disk.
  *
@@ -28,9 +29,9 @@
 
 GLubyte *							/* O - Bitmap data */
 LoadDIBitmap(const char *filename,	/* I - File to load */
-             unsigned __int16 &uHeight,	// image height
-			 unsigned __int16 &uWidth,	// image width 
-			 unsigned __int8 &uBytesPerPixel )
+             unsigned short &uHeight,	// image height
+			 unsigned short &uWidth,	// image width
+			 unsigned char &uBytesPerPixel )
 {
     FILE             *fp;			/* Open file pointer */
     GLubyte          *bits;			/* Bitmap pixel bits */
@@ -40,7 +41,12 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
 	BITMAPINFO *info;				// Bitmap information 
 
     /* Try opening the file; use "rb" mode to read this *binary* file. */
+#ifdef _WINDOWS
 	fopen_s(&fp, filename, "rb");
+#endif
+#ifdef OSX
+    fp = fopen(filename, "rb");
+#endif
     if (fp == 0){
         return (0);}
 
@@ -55,9 +61,11 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
     if (header.bfType != 'MB')	/* Check for BM reversed... */
     {
         /* Not a bitmap file - return 0... */
-		char errorMsg[256];
-		sprintf_s( errorMsg, "%s has a .bmp extension, but is not a bitmap file", filename );
-		MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
+#ifdef _WINDOWS
+        char errorMsg[256];
+        sprintf_s( errorMsg, "%s has a .bmp extension, but is not a bitmap file", filename );
+        MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
+#endif
         fclose(fp);
         return (0);
     }
@@ -149,8 +157,8 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
 	fclose(fp);
 
 	// set referance variables
-	uHeight = static_cast<unsigned __int16>( info->bmiHeader.biHeight );
-	uWidth = static_cast<unsigned __int16>( info->bmiHeader.biWidth );
+	uHeight = static_cast<unsigned short>( info->bmiHeader.biHeight );
+	uWidth = static_cast<unsigned short>( info->bmiHeader.biWidth );
 	uBytesPerPixel = (unsigned char)bytesPerPixel; // currently, this loader only accepts a 24 bit bitmap
 	free( info );
 	info = 0;
@@ -158,9 +166,9 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
 }
 
 // this method loads an uncompressed targa (BASED ON METHOD FROM NEHE LESSON 24)
-GLubyte* LoadUncompressedTarga( const char *filename,	unsigned __int16 &uHeight, // image height
-														unsigned __int16 &uWidth,	// image width 
-														unsigned __int8	&ubytesPerPixel ) // no of bytes per pixel
+GLubyte* LoadUncompressedTarga( const char *filename,	unsigned short &uHeight, // image height
+														unsigned short &uWidth,	// image width
+														unsigned char &ubytesPerPixel ) // no of bytes per pixel
 {
 	GLubyte		TGAheader[12]={0,0,2,0,0,0,0,0,0,0,0,0}; // uncompressed TGA Header
 	GLubyte		TGAcompare[12];	// used to compare TGA header
@@ -170,8 +178,12 @@ GLubyte* LoadUncompressedTarga( const char *filename,	unsigned __int16 &uHeight,
 	GLubyte*	imageData; // stores the pixel data from the tga file
 
 	FILE *file = 0;
-	fopen_s(&file, filename, "rb"); // open the TGA file
-
+#ifdef _WINDOWS
+    fopen_s(&file, filename, "rb"); // open the TGA file
+#endif
+#ifdef OSX
+    file = fopen(filename, "rb"); // open the TGA file
+#endif
 	if(	file==0 || // does file exist
 		fread(TGAcompare,1,sizeof(TGAcompare),file)!=sizeof(TGAcompare) ||	// are there 12 bytes to read?
 		memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0				||	// is it an uncompressed header?
@@ -229,9 +241,9 @@ GLubyte* LoadUncompressedTarga( const char *filename,	unsigned __int16 &uHeight,
 }
 
 // this method loads a Run Length Encoded (RLE) compressed targa
-GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned __int16 &uHeight,	// image height
-														unsigned __int16 &uWidth,	// image width 
-														unsigned __int8 &uBytesPerPixel )
+GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned short &uHeight,	// image height
+														unsigned short &uWidth,	// image width
+														unsigned char &uBytesPerPixel )
 {
 	GLubyte		TGAheader[12]={0,0,10,0,0,0,0,0,0,0,0,0}; // RLE compressed TGA header
 	GLubyte		TGAcompare[12];	// used to compare TGA header
@@ -240,8 +252,12 @@ GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned __int16 &uHeight
 	GLubyte*	imageData = 0; // stores the pixel data from the tga file
 
 	FILE *file = 0;
-	fopen_s(&file, filename, "rb"); // open the TGA file
-
+#ifdef _WINDOWS
+    fopen_s(&file, filename, "rb"); // open the TGA file
+#endif
+#ifdef OSX
+    file = fopen(filename, "rb"); // open the TGA file
+#endif
 	if(	file==0 || // does the file exist?
 		fread(TGAcompare,1,sizeof(TGAcompare),file)!=sizeof(TGAcompare) ||	// are there 12 bytes to read?
 		memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0				||	// is it a compressed tga header?
@@ -307,7 +323,7 @@ GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned __int16 &uHeight
 									color packets minus 1 that follow the header */
 		{	
 			chunkheader++; // add 1 to get number of following color values
-			for(__int16 counter = 0; counter < chunkheader; counter++) // read RAW color values
+			for(short counter = 0; counter < chunkheader; counter++) // read RAW color values
 			{
 				if(fread(colorbuffer, 1, uBytesPerPixel, file) != uBytesPerPixel) // Try to read 1 pixel
 				{
@@ -349,7 +365,7 @@ GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned __int16 &uHeight
 				return( 0 );	// return failed
 			}
 
-			for( __int16 counter = 0; counter < chunkheader; counter++ )	/*	copy the color into the image data as many 
+			for( short counter = 0; counter < chunkheader; counter++ )	/*	copy the color into the image data as many 
 																				times as dictated by the header */
 			{
 				imageData[currentbyte		] = colorbuffer[2];	// switch R and B bytes areound while copying
@@ -384,16 +400,21 @@ GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned __int16 &uHeight
 }
 
 // this method loads a RLE compressed or uncompressed targa file
-GLubyte* LoadTarga(const char *filename,	unsigned __int16 &uHeight,	// image height
-											unsigned __int16 &uWidth,	// image width 	
-											unsigned __int8 &uBytesPerPixel )
+GLubyte* LoadTarga(const char *filename,	unsigned short &uHeight,	// image height
+											unsigned short &uWidth,	// image width
+											unsigned char &uBytesPerPixel )
 {
 	GLubyte TGAheaderUncompressed[12] = {0,0,2,0,0,0,0,0,0,0,0,0};	// uncompressed TGA Header
 	GLubyte TGAheaderRLECompressed[12] = {0,0,10,0,0,0,0,0,0,0,0,0};	// RLE compressed TGA Header
 	GLubyte	TGAcompare[12]; // Used To Compare TGA Header
 
 	FILE *file = 0;
-	fopen_s(&file, filename, "rb"); // Open The TGA File
+#ifdef _WINDOWS
+    fopen_s(&file, filename, "rb"); // Open The TGA File
+#endif
+#ifdef OSX
+    file = fopen(filename, "rb"); // Open The TGA File
+#endif
 	if(	!file ){ // if the file does not exist
 		return( 0 );} // return 0
 
@@ -414,14 +435,13 @@ GLubyte* LoadTarga(const char *filename,	unsigned __int16 &uHeight,	// image hei
 		file = 0;
 		return( LoadRLECompressedTarga( filename, uHeight, uWidth, uBytesPerPixel ) );}
 
+#ifdef _WINDOWS
 	char errorMsg[256];
 	sprintf_s( errorMsg, "%s has a .tga extension, but is not an uncompressed or RLE compressed targa file", filename );
 	MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
-
+#endif
 	fclose( file ); // close the file
 	file = 0;
 	return( 0 );
 }
-
-#endif /* WIN32 */
 

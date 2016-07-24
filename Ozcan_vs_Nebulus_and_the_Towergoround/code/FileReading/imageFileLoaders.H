@@ -18,10 +18,10 @@
  * Include necessary headers.
  */
 
-#  ifdef WIN32
+#ifdef _WINDOWS
 #    include <windows.h>
 #    include <wingdi.h>
-#  endif /* WIN32 */
+#endif
 
 /*
  * Make this header file work with C and C++ source code...
@@ -41,7 +41,7 @@ extern "C" {
  * to avoid differences in alignment...
  */
 
-#  ifndef WIN32
+#ifndef _WINDOWS
 typedef struct                       /**** BMP file header structure ****/
     {
     unsigned short bfType;           /* Magic number for file */
@@ -90,7 +90,7 @@ typedef struct                       /**** Bitmap information structure ****/
     BITMAPINFOHEADER bmiHeader;      /* Image header */
     RGBQUAD          bmiColors[256]; /* Image colormap */
     } BITMAPINFO;
-#  endif /* !WIN32 */
+#endif /* !_WINDOWS */
 
 /*
  * Prototypes...
@@ -98,13 +98,13 @@ typedef struct                       /**** Bitmap information structure ****/
 typedef unsigned char GLubyte;
 typedef unsigned int GLuint;
 
-extern GLubyte *LoadDIBitmap(const char *filename,	unsigned __int16 &uHeight,
-													unsigned __int16 &uWidth, 
-													unsigned __int8 &uBytesPerPixel );
+extern GLubyte *LoadDIBitmap(const char *filename, unsigned short &uHeight,
+                                                    unsigned short &uWidth,
+													unsigned char &uBytesPerPixel );
 // this method loads a RLE compressed or uncompressed targa file
-extern GLubyte* LoadTarga(const char *filename, unsigned __int16 &uHeight,
-												unsigned __int16 &uWidth, 
-												unsigned __int8 &uBytesPerPixel );
+extern GLubyte* LoadTarga(const char *filename, unsigned short &uHeight,
+												unsigned short &uWidth,
+												unsigned char &uBytesPerPixel );
 
 #  ifdef __cplusplus
 }
