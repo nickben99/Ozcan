@@ -58,7 +58,8 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
         return (0);
     }
 
-    if (header.bfType != 'MB')	/* Check for BM reversed... */
+    unsigned short bmReversed = ('M' << 8) | 'B';
+    if (header.bfType != bmReversed)	/* Check for BM reversed... */
     {
         /* Not a bitmap file - return 0... */
 #ifdef _WINDOWS
