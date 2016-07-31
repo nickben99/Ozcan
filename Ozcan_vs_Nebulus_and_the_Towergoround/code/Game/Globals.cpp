@@ -2,8 +2,10 @@
 
 // ---- header files -----
 #include "Globals.h"
+#ifdef _WINDOWS
 #include "Game/CMainMenu.h"
 #include "Game/main.h"
+#endif
 // -----------------------
 
 Globals& Globals::Instance()
@@ -14,7 +16,9 @@ Globals& Globals::Instance()
 
 Globals::~Globals()
 {
+#ifdef _WINDOWS
 	delete mpMainMenu;
+#endif
 }
 
 Globals::Globals()
@@ -22,7 +26,9 @@ Globals::Globals()
 	, windowHeight(0)
 	, gameLevel(0)
 {
+#ifdef _WINDOWS
 	mpMainMenu = new CMainMenu();
 	main = menuSystem;
 	drawMenu = 1; // used to stop the menu being drawn when the game starts
+#endif
 }

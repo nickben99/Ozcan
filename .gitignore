@@ -11,6 +11,8 @@ Ozcan_vs_Nebulus_and_the_Towergoround/Release/
 # Ozcan_vs_Nebulus_and_the_Towergoround/resources/
 # Ozcan_vs_Nebulus_and_the_Towergoround/sounds/
 
+.vscode
+
 *.sdf
 *.suo
 *.db

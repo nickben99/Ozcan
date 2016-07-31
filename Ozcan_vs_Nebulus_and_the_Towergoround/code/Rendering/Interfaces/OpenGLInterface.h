@@ -8,6 +8,8 @@
 
 #ifdef _WINDOWS
 #include "Rendering/PlatformSpecific/Windows/OpenGLWindows.h"
+#elif OSX
+#include "Rendering/PlatformSpecific/OSX/OpenGLOSX.h"
 #else
 #include "Rendering/PlatformSpecific/iOS/OpenGLiOS.h"
 #endif
@@ -22,12 +24,13 @@ class OpenGLInterface
 		{
 
 		}
-
+    
 		bool InitGL()
 		{
 			return implementation.InitGL();
 		}
 
+#ifdef _WINDOWS
 		void DestroyGL()
 		{
 			return implementation.DestroyGL();
@@ -234,6 +237,8 @@ class OpenGLInterface
 			implementation.SetViewMatrix(mat);
 		}
 #endif
+    
+#endif // _WINDOWS
 
 private:
 	OpenGLImplementation implementation;

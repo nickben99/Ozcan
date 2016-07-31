@@ -19,6 +19,9 @@
 		3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */; };
 		3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */; };
 		3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE81D3C40850005D3D0 /* texture.cpp */; };
+		3CFD2DF31D45AF690005D3D0 /* OpenGLOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DEF1D45AF690005D3D0 /* OpenGLOSX.cpp */; };
+		3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DF11D45AF690005D3D0 /* OpenGLOSXShader.cpp */; };
+		3CFD2DF71D45B20C0005D3D0 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DF51D45B20C0005D3D0 /* Globals.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +65,13 @@
 		3CFD2DE61D3C3D090005D3D0 /* imageFileLoaders.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = imageFileLoaders.H; path = code/FileReading/imageFileLoaders.H; sourceTree = "<group>"; };
 		3CFD2DE81D3C40850005D3D0 /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture.cpp; path = code/FileReading/texture.cpp; sourceTree = "<group>"; };
 		3CFD2DE91D3C40850005D3D0 /* TEXTURE.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TEXTURE.H; path = code/FileReading/TEXTURE.H; sourceTree = "<group>"; };
+		3CFD2DEE1D45AB3F0005D3D0 /* OpenGLInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLInterface.h; path = code/Rendering/Interfaces/OpenGLInterface.h; sourceTree = "<group>"; };
+		3CFD2DEF1D45AF690005D3D0 /* OpenGLOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLOSX.cpp; path = code/Rendering/PlatformSpecific/OSX/OpenGLOSX.cpp; sourceTree = "<group>"; };
+		3CFD2DF01D45AF690005D3D0 /* OpenGLOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLOSX.h; path = code/Rendering/PlatformSpecific/OSX/OpenGLOSX.h; sourceTree = "<group>"; };
+		3CFD2DF11D45AF690005D3D0 /* OpenGLOSXShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLOSXShader.cpp; path = code/Rendering/PlatformSpecific/OSX/OpenGLOSXShader.cpp; sourceTree = "<group>"; };
+		3CFD2DF21D45AF690005D3D0 /* OpenGLOSXShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLOSXShader.h; path = code/Rendering/PlatformSpecific/OSX/OpenGLOSXShader.h; sourceTree = "<group>"; };
+		3CFD2DF51D45B20C0005D3D0 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Globals.cpp; path = code/Game/Globals.cpp; sourceTree = "<group>"; };
+		3CFD2DF61D45B20C0005D3D0 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = code/Game/Globals.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +140,8 @@
 		3CC2AFDA1D3B37FA0003005B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3CFD2DF51D45B20C0005D3D0 /* Globals.cpp */,
+				3CFD2DF61D45B20C0005D3D0 /* Globals.h */,
 				3CC2AFF21D3B3F1D0003005B /* Random.cpp */,
 				3CC2AFF31D3B3F1D0003005B /* Random.h */,
 				3CC2AFEF1D3B3E2B0003005B /* defines.cpp */,
@@ -143,6 +155,8 @@
 		3CC2AFDE1D3B3AB00003005B /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
+				3CFD2DEC1D45AB040005D3D0 /* PlatformSpecific */,
+				3CFD2DEB1D45AAF70005D3D0 /* Interfaces */,
 				3CC2AFE21D3B3D680003005B /* CModel.h */,
 				3CC2AFE01D3B3B360003005B /* OpenGLInclude.h */,
 			);
@@ -175,6 +189,33 @@
 				3CFD2DE31D3C381E0005D3D0 /* CTextFileReader.h */,
 			);
 			name = FileReading;
+			sourceTree = "<group>";
+		};
+		3CFD2DEB1D45AAF70005D3D0 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3CFD2DEE1D45AB3F0005D3D0 /* OpenGLInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3CFD2DEC1D45AB040005D3D0 /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3CFD2DED1D45AB150005D3D0 /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3CFD2DED1D45AB150005D3D0 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CFD2DEF1D45AF690005D3D0 /* OpenGLOSX.cpp */,
+				3CFD2DF01D45AF690005D3D0 /* OpenGLOSX.h */,
+				3CFD2DF11D45AF690005D3D0 /* OpenGLOSXShader.cpp */,
+				3CFD2DF21D45AF690005D3D0 /* OpenGLOSXShader.h */,
+			);
+			name = OSX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CFD2DF71D45B20C0005D3D0 /* Globals.cpp in Sources */,
 				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
 				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
 				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
@@ -242,6 +284,8 @@
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
 				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
+				3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */,
+				3CFD2DF31D45AF690005D3D0 /* OpenGLOSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +323,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 					OSX,
+					_DEBUG,
+					USE_SHADERS,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -318,7 +364,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = OSX;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					OSX,
+					USE_SHADERS,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

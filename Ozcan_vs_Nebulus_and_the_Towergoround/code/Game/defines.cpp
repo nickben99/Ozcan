@@ -6,10 +6,10 @@
 //--- Header files --------------------
 #include "Game/defines.h" // the header file
 
-#ifdef _WINDOWS
-
-#include "FileReading\CTextFileReader.h"
-#include "Game\Globals.h"
+#ifdef OSX
+#include "FileReading/CTextFileReader.h"
+#include "Game/Globals.h"
+#endif
 //-------------------------------------
 
 //global variables---------------------
@@ -26,6 +26,8 @@ const char* GetDirectoryPath()
 	}
 	return pEmptyPath;
 }
+
+#ifdef _WINDOWS
 
 /*	returns true if a quadratic equation can be solved within defined limits and 
 	sets the referance parameter to the lowest root */

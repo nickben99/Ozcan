@@ -47,7 +47,9 @@
 						(highNumber+(Random::GetInst().GetRand()%((abs(loNumber-(highNumber)))+1))) :\
 						(loNumber+(Random::GetInst().GetRand()%((abs(loNumber-(highNumber)))+1)))
 
+#endif
 const char* GetDirectoryPath();
+#ifdef _WINDOWS
 
 /*	returns true if a quadratic equation can be solved within defined limits and 
 	sets the referance parameter to the lowest root */
