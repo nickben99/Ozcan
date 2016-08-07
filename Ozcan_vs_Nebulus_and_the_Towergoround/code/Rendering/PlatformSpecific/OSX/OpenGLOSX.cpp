@@ -20,8 +20,6 @@
 const int InvalidLocation = -1;
 
 OpenGLImplementation::OpenGLImplementation()
-#ifdef _WINDOWS
-#ifdef USE_SHADERS
 	: useTextureSubFunctionLocation(0)
 	, noTextureSubFunctionLocation(0)
 
@@ -47,8 +45,6 @@ OpenGLImplementation::OpenGLImplementation()
 	, textureSubRoutineUniform(0)
 	, colorSubRoutineUniform(0)
 	, lightingSubRoutineUniform(0)
-#endif
-#endif
 {
 
 }
@@ -56,9 +52,6 @@ OpenGLImplementation::OpenGLImplementation()
 OpenGLImplementation::~OpenGLImplementation()
 {
 }
-
-#ifdef _WINDOWS
-#ifdef USE_SHADERS
 
 bool OpenGLImplementation::InitGL()									
 {
@@ -124,6 +117,7 @@ bool OpenGLImplementation::InitGL()
 
 	shader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
 	shader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
+
 	return true;
 }
 
@@ -132,6 +126,7 @@ void OpenGLImplementation::DestroyGL()
 	shader.DestroyProgram();
 }
 
+#ifdef _WINDOWS
 bool OpenGLImplementation::HasBeenInitialized()
 {
 	return hasBeenInitialized;
@@ -152,7 +147,7 @@ int OpenGLImplementation::GetShaderProgram()
 {
 	return shader.GetShaderProgram();
 }
-
+#endif // _WINDOWS
 int OpenGLImplementation::GetUniformLocation(const char* pUniformVariableName)
 {
 	return shader.GetUniformLocation(pUniformVariableName);
@@ -182,7 +177,7 @@ void OpenGLImplementation::SetUniformFloat(int location, float newValue)
 {
 	shader.SetUniformFloat(location, newValue);
 }
-
+#ifdef _WINDOWS
 void OpenGLImplementation::SetUniformBool(int location, bool newValue)
 {
 	shader.SetUniformBool(location, newValue);
@@ -337,51 +332,17 @@ void OpenGLImplementation::SetEmissiveColor(const CVector4& color)
 {
 	SetUniformVector4(emissiveColorLocation, color);
 }
-
+#endif // _WINDOWS
 void OpenGLImplementation::SetShininess(float val)
 {
 	SetUniformFloat(shininessLocation, val);
 }
-
+#ifdef _WINDOWS
 void OpenGLImplementation::ShowSpecularHighlights(bool show)
 {
 	SetUniformBool(showSpecularHighlightLocation, show);
 }
-
-#else
-// lighting and rendering context set-up
-bool OpenGLImplementation::InitGL()									
-{
-	// Light values and coordinates
-	GLfloat  ambientLight[] = {0.5f, 0.5f, 0.5f, 1.0f};
-	GLfloat  diffuseLight[] = {1.2f, 1.2f, 1.2f, 1.0f};
-
-	// clear window to white
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f );
-
-	glEnable(GL_DEPTH_TEST);	// hidden surface removal
-	glFrontFace(GL_CCW);		// counter-clockwise wound poygons can be seen
-	// back face culling (don't draw backfaces)
-	glEnable(GL_CULL_FACE); 
-
-	// enable lighting
-	glEnable(GL_LIGHTING);
-
-	// setup light 0
-	glLightfv(GL_LIGHT0,GL_AMBIENT, ambientLight);
-	glLightfv(GL_LIGHT0,GL_DIFFUSE, diffuseLight);
-	// turn on the light
-	glEnable(GL_LIGHT0);
-
-	glShadeModel(GL_SMOOTH); // guroud shading
-	glClearDepth(1.0f);	// depth buffer setup
-	glDepthFunc(GL_LEQUAL); // the type of depth testing to do
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// perspective calculations
-
-	return true;
-}
-#endif
-
+#endif //_WINDOWS
 //called each time the scene is resized (and on initialisation)
 void OpenGLImplementation::ReSizeGLScene(int width, int height)		
 {
@@ -396,7 +357,6 @@ void OpenGLImplementation::ReSizeGLScene(int width, int height)
 
 void OpenGLImplementation::GLEnable(unsigned int identifier)
 {
-#ifdef USE_SHADERS
 	switch (identifier)
 	{
 		case GL_LIGHTING:
@@ -406,14 +366,10 @@ void OpenGLImplementation::GLEnable(unsigned int identifier)
 			glEnable(identifier);
 			break;
 	}
-#else
-	glEnable(identifier);
-#endif
 }
 
 void OpenGLImplementation::GLDisable(unsigned int identifier)
 {
-#ifdef USE_SHADERS
 	switch (identifier)
 	{
 		case GL_LIGHTING:
@@ -423,9 +379,6 @@ void OpenGLImplementation::GLDisable(unsigned int identifier)
 			glDisable(identifier);
 			break;
 	}
-#else
-	glDisable(identifier);
-#endif
 }
 
 void OpenGLImplementation::GLMaterial(unsigned int identifier, float value)
@@ -444,7 +397,7 @@ void OpenGLImplementation::GLMaterial(unsigned int identifier, float value)
 	glMaterialf( GL_FRONT, identifier, value);
 #endif
 }
-
+#ifdef _WINDOWS
 void OpenGLImplementation::GLMaterial(unsigned int identifier, float* valueArrayPointer)
 {
 #ifdef USE_SHADERS

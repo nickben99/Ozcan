@@ -30,7 +30,6 @@ class OpenGLInterface
 			return implementation.InitGL();
 		}
 
-#ifdef _WINDOWS
 		void DestroyGL()
 		{
 			return implementation.DestroyGL();
@@ -55,13 +54,12 @@ class OpenGLInterface
 		{
 			implementation.GLMaterial(identifier, value);
 		}
-
+#ifdef _WINDOWS
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer)
 		{
 			implementation.GLMaterial(identifier, valueArrayPointer);
 		}
 
-#ifdef USE_SHADERS
 		void ShowSpecularHighlights(bool show)
 		{
 			implementation.ShowSpecularHighlights(show);
@@ -236,7 +234,6 @@ class OpenGLInterface
 		{
 			implementation.SetViewMatrix(mat);
 		}
-#endif
     
 #endif // _WINDOWS
 

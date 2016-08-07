@@ -27,31 +27,31 @@ class OpenGLImplementation
 	public:
 		OpenGLImplementation();
 		~OpenGLImplementation();
-#ifdef _WINDOWS
 
 		bool InitGL();
 		void DestroyGL();
-		void ReSizeGLScene(int width, int height);
-
+   
+        void ReSizeGLScene(int width, int height);
 		void GLEnable(unsigned int identifier);
 		void GLDisable(unsigned int identifier);
 
 		void GLMaterial(unsigned int identifier, float value);
+#ifdef _WINDOWS
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer);
 
-#ifdef USE_SHADERS
 		bool HasBeenInitialized();
 		void UseProgram();
 		void StopUsingProgram();
 		int GetShaderProgram();
-
+#endif // _WINDOWS
 		int GetUniformLocation(const char* pUniformVariableName);
 		unsigned int GetSubroutineUniformIndex(const char* pSubroutineUniformName, unsigned int shaderType);		
 		int GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType);
 		int GetAttribLocation(const char* pUniformVariableName);
-
 		void SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType);
+    
 		void SetUniformFloat(int location, float newValue);
+#ifdef _WINDOWS    
 		void SetUniformBool(int location, bool newValue);
 		void SetUniformInt(int location, int newValue);
 		void SetUniformMatrix(int location, const CMatrix& mat);
@@ -101,13 +101,16 @@ class OpenGLImplementation
 		void SetDiffuseColor(const CVector& color);
 		void SetSpecularColor(const CVector& color);
 		void SetEmissiveColor(const CVector4& color);
+#endif
 		void SetShininess(float val);
+#ifdef _WINDOWS
 		void ShowSpecularHighlights(bool show);
 
 	private:
 		bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 		bool CompileShaders();
 
+#endif // _WINDOWS
 		OpenGLShader shader;
 
 		unsigned int useTextureSubFunctionLocation;
@@ -136,8 +139,6 @@ class OpenGLImplementation
 		int textureSubRoutineUniform;
 		int colorSubRoutineUniform;
 		int lightingSubRoutineUniform;
-#endif // USE_SHADERS
-#endif // _WINDOWS
 };
 
 #endif
