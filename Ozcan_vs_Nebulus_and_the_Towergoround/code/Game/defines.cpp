@@ -6,10 +6,9 @@
 //--- Header files --------------------
 #include "Game/defines.h" // the header file
 
-#ifdef OSX
 #include "FileReading/CTextFileReader.h"
 #include "Game/Globals.h"
-#endif
+
 //-------------------------------------
 
 //global variables---------------------
