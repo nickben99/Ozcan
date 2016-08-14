@@ -36,9 +36,8 @@ class OpenGLImplementation
 		void GLDisable(unsigned int identifier);
 
 		void GLMaterial(unsigned int identifier, float value);
-#ifdef _WINDOWS
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer);
-
+#ifdef _WINDOWS
 		bool HasBeenInitialized();
 		void UseProgram();
 		void StopUsingProgram();
@@ -55,9 +54,10 @@ class OpenGLImplementation
 		void SetUniformBool(int location, bool newValue);
 		void SetUniformInt(int location, int newValue);
 		void SetUniformMatrix(int location, const CMatrix& mat);
+#endif // _WINDOWS
 		void SetUniformVector3(int location, const CVector& vect);
 		void SetUniformVector4(int location, const CVector4& vect);
-
+#ifdef _WINDOWS
 		template<typename T> unsigned int CreateVertexBufferObject(T* pArray, int numElements, unsigned int bufferType, bool isDynamic = false)
 		{
 			GLuint vertexBuffer = 0;
@@ -96,12 +96,11 @@ class OpenGLImplementation
 		void SetProjectionMatrix(const CMatrix& mat);
 		void SetModelMatrix(const CMatrix& mat);
 		void SetViewMatrix(const CMatrix& mat);
-
+#endif
 		void SetAmbientColor(const CVector& color);
 		void SetDiffuseColor(const CVector& color);
 		void SetSpecularColor(const CVector& color);
 		void SetEmissiveColor(const CVector4& color);
-#endif
 		void SetShininess(float val);
 #ifdef _WINDOWS
 		void ShowSpecularHighlights(bool show);

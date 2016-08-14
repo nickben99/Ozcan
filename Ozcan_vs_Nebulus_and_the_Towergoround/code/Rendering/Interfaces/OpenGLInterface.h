@@ -54,12 +54,12 @@ class OpenGLInterface
 		{
 			implementation.GLMaterial(identifier, value);
 		}
-#ifdef _WINDOWS
+
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer)
 		{
 			implementation.GLMaterial(identifier, valueArrayPointer);
 		}
-
+#ifdef _WINDOWS
 		void ShowSpecularHighlights(bool show)
 		{
 			implementation.ShowSpecularHighlights(show);
@@ -144,12 +144,12 @@ class OpenGLInterface
 		{
 			implementation.SetUniformMatrix(location, mat);
 		}
-
+#endif // _WINDOWS
 		void SetUniformVector3(int location, const CVector& vect)
 		{
 			implementation.SetUniformVector3(location, vect);
 		}
-
+#ifdef _WINDOWS
 		void SetUniformVector4(int location, const CVector4& vect)
 		{
 			implementation.SetUniformVector4(location, vect);

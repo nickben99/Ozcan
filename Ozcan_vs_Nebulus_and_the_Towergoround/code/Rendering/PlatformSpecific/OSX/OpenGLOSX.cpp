@@ -192,7 +192,7 @@ void OpenGLImplementation::SetUniformMatrix(int location, const CMatrix& mat)
 {
 	shader.SetUniformMatrix(location, mat);
 }
-
+#endif // _WINDOWS
 void OpenGLImplementation::SetUniformVector3(int location, const CVector& vect)
 {
 	shader.SetUniformVector3(location, vect);
@@ -202,7 +202,7 @@ void OpenGLImplementation::SetUniformVector4(int location, const CVector4& vect)
 {
 	shader.SetUniformVector4(location, vect);
 }
-
+#ifdef _WINDOWS
 void OpenGLImplementation::UseTextureDefault(int textureIndex)
 {
 	UseTexture(0, textureIndex, textureSamplerLocation);
@@ -312,7 +312,7 @@ void OpenGLImplementation::SetViewMatrix(const CMatrix& mat)
 {
 	SetUniformMatrix(viewMatrixLocation, mat);
 }
-
+#endif // _WINDOWS
 void OpenGLImplementation::SetAmbientColor(const CVector& color)
 {
 	SetUniformVector3(ambientColorLocation, color);
@@ -332,7 +332,7 @@ void OpenGLImplementation::SetEmissiveColor(const CVector4& color)
 {
 	SetUniformVector4(emissiveColorLocation, color);
 }
-#endif // _WINDOWS
+
 void OpenGLImplementation::SetShininess(float val)
 {
 	SetUniformFloat(shininessLocation, val);
@@ -397,7 +397,7 @@ void OpenGLImplementation::GLMaterial(unsigned int identifier, float value)
 	glMaterialf( GL_FRONT, identifier, value);
 #endif
 }
-#ifdef _WINDOWS
+
 void OpenGLImplementation::GLMaterial(unsigned int identifier, float* valueArrayPointer)
 {
 #ifdef USE_SHADERS
@@ -423,7 +423,5 @@ void OpenGLImplementation::GLMaterial(unsigned int identifier, float* valueArray
 	glMaterialfv( GL_FRONT, identifier, valueArrayPointer);
 #endif
 }
-
-#endif // _WINDOWS
 
 #endif
