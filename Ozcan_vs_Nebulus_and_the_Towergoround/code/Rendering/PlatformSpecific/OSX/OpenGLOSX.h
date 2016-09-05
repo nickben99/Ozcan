@@ -37,12 +37,12 @@ class OpenGLImplementation
 
 		void GLMaterial(unsigned int identifier, float value);
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer);
-#ifdef _WINDOWS
+
 		bool HasBeenInitialized();
 		void UseProgram();
 		void StopUsingProgram();
 		int GetShaderProgram();
-#endif // _WINDOWS
+
 		int GetUniformLocation(const char* pUniformVariableName);
 		unsigned int GetSubroutineUniformIndex(const char* pSubroutineUniformName, unsigned int shaderType);		
 		int GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType);
@@ -50,14 +50,13 @@ class OpenGLImplementation
 		void SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType);
     
 		void SetUniformFloat(int location, float newValue);
-#ifdef _WINDOWS    
 		void SetUniformBool(int location, bool newValue);
 		void SetUniformInt(int location, int newValue);
 		void SetUniformMatrix(int location, const CMatrix& mat);
-#endif // _WINDOWS
+
 		void SetUniformVector3(int location, const CVector& vect);
 		void SetUniformVector4(int location, const CVector4& vect);
-#ifdef _WINDOWS
+//#ifdef _WINDOWS
 		template<typename T> unsigned int CreateVertexBufferObject(T* pArray, int numElements, unsigned int bufferType, bool isDynamic = false)
 		{
 			GLuint vertexBuffer = 0;
@@ -96,20 +95,19 @@ class OpenGLImplementation
 		void SetProjectionMatrix(const CMatrix& mat);
 		void SetModelMatrix(const CMatrix& mat);
 		void SetViewMatrix(const CMatrix& mat);
-#endif
+//#endif
 		void SetAmbientColor(const CVector& color);
 		void SetDiffuseColor(const CVector& color);
 		void SetSpecularColor(const CVector& color);
 		void SetEmissiveColor(const CVector4& color);
 		void SetShininess(float val);
-#ifdef _WINDOWS
 		void ShowSpecularHighlights(bool show);
-
+//#ifdef _WINDOWS
 	private:
 		bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 		bool CompileShaders();
 
-#endif // _WINDOWS
+//#endif // _WINDOWS
 		OpenGLShader shader;
 
 		unsigned int useTextureSubFunctionLocation;

@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  osxSetup.cpp
 //  Ozcan vs Nebulus and the Towergoround
 //
 //  Created by Benjamin Nickson on 7/9/16.
@@ -17,7 +17,7 @@ void display()
     
     glBegin(GL_TRIANGLES); //Begin triangle coordinates
     
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor3f(0.0f, 1.0f, 0.0f);
     //Triangle
     glVertex2f(0.0f, 0.5f);
     glVertex2f(-0.5f, -0.5f);

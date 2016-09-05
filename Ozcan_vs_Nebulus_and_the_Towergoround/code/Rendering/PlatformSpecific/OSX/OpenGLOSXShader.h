@@ -34,8 +34,6 @@ class OpenGLShader
 	public:
 		OpenGLShader();
 		~OpenGLShader();
-    
-//#ifdef _WINDOWS
 
 		int GetShaderProgram();
 
@@ -58,9 +56,7 @@ class OpenGLShader
 
 		void CacheSubroutineUniforms();
 
-//#endif // _WINDOWS
 		static int CheckGLError(const char *file, int line);
-//#ifdef _WINDOWS
 
 	private:
 		static bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType, GLuint& shaderObj);

@@ -8,6 +8,8 @@
 
 #ifdef _WINDOWS
 #include "Audio/PlatformSpecific/Windows/SoundWindows.h"
+#elif OSX
+#include "Audio/PlatformSpecific/OSX/SoundOSX.h"
 #else
 #include "Audio/PlatformSpecific/iOS/SoundiOS.h"
 #endif

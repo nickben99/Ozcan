@@ -3,6 +3,8 @@
 #ifndef _ReplayManager_H_
 #define _ReplayManager_H_
 
+#ifdef _WINDOWS
+
 //--- System Includes -----------
 #include <vector>
 #include <map>
@@ -19,8 +21,11 @@
 //--- defines -------------------
 //-------------------------------
 
+#endif //_WINDOWS
+
 class ReplayManager
 {
+#ifdef _WINDOWS
 	public:
 		enum eReplayStyle
 		{
@@ -252,6 +257,8 @@ class ReplayManager
 			}
 		}
 #endif
+    
+#endif //_WINDOWS
 };
 
 #endif

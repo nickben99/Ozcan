@@ -126,7 +126,6 @@ void OpenGLImplementation::DestroyGL()
 	shader.DestroyProgram();
 }
 
-#ifdef _WINDOWS
 bool OpenGLImplementation::HasBeenInitialized()
 {
 	return hasBeenInitialized;
@@ -147,7 +146,7 @@ int OpenGLImplementation::GetShaderProgram()
 {
 	return shader.GetShaderProgram();
 }
-#endif // _WINDOWS
+
 int OpenGLImplementation::GetUniformLocation(const char* pUniformVariableName)
 {
 	return shader.GetUniformLocation(pUniformVariableName);
@@ -177,7 +176,7 @@ void OpenGLImplementation::SetUniformFloat(int location, float newValue)
 {
 	shader.SetUniformFloat(location, newValue);
 }
-#ifdef _WINDOWS
+
 void OpenGLImplementation::SetUniformBool(int location, bool newValue)
 {
 	shader.SetUniformBool(location, newValue);
@@ -192,7 +191,7 @@ void OpenGLImplementation::SetUniformMatrix(int location, const CMatrix& mat)
 {
 	shader.SetUniformMatrix(location, mat);
 }
-#endif // _WINDOWS
+
 void OpenGLImplementation::SetUniformVector3(int location, const CVector& vect)
 {
 	shader.SetUniformVector3(location, vect);
@@ -202,7 +201,7 @@ void OpenGLImplementation::SetUniformVector4(int location, const CVector4& vect)
 {
 	shader.SetUniformVector4(location, vect);
 }
-#ifdef _WINDOWS
+//#ifdef _WINDOWS
 void OpenGLImplementation::UseTextureDefault(int textureIndex)
 {
 	UseTexture(0, textureIndex, textureSamplerLocation);
@@ -312,7 +311,7 @@ void OpenGLImplementation::SetViewMatrix(const CMatrix& mat)
 {
 	SetUniformMatrix(viewMatrixLocation, mat);
 }
-#endif // _WINDOWS
+//#endif // _WINDOWS
 void OpenGLImplementation::SetAmbientColor(const CVector& color)
 {
 	SetUniformVector3(ambientColorLocation, color);
@@ -337,12 +336,12 @@ void OpenGLImplementation::SetShininess(float val)
 {
 	SetUniformFloat(shininessLocation, val);
 }
-#ifdef _WINDOWS
+
 void OpenGLImplementation::ShowSpecularHighlights(bool show)
 {
 	SetUniformBool(showSpecularHighlightLocation, show);
 }
-#endif //_WINDOWS
+
 //called each time the scene is resized (and on initialisation)
 void OpenGLImplementation::ReSizeGLScene(int width, int height)		
 {

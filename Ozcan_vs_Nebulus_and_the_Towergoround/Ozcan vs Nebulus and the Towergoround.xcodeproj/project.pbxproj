@@ -10,6 +10,9 @@
 		3CA5ED8C1D33108E0098F0FA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */; };
 		3CA5ED8E1D3310FD0098F0FA /* libGLEW.1.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */; };
 		3CA5ED901D3311120098F0FA /* libglfw3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */; };
+		3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EB81D7D21B800A1CB1B /* SoundOSX.cpp */; };
+		3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EC11D7D237700A1CB1B /* CKeyMapOSX.cpp */; };
+		3CB28EC61D7D248F00A1CB1B /* ReplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */; };
 		3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFD61D3B36060003005B /* osxSetup.cpp */; };
 		3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE51D3B3E010003005B /* CMatrix.cpp */; };
 		3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */; };
@@ -41,6 +44,15 @@
 		3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.13.0.dylib; path = ../../../../../usr/local/Cellar/glew/1.13.0/lib/libGLEW.1.13.0.dylib; sourceTree = "<group>"; };
 		3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+		3CB28EB71D7D207300A1CB1B /* SoundInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundInterface.h; path = code/Audio/Interfaces/SoundInterface.h; sourceTree = "<group>"; };
+		3CB28EB81D7D21B800A1CB1B /* SoundOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundOSX.cpp; path = code/Audio/PlatformSpecific/OSX/SoundOSX.cpp; sourceTree = "<group>"; };
+		3CB28EB91D7D21B800A1CB1B /* SoundOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundOSX.h; path = code/Audio/PlatformSpecific/OSX/SoundOSX.h; sourceTree = "<group>"; };
+		3CB28EBF1D7D22DA00A1CB1B /* CKeyCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKeyCode.h; path = code/Input/CKeyCode.h; sourceTree = "<group>"; };
+		3CB28EC01D7D22F200A1CB1B /* CKeyMapInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKeyMapInterface.h; path = code/Input/Interfaces/CKeyMapInterface.h; sourceTree = "<group>"; };
+		3CB28EC11D7D237700A1CB1B /* CKeyMapOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CKeyMapOSX.cpp; path = code/Input/PlatformSpecific/OSX/CKeyMapOSX.cpp; sourceTree = "<group>"; };
+		3CB28EC21D7D237700A1CB1B /* CKeyMapOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKeyMapOSX.h; path = code/Input/PlatformSpecific/OSX/CKeyMapOSX.h; sourceTree = "<group>"; };
+		3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReplayManager.cpp; path = code/Game/ReplayManager.cpp; sourceTree = "<group>"; };
+		3CB28EC51D7D248F00A1CB1B /* ReplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReplayManager.h; path = code/Game/ReplayManager.h; sourceTree = "<group>"; };
 		3CC2AFD61D3B36060003005B /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/OSX/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
 		3CC2AFD91D3B369E0003005B /* SoundsEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundsEnum.h; path = code/Audio/SoundsEnum.h; sourceTree = "<group>"; };
 		3CC2AFDD1D3B38250003005B /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = code/Game/main.h; sourceTree = "<group>"; };
@@ -91,16 +103,17 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
-				3CFD2DE11D3C38050005D3D0 /* FileReading */,
-				3CC2AFE31D3B3DE60003005B /* Math */,
-				3CC2AFDE1D3B3AB00003005B /* Rendering */,
-				3CC2AFDA1D3B37FA0003005B /* Game */,
 				3CC2AFD81D3B365A0003005B /* Audio */,
-				3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */,
+				3CFD2DE11D3C38050005D3D0 /* FileReading */,
+				3CC2AFDA1D3B37FA0003005B /* Game */,
+				3CB28EBB1D7D228B00A1CB1B /* Input */,
 				3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */,
+				3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */,
+				3CC2AFE31D3B3DE60003005B /* Math */,
 				3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */,
 				3C6E0DC21D330F060066B870 /* PlatformSetup */,
 				3C6E0DC11D330F060066B870 /* Products */,
+				3CC2AFDE1D3B3AB00003005B /* Rendering */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +134,66 @@
 			path = "Ozcan vs Nebulus and the Towergoround";
 			sourceTree = "<group>";
 		};
+		3CB28EB41D7D201000A1CB1B /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EB51D7D201E00A1CB1B /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3CB28EB51D7D201E00A1CB1B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EB81D7D21B800A1CB1B /* SoundOSX.cpp */,
+				3CB28EB91D7D21B800A1CB1B /* SoundOSX.h */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		3CB28EB61D7D202900A1CB1B /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EB71D7D207300A1CB1B /* SoundInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3CB28EBB1D7D228B00A1CB1B /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EBF1D7D22DA00A1CB1B /* CKeyCode.h */,
+				3CB28EBD1D7D22A900A1CB1B /* PlatformSpecific */,
+				3CB28EBC1D7D229D00A1CB1B /* Interfaces */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		3CB28EBC1D7D229D00A1CB1B /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EC01D7D22F200A1CB1B /* CKeyMapInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3CB28EBD1D7D22A900A1CB1B /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EBE1D7D22B600A1CB1B /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3CB28EBE1D7D22B600A1CB1B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EC11D7D237700A1CB1B /* CKeyMapOSX.cpp */,
+				3CB28EC21D7D237700A1CB1B /* CKeyMapOSX.h */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
 		3CC2AFD31D3B34FF0003005B /* OSX */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +205,8 @@
 		3CC2AFD81D3B365A0003005B /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				3CB28EB61D7D202900A1CB1B /* Interfaces */,
+				3CB28EB41D7D201000A1CB1B /* PlatformSpecific */,
 				3CC2AFD91D3B369E0003005B /* SoundsEnum.h */,
 			);
 			name = Audio;
@@ -140,14 +215,16 @@
 		3CC2AFDA1D3B37FA0003005B /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				3CFD2DF51D45B20C0005D3D0 /* Globals.cpp */,
-				3CFD2DF61D45B20C0005D3D0 /* Globals.h */,
-				3CC2AFF21D3B3F1D0003005B /* Random.cpp */,
-				3CC2AFF31D3B3F1D0003005B /* Random.h */,
+				3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */,
+				3CB28EC51D7D248F00A1CB1B /* ReplayManager.h */,
+				3CC2AFE11D3B3C200003005B /* CSpriteEngine.h */,
 				3CC2AFEF1D3B3E2B0003005B /* defines.cpp */,
 				3CC2AFF01D3B3E2B0003005B /* defines.h */,
-				3CC2AFE11D3B3C200003005B /* CSpriteEngine.h */,
+				3CFD2DF51D45B20C0005D3D0 /* Globals.cpp */,
+				3CFD2DF61D45B20C0005D3D0 /* Globals.h */,
 				3CC2AFDD1D3B38250003005B /* main.h */,
+				3CC2AFF21D3B3F1D0003005B /* Random.cpp */,
+				3CC2AFF31D3B3F1D0003005B /* Random.h */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -155,10 +232,10 @@
 		3CC2AFDE1D3B3AB00003005B /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
-				3CFD2DEC1D45AB040005D3D0 /* PlatformSpecific */,
-				3CFD2DEB1D45AAF70005D3D0 /* Interfaces */,
 				3CC2AFE21D3B3D680003005B /* CModel.h */,
+				3CFD2DEB1D45AAF70005D3D0 /* Interfaces */,
 				3CC2AFE01D3B3B360003005B /* OpenGLInclude.h */,
+				3CFD2DEC1D45AB040005D3D0 /* PlatformSpecific */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -280,11 +357,14 @@
 				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
 				3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */,
 				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
+				3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */,
 				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
+				3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
 				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
 				3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */,
+				3CB28EC61D7D248F00A1CB1B /* ReplayManager.cpp in Sources */,
 				3CFD2DF31D45AF690005D3D0 /* OpenGLOSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

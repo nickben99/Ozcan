@@ -1,20 +1,18 @@
 // CKeyMap.cpp - keymap implementation class
 
-#ifndef _WINDOWS
+#ifdef OSX
 
 //--- System includes ---------------
 //----------------------------------
 
 //--- Header files ---------
-#include "CKeyMapiOS.h" // the header file for this class
-#define DIRECTINPUT_VERSION 0x0800
+#include "CKeyMapOSX.h" // the header file for this class
 #include "Game/ReplayManager.h"
-#include "Debug/debug.h"
 //--------------------------
 
 CKeyMap::CKeyMap() // constructor
 {
-	mpReplay = NULL;
+	mpReplay = nullptr;
 }
 
 CKeyMap::~CKeyMap() //destructor

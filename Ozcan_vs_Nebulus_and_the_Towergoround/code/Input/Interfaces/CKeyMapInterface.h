@@ -8,6 +8,8 @@
 
 #ifdef _WINDOWS
 #include "Input/PlatformSpecific/Windows/CKeyMapWindows.h"
+#elif OSX
+#include "Input/PlatformSpecific/OSX/CKeyMapOSX.h"
 #else
 #include "Input/PlatformSpecific/iOS/CKeyMapiOS.h"
 #endif

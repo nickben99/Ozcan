@@ -1,12 +1,17 @@
 // ReplayManager.cpp
 
+#ifdef _WINDOWS
+
 //--- System includes --------------
 #include <algorithm>
 #include <assert.h>
 //----------------------------------
 
+#endif //_WINDOWS
+
 //--- Header files ---------
 #include "ReplayManager.h"
+#ifdef _WINDOWS
 #include "Random.h"
 #include "CLevel.h"
 #include "Game/Globals.h"
@@ -369,5 +374,7 @@ void ReplayManager::QuaternionResult(const CQuaternion& res)
 	CheckResult(res, frameInput[frameInput.size()-1].quaternions, frameInput[frameNumber].quaternions, 
 				frameInput[frameNumber].quaternionsReadbackCount); 
 }
+
+#endif //_WINDOWS
 
 #endif
