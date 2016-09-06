@@ -13,6 +13,11 @@
 		3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EB81D7D21B800A1CB1B /* SoundOSX.cpp */; };
 		3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EC11D7D237700A1CB1B /* CKeyMapOSX.cpp */; };
 		3CB28EC61D7D248F00A1CB1B /* ReplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */; };
+		3CB28ED21D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28ECE1D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp */; };
+		3CB28ED31D7E6CD700A1CB1B /* CTimerOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28ED01D7E6CD700A1CB1B /* CTimerOSX.cpp */; };
+		3CB28EDD1D7E708800A1CB1B /* DebugMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28ED91D7E708800A1CB1B /* DebugMenu.cpp */; };
+		3CB28EDE1D7E708800A1CB1B /* DebugRendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EDB1D7E708800A1CB1B /* DebugRendering.cpp */; };
+		3CB28EE11D7E70FF00A1CB1B /* DebugOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EDF1D7E70FF00A1CB1B /* DebugOSX.cpp */; };
 		3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFD61D3B36060003005B /* osxSetup.cpp */; };
 		3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE51D3B3E010003005B /* CMatrix.cpp */; };
 		3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */; };
@@ -53,6 +58,19 @@
 		3CB28EC21D7D237700A1CB1B /* CKeyMapOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKeyMapOSX.h; path = code/Input/PlatformSpecific/OSX/CKeyMapOSX.h; sourceTree = "<group>"; };
 		3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReplayManager.cpp; path = code/Game/ReplayManager.cpp; sourceTree = "<group>"; };
 		3CB28EC51D7D248F00A1CB1B /* ReplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReplayManager.h; path = code/Game/ReplayManager.h; sourceTree = "<group>"; };
+		3CB28ECC1D7E6C3700A1CB1B /* CHighPrecisionTimerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHighPrecisionTimerInterface.h; path = code/Time/Interfaces/CHighPrecisionTimerInterface.h; sourceTree = "<group>"; };
+		3CB28ECD1D7E6C3700A1CB1B /* CTimerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTimerInterface.h; path = code/Time/Interfaces/CTimerInterface.h; sourceTree = "<group>"; };
+		3CB28ECE1D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CHighPrecisionTimerOSX.cpp; path = code/Time/PlatformSpecific/OSX/CHighPrecisionTimerOSX.cpp; sourceTree = "<group>"; };
+		3CB28ECF1D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHighPrecisionTimerOSX.h; path = code/Time/PlatformSpecific/OSX/CHighPrecisionTimerOSX.h; sourceTree = "<group>"; };
+		3CB28ED01D7E6CD700A1CB1B /* CTimerOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTimerOSX.cpp; path = code/Time/PlatformSpecific/OSX/CTimerOSX.cpp; sourceTree = "<group>"; };
+		3CB28ED11D7E6CD700A1CB1B /* CTimerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTimerOSX.h; path = code/Time/PlatformSpecific/OSX/CTimerOSX.h; sourceTree = "<group>"; };
+		3CB28ED81D7E707500A1CB1B /* DebugInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugInterface.h; path = code/Debug/Interfaces/DebugInterface.h; sourceTree = "<group>"; };
+		3CB28ED91D7E708800A1CB1B /* DebugMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugMenu.cpp; path = code/Debug/DebugMenu.cpp; sourceTree = "<group>"; };
+		3CB28EDA1D7E708800A1CB1B /* DebugMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugMenu.h; path = code/Debug/DebugMenu.h; sourceTree = "<group>"; };
+		3CB28EDB1D7E708800A1CB1B /* DebugRendering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugRendering.cpp; path = code/Debug/DebugRendering.cpp; sourceTree = "<group>"; };
+		3CB28EDC1D7E708800A1CB1B /* DebugRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugRendering.h; path = code/Debug/DebugRendering.h; sourceTree = "<group>"; };
+		3CB28EDF1D7E70FF00A1CB1B /* DebugOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugOSX.cpp; path = code/Debug/PlatformSpecific/OSX/DebugOSX.cpp; sourceTree = "<group>"; };
+		3CB28EE01D7E70FF00A1CB1B /* DebugOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugOSX.h; path = code/Debug/PlatformSpecific/OSX/DebugOSX.h; sourceTree = "<group>"; };
 		3CC2AFD61D3B36060003005B /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/OSX/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
 		3CC2AFD91D3B369E0003005B /* SoundsEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundsEnum.h; path = code/Audio/SoundsEnum.h; sourceTree = "<group>"; };
 		3CC2AFDD1D3B38250003005B /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = code/Game/main.h; sourceTree = "<group>"; };
@@ -103,6 +121,7 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3CB28ED41D7E700500A1CB1B /* Debug */,
 				3CC2AFD81D3B365A0003005B /* Audio */,
 				3CFD2DE11D3C38050005D3D0 /* FileReading */,
 				3CC2AFDA1D3B37FA0003005B /* Game */,
@@ -114,6 +133,7 @@
 				3C6E0DC21D330F060066B870 /* PlatformSetup */,
 				3C6E0DC11D330F060066B870 /* Products */,
 				3CC2AFDE1D3B3AB00003005B /* Rendering */,
+				3CB28EC81D7E6BD500A1CB1B /* Time */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,6 +210,81 @@
 			children = (
 				3CB28EC11D7D237700A1CB1B /* CKeyMapOSX.cpp */,
 				3CB28EC21D7D237700A1CB1B /* CKeyMapOSX.h */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		3CB28EC81D7E6BD500A1CB1B /* Time */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EC91D7E6BE500A1CB1B /* Interfaces */,
+				3CB28ECA1D7E6BF400A1CB1B /* PlatformSpecific */,
+			);
+			name = Time;
+			sourceTree = "<group>";
+		};
+		3CB28EC91D7E6BE500A1CB1B /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ECC1D7E6C3700A1CB1B /* CHighPrecisionTimerInterface.h */,
+				3CB28ECD1D7E6C3700A1CB1B /* CTimerInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3CB28ECA1D7E6BF400A1CB1B /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ECB1D7E6C0200A1CB1B /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3CB28ECB1D7E6C0200A1CB1B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ECE1D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp */,
+				3CB28ECF1D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.h */,
+				3CB28ED01D7E6CD700A1CB1B /* CTimerOSX.cpp */,
+				3CB28ED11D7E6CD700A1CB1B /* CTimerOSX.h */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		3CB28ED41D7E700500A1CB1B /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ED91D7E708800A1CB1B /* DebugMenu.cpp */,
+				3CB28EDA1D7E708800A1CB1B /* DebugMenu.h */,
+				3CB28EDB1D7E708800A1CB1B /* DebugRendering.cpp */,
+				3CB28EDC1D7E708800A1CB1B /* DebugRendering.h */,
+				3CB28ED61D7E701E00A1CB1B /* PlatformSpecific */,
+				3CB28ED51D7E701200A1CB1B /* Interfaces */,
+			);
+			name = Debug;
+			sourceTree = "<group>";
+		};
+		3CB28ED51D7E701200A1CB1B /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ED81D7E707500A1CB1B /* DebugInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3CB28ED61D7E701E00A1CB1B /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28ED71D7E702A00A1CB1B /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3CB28ED71D7E702A00A1CB1B /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28EDF1D7E70FF00A1CB1B /* DebugOSX.cpp */,
+				3CB28EE01D7E70FF00A1CB1B /* DebugOSX.h */,
 			);
 			name = OSX;
 			sourceTree = "<group>";
@@ -352,15 +447,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CFD2DF71D45B20C0005D3D0 /* Globals.cpp in Sources */,
+				3CB28EDE1D7E708800A1CB1B /* DebugRendering.cpp in Sources */,
 				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
 				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
 				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
 				3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */,
+				3CB28ED21D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp in Sources */,
 				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
 				3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */,
 				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
+				3CB28EDD1D7E708800A1CB1B /* DebugMenu.cpp in Sources */,
 				3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */,
+				3CB28ED31D7E6CD700A1CB1B /* CTimerOSX.cpp in Sources */,
+				3CB28EE11D7E70FF00A1CB1B /* DebugOSX.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
 				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
 				3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */,

@@ -10,6 +10,7 @@
 #include "DebugMenu.h"
 #include "Game/Globals.h"
 #include "Game/defines.h"
+#include "Math/CVector.h"
 //-------------------------
 
 CVector4 selectedColor;
@@ -19,7 +20,9 @@ CVector4 normalColor;
 DebugMenu::DebugMenu()
 	: mainMenu(NULL)
 	, isVisible(false)
+#ifdef _WINDOWS
 	, font(NULL)
+#endif
 {
 	selectedColor = CVector4::red;
 	subMenuColor = CVector4::blue;
@@ -28,7 +31,9 @@ DebugMenu::DebugMenu()
 
 DebugMenu::~DebugMenu()
 {
+#ifdef _WINDOWS
 	Stop();
+#endif
 }
 
 float xDrawPosDefault = -500.0f;
@@ -88,7 +93,7 @@ void DebugMenu::DebugMenuItemContainer::Update()
 		menuItems[currentlySelected]->Increment();
 	}
 }
-
+#ifdef _WINDOWS
 void DebugMenu::DebugMenuItemContainer::Draw(Text& font, float& xDrawPos, float& yDrawPos)
 {
 	font.SetSize(25.0f);
@@ -205,6 +210,7 @@ void DebugMenu::Draw()
 		mainMenu->Draw(*font, xDrawPos, yDrawPos);
 	}
 }
+#endif // #ifdef _WINDOWS
 
 #endif // USE_SHADERS
 #endif // #if _DEBUG

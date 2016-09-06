@@ -5,13 +5,20 @@
 
 //system includes------------
 #include <vector>
+#ifdef OSX
+#include <stdio.h>
+#endif
 //---------------------------
 
 #ifndef _DebugMenu_h_
 #define _DebugMenu_h_
 
 //header files---------
-#include "Rendering\Text.h"
+#ifdef _WINDOWS
+#include "Rendering/Text.h"
+#endif
+#include "Game/defines.h"
+#include "Math/CVector.h"
 //---------------------
 
 //defines--------------
@@ -30,16 +37,15 @@ public:
 		{
 			if (NULL != textIn)
 			{
-				strncpy_s(text, TextLength-1, textIn, strlen(textIn));
+                defines::strncpy(text, TextLength-1, textIn, (int)strlen(textIn));
 			}
 			else
 			{
 				text[0] = '\0';
 			}
 		}
-
-		virtual ~DebugMenuItem() = 0 {}; // pure virtual destructor stops the class being instantiated (means it can only be a base class)
 		
+		virtual ~DebugMenuItem() {};
 		virtual void Increment() = 0;
 		virtual void Decrement() = 0;
 
@@ -57,12 +63,14 @@ public:
 
 		virtual void Update(){};
 
+#ifdef _WINDOWS
 		virtual void Draw(Text& font, float& xDrawPos, float& yDrawPos)
 		{
 			font.SetText(xDrawPos, yDrawPos, GetText());
 			font.Draw();
 			yDrawPos += font.GetTextHeight();
 		}
+#endif
 
 	protected:
 		static const int TextLength = 256;
@@ -95,7 +103,9 @@ public:
 		void Stop();
 
 		virtual void Update();
+#ifdef _WINDOWS
 		virtual void Draw(Text& font, float& xDrawPos, float& yDrawPos);
+#endif
 
 		virtual void Increment()
 		{
@@ -152,7 +162,9 @@ public:
 
 		virtual const char* GetText()
 		{
+#ifdef _WINDOWS
 			sprintf_s(displayText, "%s %f", text, *variable);
+#endif
 			return displayText;
 		}
 
@@ -187,7 +199,12 @@ public:
 
 		virtual const char* GetText()
 		{
-			sprintf_s(displayText, "%s %s", text, (*variable) ? "true" : "false");
+#ifdef _WINDOWS
+            sprintf_s
+#elif OSX
+            sprintf
+#endif
+			(displayText, "%s %s", text, (*variable) ? "true" : "false");
 			return displayText;
 		}
 
@@ -212,7 +229,12 @@ public:
 
 		virtual const char* GetText()
 		{
-			sprintf_s(displayText, "%s %.3f, %.3f, %.3f", text, variable->x, variable->y, variable->z);			
+#ifdef _WINDOWS
+            sprintf_s
+#elif OSX
+            sprintf
+#endif
+			(displayText, "%s %.3f, %.3f, %.3f", text, variable->x, variable->y, variable->z);
 			return displayText;
 		}
 
@@ -237,7 +259,12 @@ public:
 
 		virtual const char* GetText()
 		{
-			sprintf_s(displayText, "%s %.3f, %.3f, %.3f, %.3f", text, vector4Variable->v3.x, vector4Variable->v3.y, vector4Variable->v3.z, vector4Variable->w);			
+#ifdef _WINDOWS
+            sprintf_s
+#elif OSX
+            sprintf
+#endif
+			(displayText, "%s %.3f, %.3f, %.3f, %.3f", text, vector4Variable->v3.x, vector4Variable->v3.y, vector4Variable->v3.z, vector4Variable->w);			
 			return displayText;
 		}
 
@@ -259,12 +286,16 @@ public:
 
 private:
 	void Start();
+#ifdef _WINDOWS
 	void Stop();
+#endif
 
 private:
 	DebugMenuItemContainer* mainMenu;
 	bool isVisible;
+#ifdef _WINDOWS
 	Text* font;
+#endif
 };
 
 #endif // ifndef _DebugMenu_h_ 

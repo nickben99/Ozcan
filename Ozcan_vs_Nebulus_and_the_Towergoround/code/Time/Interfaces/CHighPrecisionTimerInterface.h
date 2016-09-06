@@ -5,6 +5,8 @@
 
 #ifdef _WINDOWS
 #include "Time/PlatformSpecific/Windows/CHighPrecisionTimerWindows.h"
+#elif OSX
+#include "Time/PlatformSpecific/OSX/CHighPrecisionTimerOSX.h"
 #else
 #include "Time/PlatformSpecific/iOS/CHighPrecisionTimeriOS.h"
 #endif

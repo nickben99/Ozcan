@@ -8,7 +8,9 @@
 
 #ifdef _WINDOWS
 #include "Game/CLevel.h" // holds the current level instance
+#endif
 #include "Input/Interfaces/CKeyMapInterface.h"
+#ifdef _WINDOWS
 #include "Audio/Interfaces/SoundInterface.h"
 #include "Time/Interfaces/CTimerInterface.h"
 #include "Rendering/Interfaces/OpenGLInterface.h"
@@ -30,7 +32,9 @@ public:
 #ifdef _WINDOWS
 	SoundInterface sound;
 	CLevel currentLevel;
+#endif
 	CKeyMapInterface keys;
+#ifdef _WINDOWS
 	CTimerInterface timer;
 	MatrixStack modelMatrixStack;
 	MatrixStack viewMatrixStack;

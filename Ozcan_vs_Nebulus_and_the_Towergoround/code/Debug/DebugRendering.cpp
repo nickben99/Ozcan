@@ -1,15 +1,15 @@
 //DebugRendering.cpp
 
-#if _DEBUG
+#ifdef _DEBUG
 
 // system includes --------
 //-------------------------
 
 // header files -----------
 #include "DebugRendering.h"
-#include "Math\CMatrix.h"
-#include "Math\CVector.h"
-#include "Game\Globals.h"
+#include "Math/CMatrix.h"
+#include "Math/CVector.h"
+#include "Game/Globals.h"
 //-------------------------
 
 bool enabled = true;
@@ -25,17 +25,22 @@ DebugRendering::~DebugRendering()
 
 void DebugRendering::DestroyShapes()
 {
+#ifdef _WINDOWS
 	boxMesh.Delete();
+#endif
 }
 
 void DebugRendering::InitShapes()
 {
+#ifdef _WINDOWS
 	debugRenderingUniform = Globals::Instance().gl.GetUniformLocation("uIsDebugRendering");
 	InitBox();
+#endif
 }
 
 void DebugRendering::InitBox()
 {
+#ifdef _WINDOWS
 	boxMesh.Delete(); // in-case it has already been set-up
 
 	 float vertexPositionArray[] = 
@@ -132,19 +137,23 @@ void DebugRendering::InitBox()
 	boxMesh.CreateNormalArray(normals, 108);
 
 	boxMesh.SetColor(CVector4::white);
+#endif
 }
 
-void DebugRendering::DrawBox(const CVector& pos, float radius, const CVector4& color)
+void DebugRendering::DrawBox(const CVector& /* pos */, float /* radius */, const CVector4& /* color */)
 {
+#ifdef _WINDOWS
 	CMatrix position;
 	position.creatScalingMatrix(radius, radius, radius);
 	position.SetMatrixTranslation(CVector4(pos, 1.0f));
 
 	DrawBox(position, color);
+#endif
 }
 
-void DebugRendering::DrawBox(const CMatrix& trans, const CVector4& color)
+void DebugRendering::DrawBox(const CMatrix& /* trans */, const CVector4& /* color */)
 {
+#ifdef _WINDOWS
 	if (!enabled)
 	{
 		return;
@@ -160,6 +169,7 @@ void DebugRendering::DrawBox(const CMatrix& trans, const CVector4& color)
 		Globals::Instance().gl.SetUniformBool(debugRenderingUniform, false);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	Globals::Instance().modelMatrixStack.PopMatrix();
+#endif
 }
 
 #endif // #if _DEBUG

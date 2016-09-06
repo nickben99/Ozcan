@@ -9,7 +9,9 @@
 #define _DebugRendering_h_
 
 //header files---------
+#ifdef _WINDOWS
 #include "Rendering\MeshBuffer.h"
+#endif
 //---------------------
 
 //defines--------------
@@ -17,6 +19,7 @@
 
 //forward declerations----
 class CVector;
+class CVector4;
 class CMatrix;
 //------------------------
 
@@ -36,7 +39,9 @@ private:
 	void InitBox();
 
 private:
+#ifdef _WINDOWS
 	MeshBuffer boxMesh;
+#endif
 	int debugRenderingUniform;
 };
 

@@ -5,6 +5,8 @@
 
 #ifdef _WINDOWS
 #include "Time/PlatformSpecific/Windows/CTimerWindows.h"
+#elif OSX
+#include "Time/PlatformSpecific/OSX/CTimerOSX.h"
 #else
 #include "Time/PlatformSpecific/iOS/CTimeriOS.h"
 #endif
