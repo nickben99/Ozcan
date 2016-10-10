@@ -9,6 +9,8 @@
 #include "Math/CMatrix.h"
 #include "Game/CLevel.h"
 #include "Game/Globals.h"
+#include "Game/ReplayManager.h"
+#include "Game/GameTime.h"
 //-------------------------
 
 //--- external variables --------
@@ -53,7 +55,12 @@ int CParticleSystem::initialiseParticleSystem()
 	if (particleTexture <= 0)
 	{ 
 		char buffer[256];
-		sprintf_s(buffer, "%simages/particle.bmp", GetDirectoryPath()); // create file name with path
+#ifdef _WINDOWS
+        sprintf_s
+#else
+        sprintf
+#endif
+		(buffer, "%simages/particle.bmp", GetDirectoryPath()); // create file name with path
 
 		particleTexture = // bind the background texture
 			TextureLoad(buffer, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);
@@ -130,16 +137,16 @@ void CParticleSystem::resetAllParticles(CVector *startingPosition, int frame)
 										by the fade value) */
 		/*	results in a random number between 2 and 5 which is 
 			0.20 and 0.50 seconds */
-		aParticle.fade =	FRANDOM(20, 50)*0.1f;
+        aParticle.fade = defines::FRandom(20, 50)*0.1f;
 		/*	set colour, which will have 'life' as the alpha value.
 			colour will be somewhere between orange and red */	
 		aParticle.r = 1.0f; //FRANDOM(0, 100)*0.01f;  
-		aParticle.g = FRANDOM(0, 100)*0.01f;
-		aParticle.b = FRANDOM(0, 100)*0.01f;
+		aParticle.g = defines::FRandom(0, 100)*0.01f;
+		aParticle.b = defines::FRandom(0, 100)*0.01f;
 		// set starting position
 		aParticle.position = *startingPosition;
 		// set the velocity to a random direction
-		aParticle.velocity = CVector(FRANDOM(-26, 26), FRANDOM(-26, 26), FRANDOM(-26, 26));
+		aParticle.velocity = CVector(defines::FRandom(-26, 26), defines::FRandom(-26, 26), defines::FRandom(-26, 26));
 	}
 
 	while (numFramesActive < frame)

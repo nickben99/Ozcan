@@ -1,9 +1,7 @@
 //CParticleSystem.h - header for the particle system class
 
 //system includes------------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include <Rendering/OpenGLInclude.h>
 //---------------------------
 
 #ifndef _CParticleSystem_h_
@@ -13,7 +11,7 @@
 #include "Math/CVector.h"
 #include "FileReading/texture.h"
 #include "Game/defines.h"
-#include "Rendering\MeshBuffer.h"
+#include "Rendering/MeshBuffer.h"
 //---------------------
 
 //defines--------------
@@ -73,7 +71,7 @@ class CParticleSystem
 		// draw all the particles
 		void draw( void);
 
-		void CParticleSystem::saveReplayUpdate(bool& systemActive, int& systemFrame, bool isFirstFrame, CVector* position);
+		void saveReplayUpdate(bool& systemActive, int& systemFrame, bool isFirstFrame, CVector* position);
 
 		// virtual methods
 

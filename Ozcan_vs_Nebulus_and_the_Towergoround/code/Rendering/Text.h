@@ -8,9 +8,9 @@
 #define _Text_h_
 
 //header files---------
-#include "Rendering\MeshBuffer.h"
-#include "Math\CVector.h"
-#include "Math\CMatrix.h"
+#include "Rendering/MeshBuffer.h"
+#include "Math/CVector.h"
+#include "Math/CMatrix.h"
 //---------------------
 
 //defines--------------

@@ -3,13 +3,13 @@
 #ifdef USE_SHADERS
 
 // system includes --------
-#include <glew-1.12.0\include\GL/glew.h>
+#include <Rendering/OpenGLInclude.h>
 //-------------------------
 
 // header files -----------
 #include "MeshBuffer.h"
-#include "Game\Globals.h"
-#include "Rendering\CModel.h"
+#include "Game/Globals.h"
+#include "Rendering/CModel.h"
 //-------------------------
 
 //--- external variables --------

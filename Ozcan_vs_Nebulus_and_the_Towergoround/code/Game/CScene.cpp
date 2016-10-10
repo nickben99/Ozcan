@@ -5,6 +5,7 @@
 
 //header files----------
 #include "CScene.h" // header file
+#ifdef _WINDOWS
 #include "FileReading/texture.h" // REUSED CLASS FROM OPENGL SUPERBIBLE - sets up textures
 #include "Rendering/CModelLoader.h"
 #include "ReplayManager.h"
@@ -33,10 +34,10 @@ CScene::~CScene()
 {
 	deleteCurrentScene();
 }
-
+#endif //_WINDOWS
 CVector4 lightPosition(300.0f, 1000.0f, 0.0f, 1.0f);
 CVector4 lightDirection(-2.75f, -2.5f, 0.0f, 0.0f);
-
+#ifdef _WINDOWS
 #if  (_DEBUG && USE_SHADERS)
 bool CSceneVariablesAddedToDebugMenu = false;
 #endif
@@ -292,17 +293,25 @@ bool CScene::ShapeCast(const CVector& from, const CVector& to, float radius, uns
 	}
 	return hasTriangleBeenHit;
 }
-
+#endif //_WINDOWS
 // do a ray cast against the scene triangles
 bool CScene::RayCast(const CVector& from, const CVector& to, unsigned int dynamicTypes, unsigned int spriteTypes, CVector& outHitPoint, CVector& outHitNormal)
 {
+#ifdef _WINDOWS
 	return ShapeCast(from, to, 0.0f, dynamicTypes, spriteTypes, outHitPoint, outHitNormal);
+#else
+    return false;
+#endif
 }
 
 // do a sphere cast against the scene triangles
 bool CScene::SphereCast(const CVector& from, const CVector& to, float radius, unsigned int dynamicTypes, unsigned int spriteTypes, CVector& outHitPoint, CVector& outHitNormal)
 {
+#ifdef _WINDOWS
 	return ShapeCast(from, to, radius, dynamicTypes, spriteTypes, outHitPoint, outHitNormal);
+#else
+    return false;
+#endif
 }
 
 CVector4 CScene::GetLightPosition()

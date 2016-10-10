@@ -1,12 +1,13 @@
 //CMenu.cpp, the menu class
 
 // system includes --------
-#include <glew-1.12.0\include\GL/glew.h>
+#include <Rendering/OpenGLInclude.h>
 //-------------------------
 
 // header files -----------
 #include "CMenu.h"
 #include "Game/Globals.h"
+#include "Game/defines.h"
 using namespace std; // using standard namespace
 
 //-------------------------
@@ -30,7 +31,7 @@ CMenu::~CMenu()
 // delete the menu, its sub menus and contents
 void CMenu::deleteMenu( void)
 {
-	int totalsubMenus = subMenus.size(); // total options
+	int totalsubMenus = (int)subMenus.size(); // total options
 
 	for (int i = 0; i < totalsubMenus; i++) // go through menu options
 	{
@@ -41,7 +42,7 @@ void CMenu::deleteMenu( void)
 		}
 	}
 
-	int totalOptions = menuOptions.size(); // total options
+	int totalOptions = (int)menuOptions.size(); // total options
 
 	for (int i = 0; i < totalOptions; i++) // go through menu options
 	{
@@ -81,7 +82,7 @@ void CMenu::setMenuDimensionsAndCentrePoint(CVector *theCentre, CVector *theDime
 // set options positions and dimensions
 void CMenu::setOptionsPositionsAndDimensions()
 {
-	int totalOptions = menuOptions.size(); // total options
+	int totalOptions = (int)menuOptions.size(); // total options
 
 #ifdef USE_SHADERS
 	float x	= centre.x;
@@ -111,7 +112,7 @@ void CMenu::setOptionsPositionsAndDimensions()
 // respond to input from the key board
 void CMenu::keyInput( void)
 {
-	int totalSubMenus = subMenus.size(); // get amount of sub menus
+	int totalSubMenus = (int)subMenus.size(); // get amount of sub menus
 
 	// if this menu is made up of sub menus
 	if (totalSubMenus > 0)
@@ -131,7 +132,7 @@ void CMenu::keyInput( void)
 	}
 	else // this menu does not have sub menus, it has options of its own
 	{
-		int totalOptions = menuOptions.size(); // get amount of options	
+		int totalOptions = (int)menuOptions.size(); // get amount of options
 
 		// highlight previous option in the list
 		if(Globals::Instance().keys.GetKeyPressed(eKeyCode_UP))
@@ -172,7 +173,7 @@ void CMenu::keyInput( void)
 // draw the menu background and its options
 void CMenu::draw( void)
 {
-	int totalSubMenus = subMenus.size(); // get amount of sub menus
+	int totalSubMenus = (int)subMenus.size(); // get amount of sub menus
 
 	if (totalSubMenus > 0) // if this menu is made up of sub menus
 	{
@@ -187,7 +188,7 @@ void CMenu::draw( void)
 		// draw the background image
 		drawBackGroundImage();
 
-		int totalOptions = menuOptions.size(); // get amount of options	
+		int totalOptions = (int)menuOptions.size(); // get amount of options
 
 		for (int option = 0; option < totalOptions; option++)
 		{

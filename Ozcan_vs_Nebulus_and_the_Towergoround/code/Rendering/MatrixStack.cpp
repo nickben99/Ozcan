@@ -1,15 +1,14 @@
 //MatrixStack.cpp
 
 // system includes --------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
+#include <Rendering/OpenGLInclude.h>
 //-------------------------
 
 // header files -----------
 #include "MatrixStack.h"
-#include "Game\Globals.h"
+#include "Game/Globals.h"
 #ifndef USE_SHADERS
-#include "Math\CMatrix.h"
+#include "Math/CMatrix.h"
 #endif
 //-------------------------
 

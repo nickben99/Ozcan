@@ -8,7 +8,7 @@
 
 //header files---------
 #ifdef USE_SHADERS
-#include "Math\CMatrix.h"
+#include "Math/CMatrix.h"
 #endif
 //---------------------
 

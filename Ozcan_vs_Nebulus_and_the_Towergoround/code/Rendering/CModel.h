@@ -11,14 +11,12 @@ CODE BASED ON TUTORIAL AT http://rsn.gamedev.net/tutorials/ms3danim.asp
 #ifndef _CModel_h_
 #define _CModel_h_
 
-#ifdef _WINDOWS
-
 //header files---
 #include "CModel.h"
 #include "Math/CMatrix.h"
 #include "Math/CVector.h"
 #include "Math/CQuaternion.h"
-#include "Rendering\MeshBuffer.h"
+#include "Rendering/MeshBuffer.h"
 //---------------
 
 //external definitions --
@@ -204,8 +202,6 @@ class CModel
 	int modelDisplayList; // a display list for the model if it does not have any bones
 //-----------------------------
 }; // class CModel
-
-#endif
 
 #endif // _CModel_h_
 

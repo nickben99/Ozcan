@@ -1,5 +1,7 @@
 //CLevel.cpp, the level class
 
+#ifdef _WINDOWS
+
 // system includes --------
 #include <assert.h>
 //-------------------------
@@ -787,7 +789,8 @@ void CLevel::CheckStartWholeLevelReplay()
 	}
 #endif
 }
-		
+
+#endif
 
 
 

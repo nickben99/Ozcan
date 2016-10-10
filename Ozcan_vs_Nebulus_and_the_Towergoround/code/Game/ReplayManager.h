@@ -3,8 +3,6 @@
 #ifndef _ReplayManager_H_
 #define _ReplayManager_H_
 
-#ifdef _WINDOWS
-
 //--- System Includes -----------
 #include <vector>
 #include <map>
@@ -21,11 +19,8 @@
 //--- defines -------------------
 //-------------------------------
 
-#endif //_WINDOWS
-
 class ReplayManager
 {
-#ifdef _WINDOWS
 	public:
 		enum eReplayStyle
 		{
@@ -156,12 +151,10 @@ class ReplayManager
 			static ReplayManager inst; // create static instance once
 			return &inst; // return the address of the instance
 		}
-		
 		void IncrementFrame();
 
 		void StartRecording();
 		void StartReplaying(eReplayStyle style);
-
 		bool IsRecording();
 		bool IsReplaying();
 		bool IsReplayingWholeLevel();
@@ -257,8 +250,6 @@ class ReplayManager
 			}
 		}
 #endif
-    
-#endif //_WINDOWS
 };
 
 #endif

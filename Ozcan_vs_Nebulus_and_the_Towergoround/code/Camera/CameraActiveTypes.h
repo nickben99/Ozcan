@@ -59,7 +59,7 @@ private:
 
 private:
 	void DestroyAll();
-	void CameraActiveTypes::Destroy(TypeContainer& container);
+	void Destroy(TypeContainer& container);
 	void ClearSpaceForNewType();
 	bool IsSpaceAvailable();
 	void DeleteOldestActiveType();

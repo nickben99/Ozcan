@@ -1,9 +1,7 @@
 //CSkyBoard.h - header for the sky board class
 
 //system includes------------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include "Rendering/OpenGLInclude.h"
 //---------------------------
 
 #ifndef _CSkyBoard_h_

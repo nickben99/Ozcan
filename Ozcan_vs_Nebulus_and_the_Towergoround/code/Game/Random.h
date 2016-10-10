@@ -1,5 +1,5 @@
 // Random.h
-#ifdef _WINDOWS
+
 #ifndef _Random_H_
 #define _Random_H_
 
@@ -34,5 +34,4 @@ class Random
 		void SetReplayManager(ReplayManager* pReplay);
 };
 
-#endif
 #endif

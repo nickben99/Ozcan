@@ -7,9 +7,9 @@
 #define _CameraLerp_h_
 
 //header files---------
-#include "Camera\CameraTransform.h"
-#include "Camera\CameraTransition.h"
-#include "Camera\CameraTransitionCollision.h"
+#include "Camera/CameraTransform.h"
+#include "Camera/CameraTransition.h"
+#include "Camera/CameraTransitionCollision.h"
 //---------------------
 
 //defines--------------

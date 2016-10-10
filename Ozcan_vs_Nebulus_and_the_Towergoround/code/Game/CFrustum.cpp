@@ -7,7 +7,7 @@
 // header files -----------
 #include "CFrustum.h"
 #include "Math/CMatrix.h"
-#include "Camera\CCamera.h"
+#include "Camera/CCamera.h"
 #include "CMenu.h"
 
 //-------------------------

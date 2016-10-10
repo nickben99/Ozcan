@@ -53,7 +53,7 @@ void COctree::destroyOctree()
 	triangles.clear(); // destroy the static list
 
 #ifdef USE_SHADERS
-	int numMeshBuffers = meshBuffers.size();
+	int numMeshBuffers = (int)meshBuffers.size();
 	for (int buffer = 0; buffer < numMeshBuffers; ++buffer)
 	{
 		delete meshBuffers[buffer];
@@ -180,7 +180,7 @@ void COctree::getSceneDimensionsAndTriangles(CSprite **sprite, int numberOfSprit
 	}//end for sprites
 
 	// record number of triangles (much faster than calling triangles.size() each time)
-	numberOfTriangles = triangles.size(); 
+	numberOfTriangles = (int)triangles.size();
 
 	centre = lowestXYZ + ((highestXYZ - &lowestXYZ)*0.5); // get scene centre
 
@@ -204,7 +204,7 @@ void COctree::getSceneDimensionsAndTriangles(CSprite **sprite, int numberOfSprit
 	aTriangle index; // variables for insertion sort below
 
 	/*	go through all the triangles and group them by material */
-	int totalTriangles = triangles.size(); 
+	int totalTriangles = (int)triangles.size();
 	/*	sort all the triangles based on the memory address of the materials 
 		using the insertion sort */
 	for (int i = 1; i < totalTriangles; i++)
@@ -505,7 +505,7 @@ void COctree::groupNodeTrianglesByMaterial( void)
 		index = nodeTriangles[i]; // get aTriangle pointer
 		j = i;
 
-		while ((j > 0) && ((int)nodeTriangles[j - 1]->triMaterial > (int)index->triMaterial))
+		while ((j > 0) && ((size_t)nodeTriangles[j - 1]->triMaterial > (size_t)index->triMaterial))
 		{
 			nodeTriangles[j] = nodeTriangles[j-1];
 			j = j - 1;

@@ -7,27 +7,27 @@
 #include <float.h> // for _isnan
 #endif
 #include <cmath> // for std::isnan
+#ifdef OSX
+#include <cstdlib>
+#include <string.h>
+#endif
 //---------------------------
 
 #ifndef _defines_h_
 #define _defines_h_
 
-#ifdef _WINDOWS
-
 //header files---------------
-#include "Random.h"
+#include "Game/Random.h"
 //---------------------------
 
 #define UNUSED(expr) (void)(expr)
 
-#endif
 #define EPSILON 1.0e-5   // a very small value 
 
 // floating point equality check, within the bounds of a very small differance
 #define FLOAT_EQUALS(N1, N2) (fabs(N1 - (N2)) < EPSILON) ? true : false
 
 #define PI 3.141592654f
-#ifdef _WINDOWS
 
 // convert degrees to radians
 #define degToRad(degrees) degrees*(PI/180.0f)
@@ -47,9 +47,7 @@
 						(highNumber+(Random::GetInst().GetRand()%((abs(loNumber-(highNumber)))+1))) :\
 						(loNumber+(Random::GetInst().GetRand()%((abs(loNumber-(highNumber)))+1)))
 
-#endif
 const char* GetDirectoryPath();
-#ifdef _WINDOWS
 
 /*	returns true if a quadratic equation can be solved within defined limits and 
 	sets the referance parameter to the lowest root */
@@ -60,7 +58,6 @@ float ToShaderUIX(float coord);
 
 float ToShaderUIY(float coord);
 
-#endif
 // make sure acos input is within range
 /*	BASED ON METHOD FROM 3D MATH PRIMER FOR GRAPHICS AND GAME DEVELOPMENT 
 	- DUNN AND PARBERRY */
@@ -84,6 +81,16 @@ inline float SlowFastSlowLerp(float input)
 namespace defines
 {
 
+inline float FRandom(const int& loNumber, const int& highNumber)
+{
+    Random& randInst = Random::GetInst();
+    if (loNumber > highNumber)
+    {
+        return (float)(highNumber+(randInst.GetRand()%((std::abs(loNumber-highNumber))+1)));
+    }
+    return (float)(loNumber+(randInst.GetRand()%((std::abs(loNumber-highNumber))+1)));
+}
+    
 template<typename T> inline T Min(const T& lhs, const T& rhs)
 {
 	return (lhs < rhs) ? lhs : rhs;
@@ -122,6 +129,37 @@ inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numT
     {
         copyTo[character] = copyFrom[character];
     }
+#endif
+}
+    
+inline void ReverseString(char* buffer)
+{
+#ifdef _WINDOWS
+    _strrev(buffer); // reverse the latest line of file
+#else
+    char* start = buffer;
+    char* end = buffer;
+    while (*end != '\0')
+    {
+        ++end;
+    }
+    --end;
+    
+    for (; start < end; ++start, ++end)
+    {
+        char tmp = *start;
+        *start = *end;
+        *end = tmp;
+    }
+#endif
+}
+
+inline void CopyString(char* copyTo, const char* copyFrom)
+{
+#ifdef _WINDOWS
+    strcpy_s(copyTo, copyFrom);
+#else
+    strcpy(copyTo, copyFrom);
 #endif
 }
     

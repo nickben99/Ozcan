@@ -29,6 +29,8 @@ class CamType
 		virtual void GetOutput(CameraTransform& transform) = 0;
 
 		virtual eCamIdentifier GetType() = 0;
+    
+    virtual ~CamType(){}
 }; // end class
 
 #endif // ifndef _CamType_h_ 

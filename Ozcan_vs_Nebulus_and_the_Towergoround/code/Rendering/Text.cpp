@@ -2,16 +2,15 @@
 //Text.cpp
 
 // system includes --------
-#include <windows.h>		// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
+#include <Rendering/OpenGLInclude.h>
 //-------------------------
 
 // header files -----------
 #include "Text.h"
-#include "FileReading\imageFileLoaders.H"
-#include "FileReading\TEXTURE.H"
-#include "Game\defines.h"
-#include "Game\Globals.h"
+#include "FileReading/imageFileLoaders.H"
+#include "FileReading/TEXTURE.H"
+#include "Game/defines.h"
+#include "Game/Globals.h"
 //-------------------------
 
 //--- external variables --------
@@ -267,8 +266,11 @@ int LoadTexture()
 {
 	const int BufferSize = 256;
 	char buffer[BufferSize];
-
+#ifdef _WINDOWS
 	sprintf_s(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
+#else
+    sprintf(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
+#endif
 	return TextureLoad(buffer, GL_FALSE, GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST, GL_CLAMP); 
 }
 
@@ -373,7 +375,12 @@ void Text::SetText(float xPosIn, float yPosIn, const char* string, ...)
 	va_list vlist; // va_list
 	
 	va_start(vlist, string); // set to beginning of argument list
-	vsprintf_s(currentText, string, vlist); // print formatted string to thisString
+#ifdef _WINDOWS
+	vsprintf_s
+#else
+    vsprintf
+#endif
+    (currentText, string, vlist); // print formatted string to thisString
 	va_end(vlist); // reset argument pointer
 	
 	xPos = xPosIn;
@@ -395,7 +402,12 @@ void Text::SetText(const char* string, ...)
 	va_list vlist; // va_list
 	
 	va_start(vlist, string); // set to beginning of argument list
-	vsprintf_s(currentText, string, vlist); // print formatted string to thisString
+#ifdef _WINDOWS
+    vsprintf_s
+#else
+    vsprintf
+#endif
+	(currentText, string, vlist); // print formatted string to thisString
 	va_end(vlist); // reset argument pointer
 }
 
@@ -404,7 +416,7 @@ void Text::GetTextBox(CVector& topLeft, CVector& bottomRight)
 	topLeft = CVector(xPos, yPos, 0.0f);
 	bottomRight = CVector(xPos, yPos, 0.0f);
 
-	int numCharactersInString = strlen(currentText);
+	int numCharactersInString = (int)strlen(currentText);
 	if (0 == numCharactersInString)
 	{
 		return;
@@ -436,6 +448,7 @@ void Text::GetTextBox(CVector& topLeft, CVector& bottomRight)
 		topLeft.x -= stringWidth;
 		bottomRight.x -= stringWidth;
 		break;
+    default: break;
 	}
 
 	switch (virticalAlign)
@@ -448,6 +461,7 @@ void Text::GetTextBox(CVector& topLeft, CVector& bottomRight)
 		topLeft.y -= (LetterHeight*scale);
 		bottomRight.y -= (LetterHeight*scale);
 		break;
+    default: break;
 	}
 }
 
@@ -471,7 +485,7 @@ float Text::GetTextWidth()
 
 void Text::Draw()
 {
-	int numCharactersInString = strlen(currentText);
+	int numCharactersInString = (int)strlen(currentText);
 	if (0 == numCharactersInString)
 	{
 		return;
@@ -509,6 +523,7 @@ void Text::Draw()
 	case HorizontalAlignment::right:		
 		offset.v3.x = -stringWidth;
 		break;
+        default: break;
 	}
 
 	switch (virticalAlign)
@@ -519,6 +534,7 @@ void Text::Draw()
 	case VirticalAlignment::bottom:	
 		offset.v3.y = -(LetterHeight*scale);
 		break;
+    default: break;
 	}
 
 	alignment.SetMatrixTranslation(offset);

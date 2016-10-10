@@ -9,12 +9,12 @@
 
 //header files---------
 #include "Math/CVector.h"
-#include "Math\CMatrix.h"
+#include "Math/CMatrix.h"
 #include "Game/Globals.h"
 #include "Audio/SoundsEnum.h"
 #include "FileReading/texture.h"
-#include "Rendering\MeshBuffer.h"
-#include "Rendering\Text.h"
+#include "Rendering/MeshBuffer.h"
+#include "Rendering/Text.h"
 
 //---------------------
 
@@ -25,7 +25,9 @@
 //---------------------
 
 // external variables ----
+#ifndef USE_SHADERS
 extern HDC			hDC;
+#endif
 // -----------------------
 
 class CMenuOption
@@ -105,7 +107,7 @@ class CMenuOption
 #endif
 		}
 
-		~CMenuOption() // destructor
+		virtual ~CMenuOption() // destructor
 		{
 #ifdef USE_SHADERS
 			if (NULL != text)
@@ -150,7 +152,7 @@ class CMenu
 
 //----public methods---------------
 		CMenu(); // constructor
-		~CMenu(); // destructor
+		virtual ~CMenu(); // destructor
 
 		void keyInput( void); // respond to input from the key board
 		void draw( void); // draw the menu background and its options

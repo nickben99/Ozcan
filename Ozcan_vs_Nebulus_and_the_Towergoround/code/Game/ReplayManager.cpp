@@ -1,17 +1,12 @@
 // ReplayManager.cpp
 
-#ifdef _WINDOWS
-
 //--- System includes --------------
 #include <algorithm>
 #include <assert.h>
 //----------------------------------
 
-#endif //_WINDOWS
-
 //--- Header files ---------
 #include "ReplayManager.h"
-#ifdef _WINDOWS
 #include "Random.h"
 #include "CLevel.h"
 #include "Game/Globals.h"
@@ -145,7 +140,7 @@ void ReplayManager::StartReplaying(eReplayStyle style)
 	float fps = 1.0f/GameTime::Instance().GetFixedTimeDeltaSeconds();
 		
 	int startFrame = mEndReplayStartFrame - (int)(fps * kBufferTimeBeforeStartFrame);
-	startFrame = max(startFrame, mOldestEndReplayFrame);
+    startFrame = defines::Max(startFrame, mOldestEndReplayFrame);
 		
 	int endFrame = startFrame + (int)(kOptimalEndReplayLength * fps);
 	endFrame = defines::Min(endFrame, mOldestEndReplayFrame + CalculateTotalNumberOfRecordedFrames() - 1);
@@ -374,7 +369,5 @@ void ReplayManager::QuaternionResult(const CQuaternion& res)
 	CheckResult(res, frameInput[frameInput.size()-1].quaternions, frameInput[frameNumber].quaternions, 
 				frameInput[frameNumber].quaternionsReadbackCount); 
 }
-
-#endif //_WINDOWS
 
 #endif

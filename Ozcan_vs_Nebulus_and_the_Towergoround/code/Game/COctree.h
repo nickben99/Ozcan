@@ -1,9 +1,7 @@
 //COctree.h - header for the octree class
 
 //system includes------------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include "Rendering/OpenGLInclude.h"
 #include <vector>		// include this to use the vector class
 //---------------------------
 
@@ -15,7 +13,7 @@
 #include "CSprite.h"
 #include "CFrustum.h"
 #ifdef USE_SHADERS
-#include "Rendering\MeshBuffer.h"
+#include "Rendering/MeshBuffer.h"
 #endif
 //---------------------
 
@@ -127,7 +125,7 @@ class COctree
 		static int currentSubDivisionLevel; // the current sub division level
 		static std::vector<COctree*> leafNodes;
 		static std::vector<COctree*> leafNodesOccupiedWithSprites;
-		static std::vector<COctree*> COctree::endNodesToDraw; /*	the end nodes which are in view and should be 
+		static std::vector<COctree*> endNodesToDraw; /*	the end nodes which are in view and should be
 																	drawn (updated each frame) */
 #ifndef USE_SHADERS
 		static int trianglesDisplayList;

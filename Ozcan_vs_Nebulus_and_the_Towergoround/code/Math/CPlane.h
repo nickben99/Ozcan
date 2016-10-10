@@ -77,7 +77,7 @@ class CPlane
 		}
 	
 		// make plane the same as another plane
-		CPlane& CPlane::operator=(const CPlane *p)
+		CPlane& operator=(const CPlane *p)
 		{
 			planeNormal = p->planeNormal;
 			pointOnPlane = p->pointOnPlane;

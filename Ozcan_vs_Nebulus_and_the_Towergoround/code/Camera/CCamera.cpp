@@ -9,7 +9,7 @@
 #include "CCamera.h"
 #include "CameraTransform.h"
 #include "Game/Globals.h"
-#include "Camera\CameraLerpDistanceElevation.h"
+#include "Camera/CameraLerpDistanceElevation.h"
 //-------------------------
 
 // creates singleton camera instance

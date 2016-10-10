@@ -18,6 +18,39 @@
 		3CB28EDD1D7E708800A1CB1B /* DebugMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28ED91D7E708800A1CB1B /* DebugMenu.cpp */; };
 		3CB28EDE1D7E708800A1CB1B /* DebugRendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EDB1D7E708800A1CB1B /* DebugRendering.cpp */; };
 		3CB28EE11D7E70FF00A1CB1B /* DebugOSX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EDF1D7E70FF00A1CB1B /* DebugOSX.cpp */; };
+		3CB28EF21D8378F300A1CB1B /* CModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EE51D8378F300A1CB1B /* CModel.cpp */; };
+		3CB28EF31D8378F300A1CB1B /* CModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EE61D8378F300A1CB1B /* CModelLoader.cpp */; };
+		3CB28EF41D8378F300A1CB1B /* CParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EE81D8378F300A1CB1B /* CParticleSystem.cpp */; };
+		3CB28EF51D8378F300A1CB1B /* MatrixStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EEA1D8378F300A1CB1B /* MatrixStack.cpp */; };
+		3CB28EF61D8378F300A1CB1B /* MeshBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EEC1D8378F300A1CB1B /* MeshBuffer.cpp */; };
+		3CB28EF71D8378F300A1CB1B /* ShadowMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EEE1D8378F300A1CB1B /* ShadowMapping.cpp */; };
+		3CB28EF81D8378F300A1CB1B /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EF01D8378F300A1CB1B /* Text.cpp */; };
+		3CB28EFB1D8385E000A1CB1B /* CLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EF91D8385E000A1CB1B /* CLevel.cpp */; };
+		3CB28EFF1D84D89E00A1CB1B /* GameTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28EFD1D84D89E00A1CB1B /* GameTime.cpp */; };
+		3CB28F1F1D84DADC00A1CB1B /* CameraActiveTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F021D84DADC00A1CB1B /* CameraActiveTypes.cpp */; };
+		3CB28F201D84DADC00A1CB1B /* CameraLerp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F041D84DADC00A1CB1B /* CameraLerp.cpp */; };
+		3CB28F211D84DADC00A1CB1B /* CameraLerpDistanceElevation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F061D84DADC00A1CB1B /* CameraLerpDistanceElevation.cpp */; };
+		3CB28F221D84DADC00A1CB1B /* CameraLinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F081D84DADC00A1CB1B /* CameraLinks.cpp */; };
+		3CB28F231D84DADC00A1CB1B /* CameraPriorityTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F0A1D84DADC00A1CB1B /* CameraPriorityTypes.cpp */; };
+		3CB28F241D84DADC00A1CB1B /* CameraTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F0C1D84DADC00A1CB1B /* CameraTransform.cpp */; };
+		3CB28F251D84DADC00A1CB1B /* CameraTransition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F0E1D84DADC00A1CB1B /* CameraTransition.cpp */; };
+		3CB28F261D84DADC00A1CB1B /* CameraTransitionCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F101D84DADC00A1CB1B /* CameraTransitionCollision.cpp */; };
+		3CB28F271D84DADC00A1CB1B /* CamTypeCircleFollow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F131D84DADC00A1CB1B /* CamTypeCircleFollow.cpp */; };
+		3CB28F281D84DADC00A1CB1B /* CamTypeReplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F151D84DADC00A1CB1B /* CamTypeReplay.cpp */; };
+		3CB28F291D84DADC00A1CB1B /* CamTypeTunnel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F171D84DADC00A1CB1B /* CamTypeTunnel.cpp */; };
+		3CB28F2A1D84DADC00A1CB1B /* CCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F191D84DADC00A1CB1B /* CCamera.cpp */; };
+		3CB28F2B1D84DADC00A1CB1B /* DebugCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F1B1D84DADC00A1CB1B /* DebugCam.cpp */; };
+		3CB28F2C1D84DADC00A1CB1B /* EularLerp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F1D1D84DADC00A1CB1B /* EularLerp.cpp */; };
+		3CB28F2E1D84DBF000A1CB1B /* CScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F2D1D84DBF000A1CB1B /* CScene.cpp */; };
+		3CB28F311DA9F1EF00A1CB1B /* CMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F2F1DA9F1EF00A1CB1B /* CMenu.cpp */; };
+		3CB28F331DA9F48000A1CB1B /* COctree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F321DA9F48000A1CB1B /* COctree.cpp */; };
+		3CB28F361DA9F79200A1CB1B /* intersections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F341DA9F79200A1CB1B /* intersections.cpp */; };
+		3CB28F391DA9F81A00A1CB1B /* CSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F371DA9F81A00A1CB1B /* CSprite.cpp */; };
+		3CB28F3C1DA9F86E00A1CB1B /* CFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F3A1DA9F86E00A1CB1B /* CFrustum.cpp */; };
+		3CB28F3F1DA9F8C300A1CB1B /* CNebulus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F3D1DA9F8C300A1CB1B /* CNebulus.cpp */; };
+		3CB28F441DA9F93300A1CB1B /* CTowerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F401DA9F93300A1CB1B /* CTowerSprite.cpp */; };
+		3CB28F451DA9F93300A1CB1B /* CTowerStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F421DA9F93300A1CB1B /* CTowerStep.cpp */; };
+		3CB28F481DA9F95600A1CB1B /* CTower.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CB28F461DA9F95600A1CB1B /* CTower.cpp */; };
 		3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFD61D3B36060003005B /* osxSetup.cpp */; };
 		3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE51D3B3E010003005B /* CMatrix.cpp */; };
 		3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFE81D3B3E010003005B /* CQuaternion.cpp */; };
@@ -71,6 +104,72 @@
 		3CB28EDC1D7E708800A1CB1B /* DebugRendering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugRendering.h; path = code/Debug/DebugRendering.h; sourceTree = "<group>"; };
 		3CB28EDF1D7E70FF00A1CB1B /* DebugOSX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugOSX.cpp; path = code/Debug/PlatformSpecific/OSX/DebugOSX.cpp; sourceTree = "<group>"; };
 		3CB28EE01D7E70FF00A1CB1B /* DebugOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugOSX.h; path = code/Debug/PlatformSpecific/OSX/DebugOSX.h; sourceTree = "<group>"; };
+		3CB28EE51D8378F300A1CB1B /* CModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CModel.cpp; path = code/Rendering/CModel.cpp; sourceTree = "<group>"; };
+		3CB28EE61D8378F300A1CB1B /* CModelLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CModelLoader.cpp; path = code/Rendering/CModelLoader.cpp; sourceTree = "<group>"; };
+		3CB28EE71D8378F300A1CB1B /* CModelLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CModelLoader.h; path = code/Rendering/CModelLoader.h; sourceTree = "<group>"; };
+		3CB28EE81D8378F300A1CB1B /* CParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CParticleSystem.cpp; path = code/Rendering/CParticleSystem.cpp; sourceTree = "<group>"; };
+		3CB28EE91D8378F300A1CB1B /* CParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CParticleSystem.h; path = code/Rendering/CParticleSystem.h; sourceTree = "<group>"; };
+		3CB28EEA1D8378F300A1CB1B /* MatrixStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MatrixStack.cpp; path = code/Rendering/MatrixStack.cpp; sourceTree = "<group>"; };
+		3CB28EEB1D8378F300A1CB1B /* MatrixStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatrixStack.h; path = code/Rendering/MatrixStack.h; sourceTree = "<group>"; };
+		3CB28EEC1D8378F300A1CB1B /* MeshBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshBuffer.cpp; path = code/Rendering/MeshBuffer.cpp; sourceTree = "<group>"; };
+		3CB28EED1D8378F300A1CB1B /* MeshBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshBuffer.h; path = code/Rendering/MeshBuffer.h; sourceTree = "<group>"; };
+		3CB28EEE1D8378F300A1CB1B /* ShadowMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShadowMapping.cpp; path = code/Rendering/ShadowMapping.cpp; sourceTree = "<group>"; };
+		3CB28EEF1D8378F300A1CB1B /* ShadowMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShadowMapping.h; path = code/Rendering/ShadowMapping.h; sourceTree = "<group>"; };
+		3CB28EF01D8378F300A1CB1B /* Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Text.cpp; path = code/Rendering/Text.cpp; sourceTree = "<group>"; };
+		3CB28EF11D8378F300A1CB1B /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = code/Rendering/Text.h; sourceTree = "<group>"; };
+		3CB28EF91D8385E000A1CB1B /* CLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CLevel.cpp; path = code/Game/CLevel.cpp; sourceTree = "<group>"; };
+		3CB28EFA1D8385E000A1CB1B /* CLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLevel.h; path = code/Game/CLevel.h; sourceTree = "<group>"; };
+		3CB28EFC1D83904000A1CB1B /* COctree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COctree.h; path = code/Game/COctree.h; sourceTree = "<group>"; };
+		3CB28EFD1D84D89E00A1CB1B /* GameTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameTime.cpp; path = code/Game/GameTime.cpp; sourceTree = "<group>"; };
+		3CB28EFE1D84D89E00A1CB1B /* GameTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTime.h; path = code/Game/GameTime.h; sourceTree = "<group>"; };
+		3CB28F001D84D99000A1CB1B /* CScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CScene.h; path = code/Game/CScene.h; sourceTree = "<group>"; };
+		3CB28F021D84DADC00A1CB1B /* CameraActiveTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraActiveTypes.cpp; path = code/Camera/CameraActiveTypes.cpp; sourceTree = "<group>"; };
+		3CB28F031D84DADC00A1CB1B /* CameraActiveTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraActiveTypes.h; path = code/Camera/CameraActiveTypes.h; sourceTree = "<group>"; };
+		3CB28F041D84DADC00A1CB1B /* CameraLerp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraLerp.cpp; path = code/Camera/CameraLerp.cpp; sourceTree = "<group>"; };
+		3CB28F051D84DADC00A1CB1B /* CameraLerp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraLerp.h; path = code/Camera/CameraLerp.h; sourceTree = "<group>"; };
+		3CB28F061D84DADC00A1CB1B /* CameraLerpDistanceElevation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraLerpDistanceElevation.cpp; path = code/Camera/CameraLerpDistanceElevation.cpp; sourceTree = "<group>"; };
+		3CB28F071D84DADC00A1CB1B /* CameraLerpDistanceElevation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraLerpDistanceElevation.h; path = code/Camera/CameraLerpDistanceElevation.h; sourceTree = "<group>"; };
+		3CB28F081D84DADC00A1CB1B /* CameraLinks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraLinks.cpp; path = code/Camera/CameraLinks.cpp; sourceTree = "<group>"; };
+		3CB28F091D84DADC00A1CB1B /* CameraLinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraLinks.h; path = code/Camera/CameraLinks.h; sourceTree = "<group>"; };
+		3CB28F0A1D84DADC00A1CB1B /* CameraPriorityTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraPriorityTypes.cpp; path = code/Camera/CameraPriorityTypes.cpp; sourceTree = "<group>"; };
+		3CB28F0B1D84DADC00A1CB1B /* CameraPriorityTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraPriorityTypes.h; path = code/Camera/CameraPriorityTypes.h; sourceTree = "<group>"; };
+		3CB28F0C1D84DADC00A1CB1B /* CameraTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraTransform.cpp; path = code/Camera/CameraTransform.cpp; sourceTree = "<group>"; };
+		3CB28F0D1D84DADC00A1CB1B /* CameraTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraTransform.h; path = code/Camera/CameraTransform.h; sourceTree = "<group>"; };
+		3CB28F0E1D84DADC00A1CB1B /* CameraTransition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraTransition.cpp; path = code/Camera/CameraTransition.cpp; sourceTree = "<group>"; };
+		3CB28F0F1D84DADC00A1CB1B /* CameraTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraTransition.h; path = code/Camera/CameraTransition.h; sourceTree = "<group>"; };
+		3CB28F101D84DADC00A1CB1B /* CameraTransitionCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraTransitionCollision.cpp; path = code/Camera/CameraTransitionCollision.cpp; sourceTree = "<group>"; };
+		3CB28F111D84DADC00A1CB1B /* CameraTransitionCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraTransitionCollision.h; path = code/Camera/CameraTransitionCollision.h; sourceTree = "<group>"; };
+		3CB28F121D84DADC00A1CB1B /* CamType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamType.h; path = code/Camera/CamType.h; sourceTree = "<group>"; };
+		3CB28F131D84DADC00A1CB1B /* CamTypeCircleFollow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CamTypeCircleFollow.cpp; path = code/Camera/CamTypeCircleFollow.cpp; sourceTree = "<group>"; };
+		3CB28F141D84DADC00A1CB1B /* CamTypeCircleFollow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamTypeCircleFollow.h; path = code/Camera/CamTypeCircleFollow.h; sourceTree = "<group>"; };
+		3CB28F151D84DADC00A1CB1B /* CamTypeReplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CamTypeReplay.cpp; path = code/Camera/CamTypeReplay.cpp; sourceTree = "<group>"; };
+		3CB28F161D84DADC00A1CB1B /* CamTypeReplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamTypeReplay.h; path = code/Camera/CamTypeReplay.h; sourceTree = "<group>"; };
+		3CB28F171D84DADC00A1CB1B /* CamTypeTunnel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CamTypeTunnel.cpp; path = code/Camera/CamTypeTunnel.cpp; sourceTree = "<group>"; };
+		3CB28F181D84DADC00A1CB1B /* CamTypeTunnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CamTypeTunnel.h; path = code/Camera/CamTypeTunnel.h; sourceTree = "<group>"; };
+		3CB28F191D84DADC00A1CB1B /* CCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCamera.cpp; path = code/Camera/CCamera.cpp; sourceTree = "<group>"; };
+		3CB28F1A1D84DADC00A1CB1B /* CCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCamera.h; path = code/Camera/CCamera.h; sourceTree = "<group>"; };
+		3CB28F1B1D84DADC00A1CB1B /* DebugCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugCam.cpp; path = code/Camera/DebugCam.cpp; sourceTree = "<group>"; };
+		3CB28F1C1D84DADC00A1CB1B /* DebugCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugCam.h; path = code/Camera/DebugCam.h; sourceTree = "<group>"; };
+		3CB28F1D1D84DADC00A1CB1B /* EularLerp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EularLerp.cpp; path = code/Camera/EularLerp.cpp; sourceTree = "<group>"; };
+		3CB28F1E1D84DADC00A1CB1B /* EularLerp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EularLerp.h; path = code/Camera/EularLerp.h; sourceTree = "<group>"; };
+		3CB28F2D1D84DBF000A1CB1B /* CScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CScene.cpp; path = code/Game/CScene.cpp; sourceTree = "<group>"; };
+		3CB28F2F1DA9F1EF00A1CB1B /* CMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMenu.cpp; path = code/Game/CMenu.cpp; sourceTree = "<group>"; };
+		3CB28F301DA9F1EF00A1CB1B /* CMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMenu.h; path = code/Game/CMenu.h; sourceTree = "<group>"; };
+		3CB28F321DA9F48000A1CB1B /* COctree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = COctree.cpp; path = code/Game/COctree.cpp; sourceTree = "<group>"; };
+		3CB28F341DA9F79200A1CB1B /* intersections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = intersections.cpp; path = code/Game/intersections.cpp; sourceTree = "<group>"; };
+		3CB28F351DA9F79200A1CB1B /* intersections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = intersections.h; path = code/Game/intersections.h; sourceTree = "<group>"; };
+		3CB28F371DA9F81A00A1CB1B /* CSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSprite.cpp; path = code/Game/CSprite.cpp; sourceTree = "<group>"; };
+		3CB28F381DA9F81A00A1CB1B /* CSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSprite.h; path = code/Game/CSprite.h; sourceTree = "<group>"; };
+		3CB28F3A1DA9F86E00A1CB1B /* CFrustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CFrustum.cpp; path = code/Game/CFrustum.cpp; sourceTree = "<group>"; };
+		3CB28F3B1DA9F86E00A1CB1B /* CFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFrustum.h; path = code/Game/CFrustum.h; sourceTree = "<group>"; };
+		3CB28F3D1DA9F8C300A1CB1B /* CNebulus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CNebulus.cpp; path = code/Game/CNebulus.cpp; sourceTree = "<group>"; };
+		3CB28F3E1DA9F8C300A1CB1B /* CNebulus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CNebulus.h; path = code/Game/CNebulus.h; sourceTree = "<group>"; };
+		3CB28F401DA9F93300A1CB1B /* CTowerSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTowerSprite.cpp; path = code/Game/CTowerSprite.cpp; sourceTree = "<group>"; };
+		3CB28F411DA9F93300A1CB1B /* CTowerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTowerSprite.h; path = code/Game/CTowerSprite.h; sourceTree = "<group>"; };
+		3CB28F421DA9F93300A1CB1B /* CTowerStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTowerStep.cpp; path = code/Game/CTowerStep.cpp; sourceTree = "<group>"; };
+		3CB28F431DA9F93300A1CB1B /* CTowerStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTowerStep.h; path = code/Game/CTowerStep.h; sourceTree = "<group>"; };
+		3CB28F461DA9F95600A1CB1B /* CTower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTower.cpp; path = code/Game/CTower.cpp; sourceTree = "<group>"; };
+		3CB28F471DA9F95600A1CB1B /* CTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTower.h; path = code/Game/CTower.h; sourceTree = "<group>"; };
 		3CC2AFD61D3B36060003005B /* osxSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = osxSetup.cpp; path = code/PlatformSetUp/OSX/osxSetup.cpp; sourceTree = SOURCE_ROOT; };
 		3CC2AFD91D3B369E0003005B /* SoundsEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundsEnum.h; path = code/Audio/SoundsEnum.h; sourceTree = "<group>"; };
 		3CC2AFDD1D3B38250003005B /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = code/Game/main.h; sourceTree = "<group>"; };
@@ -121,6 +220,7 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3CB28F011D84DAB400A1CB1B /* Camera */,
 				3CB28ED41D7E700500A1CB1B /* Debug */,
 				3CC2AFD81D3B365A0003005B /* Audio */,
 				3CFD2DE11D3C38050005D3D0 /* FileReading */,
@@ -289,6 +389,42 @@
 			name = OSX;
 			sourceTree = "<group>";
 		};
+		3CB28F011D84DAB400A1CB1B /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				3CB28F021D84DADC00A1CB1B /* CameraActiveTypes.cpp */,
+				3CB28F031D84DADC00A1CB1B /* CameraActiveTypes.h */,
+				3CB28F041D84DADC00A1CB1B /* CameraLerp.cpp */,
+				3CB28F051D84DADC00A1CB1B /* CameraLerp.h */,
+				3CB28F061D84DADC00A1CB1B /* CameraLerpDistanceElevation.cpp */,
+				3CB28F071D84DADC00A1CB1B /* CameraLerpDistanceElevation.h */,
+				3CB28F081D84DADC00A1CB1B /* CameraLinks.cpp */,
+				3CB28F091D84DADC00A1CB1B /* CameraLinks.h */,
+				3CB28F0A1D84DADC00A1CB1B /* CameraPriorityTypes.cpp */,
+				3CB28F0B1D84DADC00A1CB1B /* CameraPriorityTypes.h */,
+				3CB28F0C1D84DADC00A1CB1B /* CameraTransform.cpp */,
+				3CB28F0D1D84DADC00A1CB1B /* CameraTransform.h */,
+				3CB28F0E1D84DADC00A1CB1B /* CameraTransition.cpp */,
+				3CB28F0F1D84DADC00A1CB1B /* CameraTransition.h */,
+				3CB28F101D84DADC00A1CB1B /* CameraTransitionCollision.cpp */,
+				3CB28F111D84DADC00A1CB1B /* CameraTransitionCollision.h */,
+				3CB28F121D84DADC00A1CB1B /* CamType.h */,
+				3CB28F131D84DADC00A1CB1B /* CamTypeCircleFollow.cpp */,
+				3CB28F141D84DADC00A1CB1B /* CamTypeCircleFollow.h */,
+				3CB28F151D84DADC00A1CB1B /* CamTypeReplay.cpp */,
+				3CB28F161D84DADC00A1CB1B /* CamTypeReplay.h */,
+				3CB28F171D84DADC00A1CB1B /* CamTypeTunnel.cpp */,
+				3CB28F181D84DADC00A1CB1B /* CamTypeTunnel.h */,
+				3CB28F191D84DADC00A1CB1B /* CCamera.cpp */,
+				3CB28F1A1D84DADC00A1CB1B /* CCamera.h */,
+				3CB28F1B1D84DADC00A1CB1B /* DebugCam.cpp */,
+				3CB28F1C1D84DADC00A1CB1B /* DebugCam.h */,
+				3CB28F1D1D84DADC00A1CB1B /* EularLerp.cpp */,
+				3CB28F1E1D84DADC00A1CB1B /* EularLerp.h */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		3CC2AFD31D3B34FF0003005B /* OSX */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +446,30 @@
 		3CC2AFDA1D3B37FA0003005B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3CB28F461DA9F95600A1CB1B /* CTower.cpp */,
+				3CB28F471DA9F95600A1CB1B /* CTower.h */,
+				3CB28F401DA9F93300A1CB1B /* CTowerSprite.cpp */,
+				3CB28F411DA9F93300A1CB1B /* CTowerSprite.h */,
+				3CB28F421DA9F93300A1CB1B /* CTowerStep.cpp */,
+				3CB28F431DA9F93300A1CB1B /* CTowerStep.h */,
+				3CB28F3D1DA9F8C300A1CB1B /* CNebulus.cpp */,
+				3CB28F3E1DA9F8C300A1CB1B /* CNebulus.h */,
+				3CB28F3A1DA9F86E00A1CB1B /* CFrustum.cpp */,
+				3CB28F3B1DA9F86E00A1CB1B /* CFrustum.h */,
+				3CB28F371DA9F81A00A1CB1B /* CSprite.cpp */,
+				3CB28F381DA9F81A00A1CB1B /* CSprite.h */,
+				3CB28F341DA9F79200A1CB1B /* intersections.cpp */,
+				3CB28F351DA9F79200A1CB1B /* intersections.h */,
+				3CB28F321DA9F48000A1CB1B /* COctree.cpp */,
+				3CB28F2F1DA9F1EF00A1CB1B /* CMenu.cpp */,
+				3CB28F301DA9F1EF00A1CB1B /* CMenu.h */,
+				3CB28F2D1D84DBF000A1CB1B /* CScene.cpp */,
+				3CB28F001D84D99000A1CB1B /* CScene.h */,
+				3CB28EFD1D84D89E00A1CB1B /* GameTime.cpp */,
+				3CB28EFE1D84D89E00A1CB1B /* GameTime.h */,
+				3CB28EFC1D83904000A1CB1B /* COctree.h */,
+				3CB28EF91D8385E000A1CB1B /* CLevel.cpp */,
+				3CB28EFA1D8385E000A1CB1B /* CLevel.h */,
 				3CB28EC41D7D248F00A1CB1B /* ReplayManager.cpp */,
 				3CB28EC51D7D248F00A1CB1B /* ReplayManager.h */,
 				3CC2AFE11D3B3C200003005B /* CSpriteEngine.h */,
@@ -327,10 +487,23 @@
 		3CC2AFDE1D3B3AB00003005B /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
+				3CB28EE51D8378F300A1CB1B /* CModel.cpp */,
 				3CC2AFE21D3B3D680003005B /* CModel.h */,
+				3CB28EE61D8378F300A1CB1B /* CModelLoader.cpp */,
+				3CB28EE71D8378F300A1CB1B /* CModelLoader.h */,
+				3CB28EE81D8378F300A1CB1B /* CParticleSystem.cpp */,
+				3CB28EE91D8378F300A1CB1B /* CParticleSystem.h */,
 				3CFD2DEB1D45AAF70005D3D0 /* Interfaces */,
+				3CB28EEA1D8378F300A1CB1B /* MatrixStack.cpp */,
+				3CB28EEB1D8378F300A1CB1B /* MatrixStack.h */,
+				3CB28EEC1D8378F300A1CB1B /* MeshBuffer.cpp */,
+				3CB28EED1D8378F300A1CB1B /* MeshBuffer.h */,
 				3CC2AFE01D3B3B360003005B /* OpenGLInclude.h */,
 				3CFD2DEC1D45AB040005D3D0 /* PlatformSpecific */,
+				3CB28EEE1D8378F300A1CB1B /* ShadowMapping.cpp */,
+				3CB28EEF1D8378F300A1CB1B /* ShadowMapping.h */,
+				3CB28EF01D8378F300A1CB1B /* Text.cpp */,
+				3CB28EF11D8378F300A1CB1B /* Text.h */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -446,25 +619,58 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CB28F231D84DADC00A1CB1B /* CameraPriorityTypes.cpp in Sources */,
+				3CB28F261D84DADC00A1CB1B /* CameraTransitionCollision.cpp in Sources */,
+				3CB28EF81D8378F300A1CB1B /* Text.cpp in Sources */,
 				3CFD2DF71D45B20C0005D3D0 /* Globals.cpp in Sources */,
+				3CB28F2E1D84DBF000A1CB1B /* CScene.cpp in Sources */,
+				3CB28F1F1D84DADC00A1CB1B /* CameraActiveTypes.cpp in Sources */,
 				3CB28EDE1D7E708800A1CB1B /* DebugRendering.cpp in Sources */,
 				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
 				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
+				3CB28F201D84DADC00A1CB1B /* CameraLerp.cpp in Sources */,
 				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
+				3CB28F3C1DA9F86E00A1CB1B /* CFrustum.cpp in Sources */,
+				3CB28F441DA9F93300A1CB1B /* CTowerSprite.cpp in Sources */,
+				3CB28F281D84DADC00A1CB1B /* CamTypeReplay.cpp in Sources */,
 				3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */,
+				3CB28F451DA9F93300A1CB1B /* CTowerStep.cpp in Sources */,
+				3CB28F3F1DA9F8C300A1CB1B /* CNebulus.cpp in Sources */,
 				3CB28ED21D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp in Sources */,
 				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
 				3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */,
+				3CB28F271D84DADC00A1CB1B /* CamTypeCircleFollow.cpp in Sources */,
+				3CB28F331DA9F48000A1CB1B /* COctree.cpp in Sources */,
 				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
+				3CB28EF51D8378F300A1CB1B /* MatrixStack.cpp in Sources */,
+				3CB28F291D84DADC00A1CB1B /* CamTypeTunnel.cpp in Sources */,
+				3CB28F391DA9F81A00A1CB1B /* CSprite.cpp in Sources */,
+				3CB28EF41D8378F300A1CB1B /* CParticleSystem.cpp in Sources */,
+				3CB28F221D84DADC00A1CB1B /* CameraLinks.cpp in Sources */,
 				3CB28EDD1D7E708800A1CB1B /* DebugMenu.cpp in Sources */,
 				3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */,
+				3CB28EF21D8378F300A1CB1B /* CModel.cpp in Sources */,
+				3CB28EF71D8378F300A1CB1B /* ShadowMapping.cpp in Sources */,
+				3CB28F481DA9F95600A1CB1B /* CTower.cpp in Sources */,
 				3CB28ED31D7E6CD700A1CB1B /* CTimerOSX.cpp in Sources */,
 				3CB28EE11D7E70FF00A1CB1B /* DebugOSX.cpp in Sources */,
+				3CB28EF31D8378F300A1CB1B /* CModelLoader.cpp in Sources */,
+				3CB28EFF1D84D89E00A1CB1B /* GameTime.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
+				3CB28F311DA9F1EF00A1CB1B /* CMenu.cpp in Sources */,
+				3CB28F361DA9F79200A1CB1B /* intersections.cpp in Sources */,
+				3CB28EFB1D8385E000A1CB1B /* CLevel.cpp in Sources */,
+				3CB28EF61D8378F300A1CB1B /* MeshBuffer.cpp in Sources */,
+				3CB28F251D84DADC00A1CB1B /* CameraTransition.cpp in Sources */,
 				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
 				3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */,
+				3CB28F241D84DADC00A1CB1B /* CameraTransform.cpp in Sources */,
+				3CB28F2A1D84DADC00A1CB1B /* CCamera.cpp in Sources */,
 				3CB28EC61D7D248F00A1CB1B /* ReplayManager.cpp in Sources */,
+				3CB28F2B1D84DADC00A1CB1B /* DebugCam.cpp in Sources */,
+				3CB28F211D84DADC00A1CB1B /* CameraLerpDistanceElevation.cpp in Sources */,
+				3CB28F2C1D84DADC00A1CB1B /* EularLerp.cpp in Sources */,
 				3CFD2DF31D45AF690005D3D0 /* OpenGLOSX.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

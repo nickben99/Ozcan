@@ -5,11 +5,11 @@
 
 // header files -----------
 #include "CameraLerp.h"
-#include "Game\GameTime.h"
-#include "Game\defines.h"
-#include "Camera\CameraTransform.h"
+#include "Game/GameTime.h"
+#include "Game/defines.h"
+#include "Camera/CameraTransform.h"
 #ifdef DETERMINISTIC_REPLAY_DEBUG
-#include "Game\ReplayManager.h"
+#include "Game/ReplayManager.h"
 #endif
 //-------------------------
 

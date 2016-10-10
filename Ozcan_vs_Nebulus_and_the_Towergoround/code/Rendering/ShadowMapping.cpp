@@ -3,20 +3,17 @@
 #ifdef USE_SHADERS
 
 // system includes --------
-#include <windows.h>	// header file for windows
-
-#include <glew-1.12.0\include\GL/glew.h>
-#include <gl\glu.h>		// header file for the GLu32 library
+#include <Rendering/OpenGLInclude.h>
 //-------------------------
 
 // header files -----------
 #include "ShadowMapping.h"
-#include "FileReading\TEXTURE.H"
-#include "Game\Globals.h"
-#include "Game\CMenu.h"
-#include "Math\CBox.h"
+#include "FileReading/TEXTURE.H"
+#include "Game/Globals.h"
+#include "Game/CMenu.h"
+#include "Math/CBox.h"
 #ifdef _DEBUG
-	#include "Debug\DebugMenu.h"
+	#include "Debug/DebugMenu.h"
 #endif
 //-------------------------
 

@@ -32,7 +32,7 @@ public:
 		for (int vert = 0; vert < 8; ++vert)
 		{
 			CVector toVert = verts[vert] - linePos;
-			maxProjection = defines::Max(maxProjection, fabs(toVert.dotProduct(lineDir)));
+			maxProjection = defines::Max<float>(maxProjection, fabs(toVert.dotProduct(lineDir)));
 		}
 		return maxProjection;
 	}

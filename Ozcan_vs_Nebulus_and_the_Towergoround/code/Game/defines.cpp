@@ -26,8 +26,6 @@ const char* GetDirectoryPath()
 	return pEmptyPath;
 }
 
-#ifdef _WINDOWS
-
 /*	returns true if a quadratic equation can be solved within defined limits and 
 	sets the referance parameter to the lowest root */
 bool solveQuadraticEquation(float a, float b, float c, float minRange, float maxRange, 
@@ -81,5 +79,3 @@ float ToShaderUIY(float coord)
 	float conversion = (Globals::Instance().windowHeight/2.0f);
 	return coord-conversion;
 }
-
-#endif

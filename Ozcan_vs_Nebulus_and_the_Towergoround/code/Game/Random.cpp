@@ -1,5 +1,5 @@
 // Random.cpp
-#ifdef _WINDOWS
+
 //--- System includes ---------------
 #include <stdlib.h>
 //----------------------------------
@@ -47,4 +47,3 @@ void Random::SetReplayManager(ReplayManager* pReplay)
 {
 	mpReplay = pReplay;
 }
-#endif

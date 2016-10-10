@@ -14,9 +14,7 @@
 #define _DebugMenu_h_
 
 //header files---------
-#ifdef _WINDOWS
 #include "Rendering/Text.h"
-#endif
 #include "Game/defines.h"
 #include "Math/CVector.h"
 //---------------------
@@ -63,14 +61,12 @@ public:
 
 		virtual void Update(){};
 
-#ifdef _WINDOWS
 		virtual void Draw(Text& font, float& xDrawPos, float& yDrawPos)
 		{
 			font.SetText(xDrawPos, yDrawPos, GetText());
 			font.Draw();
 			yDrawPos += font.GetTextHeight();
 		}
-#endif
 
 	protected:
 		static const int TextLength = 256;
@@ -103,9 +99,7 @@ public:
 		void Stop();
 
 		virtual void Update();
-#ifdef _WINDOWS
 		virtual void Draw(Text& font, float& xDrawPos, float& yDrawPos);
-#endif
 
 		virtual void Increment()
 		{
@@ -163,8 +157,11 @@ public:
 		virtual const char* GetText()
 		{
 #ifdef _WINDOWS
-			sprintf_s(displayText, "%s %f", text, *variable);
+            sprintf_s
+#elif OSX
+            sprintf
 #endif
+			(displayText, "%s %f", text, *variable);
 			return displayText;
 		}
 
@@ -286,16 +283,12 @@ public:
 
 private:
 	void Start();
-#ifdef _WINDOWS
 	void Stop();
-#endif
 
 private:
 	DebugMenuItemContainer* mainMenu;
 	bool isVisible;
-#ifdef _WINDOWS
 	Text* font;
-#endif
 };
 
 #endif // ifndef _DebugMenu_h_ 
