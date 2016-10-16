@@ -213,7 +213,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the normals
 		for (int normal = 0; normal < aModel->meshes[mesh].normalsNo; normal++)
 		{
-            int res =
+            res =
 #ifdef _WINDOWS
             sscanf_s
 #else
@@ -263,7 +263,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the triangles
 		for (int triangle = 0; triangle < aModel->meshes[mesh].trianglesNo; triangle++)
 		{
-            int res =
+            res =
 #ifdef _WINDOWS
             sscanf_s
 #else
@@ -345,7 +345,7 @@ int CModelLoader::load(char* filename, CModel **model)
 	// get all the materials
 	for (int material = 0; material < aModel->materialNo; material++)
 	{ // get material name
-        int res =
+        res =
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->materials[material].name, material::kStrLen);
 #else
@@ -466,7 +466,7 @@ int CModelLoader::load(char* filename, CModel **model)
         defines::ReverseString(fileReader.currentLineOfFile); // reverse the latest line of file
 		
 		// get colour map diffuse texture, get just filename at end of line (not path)
-        defines::CopyString (aModel->materials[material].clrMapTex, ""); // set to null in case no tex
+        defines::CopyString (aModel->materials[material].clrMapTex, "", sizeof(aModel->materials[material].clrMapTex)); // set to null in case no tex
         res =
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\\\"]", aModel->materials[material].clrMapTex, material::kStrLen);
@@ -477,7 +477,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 
 		// get alpha map texture, initially set to null in case their's no alpha map tex
-        defines::CopyString(aModel->materials[material].alphaMapTex, "");
+        defines::CopyString(aModel->materials[material].alphaMapTex, "", sizeof(aModel->materials[material].alphaMapTex));
         res =
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", &aModel->materials[material].alphaMapTex, material::kStrLen);
@@ -524,7 +524,7 @@ int CModelLoader::load(char* filename, CModel **model)
 	for (int bone = 0; bone < aModel->bonesNo; bone++)
 	{
 		// get bone name
-        int res =
+        res =
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].name, bone::kStrLen);
 #else
@@ -535,7 +535,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 
 		// get parent name, initially set to null
-        defines::CopyString (aModel->bones[bone].parentName, "");
+        defines::CopyString (aModel->bones[bone].parentName, "", sizeof(aModel->bones[bone].parentName));
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].parentName, bone::kStrLen);
 #else
@@ -590,7 +590,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the position Globals::Instance().keys
 		for (int posKey = 0; posKey < aModel->bones[bone].positionKeysAmt; posKey++)
 		{
-            int res =
+            res =
 #ifdef _WINDOWS
             sscanf_s
 #else
@@ -634,7 +634,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the rotation Globals::Instance().keys
 		for (int rotKey = 0; rotKey < aModel->bones[bone].rotationKeysAmt; rotKey++)
 		{
-            int res =
+            res =
 #ifdef _WINDOWS
             sscanf_s
 #else

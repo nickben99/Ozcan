@@ -140,7 +140,7 @@ void DebugRendering::InitBox()
 #endif
 }
 
-void DebugRendering::DrawBox(const CVector& /* pos */, float /* radius */, const CVector4& /* color */)
+void DebugRendering::DrawBox(const CVector& pos, float radius, const CVector4& color)
 {
 #ifdef _WINDOWS
 	CMatrix position;
@@ -151,7 +151,7 @@ void DebugRendering::DrawBox(const CVector& /* pos */, float /* radius */, const
 #endif
 }
 
-void DebugRendering::DrawBox(const CMatrix& /* trans */, const CVector4& /* color */)
+void DebugRendering::DrawBox(const CMatrix& trans, const CVector4& color)
 {
 #ifdef _WINDOWS
 	if (!enabled)

@@ -154,14 +154,17 @@ inline void ReverseString(char* buffer)
 #endif
 }
 
-inline void CopyString(char* copyTo, const char* copyFrom)
-{
 #ifdef _WINDOWS
-    strcpy_s(copyTo, copyFrom);
-#else
-    strcpy(copyTo, copyFrom);
-#endif
+inline void CopyString(char* copyTo, const char* copyFrom, int copyToSize)
+{
+	strcpy_s(copyTo, copyToSize, copyFrom);
 }
+#else
+inline void CopyString(char* copyTo, const char* copyFrom, int)
+{
+	strcpy(copyTo, copyFrom);
+}
+#endif
     
 }
 

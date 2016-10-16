@@ -3,7 +3,12 @@
 #ifdef USE_SHADERS
 
 // system includes --------
-#include <Rendering/OpenGLInclude.h>
+#ifdef _WINDOWS
+#include <glew-1.12.0\include\GL/glew.h>
+#endif
+#ifdef OSX
+#include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
+#endif
 //-------------------------
 
 // header files -----------
