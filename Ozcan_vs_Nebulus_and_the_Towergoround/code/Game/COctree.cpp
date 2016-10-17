@@ -233,13 +233,13 @@ void COctree::getSceneDimensionsAndTriangles(CSprite **sprite, int numberOfSprit
 		{
 			transparentTris.push_back(triangles[i]); // add triangle to transparentTris vector
 			triangles.erase(triangles.begin()+i); // erase it from triangles vector
-			totalTriangles = triangles.size(); // the list size has changed
+			totalTriangles = (int)triangles.size(); // the list size has changed
 		}
 		else{
 			i++;}
 	}
 
-	int transparentTriListSize = transparentTris.size();
+	int transparentTriListSize = (int)transparentTris.size();
 	for (int i = 0; i < transparentTriListSize; i++){
 		// add all the transparent triangles onto the end of the triangles vector
 		triangles.push_back(transparentTris[i]);}
@@ -354,7 +354,7 @@ void COctree::createNodeAndSubNodes(vector<int> *trianglesInNode, CVector *theCe
 
 	/*	if their is too many triangles in this node and the max octree 
 		level has not been reached */
-	int sizeOfTrianglesInNode = trianglesInNode->size();
+	int sizeOfTrianglesInNode = (int)trianglesInNode->size();
 	if( (sizeOfTrianglesInNode > MAX_TRIANGLES_PER_NODE) && 
 		(currentSubDivisionLevel < MAX_SUBDIVISION_LEVELS) )
 	{
@@ -484,7 +484,7 @@ void COctree::assignVerticeToNode(vector<int> *trianglesInNode)
 	for (unsigned i = 0; i < trianglesInNode->size(); i++){
 		nodeTriangles.push_back(&triangles[(*trianglesInNode)[i]]);} // set pointer into triangle vector
 
-	triangleCount = nodeTriangles.size(); // record this value for speed
+	triangleCount = (int)nodeTriangles.size(); // record this value for speed
 
 	groupNodeTrianglesByMaterial(); // sort the node triangles so their grouped by material
 }
@@ -529,7 +529,7 @@ void COctree::BuildTrianglesMeshBuffers(void)
 
 	material *previousMaterialMemoryAddress = 0;
 	bool trianglesCompleatlyTransparent = false;
-	int allTrianglesCount = triangles.size();
+	int allTrianglesCount = (int)triangles.size();
 	for (int tri = 0; tri < allTrianglesCount; tri++)
 	{	// if the triangle has not yet been drawn ths frame
 		aTriangle &triangleRequired = triangles[tri];
@@ -541,11 +541,11 @@ void COctree::BuildTrianglesMeshBuffers(void)
 				meshBuffers.push_back(new MeshBuffer());
 
 				vector<float>& arr = *positions;
-				meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], positions->size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], (int)positions->size(), false);
 				vector<float>& arrnormals = *normals;
-				meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], normals->size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], (int)normals->size(), false);
 				vector<float>& arrtexCoords = *texCoords;
-				meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], texCoords->size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], (int)texCoords->size(), false);
 
 				if (0 != previousMaterialMemoryAddress) 
 				{
@@ -585,11 +585,11 @@ void COctree::BuildTrianglesMeshBuffers(void)
 		meshBuffers.push_back(new MeshBuffer());
 
 		vector<float>& arr = *positions;
-		meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], positions->size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], (int)positions->size(), false);
 		vector<float>& arrnormals = *normals;
-		meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], normals->size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], (int)normals->size(), false);
 		vector<float>& arrtexCoords = *texCoords;
-		meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], texCoords->size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], (int)texCoords->size(), false);
 
 		if (0 != previousMaterialMemoryAddress) 
 		{
@@ -603,7 +603,7 @@ void COctree::DrawTrianglesMeshBuffers(void)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // blend type (for transparency)
 	Globals::Instance().gl.GLEnable(GL_BLEND); // enable blending (for transparency)
 
-	int numMeshBuffers = meshBuffers.size();
+	int numMeshBuffers = (int)meshBuffers.size();
 	for (int buffer = 0; buffer < numMeshBuffers; ++buffer)
 	{
 		meshBuffers[buffer]->Draw();
