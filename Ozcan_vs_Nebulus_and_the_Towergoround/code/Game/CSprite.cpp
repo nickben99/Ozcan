@@ -14,6 +14,7 @@
 CSprite::CSprite()
 {
 	model = 0;
+	mpReplayData = 0;
 }
 
 // overloaded constructor
