@@ -1,9 +1,9 @@
 //CLevel.cpp, the level class
 
-#ifdef _WINDOWS
-
 // system includes --------
 #include <assert.h>
+#include <stdio.h>
+#include <string.h>
 //-------------------------
 
 // header files -----------
@@ -12,7 +12,7 @@
 #include "Game/defines.h"
 #include "CMenu.h"
 #include "Game/Main.h"
-#include "Rendering\ShadowMapping.h"
+#include "Rendering/ShadowMapping.h"
 //-------------------------
 
 // constructor
@@ -62,7 +62,9 @@ void DrawIntroScreenLoadingBar(CHUD* theHUD, float completion)
 {
 	theHUD->draw();
 	theHUD->drawIntroScreenLoadingBar( completion );
-	SwapBuffers( hDC ); // swap the frame buffers 
+#ifdef _WINDOWS
+	SwapBuffers( hDC ); // swap the frame buffers
+#endif
 }
 
 #if (_DEBUG && USE_SHADERS)
@@ -83,7 +85,9 @@ bool CLevel::loadLevel(GLint theLevel)
 
 	if (!ShadowMapping::Create())
 	{
+#ifdef _WINDOWS
 		MessageBox(0,"Could not create depth texture","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#endif
 		return false;
 	}
 
@@ -99,10 +103,17 @@ bool CLevel::loadLevel(GLint theLevel)
 	CTextFileReader fileReader; // for file reading
 	char buffer[256]; // char buffer holds the level descriptor filename
 
-	sprintf_s(buffer, "%slevels/level%d.txt", GetDirectoryPath(), level); // create file name with path
+#ifdef _WINDOWS
+    sprintf_s
+#else
+    sprintf
+#endif
+    (buffer, "%slevels/level%d.txt", GetDirectoryPath(), level); // create file name with path
 
 	if (!fileReader.openFile(buffer, ios::in)){
+#ifdef _WINDOWS
 		MessageBox(0,"level file could not be opened","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#endif
 		return(false);} // return false if file could not be opened
 
 	DrawIntroScreenLoadingBar(theHUD, 0.1f);
@@ -111,7 +122,12 @@ bool CLevel::loadLevel(GLint theLevel)
 									or a comment line */
 
 	// get the the time this level runs for
-	sscanf_s(fileReader.currentLineOfFile, "%d",	&totalLevelTime);
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+    (fileReader.currentLineOfFile, "%d", &totalLevelTime);
 	totalLevelTime*=1000; // convert level time from seconds to milliseconds
 	fileReader.getNextLine();
 
@@ -119,22 +135,41 @@ bool CLevel::loadLevel(GLint theLevel)
 	char tempBackgroundTexturePath[kBackgroundTextLen];
 	/*	get the background texture for this level (get everything between 
 		the two quotation marks in the file) */
-	sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]", tempBackgroundTexturePath, kBackgroundTextLen);     
+#ifdef _WINDOWS
+    sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]", tempBackgroundTexturePath, kBackgroundTextLen);
+#else
+    sscanf(fileReader.currentLineOfFile, "\"%[^\"]", tempBackgroundTexturePath);
+#endif
 	
 	char backgroundTexture[kBackgroundTextLen];
-	sprintf_s(backgroundTexture, "%s%s", GetDirectoryPath(), tempBackgroundTexturePath);
+#ifdef _WINDOWS
+    sprintf_s
+#else
+    sprintf
+#endif
+    (backgroundTexture, "%s%s", GetDirectoryPath(), tempBackgroundTexturePath);
 		
 	fileReader.getNextLine();
 	
 	int totalRows, totalColumns, rowHeight, columnWidth;
 
 	// get the number of rows for the scene's tower
-	sscanf_s(fileReader.currentLineOfFile, "%d %d",	&totalRows,
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+    (fileReader.currentLineOfFile, "%d %d",	&totalRows,
 													&rowHeight);
 	fileReader.getNextLine();
 
 	// get the number of columns for the scene's tower
-	sscanf_s(fileReader.currentLineOfFile, "%d %d",	&totalColumns,
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+    (fileReader.currentLineOfFile, "%d %d",	&totalColumns,
 													&columnWidth);
 	fileReader.getNextLine();
 
@@ -162,7 +197,12 @@ bool CLevel::loadLevel(GLint theLevel)
 		*legendInformation = 0;
 
 	// get the number of legend information items of sprites associated with models
-	sscanf_s(fileReader.currentLineOfFile, "%d", &numberOfLegendItemsToLoad);
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+    (fileReader.currentLineOfFile, "%d", &numberOfLegendItemsToLoad);
 	fileReader.getNextLine();
 
 	/*	allocate memory for legend information 
@@ -183,9 +223,16 @@ bool CLevel::loadLevel(GLint theLevel)
 			legendCounter++)
 		{
 			// get spriteID along with corresponding modelID
-			sscanf_s(fileReader.currentLineOfFile, "%c %d",
-				&temp, 1,
-				&tempInt);
+#ifdef _WINDOWS
+            sscanf_s(fileReader.currentLineOfFile, "%c %d",
+                     &temp, 1,
+                     &tempInt);
+#else
+            sscanf(fileReader.currentLineOfFile, "%c %d",
+                   &temp,
+                   &tempInt);
+#endif
+            
 			legendInformation[(legendCounter * 2) + 1] = tempInt;
 			legendInformation[legendCounter * 2] = (int)temp; // cast to int
 			fileReader.getNextLine();
@@ -198,7 +245,12 @@ bool CLevel::loadLevel(GLint theLevel)
 	char** tempModelFileNames = 0; //file names
 
 	// get the number of models which require loading for this level
-	sscanf_s(fileReader.currentLineOfFile, "%d", &tempNoOfModelsToLoad);
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+    (fileReader.currentLineOfFile, "%d", &tempNoOfModelsToLoad);
 	fileReader.getNextLine();
 
 	// allocate memory for the array of file names sent to the sprite engine
@@ -210,25 +262,38 @@ bool CLevel::loadLevel(GLint theLevel)
 	const int kStringLen = 200;
 	char path[kStringLen], tempFilename[kStringLen], tempPath[kStringLen];
 	// set the path to this levels models
-	sprintf_s(path, "%s%d%s", "Level", level, "/");
-	strcpy_s(tempFilename, ""); // set up temporary variables
-	strcpy_s(tempPath, path);
+#ifdef _WINDOWS
+    sprintf_s
+#else
+    sprintf
+#endif
+    (path, "%s%d%s", "Level", level, "/");
+    defines::CopyString(tempFilename, "", kStringLen); // set up temporary variables
+	defines::CopyString(tempPath, path, kStringLen);
 	
 	// put all model file names into dynamic array
 	for (int modelFilename = 0; modelFilename < tempNoOfModelsToLoad; modelFilename++)
 	{
 		tempModelFileNames[modelFilename] = new char[kStringLen]; // allocate memory
 		 // get filename
-		sscanf_s(fileReader.currentLineOfFile, "%s", tempFilename, kStringLen);
+#ifdef _WINDOWS
+        sscanf_s(fileReader.currentLineOfFile, "%s", tempFilename, kStringLen);
+#else
+        sscanf(fileReader.currentLineOfFile, "%s", tempFilename);
+#endif
 
 		// append filename to path
-		strcat_s(tempPath, kStringLen, tempFilename);
+#ifdef _WINDOWS
+        strcat_s(tempPath, kStringLen, tempFilename);
+#else
+        strcat(tempPath, tempFilename);
+#endif
 		/*	copy tempPath (which contains the filename as well, from above commenad) 
 			to tempModelFileNames[modelFilename] */
-		strcpy_s(tempModelFileNames[modelFilename], kStringLen, tempPath);
+        defines::CopyString(tempModelFileNames[modelFilename], tempPath, kStringLen);
 
-		strcpy_s(tempFilename, ""); // reset tempFilename and tempPath
-		strcpy_s(tempPath, path);
+		defines::CopyString(tempFilename, "", kStringLen); // reset tempFilename and tempPath
+		defines::CopyString(tempPath, path, kStringLen);
 
 		fileReader.getNextLine();
 	}
@@ -237,7 +302,9 @@ bool CLevel::loadLevel(GLint theLevel)
 
 	// load this levels models
 	if (!theSprites.loadModels(&tempModelFileNames[0], tempNoOfModelsToLoad)){
+#ifdef _WINDOWS
 		MessageBox(0,"model loading failed","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#endif
 		return(false);} // model loading failed
 
 	DrawIntroScreenLoadingBar(theHUD, 0.6f);
@@ -262,7 +329,12 @@ bool CLevel::loadLevel(GLint theLevel)
 	int *nonTowerSpriteInformation = 0;
 		
 	// get number of non tower sprites required for this level
-	sscanf_s(fileReader.currentLineOfFile, "%d", &tempNumberOfNonTowerSpritesToLoad);
+#ifdef _WINDOWS
+    sscanf_s
+#else
+    sscanf
+#endif
+	(fileReader.currentLineOfFile, "%d", &tempNumberOfNonTowerSpritesToLoad);
 	fileReader.getNextLine();
 
 	/*	allocate memory (multiplied by two as each non tower sprite has a number 
@@ -276,9 +348,15 @@ bool CLevel::loadLevel(GLint theLevel)
 	for (int sprite = 0; sprite < tempNumberOfNonTowerSpritesToLoad; sprite++)
 	{
 		char temp; // used to get char from file before casting as int
-		sscanf_s(fileReader.currentLineOfFile, "%c %d",	
-											&temp, 1,
-											&nonTowerSpriteInformation[(sprite*2)+1]);
+#ifdef _WINDOWS
+        sscanf_s(fileReader.currentLineOfFile, "%c %d",
+                 &temp, 1,
+                 &nonTowerSpriteInformation[(sprite*2)+1]);
+#else
+        sscanf(fileReader.currentLineOfFile, "%c %d",
+                 &temp,
+                 &nonTowerSpriteInformation[(sprite*2)+1]);
+#endif
 		nonTowerSpriteInformation[sprite*2] = (int)temp; // cast to int
 		fileReader.getNextLine();
 	}
@@ -321,7 +399,9 @@ bool CLevel::loadLevel(GLint theLevel)
 	fileReader.closeFile();
 
 	if (!theScene.initialise(backgroundTexture)){ // do any initialisation in the scene
+#ifdef _WINDOWS
 		MessageBox(0, backgroundTexture,"ERROR",MB_OK|MB_ICONEXCLAMATION);
+#endif
 		return(false);} // return false if scene initialisation problems
 
 	levelOctree.getSceneDimensionsAndTriangles(&theSprites.sprites[0], 
@@ -443,7 +523,7 @@ void CLevel::processKeyInput()
 	switch(theHUD->currentHUDState)
 	{
 		case INTRO_SCREEN:
-			strcpy_s(theHUD->introScreenText, "Press Enter To Proceed");
+            defines::CopyString(theHUD->introScreenText, "Press Enter To Proceed", 256);
 		case RESTART_SCREEN:
 			levelTimer = 0; // level has not yet begun
 			levelTimeRemaining = totalLevelTime;
@@ -549,14 +629,14 @@ void CLevel::collisionDetection()
 				if (theNebulus->position.y < -50.0f) // died through falling off tower
 				{
 					theHUD->restartScreenSubTextXScreenPerCent = 0.1f;
-					strcpy_s(theHUD->restartScreenSubText, "You Fell Off The Tower, Press Enter To Play");
+                    defines::CopyString(theHUD->restartScreenSubText, "You Fell Off The Tower, Press Enter To Play", 256);
 
 					reStartLevel(ReplayManager::eRSEnd);// replay end level
 					return;
 				}
 
 				theHUD->restartScreenSubTextXScreenPerCent = 0.1f;
-				strcpy_s(theHUD->restartScreenSubText, "You Ran Out Of Time, Press Enter To Play");
+				defines::CopyString(theHUD->restartScreenSubText, "You Ran Out Of Time, Press Enter To Play", 256);
 				// died by running out of time - no replay
 			}			
 		}
@@ -575,10 +655,15 @@ void CLevel::collisionDetection()
 #endif
 
 			theHUD->currentHUDState = END_GAME;
-			strcpy_s(theHUD->endScreenText, "Level Completed"); // set text
+            defines::CopyString(theHUD->endScreenText, "Level Completed", 256); // set text
 			theHUD->endScreenTextXScreenPerCent = 0.07f;
 			
-			sprintf_s(theHUD->endScreenSubText, 
+#ifdef _WINDOWS
+            sprintf_s
+#else
+            sprintf
+#endif
+            (theHUD->endScreenSubText,
 				"Level score %d, time bonus %d, Total score %d", 
 				/*	time bonus is a per centage of 10,000 the longer the level has taken 
 					to complete the lower the time bonus */	
@@ -599,20 +684,20 @@ void CLevel::collisionDetection()
 			if (theNebulus->lives < 0) // no lives left, go back to menu screen
 			{
 				theHUD->currentHUDState = END_GAME;
-				strcpy_s(theHUD->endScreenText, "Game Over"); // set text
+                defines::CopyString(theHUD->endScreenText, "Game Over", 256); // set text
 				theHUD->endScreenTextXScreenPerCent = 0.2f; 
 
 				// print a different message depending on the type of death
 				if (theNebulus->position.y < -50.0f) 
 				{
 					theHUD->endScreenSubTextXScreenPerCent = 0.28f;
-					strcpy_s(theHUD->endScreenSubText, "You Fell Off The Tower");
+					defines::CopyString(theHUD->endScreenSubText, "You Fell Off The Tower", 256);
 				}
 
 				if (levelTimeRemaining <= 0) 
 				{
 					theHUD->endScreenSubTextXScreenPerCent = 0.3f;
-					strcpy_s(theHUD->endScreenSubText, "You Ran Out Of Time");
+					defines::CopyString(theHUD->endScreenSubText, "You Ran Out Of Time", 256);
 				}
 				mGameTime.Pause(true); //paused = 1; // stop the game
 			}
@@ -789,8 +874,6 @@ void CLevel::CheckStartWholeLevelReplay()
 	}
 #endif
 }
-
-#endif
 
 
 

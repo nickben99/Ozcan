@@ -2,10 +2,8 @@
 												classes of CMenuOption) */
 
 //system includes------------
-#include <windows.h>		// header file for windows
+#include <Rendering/OpenGLInclude.h>
 #include <stdio.h>			// header file for standard input/output
-#include <gl\gl.h>			// header file for the OpenGL32 library
-#include <gl\glu.h>			// header file for the GLu32 library
 //---------------------------
 
 // external variables -------
@@ -29,12 +27,14 @@ class CExit : public CMenuOption
 // public methods ----------------------
 		CExit()
 		{
-			strcpy_s(screenText, "Exit Game");
+            defines::CopyString(screenText, "Exit Game", 100);
 		}
 
 		int action( void)
 		{
+#ifdef _WINDOWS
 			PostQuitMessage(WM_QUIT); // post a quit message to end the game
+#endif
 			return( true ); /*	return type true means the leaveMenu method will 
 								not be executed (this stops the curser flicking back 
 								to the first option before exiting the game) */
@@ -48,7 +48,7 @@ class CLevelOne : public CMenuOption
 // public methods ----------------------
 		CLevelOne() // constructor
 		{
-			strcpy_s(screenText, "Play Level 1");
+			defines::CopyString(screenText, "Play Level 1", 100);
 			HUD = CHUD::instance(); // get singleton instance
 		}
 
@@ -66,7 +66,7 @@ class CLevelTwo : public CMenuOption
 // public methods ----------------------
 		CLevelTwo() // constructor
 		{
-			strcpy_s(screenText, "Play Level 2");
+            defines::CopyString(screenText, "Play Level 2", 100);
 			HUD = CHUD::instance(); // get singleton instance
 		}
 
@@ -84,7 +84,7 @@ class CLevelThree : public CMenuOption
 // public methods ----------------------
 		CLevelThree() // constructor
 		{
-			strcpy_s(screenText, "Play Level 3");
+			defines::CopyString(screenText, "Play Level 3", 100);
 			HUD = CHUD::instance(); // get singleton instance
 		}
 
@@ -112,7 +112,7 @@ class CMainMenu : public CMenu
 			CLevelOne *levelOne = new CLevelOne();
 			CLevelTwo *levelTwo = new CLevelTwo();
 			CLevelThree *levelThree = new CLevelThree();
-			CExit	*exit = new CExit();
+			CExit *exit = new CExit();
 
 			menuOptions.push_back(levelOne);
 			menuOptions.push_back(levelTwo);
@@ -125,9 +125,19 @@ class CMainMenu : public CMenu
 		{
 			// load the main menus background and curser 
 			char theBackground[400];
-			sprintf_s(theBackground, "%simages/back2.bmp", GetDirectoryPath());
+#ifdef _WINDOWS
+            sprintf_s
+#else
+            sprintf
+#endif
+			(theBackground, "%simages/back2.bmp", GetDirectoryPath());
 			char theCurser[400];
-			sprintf_s(theCurser, "%simages/select.bmp", GetDirectoryPath());
+#ifdef _WINDOWS
+            sprintf_s
+#else
+            sprintf
+#endif
+            (theCurser, "%simages/select.bmp", GetDirectoryPath());
 			return( CMenu::Load(theBackground, theCurser));
 		}
 

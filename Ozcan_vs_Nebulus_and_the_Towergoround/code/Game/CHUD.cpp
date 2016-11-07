@@ -3,16 +3,20 @@
 // system includes --------
 #include <math.h>
 #include <time.h>
+#ifdef _WINDOWS
 #include <glew-1.12.0\include\GL/glew.h>
+#endif
 //-------------------------
 
 // header files -----------
 #include "CHUD.h"
 #include "CMenu.h"
 #include "Globals.h"
+#include "Game/defines.h"
+#include "Game/ReplayManager.h"
 //-------------------------
 
-extern HWND hWnd;
+//extern HWND hWnd;
 
 extern GLuint TextureLoad(const char *filename, bool alpha, GLenum minfilter, GLenum magfilter, GLenum wrap);
 
@@ -51,7 +55,7 @@ CHUD::CHUD( void)
 void CHUD::reinitialiseHUD( void) // set back to starting state
 {
 	currentHUDState = INTRO_SCREEN; // hud starts on intro screen
-	strcpy_s(introScreenText, "Loading...");
+    defines::CopyString(introScreenText, "Loading...", 256);
 	powerUpPerCentRemaining = 0.0f;
 }
 
@@ -158,7 +162,12 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 #endif
 
 	char buffer[256];
-	sprintf_s(buffer, "%simages/introScrn1.bmp", GetDirectoryPath()); // create file name with path
+#ifdef _WINDOWS
+    sprintf_s
+#else
+    sprintf
+#endif
+	(buffer, "%simages/introScrn1.bmp", GetDirectoryPath()); // create file name with path
 
 	introScreenBackground = // bind the intro screen Background texture
 		TextureLoad(buffer, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);
@@ -459,11 +468,16 @@ void CHUD::ReplayDraw()
 
 	if (wholeLevelReplay)
 	{
-		sprintf_s(replayText, "REPLAY REPLAY - whole - %s", (repeating) ? "repeat" : "non repeat"); 
+#ifdef _WINDOWS
+        sprintf_s
+#else
+        sprintf
+#endif
+        (replayText, "REPLAY REPLAY - whole - %s", (repeating) ? "repeat" : "non repeat");
 	}
 	else
 	{
-		strcpy_s(replayText, "REPLAY REPLAY - end"); 
+        defines::CopyString(replayText, "REPLAY REPLAY - end", NumReplayTextChars);
 	}
 #else
 	strcpy_s(replayText, "REPLAY REPLAY"); // print the string

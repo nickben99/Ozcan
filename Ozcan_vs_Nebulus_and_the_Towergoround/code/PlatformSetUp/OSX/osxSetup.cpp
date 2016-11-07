@@ -10,6 +10,8 @@
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 #include "Audio/SoundsEnum.h"
 
+GLFWwindow* window = nullptr;
+
 void display()
 {
     glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
@@ -35,7 +37,7 @@ int main()
     }
     //glEnable(GL_DEPTH_TEST);
     
-    GLFWwindow* window = glfwCreateWindow( 640, 480, "Ozcan vs Nebulus and the Towergoround", NULL, NULL);
+    window = glfwCreateWindow( 640, 480, "Ozcan vs Nebulus and the Towergoround", NULL, NULL);
     if (!window)
     {
         glfwTerminate(); //terminating glfw window

@@ -15,7 +15,7 @@
 #include "FileReading/texture.h"
 #include "Game/Globals.h"
 #if _DEBUG
-	#include "Debug\DebugMenu.h"
+	#include "Debug/DebugMenu.h"
 #endif
 //--------------------------------------
 

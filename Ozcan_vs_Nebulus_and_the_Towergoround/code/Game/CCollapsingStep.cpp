@@ -137,5 +137,6 @@ void CCollapsingStep::collisionResponse(	CSprite * collidedWith,
 			}
 			break;
 		}
+        default: break;
 	}
 }

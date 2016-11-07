@@ -10,7 +10,9 @@
 #ifdef OSX
 #include <cstdlib>
 #include <string.h>
+#include <unistd.h> // for usleep
 #endif
+
 //---------------------------
 
 #ifndef _defines_h_
@@ -159,13 +161,22 @@ inline void CopyString(char* copyTo, const char* copyFrom, int copyToSize)
 {
 	strcpy_s(copyTo, copyToSize, copyFrom);
 }
+    
+inline void sleep(unsigned milliseconds)
+{
+    Sleep(milliseconds);
+}
 #else
 inline void CopyString(char* copyTo, const char* copyFrom, int)
 {
 	strcpy(copyTo, copyFrom);
 }
-#endif
     
+inline void sleep(unsigned milliseconds)
+{
+    usleep(milliseconds * 1000); // takes microseconds
+}
+#endif
 }
 
 #endif // ifndef _defines_

@@ -1,9 +1,7 @@
 //CPowerUp.h - header for the power up class (includes the powerUp manager class)
 
 //system includes------------
-#include <windows.h>	// header file for windows
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#include <gl\glu.h>		// header file for the GLu32 library
+#include <Rendering/OpenGLInclude.h>
 //---------------------------
 
 #ifndef _CPowerUp_h_
@@ -107,7 +105,7 @@ class CPowerUpManager
 		int isPositionTaken(CVector *newPosition, CPowerUp* self)
 		{
 			// get the amount of power ups in the level
-			int totalPowerUpsInLevel = powerUpsInLevel.size();
+			int totalPowerUpsInLevel = (int)powerUpsInLevel.size();
 			for (int pUp = 0; pUp < totalPowerUpsInLevel; pUp++)
 			{
 				if( (powerUpsInLevel[pUp] != self) && 

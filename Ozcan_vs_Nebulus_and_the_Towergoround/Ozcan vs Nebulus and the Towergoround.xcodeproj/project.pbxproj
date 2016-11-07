@@ -57,6 +57,29 @@
 		3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEA1D3B3E010003005B /* CVector.cpp */; };
 		3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFEF1D3B3E2B0003005B /* defines.cpp */; };
 		3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AFF21D3B3F1D0003005B /* Random.cpp */; };
+		3CE82B091DCEAD42009ADBEF /* CBouncingSideToSideEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82AFF1DCEAD42009ADBEF /* CBouncingSideToSideEnemy.cpp */; };
+		3CE82B0A1DCEAD42009ADBEF /* CCollapsingStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B011DCEAD42009ADBEF /* CCollapsingStep.cpp */; };
+		3CE82B0B1DCEAD42009ADBEF /* CExitScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B031DCEAD42009ADBEF /* CExitScreen.cpp */; };
+		3CE82B0C1DCEAD42009ADBEF /* CFireBall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B051DCEAD42009ADBEF /* CFireBall.cpp */; };
+		3CE82B0D1DCEAD42009ADBEF /* CFlyAcrossEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B071DCEAD42009ADBEF /* CFlyAcrossEnemy.cpp */; };
+		3CE82B161DCEAEEA009ADBEF /* CHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B0E1DCEAEEA009ADBEF /* CHUD.cpp */; };
+		3CE82B171DCEAEEA009ADBEF /* CHUDFader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B101DCEAEEA009ADBEF /* CHUDFader.cpp */; };
+		3CE82B181DCEAEEA009ADBEF /* CLift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B121DCEAEEA009ADBEF /* CLift.cpp */; };
+		3CE82B191DCEAEEA009ADBEF /* CMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B141DCEAEEA009ADBEF /* CMainMenu.cpp */; };
+		3CE82B1B1DCEB6C2009ADBEF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B1A1DCEB6C2009ADBEF /* main.cpp */; };
+		3CE82B1D1DCED712009ADBEF /* CSpriteEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B1C1DCED712009ADBEF /* CSpriteEngine.cpp */; };
+		3CE82B201DD00EF1009ADBEF /* CSlippyStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B1E1DD00EF1009ADBEF /* CSlippyStep.cpp */; };
+		3CE82B371DD00F4B009ADBEF /* CPowerUp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B211DD00F4B009ADBEF /* CPowerUp.cpp */; };
+		3CE82B381DD00F4B009ADBEF /* CPowerUpGrow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B231DD00F4B009ADBEF /* CPowerUpGrow.cpp */; };
+		3CE82B391DD00F4B009ADBEF /* CPowerUpNoFriction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B251DD00F4B009ADBEF /* CPowerUpNoFriction.cpp */; };
+		3CE82B3A1DD00F4B009ADBEF /* CPowerUpSpeed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B271DD00F4B009ADBEF /* CPowerUpSpeed.cpp */; };
+		3CE82B3B1DD00F4B009ADBEF /* CSideToSideEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B291DD00F4B009ADBEF /* CSideToSideEnemy.cpp */; };
+		3CE82B3C1DD00F4B009ADBEF /* CSkyBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B2B1DD00F4B009ADBEF /* CSkyBoard.cpp */; };
+		3CE82B3D1DD00F4B009ADBEF /* CTowerBottom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B2D1DD00F4B009ADBEF /* CTowerBottom.cpp */; };
+		3CE82B3E1DD00F4B009ADBEF /* CTowerTop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B2F1DD00F4B009ADBEF /* CTowerTop.cpp */; };
+		3CE82B3F1DD00F4B009ADBEF /* CTunnel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B311DD00F4B009ADBEF /* CTunnel.cpp */; };
+		3CE82B401DD00F4B009ADBEF /* CUpDownEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B331DD00F4B009ADBEF /* CUpDownEnemy.cpp */; };
+		3CE82B411DD00F4B009ADBEF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B351DD00F4B009ADBEF /* Game.cpp */; };
 		3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */; };
 		3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */; };
 		3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE81D3C40850005D3D0 /* texture.cpp */; };
@@ -188,6 +211,50 @@
 		3CC2AFF01D3B3E2B0003005B /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = defines.h; path = code/Game/defines.h; sourceTree = "<group>"; };
 		3CC2AFF21D3B3F1D0003005B /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Random.cpp; path = code/Game/Random.cpp; sourceTree = "<group>"; };
 		3CC2AFF31D3B3F1D0003005B /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Random.h; path = code/Game/Random.h; sourceTree = "<group>"; };
+		3CE82AFF1DCEAD42009ADBEF /* CBouncingSideToSideEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CBouncingSideToSideEnemy.cpp; path = code/Game/CBouncingSideToSideEnemy.cpp; sourceTree = "<group>"; };
+		3CE82B001DCEAD42009ADBEF /* CBouncingSideToSideEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBouncingSideToSideEnemy.h; path = code/Game/CBouncingSideToSideEnemy.h; sourceTree = "<group>"; };
+		3CE82B011DCEAD42009ADBEF /* CCollapsingStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCollapsingStep.cpp; path = code/Game/CCollapsingStep.cpp; sourceTree = "<group>"; };
+		3CE82B021DCEAD42009ADBEF /* CCollapsingStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCollapsingStep.h; path = code/Game/CCollapsingStep.h; sourceTree = "<group>"; };
+		3CE82B031DCEAD42009ADBEF /* CExitScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CExitScreen.cpp; path = code/Game/CExitScreen.cpp; sourceTree = "<group>"; };
+		3CE82B041DCEAD42009ADBEF /* CExitScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CExitScreen.h; path = code/Game/CExitScreen.h; sourceTree = "<group>"; };
+		3CE82B051DCEAD42009ADBEF /* CFireBall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CFireBall.cpp; path = code/Game/CFireBall.cpp; sourceTree = "<group>"; };
+		3CE82B061DCEAD42009ADBEF /* CFireBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFireBall.h; path = code/Game/CFireBall.h; sourceTree = "<group>"; };
+		3CE82B071DCEAD42009ADBEF /* CFlyAcrossEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CFlyAcrossEnemy.cpp; path = code/Game/CFlyAcrossEnemy.cpp; sourceTree = "<group>"; };
+		3CE82B081DCEAD42009ADBEF /* CFlyAcrossEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFlyAcrossEnemy.h; path = code/Game/CFlyAcrossEnemy.h; sourceTree = "<group>"; };
+		3CE82B0E1DCEAEEA009ADBEF /* CHUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CHUD.cpp; path = code/Game/CHUD.cpp; sourceTree = "<group>"; };
+		3CE82B0F1DCEAEEA009ADBEF /* CHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHUD.h; path = code/Game/CHUD.h; sourceTree = "<group>"; };
+		3CE82B101DCEAEEA009ADBEF /* CHUDFader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CHUDFader.cpp; path = code/Game/CHUDFader.cpp; sourceTree = "<group>"; };
+		3CE82B111DCEAEEA009ADBEF /* CHUDFader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHUDFader.h; path = code/Game/CHUDFader.h; sourceTree = "<group>"; };
+		3CE82B121DCEAEEA009ADBEF /* CLift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CLift.cpp; path = code/Game/CLift.cpp; sourceTree = "<group>"; };
+		3CE82B131DCEAEEA009ADBEF /* CLift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLift.h; path = code/Game/CLift.h; sourceTree = "<group>"; };
+		3CE82B141DCEAEEA009ADBEF /* CMainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CMainMenu.cpp; path = code/Game/CMainMenu.cpp; sourceTree = "<group>"; };
+		3CE82B151DCEAEEA009ADBEF /* CMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMainMenu.h; path = code/Game/CMainMenu.h; sourceTree = "<group>"; };
+		3CE82B1A1DCEB6C2009ADBEF /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = code/Game/main.cpp; sourceTree = "<group>"; };
+		3CE82B1C1DCED712009ADBEF /* CSpriteEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSpriteEngine.cpp; path = code/Game/CSpriteEngine.cpp; sourceTree = "<group>"; };
+		3CE82B1E1DD00EF1009ADBEF /* CSlippyStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSlippyStep.cpp; path = code/Game/CSlippyStep.cpp; sourceTree = "<group>"; };
+		3CE82B1F1DD00EF1009ADBEF /* CSlippyStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSlippyStep.h; path = code/Game/CSlippyStep.h; sourceTree = "<group>"; };
+		3CE82B211DD00F4B009ADBEF /* CPowerUp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPowerUp.cpp; path = code/Game/CPowerUp.cpp; sourceTree = "<group>"; };
+		3CE82B221DD00F4B009ADBEF /* CPowerUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPowerUp.h; path = code/Game/CPowerUp.h; sourceTree = "<group>"; };
+		3CE82B231DD00F4B009ADBEF /* CPowerUpGrow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPowerUpGrow.cpp; path = code/Game/CPowerUpGrow.cpp; sourceTree = "<group>"; };
+		3CE82B241DD00F4B009ADBEF /* CPowerUpGrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPowerUpGrow.h; path = code/Game/CPowerUpGrow.h; sourceTree = "<group>"; };
+		3CE82B251DD00F4B009ADBEF /* CPowerUpNoFriction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPowerUpNoFriction.cpp; path = code/Game/CPowerUpNoFriction.cpp; sourceTree = "<group>"; };
+		3CE82B261DD00F4B009ADBEF /* CPowerUpNoFriction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPowerUpNoFriction.h; path = code/Game/CPowerUpNoFriction.h; sourceTree = "<group>"; };
+		3CE82B271DD00F4B009ADBEF /* CPowerUpSpeed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CPowerUpSpeed.cpp; path = code/Game/CPowerUpSpeed.cpp; sourceTree = "<group>"; };
+		3CE82B281DD00F4B009ADBEF /* CPowerUpSpeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPowerUpSpeed.h; path = code/Game/CPowerUpSpeed.h; sourceTree = "<group>"; };
+		3CE82B291DD00F4B009ADBEF /* CSideToSideEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSideToSideEnemy.cpp; path = code/Game/CSideToSideEnemy.cpp; sourceTree = "<group>"; };
+		3CE82B2A1DD00F4B009ADBEF /* CSideToSideEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSideToSideEnemy.h; path = code/Game/CSideToSideEnemy.h; sourceTree = "<group>"; };
+		3CE82B2B1DD00F4B009ADBEF /* CSkyBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSkyBoard.cpp; path = code/Game/CSkyBoard.cpp; sourceTree = "<group>"; };
+		3CE82B2C1DD00F4B009ADBEF /* CSkyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSkyBoard.h; path = code/Game/CSkyBoard.h; sourceTree = "<group>"; };
+		3CE82B2D1DD00F4B009ADBEF /* CTowerBottom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTowerBottom.cpp; path = code/Game/CTowerBottom.cpp; sourceTree = "<group>"; };
+		3CE82B2E1DD00F4B009ADBEF /* CTowerBottom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTowerBottom.h; path = code/Game/CTowerBottom.h; sourceTree = "<group>"; };
+		3CE82B2F1DD00F4B009ADBEF /* CTowerTop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTowerTop.cpp; path = code/Game/CTowerTop.cpp; sourceTree = "<group>"; };
+		3CE82B301DD00F4B009ADBEF /* CTowerTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTowerTop.h; path = code/Game/CTowerTop.h; sourceTree = "<group>"; };
+		3CE82B311DD00F4B009ADBEF /* CTunnel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTunnel.cpp; path = code/Game/CTunnel.cpp; sourceTree = "<group>"; };
+		3CE82B321DD00F4B009ADBEF /* CTunnel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTunnel.h; path = code/Game/CTunnel.h; sourceTree = "<group>"; };
+		3CE82B331DD00F4B009ADBEF /* CUpDownEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CUpDownEnemy.cpp; path = code/Game/CUpDownEnemy.cpp; sourceTree = "<group>"; };
+		3CE82B341DD00F4B009ADBEF /* CUpDownEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUpDownEnemy.h; path = code/Game/CUpDownEnemy.h; sourceTree = "<group>"; };
+		3CE82B351DD00F4B009ADBEF /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = code/Game/Game.cpp; sourceTree = "<group>"; };
+		3CE82B361DD00F4B009ADBEF /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = code/Game/Game.h; sourceTree = "<group>"; };
 		3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTextFileReader.cpp; path = code/FileReading/CTextFileReader.cpp; sourceTree = "<group>"; };
 		3CFD2DE31D3C381E0005D3D0 /* CTextFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTextFileReader.h; path = code/FileReading/CTextFileReader.h; sourceTree = "<group>"; };
 		3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imageFileLoaders.cpp; path = code/FileReading/imageFileLoaders.cpp; sourceTree = "<group>"; };
@@ -446,6 +513,50 @@
 		3CC2AFDA1D3B37FA0003005B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3CE82B211DD00F4B009ADBEF /* CPowerUp.cpp */,
+				3CE82B221DD00F4B009ADBEF /* CPowerUp.h */,
+				3CE82B231DD00F4B009ADBEF /* CPowerUpGrow.cpp */,
+				3CE82B241DD00F4B009ADBEF /* CPowerUpGrow.h */,
+				3CE82B251DD00F4B009ADBEF /* CPowerUpNoFriction.cpp */,
+				3CE82B261DD00F4B009ADBEF /* CPowerUpNoFriction.h */,
+				3CE82B271DD00F4B009ADBEF /* CPowerUpSpeed.cpp */,
+				3CE82B281DD00F4B009ADBEF /* CPowerUpSpeed.h */,
+				3CE82B291DD00F4B009ADBEF /* CSideToSideEnemy.cpp */,
+				3CE82B2A1DD00F4B009ADBEF /* CSideToSideEnemy.h */,
+				3CE82B2B1DD00F4B009ADBEF /* CSkyBoard.cpp */,
+				3CE82B2C1DD00F4B009ADBEF /* CSkyBoard.h */,
+				3CE82B2D1DD00F4B009ADBEF /* CTowerBottom.cpp */,
+				3CE82B2E1DD00F4B009ADBEF /* CTowerBottom.h */,
+				3CE82B2F1DD00F4B009ADBEF /* CTowerTop.cpp */,
+				3CE82B301DD00F4B009ADBEF /* CTowerTop.h */,
+				3CE82B311DD00F4B009ADBEF /* CTunnel.cpp */,
+				3CE82B321DD00F4B009ADBEF /* CTunnel.h */,
+				3CE82B331DD00F4B009ADBEF /* CUpDownEnemy.cpp */,
+				3CE82B341DD00F4B009ADBEF /* CUpDownEnemy.h */,
+				3CE82B351DD00F4B009ADBEF /* Game.cpp */,
+				3CE82B361DD00F4B009ADBEF /* Game.h */,
+				3CE82B1E1DD00EF1009ADBEF /* CSlippyStep.cpp */,
+				3CE82B1F1DD00EF1009ADBEF /* CSlippyStep.h */,
+				3CE82B1C1DCED712009ADBEF /* CSpriteEngine.cpp */,
+				3CE82B1A1DCEB6C2009ADBEF /* main.cpp */,
+				3CE82B0E1DCEAEEA009ADBEF /* CHUD.cpp */,
+				3CE82B0F1DCEAEEA009ADBEF /* CHUD.h */,
+				3CE82B101DCEAEEA009ADBEF /* CHUDFader.cpp */,
+				3CE82B111DCEAEEA009ADBEF /* CHUDFader.h */,
+				3CE82B121DCEAEEA009ADBEF /* CLift.cpp */,
+				3CE82B131DCEAEEA009ADBEF /* CLift.h */,
+				3CE82B141DCEAEEA009ADBEF /* CMainMenu.cpp */,
+				3CE82B151DCEAEEA009ADBEF /* CMainMenu.h */,
+				3CE82AFF1DCEAD42009ADBEF /* CBouncingSideToSideEnemy.cpp */,
+				3CE82B001DCEAD42009ADBEF /* CBouncingSideToSideEnemy.h */,
+				3CE82B011DCEAD42009ADBEF /* CCollapsingStep.cpp */,
+				3CE82B021DCEAD42009ADBEF /* CCollapsingStep.h */,
+				3CE82B031DCEAD42009ADBEF /* CExitScreen.cpp */,
+				3CE82B041DCEAD42009ADBEF /* CExitScreen.h */,
+				3CE82B051DCEAD42009ADBEF /* CFireBall.cpp */,
+				3CE82B061DCEAD42009ADBEF /* CFireBall.h */,
+				3CE82B071DCEAD42009ADBEF /* CFlyAcrossEnemy.cpp */,
+				3CE82B081DCEAD42009ADBEF /* CFlyAcrossEnemy.h */,
 				3CB28F461DA9F95600A1CB1B /* CTower.cpp */,
 				3CB28F471DA9F95600A1CB1B /* CTower.h */,
 				3CB28F401DA9F93300A1CB1B /* CTowerSprite.cpp */,
@@ -623,23 +734,33 @@
 				3CB28F261D84DADC00A1CB1B /* CameraTransitionCollision.cpp in Sources */,
 				3CB28EF81D8378F300A1CB1B /* Text.cpp in Sources */,
 				3CFD2DF71D45B20C0005D3D0 /* Globals.cpp in Sources */,
+				3CE82B171DCEAEEA009ADBEF /* CHUDFader.cpp in Sources */,
 				3CB28F2E1D84DBF000A1CB1B /* CScene.cpp in Sources */,
+				3CE82B201DD00EF1009ADBEF /* CSlippyStep.cpp in Sources */,
 				3CB28F1F1D84DADC00A1CB1B /* CameraActiveTypes.cpp in Sources */,
 				3CB28EDE1D7E708800A1CB1B /* DebugRendering.cpp in Sources */,
 				3CC2AFF41D3B3F1D0003005B /* Random.cpp in Sources */,
 				3CC2AFF11D3B3E2B0003005B /* defines.cpp in Sources */,
+				3CE82B411DD00F4B009ADBEF /* Game.cpp in Sources */,
 				3CB28F201D84DADC00A1CB1B /* CameraLerp.cpp in Sources */,
+				3CE82B1B1DCEB6C2009ADBEF /* main.cpp in Sources */,
+				3CE82B0A1DCEAD42009ADBEF /* CCollapsingStep.cpp in Sources */,
 				3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */,
+				3CE82B3B1DD00F4B009ADBEF /* CSideToSideEnemy.cpp in Sources */,
 				3CB28F3C1DA9F86E00A1CB1B /* CFrustum.cpp in Sources */,
+				3CE82B091DCEAD42009ADBEF /* CBouncingSideToSideEnemy.cpp in Sources */,
 				3CB28F441DA9F93300A1CB1B /* CTowerSprite.cpp in Sources */,
 				3CB28F281D84DADC00A1CB1B /* CamTypeReplay.cpp in Sources */,
+				3CE82B1D1DCED712009ADBEF /* CSpriteEngine.cpp in Sources */,
 				3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */,
 				3CB28F451DA9F93300A1CB1B /* CTowerStep.cpp in Sources */,
+				3CE82B3F1DD00F4B009ADBEF /* CTunnel.cpp in Sources */,
 				3CB28F3F1DA9F8C300A1CB1B /* CNebulus.cpp in Sources */,
 				3CB28ED21D7E6CD700A1CB1B /* CHighPrecisionTimerOSX.cpp in Sources */,
 				3CC2AFED1D3B3E010003005B /* CQuaternion.cpp in Sources */,
 				3CB28EBA1D7D21B800A1CB1B /* SoundOSX.cpp in Sources */,
 				3CB28F271D84DADC00A1CB1B /* CamTypeCircleFollow.cpp in Sources */,
+				3CE82B391DD00F4B009ADBEF /* CPowerUpNoFriction.cpp in Sources */,
 				3CB28F331DA9F48000A1CB1B /* COctree.cpp in Sources */,
 				3CC2AFEC1D3B3E010003005B /* CMatrix.cpp in Sources */,
 				3CC2AFEE1D3B3E010003005B /* CVector.cpp in Sources */,
@@ -647,21 +768,34 @@
 				3CB28F291D84DADC00A1CB1B /* CamTypeTunnel.cpp in Sources */,
 				3CB28F391DA9F81A00A1CB1B /* CSprite.cpp in Sources */,
 				3CB28EF41D8378F300A1CB1B /* CParticleSystem.cpp in Sources */,
+				3CE82B3E1DD00F4B009ADBEF /* CTowerTop.cpp in Sources */,
+				3CE82B381DD00F4B009ADBEF /* CPowerUpGrow.cpp in Sources */,
+				3CE82B191DCEAEEA009ADBEF /* CMainMenu.cpp in Sources */,
+				3CE82B3A1DD00F4B009ADBEF /* CPowerUpSpeed.cpp in Sources */,
 				3CB28F221D84DADC00A1CB1B /* CameraLinks.cpp in Sources */,
+				3CE82B401DD00F4B009ADBEF /* CUpDownEnemy.cpp in Sources */,
 				3CB28EDD1D7E708800A1CB1B /* DebugMenu.cpp in Sources */,
 				3CB28EC31D7D237700A1CB1B /* CKeyMapOSX.cpp in Sources */,
+				3CE82B181DCEAEEA009ADBEF /* CLift.cpp in Sources */,
 				3CB28EF21D8378F300A1CB1B /* CModel.cpp in Sources */,
 				3CB28EF71D8378F300A1CB1B /* ShadowMapping.cpp in Sources */,
 				3CB28F481DA9F95600A1CB1B /* CTower.cpp in Sources */,
+				3CE82B0C1DCEAD42009ADBEF /* CFireBall.cpp in Sources */,
+				3CE82B3C1DD00F4B009ADBEF /* CSkyBoard.cpp in Sources */,
 				3CB28ED31D7E6CD700A1CB1B /* CTimerOSX.cpp in Sources */,
 				3CB28EE11D7E70FF00A1CB1B /* DebugOSX.cpp in Sources */,
+				3CE82B3D1DD00F4B009ADBEF /* CTowerBottom.cpp in Sources */,
+				3CE82B161DCEAEEA009ADBEF /* CHUD.cpp in Sources */,
+				3CE82B371DD00F4B009ADBEF /* CPowerUp.cpp in Sources */,
 				3CB28EF31D8378F300A1CB1B /* CModelLoader.cpp in Sources */,
 				3CB28EFF1D84D89E00A1CB1B /* GameTime.cpp in Sources */,
 				3CC2AFD71D3B36060003005B /* osxSetup.cpp in Sources */,
 				3CB28F311DA9F1EF00A1CB1B /* CMenu.cpp in Sources */,
 				3CB28F361DA9F79200A1CB1B /* intersections.cpp in Sources */,
 				3CB28EFB1D8385E000A1CB1B /* CLevel.cpp in Sources */,
+				3CE82B0D1DCEAD42009ADBEF /* CFlyAcrossEnemy.cpp in Sources */,
 				3CB28EF61D8378F300A1CB1B /* MeshBuffer.cpp in Sources */,
+				3CE82B0B1DCEAD42009ADBEF /* CExitScreen.cpp in Sources */,
 				3CB28F251D84DADC00A1CB1B /* CameraTransition.cpp in Sources */,
 				3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */,
 				3CFD2DF41D45AF690005D3D0 /* OpenGLOSXShader.cpp in Sources */,

@@ -388,7 +388,7 @@ void CSpriteEngine::setMovingSpritesBack()
 {
 	CPowerUpManager::instance()->removeAllPowerUpsFromList();
 
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 	for (int sprite = 0; sprite < totalMovingSprites; sprite++)
 	{
 		movingSprites[sprite]->reinitialise();
@@ -400,7 +400,7 @@ void CSpriteEngine::saveReplayUpdate(int frame)
 {
 	ReplayManager::instance()->PreSpriteUpdate();
 
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 	for (int sprite = 0; sprite < totalMovingSprites; sprite++)
 	{
 		movingSprites[sprite]->saveReplayUpdate(frame);
@@ -464,7 +464,7 @@ void CSpriteEngine::processKeyInput()
 	}
 #endif
 
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 
 	for (int i = 0; i < totalMovingSprites; i++)
 	{ //  go through the moving objects
@@ -481,6 +481,7 @@ void CSpriteEngine::processKeyInput()
 			case SFIRE_BALL:
 				aSprite.keyInput();
 				break;
+            default: break;
 		}// end switch spriteType
 	}
 }
@@ -488,7 +489,7 @@ void CSpriteEngine::processKeyInput()
 // move all the sprites
 void CSpriteEngine::moveAll(int timeChange, GLfloat timeChangeInSeconds) 
 {
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 
 	for (int i = 0; i < totalMovingSprites; i++){ //  go through the moving objects
 		movingSprites[i]->move(timeChange, timeChangeInSeconds);} // move the sprite
@@ -499,7 +500,7 @@ void CSpriteEngine::collisionDetection()
 {
 	/*	test all MOVING objects with a BOUNDING_ELIPSOID 
 		against the environment */
-	int amountOfSprites = boundingElipsoidSprites.size();
+	int amountOfSprites = (int)boundingElipsoidSprites.size();
 	for (int i = 0; i < amountOfSprites; i++) //  go through bounding elipsoid objects
 	{	
 		// referance variable for readability and quicker execution
@@ -547,7 +548,7 @@ void CSpriteEngine::collisionDetection()
 		}
 	}
 		
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 	// test all the moving objects and against each other
 	for (int i = 0; i < totalMovingSprites; i++) //  go through the moving objects
 	{	// if MOVING object is active 
@@ -595,6 +596,7 @@ void CSpriteEngine::collisionDetection()
 										collisionTestEvaluated = true;
 										break;
 									}// end case BOUNDING_CAPSULE
+                                    default: break;
 								}// end switch sprites[sprite2]->collisionType
 								break;
 							}// end case BOUNDING_CAPSULE
@@ -622,9 +624,11 @@ void CSpriteEngine::collisionDetection()
 										collisionTestEvaluated = true; // test has been evaluated
 										break;
 									}
+                                    default: break;
 								}// end switch sprites[sprite2]->collisionType
 								break;
 							}// end case BOUNDING_ELIPSOID
+                            default: break;
 						}// end switch sprites[sprite1]->collisionType
 						/*	swap pointers and do again if collision has still 
 							not been evaluated */
@@ -720,13 +724,13 @@ void CSpriteEngine::findClosestTriangle(CSprite * sprite,
 			velocMagnitude = velocity->getMagnitude();
 
 	// go through the octree end nodes which the sprite occupys
-	int totalEndNodesOccupying = sprite->endNodesOccupying.size();
+	int totalEndNodesOccupying = (int)sprite->endNodesOccupying.size();
 
 	// set all triangles in all end nodes occupying to not evaluated yet
 	for (int endNode = 0; endNode < totalEndNodesOccupying; endNode++)
 	{	// referance for speed and readability
 		COctree &aNode = *sprite->endNodesOccupying[endNode]; 
-		int totalNodeTriangles = aNode.nodeTriangles.size();
+		int totalNodeTriangles = (int)aNode.nodeTriangles.size();
 
 		for (int nodeTriangle = 0; nodeTriangle < totalNodeTriangles; nodeTriangle++){
 			aNode.nodeTriangles[nodeTriangle]->collisionTested = false;}
@@ -735,7 +739,7 @@ void CSpriteEngine::findClosestTriangle(CSprite * sprite,
 	for (int endNode = 0; endNode < totalEndNodesOccupying; endNode++)
 	{	// referance for speed and readability
 		COctree &aNode = *sprite->endNodesOccupying[endNode]; 
-		int totalNodeTriangles = aNode.nodeTriangles.size();
+		int totalNodeTriangles = (int)aNode.nodeTriangles.size();
 
 		for (int nodeTriangle = 0; nodeTriangle < totalNodeTriangles; nodeTriangle++)
 		{	// referance for speed and readability
@@ -760,7 +764,7 @@ void CSpriteEngine::findClosestTriangle(CSprite * sprite,
 		}
 	}
 
-	int totalMovingSprites = movingSprites.size(); // get amt of moving sprites
+	int totalMovingSprites = (int)movingSprites.size(); // get amt of moving sprites
 	// go through all the sprites to get all the triangles
 	for (int i = 0; i < totalMovingSprites; i++)
 	{	
@@ -1073,7 +1077,7 @@ void CSpriteEngine::triangleTest(CSprite * sprite, CVector*,
 // draw all the sprites
 void CSpriteEngine::drawAll(int timeChange, bool drawTransparentSprites) 
 {
-	int totalMovingSprites = movingSprites.size();
+	int totalMovingSprites = (int)movingSprites.size();
 
 	for (int sprite = 0; sprite < totalMovingSprites; sprite++)
 	{	// referance variable for speed and readability

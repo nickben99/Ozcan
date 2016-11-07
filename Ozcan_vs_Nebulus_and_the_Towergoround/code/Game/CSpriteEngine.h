@@ -9,7 +9,6 @@
 
 //header files---------
 #include "Rendering/CModel.h"
-#ifdef _WINDOWS
 #include "Rendering/CModelLoader.h"
 #include "CSprite.h"
 #include "CTowerSprite.h"
@@ -175,7 +174,5 @@ class CSpriteEngine
 	CPowerUpManager *powerUpManager; // pointer to the singleton power-up manager
 //-----------------------------
 }; // class CSpriteEngine
-
-#endif
 
 #endif // _CSpriteEngine_h_

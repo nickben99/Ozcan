@@ -44,7 +44,9 @@ bool Game::Update()
 	/*	get amount to stop for to ensure frame length stays approximatly 60 fps */
 	float fixedTimeDelta = static_cast<float>( GameTime::Instance().GetCurrentFixedTimeDeltaMilli() );
 	int stopTime = static_cast<int>( ((fixedTimeDelta-time) >= 0.0) ? 16.0f-time : 0.0f );
-	Sleep(stopTime); // keep frame rate around 60 fps
+    
+    defines::sleep(stopTime); // keep frame rate around 60 fps
+    
 	timer.Start();
 
 	return running;

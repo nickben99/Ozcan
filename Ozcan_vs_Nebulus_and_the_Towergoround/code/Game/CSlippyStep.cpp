@@ -63,5 +63,6 @@ void CSlippyStep::collisionResponse(CSprite * collidedWith,
 				collidedWith->applyForce(forceVector*5.0f);}
 			break;
 		}
+        default: break;
 	}
 }

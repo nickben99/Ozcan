@@ -109,5 +109,6 @@ void CPowerUpSpeed::collisionResponse(	CSprite * collidedWith,
 			}
 			break;
 		}// end case SNEBULUS
+        default: break;
 	}// end switch
 } 

@@ -8,7 +8,6 @@
 
 //---header files------------
 #include "CSpriteEngine.h"
-#ifdef _WINDOWS
 #include "CLevel.h"
 #include "Game/Globals.h"
 #include "CNebulus.h"
@@ -19,16 +18,12 @@
 //---defines-----------------
 //---------------------------
 
-//---external variables------
-extern CSpriteEngine sprites;	// from winSetup
-//---------------------------
-
 
 //---functions---------------
 bool initGameMenus(); // initialise the game menus
 void deleteGameObjects(); // delete all game objects									
-GLint gameMain(GLint level = 1); // main function
-GLint menuSystem(GLint a = 0); // the menu system (dummy parameter unnused)
+int gameMain(int level = 1); // main function
+int menuSystem(int a = 0); // the menu system (dummy parameter unnused)
 //---------------------------
-#endif
+
 #endif //_main_h_
