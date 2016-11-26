@@ -23,13 +23,7 @@
 
 #ifdef USE_SHADERS
 
-#ifdef _WINDOWS
-#include <Rendering\PlatformSpecific\Windows\OpenGLShader.h>
-#endif
-
-#ifdef OSX
-#include <Rendering/PlatformSpecific/OSX/OpenGLOSXShader.h>
-#endif
+#include <Rendering/OpenGLShader.h>
 
 #else
 #define CHECK_GL_ERROR

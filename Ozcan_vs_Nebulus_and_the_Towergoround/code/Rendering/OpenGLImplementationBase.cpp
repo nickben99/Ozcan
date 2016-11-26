@@ -1,16 +1,20 @@
-// OpenGLOSX.cpp - keymap implementation class
-
-#ifdef OSX
+// OpenGLBase.cpp
 
 //--- System includes ---------------
+#ifdef _WINDOWS
+#include <windows.h>	// header file for windows
 #include <Rendering/OpenGLInclude.h>
+#include <gl\glu.h>		// header file for the GLu32 library
+#elif OSX
+#include <Rendering/OpenGLInclude.h>
+#endif
 
 #include <iostream>
 #include <string>
 //----------------------------------
 
 //--- Header files ---------
-#include "OpenGLOSX.h" // the header file for this class
+#include "OpenGLImplementationBase.h" // the header file for this class
 #include "Game/Globals.h"
 #ifdef OSX
 #include <Math/CVector.h>
@@ -19,7 +23,8 @@
 
 const int InvalidLocation = -1;
 
-OpenGLImplementation::OpenGLImplementation()
+OpenGLImplementationBase::OpenGLImplementationBase()
+#ifdef USE_SHADERS
 	: useTextureSubFunctionLocation(0)
 	, noTextureSubFunctionLocation(0)
 
@@ -45,15 +50,18 @@ OpenGLImplementation::OpenGLImplementation()
 	, textureSubRoutineUniform(0)
 	, colorSubRoutineUniform(0)
 	, lightingSubRoutineUniform(0)
+#endif
 {
 
 }
 
-OpenGLImplementation::~OpenGLImplementation()
+OpenGLImplementationBase::~OpenGLImplementationBase()
 {
 }
 
-bool OpenGLImplementation::InitGL()									
+#ifdef USE_SHADERS
+
+bool OpenGLImplementationBase::InitGL()									
 {
 	hasBeenInitialized = true;
 	glewExperimental = GL_TRUE;
@@ -65,14 +73,42 @@ bool OpenGLImplementation::InitGL()
         return false;
     }
 
-#if _DEBUG && _WINDOWS
-	const GLubyte* version = glGetString(GL_SHADING_LANGUAGE_VERSION);
-	OutputDebugString((char*)version);
+#ifdef _DEBUG
+	const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+#ifdef _WINDOWS
+    OutputDebugString("\n");
+    OutputDebugString(version);
+#elif OSX
+    std::cout << "\n" << version;
 #endif
 
-	if (!shader.CreateProgram("shader.vs", "shader.fs"))
+	int NumberOfExtensions = 0;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &NumberOfExtensions);
+	for(int i=0; i<NumberOfExtensions; i++)
 	{
-		return false;
+	    const char* one_string = (char*)glGetStringi(GL_EXTENSIONS, i);
+#ifdef _WINDOWS
+        OutputDebugString("\n");
+        OutputDebugString(one_string);
+#elif OSX
+        std::cout << "\n" << one_string;
+#endif
+	}
+#endif
+
+	if (glewIsSupported("GL_ARB_shader_subroutine") && glewIsSupported("GL_ARB_gpu_shader_fp64"))
+	{
+		if (!shader.CreateProgram("shader.vs", "shader.fs"))
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
+		{
+			return false;
+		}
 	}
 	
 	shader.UseProgram();
@@ -117,98 +153,97 @@ bool OpenGLImplementation::InitGL()
 
 	shader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
 	shader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
-
 	return true;
 }
 
-void OpenGLImplementation::DestroyGL()
+void OpenGLImplementationBase::DestroyGL()
 {
 	shader.DestroyProgram();
 }
 
-bool OpenGLImplementation::HasBeenInitialized()
+bool OpenGLImplementationBase::HasBeenInitialized()
 {
 	return hasBeenInitialized;
 }
 
-void OpenGLImplementation::UseProgram()
+void OpenGLImplementationBase::UseProgram()
 {
 	shader.UseProgram();
 }
 
-void OpenGLImplementation::StopUsingProgram()
+void OpenGLImplementationBase::StopUsingProgram()
 {
 	glUseProgram(0);
 	CHECK_GL_ERROR;
 }
 
-int OpenGLImplementation::GetShaderProgram()
+int OpenGLImplementationBase::GetShaderProgram()
 {
 	return shader.GetShaderProgram();
 }
 
-int OpenGLImplementation::GetUniformLocation(const char* pUniformVariableName)
+int OpenGLImplementationBase::GetUniformLocation(const char* pUniformVariableName)
 {
 	return shader.GetUniformLocation(pUniformVariableName);
 }
 
-unsigned int OpenGLImplementation::GetSubroutineUniformIndex(const char* pSubroutineUniformVariableName, unsigned int shaderType)
+unsigned int OpenGLImplementationBase::GetSubroutineUniformIndex(const char* pSubroutineUniformVariableName, unsigned int shaderType)
 {
 	return shader.GetSubroutineUniformIndex(pSubroutineUniformVariableName, shaderType);
 }
 
-void OpenGLImplementation::SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType)
+void OpenGLImplementationBase::SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType)
 {
 	shader.SetSubroutineUniformIndex(subRoutineUniformIndex, subRoutineIndex, shaderType, true, false);
 }
 
-int OpenGLImplementation::GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType)
+int OpenGLImplementationBase::GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType)
 {
 	return shader.GetSubroutineIndex(pSubRoutineName, shaderType);
 }
 
-int OpenGLImplementation::GetAttribLocation(const char* pUniformVariableName)
+int OpenGLImplementationBase::GetAttribLocation(const char* pUniformVariableName)
 {
 	return shader.GetAttribLocation(pUniformVariableName);
 }
 
-void OpenGLImplementation::SetUniformFloat(int location, float newValue)
+void OpenGLImplementationBase::SetUniformFloat(int location, float newValue)
 {
 	shader.SetUniformFloat(location, newValue);
 }
 
-void OpenGLImplementation::SetUniformBool(int location, bool newValue)
+void OpenGLImplementationBase::SetUniformBool(int location, bool newValue)
 {
 	shader.SetUniformBool(location, newValue);
 }
 
-void OpenGLImplementation::SetUniformInt(int location, int newValue)
+void OpenGLImplementationBase::SetUniformInt(int location, int newValue)
 {
 	shader.SetUniformInt(location, newValue);
 }
 
-void OpenGLImplementation::SetUniformMatrix(int location, const CMatrix& mat)
+void OpenGLImplementationBase::SetUniformMatrix(int location, const CMatrix& mat)
 {
 	shader.SetUniformMatrix(location, mat);
 }
 
-void OpenGLImplementation::SetUniformVector3(int location, const CVector& vect)
+void OpenGLImplementationBase::SetUniformVector3(int location, const CVector& vect)
 {
 	shader.SetUniformVector3(location, vect);
 }
 
-void OpenGLImplementation::SetUniformVector4(int location, const CVector4& vect)
+void OpenGLImplementationBase::SetUniformVector4(int location, const CVector4& vect)
 {
 	shader.SetUniformVector4(location, vect);
 }
-//#ifdef _WINDOWS
-void OpenGLImplementation::UseTextureDefault(int textureIndex)
+
+void OpenGLImplementationBase::UseTextureDefault(int textureIndex)
 {
 	UseTexture(0, textureIndex, textureSamplerLocation);
 	SetSubroutineUniformIndex(textureSubRoutineUniform, useTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
 }
 
-void OpenGLImplementation::UseTexture(int textureBindLayer, int textureIndex, int textureSamplerLoc)
+void OpenGLImplementationBase::UseTexture(int textureBindLayer, int textureIndex, int textureSamplerLoc)
 {
 	const int textureBindConstants[] = {GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2, GL_TEXTURE3, GL_TEXTURE4, GL_TEXTURE5, GL_TEXTURE6,
 										GL_TEXTURE7,GL_TEXTURE8, GL_TEXTURE9, GL_TEXTURE10, GL_TEXTURE11,GL_TEXTURE12,GL_TEXTURE13,
@@ -223,24 +258,24 @@ void OpenGLImplementation::UseTexture(int textureBindLayer, int textureIndex, in
 	SetUniformInt(textureSamplerLoc, textureBindLayer);
 }
 
-void OpenGLImplementation::DontUseDefaultTexture()
+void OpenGLImplementationBase::DontUseDefaultTexture()
 {
 	SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
 }
 
-void OpenGLImplementation::DeleteVertexBufferObject(unsigned int vertexBufferObject)
+void OpenGLImplementationBase::DeleteVertexBufferObject(unsigned int vertexBufferObject)
 {
 	glDeleteBuffers( 1, &vertexBufferObject);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::BindBuffer(unsigned int bufferType, int vertexBufferObject)
+void OpenGLImplementationBase::BindBuffer(unsigned int bufferType, int vertexBufferObject)
 {
 	glBindBuffer(bufferType, vertexBufferObject);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::VertexAttribPointer(int location, int numComponents, int stride, int offset)
+void OpenGLImplementationBase::VertexAttribPointer(int location, int numComponents, int stride, int offset)
 {
 	glEnableVertexAttribArray(location);
 	CHECK_GL_ERROR;
@@ -249,101 +284,135 @@ void OpenGLImplementation::VertexAttribPointer(int location, int numComponents, 
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::DisableVertexPositionAttribPointer()
+void OpenGLImplementationBase::DisableVertexPositionAttribPointer()
 {
 	glDisableVertexAttribArray(vertexPositionAttribLocation);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::SetVertexPositionAttribPointer(int stride, int offset)
+void OpenGLImplementationBase::SetVertexPositionAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
 	VertexAttribPointer(vertexPositionAttribLocation, NumComponents, stride, offset);
 }
 
-void OpenGLImplementation::DisableVertexNormalAttribPointer()
+void OpenGLImplementationBase::DisableVertexNormalAttribPointer()
 {
 	glDisableVertexAttribArray(vertexNormalAttribLocation);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::SetVertexNormalAttribPointer(int stride, int offset)
+void OpenGLImplementationBase::SetVertexNormalAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
 	VertexAttribPointer(vertexNormalAttribLocation, NumComponents, stride, offset);
 }
 
-void OpenGLImplementation::DisableVertexTextureAttribPointer()
+void OpenGLImplementationBase::DisableVertexTextureAttribPointer()
 {
 	glDisableVertexAttribArray(vertexTexCoordAttribLocation);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::SetVertexTextureAttribPointer(int stride)
+void OpenGLImplementationBase::SetVertexTextureAttribPointer(int stride)
 {
 	const int NumComponents = 2;
 	VertexAttribPointer(vertexTexCoordAttribLocation, NumComponents, stride);
 }
 
-void OpenGLImplementation::DrawElements(int numToDraw)
+void OpenGLImplementationBase::DrawElements(int numToDraw)
 {
 	glDrawElements( GL_TRIANGLES, numToDraw, GL_UNSIGNED_SHORT, 0);
 	CHECK_GL_ERROR;	
 }
 
-void OpenGLImplementation::DrawArrays(int numToDraw)
+void OpenGLImplementationBase::DrawArrays(int numToDraw)
 {
 	glDrawArrays(GL_TRIANGLES, 0, numToDraw);
 	CHECK_GL_ERROR;
 }
 
-void OpenGLImplementation::SetProjectionMatrix(const CMatrix& mat)
+void OpenGLImplementationBase::SetProjectionMatrix(const CMatrix& mat)
 {
 	SetUniformMatrix(projectionMatrixLocation, mat);
 }
 
-void OpenGLImplementation::SetModelMatrix(const CMatrix& mat)
+void OpenGLImplementationBase::SetModelMatrix(const CMatrix& mat)
 {
 	SetUniformMatrix(modelMatrixLocation, mat);
 }
 
-void OpenGLImplementation::SetViewMatrix(const CMatrix& mat)
+void OpenGLImplementationBase::SetViewMatrix(const CMatrix& mat)
 {
 	SetUniformMatrix(viewMatrixLocation, mat);
 }
-//#endif // _WINDOWS
-void OpenGLImplementation::SetAmbientColor(const CVector& color)
+
+void OpenGLImplementationBase::SetAmbientColor(const CVector& color)
 {
 	SetUniformVector3(ambientColorLocation, color);
 }
 
-void OpenGLImplementation::SetDiffuseColor(const CVector& color)
+void OpenGLImplementationBase::SetDiffuseColor(const CVector& color)
 {
 	SetUniformVector3(diffuseColorLocation, color);
 }
 
-void OpenGLImplementation::SetSpecularColor(const CVector& color)
+void OpenGLImplementationBase::SetSpecularColor(const CVector& color)
 {
 	SetUniformVector3(specularColorLocation, color);
 }
 
-void OpenGLImplementation::SetEmissiveColor(const CVector4& color)
+void OpenGLImplementationBase::SetEmissiveColor(const CVector4& color)
 {
 	SetUniformVector4(emissiveColorLocation, color);
 }
 
-void OpenGLImplementation::SetShininess(float val)
+void OpenGLImplementationBase::SetShininess(float val)
 {
 	SetUniformFloat(shininessLocation, val);
 }
 
-void OpenGLImplementation::ShowSpecularHighlights(bool show)
+void OpenGLImplementationBase::ShowSpecularHighlights(bool show)
 {
 	SetUniformBool(showSpecularHighlightLocation, show);
 }
 
+#else
+// lighting and rendering context set-up
+bool OpenGLImplementationBase::InitGL()									
+{
+	// Light values and coordinates
+	GLfloat  ambientLight[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	GLfloat  diffuseLight[] = {1.2f, 1.2f, 1.2f, 1.0f};
+
+	// clear window to white
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f );
+
+	glEnable(GL_DEPTH_TEST);	// hidden surface removal
+	glFrontFace(GL_CCW);		// counter-clockwise wound poygons can be seen
+	// back face culling (don't draw backfaces)
+	glEnable(GL_CULL_FACE); 
+
+	// enable lighting
+	glEnable(GL_LIGHTING);
+
+	// setup light 0
+	glLightfv(GL_LIGHT0,GL_AMBIENT, ambientLight);
+	glLightfv(GL_LIGHT0,GL_DIFFUSE, diffuseLight);
+	// turn on the light
+	glEnable(GL_LIGHT0);
+
+	glShadeModel(GL_SMOOTH); // guroud shading
+	glClearDepth(1.0f);	// depth buffer setup
+	glDepthFunc(GL_LEQUAL); // the type of depth testing to do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// perspective calculations
+
+	return true;
+}
+#endif
+
 //called each time the scene is resized (and on initialisation)
-void OpenGLImplementation::ReSizeGLScene(int width, int height)		
+void OpenGLImplementationBase::ReSizeGLScene(int width, int height)		
 {
 	if (height==0){ // prevent a divide by zero
 		height=1;}
@@ -351,11 +420,29 @@ void OpenGLImplementation::ReSizeGLScene(int width, int height)
 	Globals::Instance().windowWidth	= (float)width;
 	Globals::Instance().windowHeight = (float)height; // keep a record of the window width and height
 
+#ifdef USE_SHADERS
+	//glViewport(-width, 0, width*2, height*2);
 	glViewport(0, 0, width, height); // reset the current viewport
+#else
+	glViewport(0, 0, width, height); // reset the current viewport
+
+	// select the projection matrix for manipulation from this point forwards
+	glMatrixMode(GL_PROJECTION); 
+	glLoadIdentity(); // reset the projection matrix
+
+	// calculate the aspect ratio of the window
+	gluPerspective(45.0f, Globals::Instance().windowWidth/Globals::Instance().windowHeight, 0.1f, 500.0f);
+	
+	/*	select the modelview matrix for manipulation from this point forwards
+		(and subsequently throughout programme) */	
+	glMatrixMode(GL_MODELVIEW);	
+	glLoadIdentity(); // reset the modelview matrix
+#endif
 }
 
-void OpenGLImplementation::GLEnable(unsigned int identifier)
+void OpenGLImplementationBase::GLEnable(unsigned int identifier)
 {
+#ifdef USE_SHADERS
 	switch (identifier)
 	{
 		case GL_LIGHTING:
@@ -365,10 +452,14 @@ void OpenGLImplementation::GLEnable(unsigned int identifier)
 			glEnable(identifier);
 			break;
 	}
+#else
+	glEnable(identifier);
+#endif
 }
 
-void OpenGLImplementation::GLDisable(unsigned int identifier)
+void OpenGLImplementationBase::GLDisable(unsigned int identifier)
 {
+#ifdef USE_SHADERS
 	switch (identifier)
 	{
 		case GL_LIGHTING:
@@ -378,9 +469,12 @@ void OpenGLImplementation::GLDisable(unsigned int identifier)
 			glDisable(identifier);
 			break;
 	}
+#else
+	glDisable(identifier);
+#endif
 }
 
-void OpenGLImplementation::GLMaterial(unsigned int identifier, float value)
+void OpenGLImplementationBase::GLMaterial(unsigned int identifier, float value)
 {
 #ifdef USE_SHADERS
 	switch (identifier)
@@ -397,7 +491,7 @@ void OpenGLImplementation::GLMaterial(unsigned int identifier, float value)
 #endif
 }
 
-void OpenGLImplementation::GLMaterial(unsigned int identifier, float* valueArrayPointer)
+void OpenGLImplementationBase::GLMaterial(unsigned int identifier, float* valueArrayPointer)
 {
 #ifdef USE_SHADERS
 	switch (identifier)
@@ -422,5 +516,3 @@ void OpenGLImplementation::GLMaterial(unsigned int identifier, float* valueArray
 	glMaterialfv( GL_FRONT, identifier, valueArrayPointer);
 #endif
 }
-
-#endif

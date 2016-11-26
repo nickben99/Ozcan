@@ -465,6 +465,7 @@ int WINAPI WinMain(	HINSTANCE, // instance
 	if (!Globals::Instance().gl.InitGL())
 	{
 		MessageBox(0,"Initialization Failure","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		KillGameWindow();
 		return 0;// quit if window was not created
 	}
 

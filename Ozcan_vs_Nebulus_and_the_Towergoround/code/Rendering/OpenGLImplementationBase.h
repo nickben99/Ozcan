@@ -1,16 +1,17 @@
-// OpenGLWindows.h
-
-#ifdef _WINDOWS
-
-#ifndef _OpenGLWindows_H_
-#define _OpenGLWindows_H_
+// OpenGLOSX.h
+#ifndef _OpenGLBase_H_
+#define _OpenGLBase_H_
 
 //--- System Includes -----------
+#ifdef _WINDOWS
 #include <gl\gl.h>		// header file for the OpenGL32 library
+#elif OSX
+#include <Rendering/OpenGLInclude.h>
+#endif
 //-------------------------------
 
 //--- Header files --------------
-#include "Rendering/OpenGLShader.h"
+#include <Rendering/OpenGLShader.h>
 //-------------------------------
 
 //--- external variables --------
@@ -22,16 +23,15 @@ class CVector;
 class CVector4;
 //-------------------------------
 
-class OpenGLImplementation
+class OpenGLImplementationBase
 {
 	public:
-		OpenGLImplementation();
-		~OpenGLImplementation();
+		OpenGLImplementationBase();
+		~OpenGLImplementationBase();
 
 		bool InitGL();
 		void DestroyGL();
-		void ReSizeGLScene(int width, int height);
-
+        void ReSizeGLScene(int width, int height);
 		void GLEnable(unsigned int identifier);
 		void GLDisable(unsigned int identifier);
 
@@ -48,8 +48,8 @@ class OpenGLImplementation
 		unsigned int GetSubroutineUniformIndex(const char* pSubroutineUniformName, unsigned int shaderType);		
 		int GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType);
 		int GetAttribLocation(const char* pUniformVariableName);
-
 		void SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType);
+    
 		void SetUniformFloat(int location, float newValue);
 		void SetUniformBool(int location, bool newValue);
 		void SetUniformInt(int location, int newValue);
@@ -137,7 +137,5 @@ class OpenGLImplementation
 		int lightingSubRoutineUniform;
 #endif
 };
-
-#endif
 
 #endif

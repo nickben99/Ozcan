@@ -1,19 +1,25 @@
-// OpenGLOSXShader.cpp
-
-#ifdef OSX
-
+// OpenGLShader.cpp
 #ifdef USE_SHADERS
 
 //--- System includes ---------------
+#ifdef _WINDOWS
+#include <windows.h>	// header file for windows
+#include <glew-1.12.0\include\GL/glew.h>
+#include <gl\glu.h>		// header file for the GLu32 library
+#elif OSX
 #include <Rendering/OpenGLInclude.h>
+#endif
 
 #include <iostream>
 #include <string>
+
+#ifdef OSX
 #include <stdio.h> // for sprintf
+#endif
 //----------------------------------
 
 //--- Header files ---------
-#include "OpenGLOSXShader.h" // the header file for this class
+#include "OpenGLShader.h" // the header file for this class
 #include "FileReading/CTextFileReader.h"
 #include "Game/defines.h"
 #include "Math/CMatrix.h"
@@ -29,29 +35,47 @@ int OpenGLShader::CheckGLError(const char *file, int line)
 	glErr = glGetError();
 	while (glErr != GL_NO_ERROR) 
     {
-        const char* sError = nullptr;
+        const GLubyte* sError = nullptr;
+#ifdef _WINDOWS
+	    sError = gluErrorString(glErr);
+#endif
+
+        const char* sErrorCode = nullptr;
         switch (glErr)
         {
-            case GL_INVALID_ENUM: sError = "GL_INVALID_ENUM"; break;
-            case GL_INVALID_VALUE: sError = "GL_INVALID_VALUE"; break;
-            case GL_INVALID_OPERATION: sError = "GL_INVALID_OPERATION"; break;
-            case GL_INVALID_FRAMEBUFFER_OPERATION: sError = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
-            case GL_OUT_OF_MEMORY: sError = "GL_OUT_OF_MEMORY"; break;
-            case GL_STACK_UNDERFLOW: sError = "GL_STACK_UNDERFLOW"; break;
-            case GL_STACK_OVERFLOW: sError = "GL_STACK_OVERFLOW"; break;
-            default: break;
+            case GL_INVALID_ENUM: sErrorCode = "GL_INVALID_ENUM"; break;
+            case GL_INVALID_VALUE: sErrorCode = "GL_INVALID_VALUE"; break;
+            case GL_INVALID_OPERATION: sErrorCode = "GL_INVALID_OPERATION"; break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION: sErrorCode = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+            case GL_OUT_OF_MEMORY: sErrorCode = "GL_OUT_OF_MEMORY"; break;
+            case GL_STACK_UNDERFLOW: sErrorCode = "GL_STACK_UNDERFLOW"; break;
+            case GL_STACK_OVERFLOW: sErrorCode = "GL_STACK_OVERFLOW"; break;
+            default: sErrorCode = "(no message available)"; break;
         }
-        
 		char printOut[2048];				
 		if (sError)
 		{
-			sprintf(printOut, "GL Error # %d (%s) in File %s at line: %d", glErr, sError, file, line);
+#ifdef _WINDOWS
+			sprintf_s
+#elif OSX
+			sprintf
+#endif
+			(printOut, "GL Error # %s (%s) in File %s at line: %d", sErrorCode, sError, file, line);		
 		}
 		else
 		{
-			sprintf(printOut, "GL Error # %d (no message available) in File %s at line: %d", glErr, file, line);
+#ifdef _WINDOWS
+			sprintf_s
+#elif OSX
+			sprintf
+#endif
+			(printOut, "GL Error # %s in File %s at line: %d", sErrorCode, file, line);	
 		}
+#ifdef _WINDOWS
+		OutputDebugString(printOut);
+#elif OSX
         std::cout << printOut;
+#endif
 
 		retCode = 1;
 		glErr = glGetError();
@@ -60,29 +84,23 @@ int OpenGLShader::CheckGLError(const char *file, int line)
 }
 
 OpenGLShader::OpenGLShader()
-//#ifdef _WINDOWS
 	: shaderProgram(0)
 	, compiledVertexShader(0)
 	, compiledFragmentShader(0)
-	, vao(0)
+	//, vao(0)
 	, numActiveFragmentShaderSubroutineUniforms(0)
 	, activeFragmentShaderSubRoutineUniformIndecis(NULL)
 	, activeFragmentShaderSubRoutineUniformNames(NULL)
 	, numActiveVertexShaderSubroutineUniforms(0)
 	, activeVertexShaderSubRoutineUniformIndecis(NULL)
 	, activeVertexShaderSubRoutineUniformNames(NULL)
-//#endif
 {
 }
 
 OpenGLShader::~OpenGLShader()
-{
-//#ifdef _WINDOWS
+{	
 	DestroyProgram();
-//#endif
 }
-
-//#ifdef _WINDOWS
 
 int OpenGLShader::GetShaderProgram()
 {
@@ -290,10 +308,10 @@ void OpenGLShader::SetUniformVector4(int location, const CVector4& newValue)
 bool OpenGLShader::CreateProgram(const char* vertexShaderFileName, const char* fragmentShaderFileName)
 {
 	// Create Vertex Array Object
-    glGenVertexArrays(1, &vao);
-	CHECK_GL_ERROR;
-    glBindVertexArray(vao);
-	CHECK_GL_ERROR;
+//    glGenVertexArrays(1, &vao);
+//	CHECK_GL_ERROR;
+//    glBindVertexArray(vao);
+//	CHECK_GL_ERROR;
 
 	shaderProgram = glCreateProgram();
 	CHECK_GL_ERROR;
@@ -305,14 +323,24 @@ bool OpenGLShader::CreateProgram(const char* vertexShaderFileName, const char* f
 	char buffer[256];
 
     string vertexShader; 
-	sprintf(buffer, "%scode/Shaders/%s", GetDirectoryPath(), vertexShaderFileName); // create file name with path
+#ifdef _WINDOWS
+	sprintf_s
+#elif OSX
+	sprintf
+#endif
+	(buffer, "%scode/Shaders/%s", GetDirectoryPath(), vertexShaderFileName); // create file name with path
     if (!CTextFileReader::ReadFile(buffer, vertexShader)) 
 	{
         return false;
     }
 
 	string fragmentShader;
-	sprintf(buffer, "%scode/Shaders/%s", GetDirectoryPath(), fragmentShaderFileName); // create file name with path
+#ifdef _WINDOWS
+	sprintf_s
+#elif OSX
+	sprintf
+#endif
+	(buffer, "%scode/Shaders/%s", GetDirectoryPath(), fragmentShaderFileName); // create file name with path
     if (!CTextFileReader::ReadFile(buffer, fragmentShader)) 
 	{
         return false;
@@ -384,12 +412,12 @@ void OpenGLShader::DestroyProgram()
 		shaderProgram = 0;
 	}
 
-	if (0 != vao)
-	{
-		glDeleteVertexArrays(1, &vao);
-		CHECK_GL_ERROR;
-		vao = 0;
-	}
+//	if (0 != vao)
+//	{
+//		glDeleteVertexArrays(1, &vao);
+//		CHECK_GL_ERROR;
+//		vao = 0;
+//	}
 }
 
 void OpenGLShader::UseProgram()
@@ -428,8 +456,14 @@ bool OpenGLShader::AddShader(GLuint shaderProgram, const char* pShaderText, GLen
         glGetShaderInfoLog(shaderObj, 1024, NULL, InfoLog);
         
 		char printOut[2048];
-		sprintf(printOut, "Error compiling shader type %d: '%s'\n", ShaderType, InfoLog);
+#ifdef _WINDOWS
+		sprintf_s(printOut, "\n\nError compiling shader type %d: '%s'\n", ShaderType, InfoLog);		
+		OutputDebugString(printOut);
+#elif OSX
+		sprintf(printOut, "\n\nError compiling shader type %d: '%s'\n", ShaderType, InfoLog);
         std::cout << printOut;
+#endif
+		
 #endif
         return false;
     }
@@ -440,7 +474,3 @@ bool OpenGLShader::AddShader(GLuint shaderProgram, const char* pShaderText, GLen
 }
 
 #endif // USE_SHADERS
-
-//#endif // _WINDOWS
-
-#endif // OSX

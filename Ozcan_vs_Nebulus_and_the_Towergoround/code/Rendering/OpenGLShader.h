@@ -1,14 +1,16 @@
 // OpenGLShader.h
 
-#ifdef _WINDOWS
-
 #ifdef USE_SHADERS
 
 #ifndef _OpenGLShader_H_
 #define _OpenGLShader_H_
 
 //--- System Includes -----------
+#ifdef _WINDOWS
 #include <gl\gl.h>		// header file for the OpenGL32 library
+#elif OSX
+#include <Rendering/OpenGLInclude.h>
+#endif
 //-------------------------------
 
 //--- Header files --------------
@@ -56,7 +58,7 @@ class OpenGLShader
 
 		void CacheSubroutineUniforms();
 
-		static int CheckGLError(char *file, int line);
+		static int CheckGLError(const char *file, int line);
 
 	private:
 		static bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType, GLuint& shaderObj);
@@ -71,7 +73,7 @@ private:
 	GLuint shaderProgram;
 	GLuint compiledVertexShader;
 	GLuint compiledFragmentShader;
-	GLuint vao;
+	//GLuint vao;
 
 	int numActiveFragmentShaderSubroutineUniforms;
 	unsigned int* activeFragmentShaderSubRoutineUniformIndecis;
@@ -84,4 +86,3 @@ private:
 
 #endif // _OpenGLShader_H_
 #endif // USE_SHADERS
-#endif // _WINDOWS
