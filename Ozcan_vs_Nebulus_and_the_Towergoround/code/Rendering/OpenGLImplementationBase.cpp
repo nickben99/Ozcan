@@ -3,12 +3,10 @@
 //--- System includes ---------------
 #ifdef _WINDOWS
 #include <windows.h>	// header file for windows
-#include <Rendering/OpenGLInclude.h>
 #include <gl\glu.h>		// header file for the GLu32 library
-#elif OSX
-#include <Rendering/OpenGLInclude.h>
 #endif
 
+#include <Rendering/OpenGLInclude.h>
 #include <iostream>
 #include <string>
 //----------------------------------
@@ -81,35 +79,16 @@ bool OpenGLImplementationBase::InitGL()
 #elif OSX
     std::cout << "\n" << version;
 #endif
-
-	int NumberOfExtensions = 0;
-	glGetIntegerv(GL_NUM_EXTENSIONS, &NumberOfExtensions);
-	for(int i=0; i<NumberOfExtensions; i++)
-	{
-	    const char* one_string = (char*)glGetStringi(GL_EXTENSIONS, i);
-#ifdef _WINDOWS
-        OutputDebugString("\n");
-        OutputDebugString(one_string);
-#elif OSX
-        std::cout << "\n" << one_string;
-#endif
-	}
 #endif
 
-	if (glewIsSupported("GL_ARB_shader_subroutine") && glewIsSupported("GL_ARB_gpu_shader_fp64"))
-	{
-		if (!shader.CreateProgram("shader.vs", "shader.fs"))
-		{
-			return false;
-		}
-	}
-	else
-	{
-		if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
-		{
-			return false;
-		}
-	}
+    if (!shader.CreateProgram("shader.vs", "shader.fs"))
+    {
+        shader.DestroyProgram();
+        if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
+        {
+            return false;
+        }
+    }
 	
 	shader.UseProgram();
 	shader.CacheSubroutineUniforms();

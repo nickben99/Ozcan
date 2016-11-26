@@ -19,3 +19,4 @@ Ozcan_vs_Nebulus_and_the_Towergoround/Release/
 *.user
 *.opendb
 .DS_Store
+*.xcbkptlist

@@ -9,6 +9,7 @@
 #include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 #include "Audio/SoundsEnum.h"
+#include "Game/Globals.h"
 
 GLFWwindow* window = nullptr;
 
@@ -37,7 +38,7 @@ int main()
     }
     //glEnable(GL_DEPTH_TEST);
     
-    window = glfwCreateWindow( 640, 480, "Ozcan vs Nebulus and the Towergoround", NULL, NULL);
+    window = glfwCreateWindow( 640, 480, "Ozcan vs Nebulus & the Towergoround", NULL, NULL);
     if (!window)
     {
         glfwTerminate(); //terminating glfw window
@@ -45,6 +46,11 @@ int main()
     }
     
     glfwMakeContextCurrent(window);
+    
+    if (!Globals::Instance().gl.InitGL())
+    {
+        return 0;// quit if window was not created
+    }
     
     //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
     while (!glfwWindowShouldClose(window))
@@ -54,6 +60,7 @@ int main()
         glfwPollEvents();
     }
     
+    Globals::Instance().gl.DestroyGL();
     glfwTerminate(); //terminating glfw window
     return 0;
 }
