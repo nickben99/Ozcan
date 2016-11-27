@@ -6,9 +6,7 @@
 #define _OpenGLShader_H_
 
 //--- System Includes -----------
-#ifdef _WINDOWS
-#include <gl\gl.h>		// header file for the OpenGL32 library
-#elif OSX
+#ifdef OSX
 #include <Rendering/OpenGLInclude.h>
 #endif
 //-------------------------------

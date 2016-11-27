@@ -299,17 +299,11 @@
     <ClCompile Include="code\Game\CMainMenu.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.cpp">
-      <Filter>Rendering\PlatformSpecific\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="code\Debug\PlatformSpecific\Windows\DebugWindows.cpp">
       <Filter>Debug\PlatformSpecific\Windows</Filter>
     </ClCompile>
     <ClCompile Include="code\Camera\CameraLerpDistanceElevation.cpp">
       <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.cpp">
-      <Filter>Rendering\PlatformSpecific\Windows</Filter>
     </ClCompile>
     <ClCompile Include="code\Rendering\MeshBuffer.cpp">
       <Filter>Rendering</Filter>
@@ -328,6 +322,12 @@
     </ClCompile>
     <ClCompile Include="code\Debug\DebugMenu.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\OpenGLImplementationBase.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Rendering\OpenGLShader.cpp">
+      <Filter>Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,9 +568,6 @@
     <ClInclude Include="code\Camera\CameraLerpDistanceElevation.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.h">
-      <Filter>Rendering\PlatformSpecific\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="code\Rendering\MeshBuffer.h">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -591,6 +588,12 @@
     </ClInclude>
     <ClInclude Include="code\Math\CBox.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\OpenGLImplementationBase.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Rendering\OpenGLShader.h">
+      <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

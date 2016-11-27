@@ -207,8 +207,8 @@
     <ClCompile Include="code\Rendering\CParticleSystem.cpp" />
     <ClCompile Include="code\Rendering\MatrixStack.cpp" />
     <ClCompile Include="code\Rendering\MeshBuffer.cpp" />
-    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.cpp" />
-    <ClCompile Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.cpp" />
+    <ClCompile Include="code\Rendering\OpenGLImplementationBase.cpp" />
+    <ClCompile Include="code\Rendering\OpenGLShader.cpp" />
     <ClCompile Include="code\Rendering\ShadowMapping.cpp" />
     <ClCompile Include="code\Rendering\Text.cpp" />
     <ClCompile Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.cpp" />
@@ -294,7 +294,8 @@
     <ClInclude Include="code\Rendering\Interfaces\OpenGLInterface.h" />
     <ClInclude Include="code\Rendering\MatrixStack.h" />
     <ClInclude Include="code\Rendering\MeshBuffer.h" />
-    <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLShader.h" />
+    <ClInclude Include="code\Rendering\OpenGLImplementationBase.h" />
+    <ClInclude Include="code\Rendering\OpenGLShader.h" />
     <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.h" />
     <ClInclude Include="code\Rendering\ShadowMapping.h" />
     <ClInclude Include="code\Rendering\Text.h" />

@@ -2,11 +2,15 @@
 
 //--- System includes ---------------
 #ifdef _WINDOWS
+#include <glew-1.12.0\include\GL/glew.h>
 #include <windows.h>	// header file for windows
 #include <gl\glu.h>		// header file for the GLu32 library
 #endif
 
-#include <Rendering/OpenGLInclude.h>
+#ifdef OSX
+#include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
+#endif
+
 #include <iostream>
 #include <string>
 //----------------------------------
