@@ -29,12 +29,7 @@ CKeyMap::CKeyMap() // constructor
 	internal->lpdikey=0;     // set to null
 
 	for (int counter = 0; counter <= 255; counter++){
-		previousKeyboard_state[counter] = 0x80;}
-
-	//waitPeriodBetweenPolls = 1000/POLLS_PER_SECOND; // compute wait period between polls
-	//timeOfLastPoll = timer.time();
-
-	mpReplay = 0;
+		previousKeyboard_state[counter] = 0x00;}
 }
 
 CKeyMap::~CKeyMap() //destructor
@@ -61,11 +56,6 @@ bool CKeyMap::deleteDirectInput()
 	delete internal;
 
 	return(true);
-}
-
-void CKeyMap::SetReplayManager(ReplayManager* pReplay)
-{
-	mpReplay = pReplay;
 }
 
 //-----------------------------------------------------------------------------
@@ -120,7 +110,7 @@ void CKeyMap::Update()
 		// get state of all the Globals::Instance().keys and put into the keyboard_state array
 		internal->lpdikey->GetDeviceState(256, (LPVOID)keyboard_state);
 
-		for (int counter = 0; counter <= 255; counter++)
+		for (int counter = 0; counter <= 255; ++counter)
 		{
 			// for all keyboard Globals::Instance().keys, if they were not pressed in the previous cycle
 			// and they are pressed now set the appropriate position in the
@@ -148,18 +138,9 @@ void CKeyMap::Update()
 	//return(false); // indicates key states were not updated this frame
 }
 
-bool CKeyMap::GetKeyPressed(eKeyCode key, bool replaySynced)
+bool CKeyMap::GetKeyPressed(eKeyCode key)
 {	
-	BYTE DIKey = MapToDirectInput(key);
-	if (replaySynced && 0 != mpReplay)
-	{
-		if (mpReplay->IsRecording())
-		{
-			mpReplay->AddPressedQuery(DIKey, 1 == changed_state_pressed[DIKey] ? true : false);
-		}
-		return mpReplay->GetPressedQuery(DIKey);
-	}
-	
+	BYTE DIKey = MapToDirectInput(key);	
 	// see if the input key sent as a parameter
 	// was not pressed in the previous cycle and
 	// is now pressed in this cycle
@@ -175,18 +156,9 @@ bool CKeyMap::GetKeyReleased(eKeyCode key)
 	return 1 == changed_state_released[DIKey] ? true : false;
 }
 
-bool CKeyMap::GetKeyStatus(eKeyCode key, bool replaySynced)
+bool CKeyMap::GetKeyStatus(eKeyCode key)
 {
 	BYTE DIKey = MapToDirectInput(key);
-	if (replaySynced && 0 != mpReplay)
-	{
-		if (mpReplay->IsRecording())
-		{
-			mpReplay->AddStatusQuery(DIKey, keyboard_state[DIKey] ? true : false);
-		}
-		return mpReplay->GetStatusQuery(DIKey);
-	}
-
 	// see if the key sent as a parameter
 	// has been pressed this cycle
 	return keyboard_state[DIKey] ? true : false;

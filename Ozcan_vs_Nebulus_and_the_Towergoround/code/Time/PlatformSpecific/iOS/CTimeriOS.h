@@ -24,4 +24,4 @@ class CTimer
 
 #endif // ifndef _CTimer_h_
 
-#endif // #ifdef _WINDOWS
+#endif // #ifndef _WINDOWS

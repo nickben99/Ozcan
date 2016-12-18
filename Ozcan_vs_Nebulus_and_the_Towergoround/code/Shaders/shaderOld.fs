@@ -2,15 +2,18 @@
 
 //subroutine vec3 LightingSelection();
 //subroutine uniform LightingSelection lightingRender;
+uniform bool uLightingRender;
 
 //subroutine vec4 ColorSelection(vec3 lightWeighting);
 //subroutine uniform ColorSelection colorRender;
 
 //subroutine vec4 TextureSelection();
 //subroutine uniform TextureSelection textureRender;
+uniform bool uTextureRender;
 
 //subroutine void MainSelection();
 //subroutine uniform MainSelection mainRender;
+uniform bool uMainRenderFragmentShader;
 
 varying vec2 vTextureCoord;
 varying vec3 vTransformedNormal;
@@ -106,8 +109,12 @@ vec3 CalculateSceneLighting_ReleaseBuild()
 //subroutine( ColorSelection )
 vec4 CalculateFragmentColor_ReleaseBuild(vec3 lightWeighting)
 {	
-	//vec4 fragmentColor = textureRender();
-	vec4 fragmentColor = RenderWithTexture();
+	vec4 fragmentColor;
+	if (uTextureRender) {
+		fragmentColor = RenderWithTexture();
+	} else {		
+		fragmentColor = RenderNOTexture();
+	}
 	
 	fragmentColor *= uPointLightingEmissiveColor;	
 	return vec4(fragmentColor.rgb * lightWeighting, fragmentColor.a);	
@@ -197,23 +204,23 @@ vec3 CalculateSceneLighting_DebugBuild()
 }
 
 //subroutine( ColorSelection )
-vec4 CalculateFragmentColor_DebugBuild(vec3 lightWeighting)
-{
-	vec4 emmissive = uPointLightingEmissiveColor;
-	if (uUseEmmissiveOverride)
-	{
-		emmissive = uEmmissiveOverride;
-	}
-	
-	//vec4 fragmentColor = textureRender();
-	vec4 fragmentColor = RenderWithTexture();
-	
-	if (uUseEmmissive)
-	{
-		fragmentColor *= emmissive;
-	}		
-	return vec4(fragmentColor.rgb * lightWeighting, fragmentColor.a);	
-}
+//vec4 CalculateFragmentColor_DebugBuild(vec3 lightWeighting)
+//{
+//	vec4 emmissive = uPointLightingEmissiveColor;
+//	if (uUseEmmissiveOverride)
+//	{
+//		emmissive = uEmmissiveOverride;
+//	}
+//	
+//	vec4 fragmentColor = textureRender();
+//	vec4 fragmentColor = RenderWithTexture();
+//	
+//	if (uUseEmmissive)
+//	{
+//		fragmentColor *= emmissive;
+//	}		
+//	return vec4(fragmentColor.rgb * lightWeighting, fragmentColor.a);	
+//}
 
 //subroutine( LightingSelection )
 vec3 RenderNoLighting()
@@ -230,14 +237,20 @@ void MainShadowMapCreation()
 //subroutine( MainSelection )
 void RenderScene()
 {
-	//vec3 lightWeighting = lightingRender();	
-	//gl_FragColor = colorRender(lightWeighting);
-	vec3 lightWeighting = CalculateSceneLighting_ReleaseBuild();	
+	vec3 lightWeighting;
+	if (uLightingRender) {
+		lightWeighting = CalculateSceneLighting_ReleaseBuild();
+	} else {		
+		lightWeighting = RenderNoLighting();
+	}
 	gl_FragColor = CalculateFragmentColor_ReleaseBuild(lightWeighting);
 }
 
 void main(void) 
 {
-	//mainRender();
-	RenderScene();
+	if (uMainRenderFragmentShader) {
+		MainShadowMapCreation();
+	} else {
+		RenderScene();	
+	}
 }

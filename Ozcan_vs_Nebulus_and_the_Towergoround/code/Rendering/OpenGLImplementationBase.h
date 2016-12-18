@@ -37,6 +37,7 @@ class OpenGLImplementationBase
 		void GLMaterial(unsigned int identifier, float* valueArrayPointer);
 
 #ifdef USE_SHADERS
+        bool IsUsingSubRoutines();
 		bool HasBeenInitialized();
 		void UseProgram();
 		void StopUsingProgram();
@@ -119,7 +120,6 @@ class OpenGLImplementationBase
 		int modelMatrixLocation;
 		int viewMatrixLocation;
 		int vertexPositionAttribLocation;
-		int vertexColorAttribLocation;
 		int vertexNormalAttribLocation;
 		int vertexTexCoordAttribLocation;
 		int ambientColorLocation;
@@ -131,9 +131,13 @@ class OpenGLImplementationBase
 		bool hasBeenInitialized;
 		 
 		int textureSubRoutineUniform;
+        int oldCodeTextureSelection;
 		int colorSubRoutineUniform;
 		int lightingSubRoutineUniform;
+        int oldCodeLightingSelection;
+        bool isUsingSubRoutines;
 #endif
+    
 };
 
 #endif

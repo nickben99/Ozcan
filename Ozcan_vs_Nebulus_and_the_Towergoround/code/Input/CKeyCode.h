@@ -42,6 +42,8 @@ enum eKeyCode
 	eKeyCode_NUMPAD5,
 	eKeyCode_1,
 	eKeyCode_2,
+    
+    eKeyCode_Max
 };
 
 #endif // ifndef _CKeyCodes_h_

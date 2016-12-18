@@ -71,7 +71,7 @@ void InitShaderDebugMenu()
 	shaders->AddVariable(new DebugMenu::FloatDebugMenuItem("shadowCoordBias", &shadowCoordBias, 0.001f, -0.001f));
 	shaders->AddVariable(new DebugMenu::FloatDebugMenuItem("visibilty decrement", &visibilityDecrement, 0.001f, -0.001f));
 
-	Globals::Instance().debugMenu.AddVariable(shaders);
+	Globals::Instance().debugMenu->AddVariable(shaders);
 }
 #endif
 

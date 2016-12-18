@@ -147,7 +147,7 @@ inline void ReverseString(char* buffer)
     }
     --end;
     
-    for (; start < end; ++start, ++end)
+    for (; start < end; ++start, --end)
     {
         char tmp = *start;
         *start = *end;

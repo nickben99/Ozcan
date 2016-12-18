@@ -50,8 +50,11 @@ OpenGLImplementationBase::OpenGLImplementationBase()
 	, hasBeenInitialized(false)
 
 	, textureSubRoutineUniform(0)
+    , oldCodeTextureSelection(0)
 	, colorSubRoutineUniform(0)
 	, lightingSubRoutineUniform(0)
+    , oldCodeLightingSelection(0)
+    , isUsingSubRoutines(true)
 #endif
 {
 
@@ -62,6 +65,11 @@ OpenGLImplementationBase::~OpenGLImplementationBase()
 }
 
 #ifdef USE_SHADERS
+
+bool OpenGLImplementationBase::IsUsingSubRoutines()
+{
+    return isUsingSubRoutines;
+}
 
 bool OpenGLImplementationBase::InitGL()									
 {
@@ -85,9 +93,11 @@ bool OpenGLImplementationBase::InitGL()
 #endif
 #endif
 
+    isUsingSubRoutines = true;
     if (!shader.CreateProgram("shader.vs", "shader.fs"))
     {
         shader.DestroyProgram();
+        isUsingSubRoutines = false;
         if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
         {
             return false;
@@ -95,7 +105,9 @@ bool OpenGLImplementationBase::InitGL()
     }
 	
 	shader.UseProgram();
-	shader.CacheSubroutineUniforms();
+    if (isUsingSubRoutines) {
+        shader.CacheSubroutineUniforms();
+    }
 
 	textureSamplerLocation = GetUniformLocation("uSampler");
 	
@@ -114,28 +126,38 @@ bool OpenGLImplementationBase::InitGL()
 	vertexNormalAttribLocation = GetAttribLocation("aVertexNormal");
 	vertexTexCoordAttribLocation = GetAttribLocation("aTextureCoord");
 
-	textureSubRoutineUniform = GetSubroutineUniformIndex("textureRender", GL_FRAGMENT_SHADER);
-	colorSubRoutineUniform = GetSubroutineUniformIndex("colorRender", GL_FRAGMENT_SHADER);
-	lightingSubRoutineUniform = GetSubroutineUniformIndex("lightingRender", GL_FRAGMENT_SHADER);
+    if (isUsingSubRoutines) {
+        textureSubRoutineUniform = GetSubroutineUniformIndex("textureRender", GL_FRAGMENT_SHADER);
+        colorSubRoutineUniform = GetSubroutineUniformIndex("colorRender", GL_FRAGMENT_SHADER);
+        lightingSubRoutineUniform = GetSubroutineUniformIndex("lightingRender", GL_FRAGMENT_SHADER);
 
-	GLint o = 0;
-	glGetProgramStageiv(shader.GetShaderProgram(), GL_FRAGMENT_SHADER, GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, &o);
-	CHECK_GL_ERROR;
+        GLint o = 0;
+        glGetProgramStageiv(shader.GetShaderProgram(), GL_FRAGMENT_SHADER, GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, &o);
+        CHECK_GL_ERROR;
 
-	useTextureSubFunctionLocation = GetSubroutineIndex("RenderWithTexture", GL_FRAGMENT_SHADER);
-	noTextureSubFunctionLocation = GetSubroutineIndex("RenderNOTexture", GL_FRAGMENT_SHADER);
-	noLightingSubFunctionLocation = GetSubroutineIndex("RenderNoLighting", GL_FRAGMENT_SHADER);
+        useTextureSubFunctionLocation = GetSubroutineIndex("RenderWithTexture", GL_FRAGMENT_SHADER);
+        noTextureSubFunctionLocation = GetSubroutineIndex("RenderNOTexture", GL_FRAGMENT_SHADER);
+        noLightingSubFunctionLocation = GetSubroutineIndex("RenderNoLighting", GL_FRAGMENT_SHADER);
 
 #ifdef _DEBUG
-	useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_DebugBuild", GL_FRAGMENT_SHADER);
-	shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+        useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_DebugBuild", GL_FRAGMENT_SHADER);
+        shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #else
-	useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
-	shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+        useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
+        shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #endif
 
-	shader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
-	shader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
+        shader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
+        shader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
+    }
+    else
+    {
+        oldCodeTextureSelection = GetUniformLocation("uTextureRender");
+        SetUniformBool(oldCodeTextureSelection, false);
+        
+        oldCodeLightingSelection = GetUniformLocation("uLightingRender");
+        SetUniformBool(oldCodeLightingSelection, true);
+    }
 	return true;
 }
 
@@ -223,7 +245,13 @@ void OpenGLImplementationBase::SetUniformVector4(int location, const CVector4& v
 void OpenGLImplementationBase::UseTextureDefault(int textureIndex)
 {
 	UseTexture(0, textureIndex, textureSamplerLocation);
-	SetSubroutineUniformIndex(textureSubRoutineUniform, useTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+    if (isUsingSubRoutines) {
+        SetSubroutineUniformIndex(textureSubRoutineUniform, useTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+    }
+    else
+    {
+        SetUniformBool(oldCodeTextureSelection, true);
+    }
 }
 
 void OpenGLImplementationBase::UseTexture(int textureBindLayer, int textureIndex, int textureSamplerLoc)
@@ -243,7 +271,13 @@ void OpenGLImplementationBase::UseTexture(int textureBindLayer, int textureIndex
 
 void OpenGLImplementationBase::DontUseDefaultTexture()
 {
-	SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+    if (isUsingSubRoutines) {
+        SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+    }
+    else
+    {
+        SetUniformBool(oldCodeTextureSelection, false);
+    }
 }
 
 void OpenGLImplementationBase::DeleteVertexBufferObject(unsigned int vertexBufferObject)
@@ -429,7 +463,13 @@ void OpenGLImplementationBase::GLEnable(unsigned int identifier)
 	switch (identifier)
 	{
 		case GL_LIGHTING:
-			SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+            if (isUsingSubRoutines) {
+                SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+            }
+            else
+            {
+                SetUniformBool(oldCodeLightingSelection, true);
+            }
 			break;
 		default: 
 			glEnable(identifier);
@@ -446,9 +486,16 @@ void OpenGLImplementationBase::GLDisable(unsigned int identifier)
 	switch (identifier)
 	{
 		case GL_LIGHTING:
-			SetSubroutineUniformIndex(lightingSubRoutineUniform, noLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+            if (isUsingSubRoutines) {
+                SetSubroutineUniformIndex(lightingSubRoutineUniform, noLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+            }
+            else
+            {
+                SetUniformBool(oldCodeLightingSelection, false);
+            }
+            
 			break;
-		default: 
+		default:
 			glDisable(identifier);
 			break;
 	}

@@ -14,6 +14,7 @@
 //--- Header files --------------
 #include "Math/CVector.h"
 #include "Math/CMatrix.h"
+#include "Input/CKeyCode.h"
 //-------------------------------
 
 //--- defines -------------------
@@ -49,8 +50,8 @@ class ReplayManager
 				{
 				}
 
-				std::map<unsigned char, bool> status;
-				std::map<unsigned char, bool> pressed;
+				std::map<eKeyCode, bool> status;
+				std::map<eKeyCode, bool> pressed;
 
 #ifdef DETERMINISTIC_REPLAY_DEBUG
 				void ZeroReplayTrackingCounts()
@@ -169,11 +170,11 @@ class ReplayManager
 		bool IsFinalFrameOfWholeLevelReplay();
 #endif
 
-		void AddPressedQuery(unsigned char DIKey, bool val);
-		bool GetPressedQuery(unsigned char DIKey);
+		void AddPressedQuery(eKeyCode DIKey, bool val);
+		bool GetPressedQuery(eKeyCode DIKey);
 
-		void AddStatusQuery(unsigned char DIKey, bool val);
-		bool GetStatusQuery(unsigned char DIKey);		
+		void AddStatusQuery(eKeyCode DIKey, bool val);
+		bool GetStatusQuery(eKeyCode DIKey);		
 
 		int GetNumFramesForEndReplay(); // how many frames the end replay would be
 

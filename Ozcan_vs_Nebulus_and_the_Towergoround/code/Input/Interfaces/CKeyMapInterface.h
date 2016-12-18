@@ -18,6 +18,12 @@
 class CKeyMapInterface
 { 
 	public:
+		CKeyMapInterface() 
+			: mpReplay(nullptr)
+		{
+
+		}
+
 		bool Init()
 		{
 			return implementation.Init();
@@ -30,12 +36,20 @@ class CKeyMapInterface
 
 		void SetReplayManager(ReplayManager* replay)
 		{
-			implementation.SetReplayManager(replay);
+			mpReplay = replay;
 		}
 
 		bool GetKeyPressed(eKeyCode key, bool replaySynced = false)
-		{ 
-			return implementation.GetKeyPressed(key, replaySynced);
+		{
+			if (replaySynced && nullptr != mpReplay)
+			{
+				if (mpReplay->IsRecording())
+				{
+					mpReplay->AddPressedQuery(key, implementation.GetKeyPressed(key));
+				}
+				return mpReplay->GetPressedQuery(key);
+			}
+			return implementation.GetKeyPressed(key);
 		}
 
 		bool GetKeyReleased(eKeyCode key)
@@ -45,11 +59,20 @@ class CKeyMapInterface
 
 		bool GetKeyStatus(eKeyCode key, bool replaySynced = false)
 		{
-			return implementation.GetKeyStatus(key, replaySynced);
+			if (replaySynced && nullptr != mpReplay)
+			{
+				if (mpReplay->IsRecording())
+				{
+					mpReplay->AddStatusQuery(key, implementation.GetKeyStatus(key));
+				}
+				return mpReplay->GetStatusQuery(key);
+			}
+			return implementation.GetKeyStatus(key);
 		}
 
 private:
 	CKeyMap implementation;
+	ReplayManager* mpReplay;
 };
 
 #endif // ifndef _CHighPrecisionTimerInterface_h_

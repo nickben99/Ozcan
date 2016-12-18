@@ -465,28 +465,51 @@ int WINAPI WinMain(	HINSTANCE, // instance
 	if (!Globals::Instance().gl.InitGL())
 	{
 		MessageBox(0,"Initialization Failure","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#ifdef USE_SHADERS
+		Text::DeleteMesh();
+		Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+#endif
 		KillGameWindow();
 		return 0;// quit if window was not created
 	}
 
-	Globals::Instance().modelMatrixStack.SetMatrixLocation(Globals::Instance().gl.GetUniformLocation("uModelMatrix"));
-	Globals::Instance().viewMatrixStack.SetMatrixLocation(Globals::Instance().gl.GetUniformLocation("uViewMatrix"));
-	Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER), 
-													Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-	Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER), 
-													Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-	Globals::Instance().gl.SetUniformMatrix(Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix"), CMatrix());
+    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
+    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+    
+    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
+    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+    if (Globals::Instance().gl.IsUsingSubRoutines())
+    {
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
+    }
+    else
+    {
+        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
+        
+        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
+    }
+    
+    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
 
 #ifdef USE_SHADERS
 	CMenu::SetPerspectiveProjectionMatrix();
 #endif
 
 	Game game;
-	// get the number of ticks per second and save in timerFrequency
 	if(!game.Init()) 
 	{
-		KillGameWindow(); // kill window and exit if QueryPerformanceFrequency didn't work
 		MessageBox(0,"Initialization Failure","ERROR",MB_OK|MB_ICONEXCLAMATION);
+#ifdef USE_SHADERS
+		Text::DeleteMesh();
+		Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+#endif
+		KillGameWindow(); // kill window and exit if QueryPerformanceFrequency didn't work
 		return (0); // failure
 	}
 
@@ -526,6 +549,7 @@ int WINAPI WinMain(	HINSTANCE, // instance
 #ifdef USE_SHADERS
 	Text::DeleteMesh();
 	Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+	Globals::Destroy();
 #endif
 	KillGameWindow();	// destroy the window
 	return (msg.wParam); // exit the program

@@ -24,6 +24,7 @@ class Globals
 { 
 public:
 	static Globals& Instance();
+    static void Destroy();
 	~Globals();
 
 	SoundInterface sound;
@@ -34,7 +35,7 @@ public:
 	MatrixStack viewMatrixStack;
 #if _DEBUG
 	DebugRendering debugDraw;
-	DebugMenu debugMenu;
+	DebugMenu* debugMenu;
 #endif
 
 	float windowWidth;
@@ -52,6 +53,7 @@ public:
 #endif
 private:
 	Globals();
+    static Globals* inst;
 };
 
 #endif // ifndef _Globals_h_

@@ -22,7 +22,10 @@
 //external variables---
 #ifdef _WINDOWS
 extern HDC hDC; // from winSetup
-#endif // _WINDOWS
+#else
+#include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h> // from OSXSetup.cpp
+extern GLFWwindow* osxWindow;
+#endif
 //---------------------
 
 //defines--------------

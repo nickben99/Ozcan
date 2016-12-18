@@ -34,10 +34,12 @@ unsigned int ShadowMapping::depthTexture = 0;
 int ShadowMapping::shadowMappingVertexSubroutineUniform = -1;
 int ShadowMapping::shadowMappingVertexRenderSubRoutineIndex = -1;
 int ShadowMapping::mainRenderVertexSubRoutineIndex = -1;
+int ShadowMapping::oldCodeVertexRenderSelector = -1;
 
 int ShadowMapping::shadowMappingSubroutineUniform = -1;
 int ShadowMapping::shadowMappingRenderSubRoutineIndex = -1;
 int ShadowMapping::mainRenderSubRoutineIndex = -1;
+int ShadowMapping::oldCodeFragmentRenderSelector = -1;
 
 int ShadowMapping::lightViewProjectionMatrixUniform = -1;
 int ShadowMapping::depthTextureSamplerUniform = -1;
@@ -71,16 +73,24 @@ unsigned int ShadowMapping::Create()
 {
 	Destroy(); // delete anything hanging around
 	
-	shadowMappingVertexSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER);
-	shadowMappingVertexRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_VERTEX_SHADER);
-	mainRenderVertexSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER);
+    if (Globals::Instance().gl.IsUsingSubRoutines())
+    {
+        shadowMappingVertexSubroutineUniform =  Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER);
+        shadowMappingVertexRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_VERTEX_SHADER);
+        mainRenderVertexSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER);
 
-	shadowMappingSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER);
-	shadowMappingRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_FRAGMENT_SHADER);
-	mainRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER);
+        shadowMappingSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER);
+        shadowMappingRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_FRAGMENT_SHADER);
+        mainRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER);
 
-	lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-	depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
+        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
+    }
+    else
+    {
+        oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+        oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+    }
 
 #if (_DEBUG && USE_SHADERS)
 	if (!shadowMappingVariablesAddedToDebugMenu)
@@ -94,7 +104,7 @@ unsigned int ShadowMapping::Create()
 		container->AddVariable(new DebugMenu::BoolDebugMenuItem("wholeSceneShadowMap", &wholeSceneShadowMap));
 		container->AddVariable(new DebugMenu::BoolDebugMenuItem("resetProjectionValues", &resetProjectionValues));
 
-		Globals::Instance().debugMenu.AddVariable(container);
+		Globals::Instance().debugMenu->AddVariable(container);
 	}
 #endif
 
@@ -163,8 +173,16 @@ void ShadowMapping::PreDepthTextureRender()
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
 
-	Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, shadowMappingRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
-	Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, shadowMappingVertexRenderSubRoutineIndex, GL_VERTEX_SHADER);
+    if (Globals::Instance().gl.IsUsingSubRoutines())
+    {
+        Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, shadowMappingRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, shadowMappingVertexRenderSubRoutineIndex, GL_VERTEX_SHADER);
+    }
+    else
+    {
+        Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, true);
+        Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, true);
+    }
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -182,10 +200,18 @@ void ShadowMapping::PostDepthTextureRender()
 {
 	Globals::Instance().modelMatrixStack.PopMatrix();
 	Globals::Instance().viewMatrixStack.PopMatrix();
-
-	CMenu::SetPerspectiveProjectionMatrix();
-	Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, mainRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
-	Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, mainRenderVertexSubRoutineIndex, GL_VERTEX_SHADER);
+    
+    if (Globals::Instance().gl.IsUsingSubRoutines())
+    {
+        CMenu::SetPerspectiveProjectionMatrix();
+        Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, mainRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, mainRenderVertexSubRoutineIndex, GL_VERTEX_SHADER);
+    }
+    else
+    {
+        Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, false);
+        Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, false);
+    }
 
 	glViewport(0, 0, (int)Globals::Instance().windowWidth, (int)Globals::Instance().windowHeight); 
 	UseDefaultFrameBuffer();

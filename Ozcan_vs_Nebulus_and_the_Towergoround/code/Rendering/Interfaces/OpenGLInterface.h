@@ -69,6 +69,11 @@ class OpenGLInterface
 		{
 			return implementation.HasBeenInitialized();
 		}
+    
+        bool IsUsingSubRoutines()
+        {
+            return implementation.IsUsingSubRoutines();
+        }
 
 		void UseProgram()
 		{

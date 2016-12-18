@@ -45,8 +45,6 @@ class CKeyMap
 
 		//int waitPeriodBetweenPolls,
 		//	timeOfLastPoll; // variables for having set times between keyboard polls
-
-		ReplayManager* mpReplay;
 //----------------------------------
 
 		// delete direct input
@@ -58,9 +56,9 @@ class CKeyMap
 		CKeyMap();    // constructor
 		~CKeyMap();   // destructor
 
-		bool GetKeyPressed(eKeyCode key, bool replaySynced = false);	// see if the direct input key has changed to pressed
+		bool GetKeyPressed(eKeyCode key);	// see if the direct input key has changed to pressed
 		bool GetKeyReleased(eKeyCode key);	// see if the direct input key has changed to unpressed
-		bool GetKeyStatus(eKeyCode key, bool replaySynced = false);	// see if the direct input key is pressed
+		bool GetKeyStatus(eKeyCode key);	// see if the direct input key is pressed
   
 		// update arrays of which Globals::Instance().keys are pressed
 		// and which Globals::Instance().keys have been pressed this cycle
@@ -69,8 +67,6 @@ class CKeyMap
 		
 		// set-up direct input 
 		bool Init();
-
-		void SetReplayManager(ReplayManager* pReplay);
 //---------------------------------------------
 };
 

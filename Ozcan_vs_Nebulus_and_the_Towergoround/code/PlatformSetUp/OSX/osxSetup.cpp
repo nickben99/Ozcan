@@ -9,26 +9,12 @@
 #include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 #include "Audio/SoundsEnum.h"
-#include "Game/Globals.h"
+#include <Game/Globals.h>
+#include <Game/CMenu.h>
+#include <Game/Game.h>
+#include <iostream> // for std::cout
 
-GLFWwindow* window = nullptr;
-
-void display()
-{
-    glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
-    glClear( GL_COLOR_BUFFER_BIT);
-    
-    glBegin(GL_TRIANGLES); //Begin triangle coordinates
-    
-    glColor3f(0.0f, 1.0f, 0.0f);
-    //Triangle
-    glVertex2f(0.0f, 0.5f);
-    glVertex2f(-0.5f, -0.5f);
-    glVertex2f(0.5f, -0.5f);
-    
-    glEnd(); //End triangle coordinates
-    
-}
+GLFWwindow* osxWindow = nullptr;
 
 int main()
 {
@@ -38,29 +24,88 @@ int main()
     }
     //glEnable(GL_DEPTH_TEST);
     
-    window = glfwCreateWindow( 640, 480, "Ozcan vs Nebulus & the Towergoround", NULL, NULL);
-    if (!window)
+    int width = 1024;
+    int height = 768;
+    osxWindow = glfwCreateWindow( width, height, "Ozcan vs Nebulus & the Towergoround", NULL, NULL);
+    if (!osxWindow)
     {
         glfwTerminate(); //terminating glfw window
         return -2;
     }
     
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(osxWindow);
     
+    Globals::Instance();
     if (!Globals::Instance().gl.InitGL())
     {
+        Text::DeleteMesh();
+        Globals::Instance().gl.DestroyGL();
+        glfwTerminate(); //terminating glfw window
         return 0;// quit if window was not created
     }
     
-    //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
-    while (!glfwWindowShouldClose(window))
+    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
+    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
+    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+    
+    bool isUsingSubRoutines4 = Globals::Instance().gl.IsUsingSubRoutines();
+    if (isUsingSubRoutines4)
     {
-        display();
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
+    }
+    else
+    {
+        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
+        
+        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
     }
     
+    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+
+    //DON'T KNOW WHY DOUBLING SIZE WORKS!!!!!!!!!!!!!!
+    Globals::Instance().gl.ReSizeGLScene(width*2, height*2); //<<== DON'T KNOW WHY DOUBLING SIZE WORKS!!
+    CMenu::SetPerspectiveProjectionMatrix();
+    
+    Game game;
+    if(!game.Init())
+    {
+        Text::DeleteMesh();
+        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+        glfwTerminate(); //terminating glfw window
+        return (0); // failure
+    }
+    
+    Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
+    
+    //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
+    while (!glfwWindowShouldClose(osxWindow))
+    {
+        if (!game.Update()) {
+            break;
+        }
+        
+//#if _DEBUG
+//        Globals::Instance().debug.printDebug();
+//#endif
+        glfwSwapBuffers(osxWindow);
+    }
+
+#ifdef USE_SHADERS
+    CHECK_GL_ERROR;
+#endif
+    
+    // Shutdown
+    game.DeleteGameObjects(); // delete all game specific objects
+    Text::DeleteMesh();
     Globals::Instance().gl.DestroyGL();
+    Globals::Destroy();
     glfwTerminate(); //terminating glfw window
     return 0;
 }

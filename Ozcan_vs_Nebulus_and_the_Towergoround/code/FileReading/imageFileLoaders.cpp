@@ -79,7 +79,8 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
         return (0);
     }
 
-    if (fread(info, 1, infosize, fp) < infosize)
+    size_t infoSizeRead = fread(info, 1, infosize, fp);
+    if (infoSizeRead < infosize)
     {
         /* Couldn't read the bitmap header - return 0... */
         free(info);
@@ -138,21 +139,6 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
 			bits[offset + 2] = pPtr[1];
 
 			bits[offset + 3] = pPtr[0]; // alpha
-		}
-
-		if (0 == bits[offset] && 0 == bits[offset + 1] && 0 == bits[offset + 2]) // black
-		{
-			if (0 != bits[offset + 3]) // is opaque
-			{
-				bits[offset + 3] = bits[offset + 3];
-			}
-		}
-		else if (0 != bits[offset] || 0 != bits[offset + 1] || 0 != bits[offset + 2]) // not black
-		{
-			if (0 == bits[offset + 3]) // is transparent
-			{
-				bits[offset + 3] = bits[offset + 3];
-			}
 		}
 	}
 	fclose(fp);

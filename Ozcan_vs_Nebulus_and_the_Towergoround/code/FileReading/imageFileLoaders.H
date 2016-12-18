@@ -42,6 +42,8 @@ extern "C" {
  */
 
 #ifndef _WINDOWS
+    
+#pragma pack(2)
 typedef struct                       /**** BMP file header structure ****/
     {
     unsigned short bfType;           /* Magic number for file */
@@ -108,5 +110,5 @@ extern GLubyte* LoadTarga(const char *filename, unsigned short &uHeight,
 
 #  ifdef __cplusplus
 }
-#  endif /* __cplusplus */
+#  endif // _WINDOWS
 #endif /* !_IMAGEFILELOADERS_H_ */

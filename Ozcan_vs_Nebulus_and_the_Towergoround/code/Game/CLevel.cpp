@@ -64,6 +64,8 @@ void DrawIntroScreenLoadingBar(CHUD* theHUD, float completion)
 	theHUD->drawIntroScreenLoadingBar( completion );
 #ifdef _WINDOWS
 	SwapBuffers( hDC ); // swap the frame buffers
+#else
+    glfwSwapBuffers(osxWindow);
 #endif
 }
 
@@ -79,7 +81,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	if (!variablesAddedToDebugMenu)
 	{
 		variablesAddedToDebugMenu = true;
-		Globals::Instance().debugMenu.AddVariable(new DebugMenu::BoolDebugMenuItem("drawShadowMap", &drawShadowMap));
+		Globals::Instance().debugMenu->AddVariable(new DebugMenu::BoolDebugMenuItem("drawShadowMap", &drawShadowMap));
 	}
 #endif
 

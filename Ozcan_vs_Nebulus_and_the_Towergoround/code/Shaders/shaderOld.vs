@@ -1,5 +1,6 @@
 //subroutine void MainSelection();
 //subroutine uniform MainSelection mainRender;
+uniform bool uMainRenderVertexShader;
 
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
@@ -34,6 +35,9 @@ void main(void) {
 	vPosition = uViewMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
 	gl_Position = uProjectionMatrix * vPosition;
 	
-	//mainRender();
-	RenderScene();
+	if (uMainRenderVertexShader) {
+		MainShadowMapCreation();
+	} else {
+		RenderScene();
+	}
 }

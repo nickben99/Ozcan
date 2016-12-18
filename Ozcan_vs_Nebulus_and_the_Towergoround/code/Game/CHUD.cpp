@@ -345,8 +345,8 @@ void CHUD::draw( void)
 	}
 
 #if (_DEBUG && USE_SHADERS)
-	Globals::Instance().debugMenu.Update();
-	Globals::Instance().debugMenu.Draw();
+	Globals::Instance().debugMenu->Update();
+	Globals::Instance().debugMenu->Draw();
 #endif
 
 #ifndef USE_SHADERS
@@ -480,7 +480,7 @@ void CHUD::ReplayDraw()
         defines::CopyString(replayText, "REPLAY REPLAY - end", NumReplayTextChars);
 	}
 #else
-	strcpy_s(replayText, "REPLAY REPLAY"); // print the string
+	defines::CopyString(replayText, "REPLAY REPLAY", NumReplayTextChars); // print the string
 #endif
 
 	float theTime = ((float)Globals::Instance().timer.time())*0.001f; // convert to seconds

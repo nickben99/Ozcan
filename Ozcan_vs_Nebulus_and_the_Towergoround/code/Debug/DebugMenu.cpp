@@ -20,7 +20,7 @@ CVector4 normalColor;
 DebugMenu::DebugMenu()
 	: mainMenu(NULL)
 	, isVisible(false)
-	, font(NULL)
+	, font(nullptr)
 {
 	selectedColor = CVector4::red;
 	subMenuColor = CVector4::blue;
@@ -117,7 +117,7 @@ void DebugMenu::DebugMenuItemContainer::Draw(Text& font, float& xDrawPos, float&
 
 void DebugMenu::Start()
 {
-	if (NULL == font)
+	if (nullptr == font)
 	{
 		font = new Text();
 	}
@@ -148,10 +148,10 @@ void DebugMenu::Start()
 
 void DebugMenu::Stop()
 {
-	if (NULL != font)
+	if (nullptr != font)
 	{
 		delete font;
-		font = NULL;
+		font = nullptr;
 	}
 
 	if (NULL != mainMenu)
@@ -163,7 +163,7 @@ void DebugMenu::Stop()
 
 void DebugMenu::Update()
 {
-	if (NULL == font)
+	if (nullptr == font)
 	{
 		return;
 	}
@@ -187,7 +187,7 @@ void DebugMenu::Update()
 
 void DebugMenu::Draw()
 {
-	if (NULL == font)
+	if (nullptr == font)
 	{
 		return;
 	}

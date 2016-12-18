@@ -298,30 +298,30 @@ void ReplayManager::PostSpriteUpdate()
 	}
 }
 
-void ReplayManager::AddPressedQuery(unsigned char DIKey, bool val)
+void ReplayManager::AddPressedQuery(eKeyCode key, bool val)
 {
-	frameInput[frameInput.size()-1].pressed[DIKey] = val;
+	frameInput[frameInput.size()-1].pressed[key] = val;
 }
 
-bool ReplayManager::GetPressedQuery(unsigned char DIKey)
+bool ReplayManager::GetPressedQuery(eKeyCode key)
 {
 	if (IsRecording() || IsReplayingWholeLevel())
 	{
-		return frameInput[Globals::Instance().currentLevel.GetFrameNumber()].pressed[DIKey];
+		return frameInput[Globals::Instance().currentLevel.GetFrameNumber()].pressed[key];
 	}
 	return false;
 }
 
-void ReplayManager::AddStatusQuery(unsigned char DIKey, bool val)
+void ReplayManager::AddStatusQuery(eKeyCode key, bool val)
 {
-	frameInput[Globals::Instance().currentLevel.GetFrameNumber()].status[DIKey] = val;
+	frameInput[Globals::Instance().currentLevel.GetFrameNumber()].status[key] = val;
 }
 
-bool ReplayManager::GetStatusQuery(unsigned char DIKey)
+bool ReplayManager::GetStatusQuery(eKeyCode key)
 {
 	if (IsRecording() || IsReplayingWholeLevel())
 	{
-		return frameInput[Globals::Instance().currentLevel.GetFrameNumber()].status[DIKey];
+		return frameInput[Globals::Instance().currentLevel.GetFrameNumber()].status[key];
 	}
 	return false; // we're replaying the end of the level, positions are stored, no need for saved key input
 }
