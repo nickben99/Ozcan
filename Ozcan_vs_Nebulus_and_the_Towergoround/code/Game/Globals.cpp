@@ -27,7 +27,9 @@ void Globals::Destroy()
 Globals::~Globals()
 {
 	delete mpMainMenu;
+#ifdef _DEBUG
     delete debugMenu;
+#endif
 }
 
 Globals::Globals()
@@ -35,7 +37,9 @@ Globals::Globals()
 	, windowHeight(0)
 	, gameLevel(0)
 {
+#ifdef _DEBUG
     debugMenu = new DebugMenu();
+#endif
 	mpMainMenu = new CMainMenu();
 	main = menuSystem;
 	drawMenu = 1; // used to stop the menu being drawn when the game starts
