@@ -69,8 +69,11 @@ int main()
     int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
     Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
 
-    //DON'T KNOW WHY DOUBLING SIZE WORKS!!!!!!!!!!!!!!
-    Globals::Instance().gl.ReSizeGLScene(width*2, height*2); //<<== DON'T KNOW WHY DOUBLING SIZE WORKS!!
+    int frameBufferWidth = 0;
+    int frameBufferHeight = 0;
+    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
+    
+    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
     CMenu::SetPerspectiveProjectionMatrix();
     
     Game game;
