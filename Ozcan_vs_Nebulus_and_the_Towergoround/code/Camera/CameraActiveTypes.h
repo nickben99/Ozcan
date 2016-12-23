@@ -46,6 +46,7 @@ private:
 	{
 		TypeContainer()
 			: mpCamType(0)
+            , mpLerp(0)
 		{}
 
 		bool IsTransitionAndCollisionFullyBlendedIn()
