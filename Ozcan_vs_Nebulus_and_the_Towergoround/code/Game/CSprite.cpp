@@ -111,16 +111,16 @@ void CSprite::saveReplayUpdate(int frame)
 				return; // we already have our end sequence recorded
 			}
 			
-			ReplayData& data = mpReplayData[ReplayManager::instance()->GetRecordingBufferIndex()];
-			data.frame = frame;
-			data.position = position;
-			data.currentAnimationFrame = currentFrame;
-			data.orientation = rotation.matrixToQuaternion();			
-			data.scale = scale;
-			data.active = active;
-			data.transparency = transparency;
-			data.soundToPlay = soundPlayedThisFrame;
-			saveReplayUpdate(data, 0 == frame);
+//			ReplayData& data = mpReplayData[ReplayManager::instance()->GetRecordingBufferIndex()];
+//			data.frame = frame;
+//			data.position = position;
+//			data.currentAnimationFrame = currentFrame;
+//			data.orientation = rotation.matrixToQuaternion();			
+//			data.scale = scale;
+//			data.active = active;
+//			data.transparency = transparency;
+//			data.soundToPlay = soundPlayedThisFrame;
+//			saveReplayUpdate(data, 0 == frame);
 		}
 		else if (ReplayManager::instance()->IsReplayingEndLevel()) // replaying end level, we don't need to do anything for replaing the whole level
 		{

@@ -12,11 +12,18 @@
 #include "Camera/CameraLerpDistanceElevation.h"
 //-------------------------
 
+CCamera* pp = nullptr;
+
 // creates singleton camera instance
 CCamera* CCamera::instance() 
 {
-	static CCamera cameraInstance; // create static camera instance once
-    return &cameraInstance; // return the address of the camera instance
+    if (!pp) {
+        pp = new CCamera();
+    }
+    return pp;
+    
+	//static CCamera cameraInstance; // create static camera instance once
+    //return &cameraInstance; // return the address of the camera instance
 }
 
 // constructor

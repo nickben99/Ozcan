@@ -11,11 +11,6 @@
 //---------------------
 
 //defines--------------
-struct towerObject
-{
-	char objectType; // char indicating the type of this object
-};
-
 /*	The default horizontal and virtical measurements 
 	of the tower.  The difference between these values
 	will determine by how much tower objects should be scaled 
@@ -29,6 +24,7 @@ class CTower
 {
 	private:
 //-----private variables-----------
+        static CTower* inst;
 //---------------------------------
 
 // ----private methods-------------
@@ -47,7 +43,7 @@ class CTower
 				xPercentFromBaseMeasurement, // percentage increase/decrease from base measurements
 				yPercentFromBaseMeasurement;
 
-		towerObject *towerObjects; // tower objects (dynamic array)
+		char *towerObjects; // tower objects (dynamic array)
 //----------------------------------
 
 //----public methods----------------------------------------
@@ -57,6 +53,8 @@ class CTower
 		// initialise tower variables and data structures
 		bool initialise(int totalRows, int totalColumns, 
 						int rowHeight, int columnWidth);
+    
+        char GetTowerObject(int index);
 
 		// overloaded operators
 

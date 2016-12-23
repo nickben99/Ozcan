@@ -53,15 +53,15 @@ void CPowerUp::reinitialise()
 		/*	the power up should be generated on a tower segment, below the power up 
 			should be two tower segments then a step, any other case will require a 
 			new position to be generated */
-		} while(	!(towerSegment == theTower->towerObjects[randomPosition].objectType && 
-					towerSegment == theTower->towerObjects[rowsBelow[0]].objectType && 
-					towerSegment == theTower->towerObjects[rowsBelow[1]].objectType && 
+		} while(	!(towerSegment == theTower->GetTowerObject(randomPosition) &&
+					towerSegment == theTower->GetTowerObject(rowsBelow[0]) &&
+					towerSegment == theTower->GetTowerObject(rowsBelow[1]) &&
 					
-					(STEP == theTower->towerObjects[rowsBelow[2]].objectType || 
-					SLIPPY_STEP_RIGHT == theTower->towerObjects[rowsBelow[2]].objectType || 
-					SLIPPY_STEP_LEFT == theTower->towerObjects[rowsBelow[2]].objectType ||
-					LIFT_BOTTOM == theTower->towerObjects[rowsBelow[2]].objectType || 
-					LIFT_TOP == theTower->towerObjects[rowsBelow[2]].objectType)) );
+					(STEP == theTower->GetTowerObject(rowsBelow[2]) ||
+					SLIPPY_STEP_RIGHT == theTower->GetTowerObject(rowsBelow[2]) ||
+					SLIPPY_STEP_LEFT == theTower->GetTowerObject(rowsBelow[2]) ||
+					LIFT_BOTTOM == theTower->GetTowerObject(rowsBelow[2]) ||
+					LIFT_TOP == theTower->GetTowerObject(rowsBelow[2]))) );
 		
 		CTowerSprite::initialise(randomPosition); // initialise super class
 		CTowerStep::initialise(randomPosition);

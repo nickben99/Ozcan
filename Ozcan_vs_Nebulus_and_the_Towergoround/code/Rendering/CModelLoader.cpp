@@ -467,7 +467,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		
 		// get colour map diffuse texture, get just filename at end of line (not path)
         defines::CopyString (aModel->materials[material].clrMapTex, "", sizeof(aModel->materials[material].clrMapTex)); // set to null in case no tex
-        res =
+
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\\\"]", aModel->materials[material].clrMapTex, material::kStrLen);
 #else
@@ -478,7 +478,7 @@ int CModelLoader::load(char* filename, CModel **model)
 
 		// get alpha map texture, initially set to null in case their's no alpha map tex
         defines::CopyString(aModel->materials[material].alphaMapTex, "", sizeof(aModel->materials[material].alphaMapTex));
-        res =
+
 #ifdef _WINDOWS
         sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", &aModel->materials[material].alphaMapTex, material::kStrLen);
 #else

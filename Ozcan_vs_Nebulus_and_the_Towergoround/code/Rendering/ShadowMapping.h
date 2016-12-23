@@ -33,13 +33,14 @@ public:
 
 	static void PreSceneRender();
 	static void PostSceneRender();
+    
+    static unsigned int GetDepthTexture();
 
 private:
 	static void UseDefaultFrameBuffer();
 	static CMatrix CalculateLightOrthographicProjection();
 	static CMatrix CalculateLightLookAtMatrix();
 
-public:
 	static unsigned int frameBuffer;
 	static unsigned int depthTexture;
 

@@ -85,13 +85,13 @@ vec3 CalculateSceneLighting_ReleaseBuild()
 	vec3 normal = normalize(vTransformedNormal);
 
 	float visibility = 1.0;
-	float coordZ = (vShadowCoord.z-shadowCoordBias);
-	for (int i = 0; i < 4; i++)
-	{
-		visibility -= (uVisibilityDecrement * step(texture2D( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
-	}
+//	float coordZ = (vShadowCoord.z-shadowCoordBias);
+//	for (int i = 0; i < 4; i++)
+//	{
+//		visibility -= (uVisibilityDecrement * step(texture2D( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
+//	}
 	
-	visibility *= float(gl_FrontFacing);
+//	visibility *= float(gl_FrontFacing);
 	
 	float specularLightWeighting = 0.0;	
 	vec3 eyeDirection = normalize(-vPosition.xyz); // this is because the camera doesn't move, the world moves away from the camera

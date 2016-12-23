@@ -2,6 +2,7 @@
 
 // system includes --------
 #include <math.h>
+#include <iostream>
 //-------------------------
 
 // header files -----------
@@ -14,13 +15,19 @@ CLift::CLift(CModel * aModel, int towerPosition, char LiftTopIdentifier)
 	: CTowerStep(aModel, towerPosition) // initialise super class
 {
 	liftTopYHeight = -1;
+    
+//    for (int i = 0; i < CTower::instance()->totalTowerObjects; i++){
+//        char val = CTower::instance()->GetTowerObject(i);
+//        std::cout << "\n " + std::to_string(i) + ". " + std::to_string(val);
+//    }
+    
 	// find the top of the lift
 	for (int object = towerPosition+theTower->towerColumns; 
 									object < theTower->totalTowerObjects; 
 												object+=theTower->towerColumns)
 	{
 		// set the height of the top of the lift	
-		if (LiftTopIdentifier == theTower->towerObjects[object].objectType)
+		if (LiftTopIdentifier == theTower->GetTowerObject(object))
 		{
 			int startingRow		= object/theTower->towerColumns;
 			liftTopYHeight = (startingRow*theTower->towerRowHeight);

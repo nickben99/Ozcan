@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
 //-------------------------
 
 // header files -----------
@@ -55,7 +56,7 @@ void CLevel::deleteCurrentLevel()
 #ifdef _DEBUG
 	Globals::Instance().debugDraw.DestroyShapes();
 #endif
-	ShadowMapping::Destroy();
+	//ShadowMapping::Destroy();
 }
 
 void DrawIntroScreenLoadingBar(CHUD* theHUD, float completion)
@@ -85,13 +86,13 @@ bool CLevel::loadLevel(GLint theLevel)
 	}
 #endif
 
-	if (!ShadowMapping::Create())
-	{
-#ifdef _WINDOWS
-		MessageBox(0,"Could not create depth texture","ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
-		return false;
-	}
+//	if (!ShadowMapping::Create())
+//	{
+//#ifdef _WINDOWS
+//		MessageBox(0,"Could not create depth texture","ERROR",MB_OK|MB_ICONEXCLAMATION);
+//#endif
+//		return false;
+//	}
 
 	mIsLoading = true;
 	startWholeLevelReplay = false;
@@ -187,7 +188,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	{
 		for(int col = 0; col < totalColumns; col++)
 		{	// put char object indicator in correct position
-			theScene.tower->towerObjects[(row*totalColumns)+col].objectType = 
+			theScene.tower->towerObjects[(row*totalColumns)+col] =
 								fileReader.currentLineOfFile[col];
 		}// end for columns
 		fileReader.getNextLine();
@@ -369,7 +370,8 @@ bool CLevel::loadLevel(GLint theLevel)
 	
 	// copy tower object chars to temporary char array
 	for (int i = 0; i < totalRows*totalColumns; i++){
-		tempTowerObjects[i] = theScene.tower->towerObjects[i].objectType;}
+		tempTowerObjects[i] = theScene.tower->towerObjects[i];
+    }
 
 	DrawIntroScreenLoadingBar(theHUD, 0.7f);
 
@@ -739,11 +741,11 @@ void DrawShadowMapRender();
 void CLevel::draw()
 {
 #ifdef USE_SHADERS
-	ShadowMapping::PreDepthTextureRender();
-	Draw3DScene();
-	ShadowMapping::PostDepthTextureRender();
+	//ShadowMapping::PreDepthTextureRender();
+	//Draw3DScene();
+	//ShadowMapping::PostDepthTextureRender();
 
-	ShadowMapping::PreSceneRender();
+	//ShadowMapping::PreSceneRender();
 #endif	
 
 #if (_DEBUG && USE_SHADERS)
@@ -767,7 +769,7 @@ void CLevel::draw()
 	}
 
 #ifdef USE_SHADERS
-	ShadowMapping::PostSceneRender();
+	//ShadowMapping::PostSceneRender();
 #endif	
 
 	// finally draw the HUD last
@@ -797,6 +799,7 @@ void CLevel::Draw3DScene()
 	}
 }
 
+#if (_DEBUG && USE_SHADERS)
 void DrawShadowMapRender()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// clear screen and depth buffer
@@ -839,13 +842,14 @@ void DrawShadowMapRender()
 	};
 	backgroundMesh.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
 	//backgroundMesh.SetColor(CVector4(1.0f, 0.0f, 0.0f, 1.0f));
-	backgroundMesh.SetTexture(ShadowMapping::depthTexture);
+	backgroundMesh.SetTexture(ShadowMapping::GetDepthTexture());
 
 	backgroundMesh.Draw();
 
 	// set the screen back to perspective view
 	CMenu::setToPerspectiveView();
 }
+#endif
 
 void CLevel::CheckStartWholeLevelReplay()
 {
