@@ -115,7 +115,7 @@ inline bool IsNaN(const float& num)
 #endif
     
 #ifdef OSX
-    return std::isnan(num);
+    return std::isnan(num) || std::isinf(num);
 #endif
 }
     
