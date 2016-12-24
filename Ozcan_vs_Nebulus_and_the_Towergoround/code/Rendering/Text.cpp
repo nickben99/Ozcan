@@ -271,7 +271,8 @@ int LoadTexture()
 #else
     sprintf(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
 #endif
-	return TextureLoad(buffer, GL_FALSE, GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST, GL_CLAMP); 
+	return TextureLoad(buffer, GL_FALSE//, GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST, GL_CLAMP);
+    , GL_LINEAR, GL_NEAREST, GL_CLAMP); //TODO TEXTURE FIX
 }
 
 void Text::CreateMesh()

@@ -768,7 +768,8 @@ int CModelLoader::reloadTextures(CModel *thisModel)
 			(filename, thisModel->materials[material].clrMapTex);
 			thisModel->materials[material].clrTexBndNo = // bind the texture
 				TextureLoad(filename, 
-				GL_FALSE, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR, GL_REPEAT); 
+				//GL_FALSE, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR, GL_REPEAT);
+                GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);//TODO TEXTURE FIX 
 
 			if (thisModel->materials[material].clrTexBndNo <= 0){ // if the texture did not load properly
 #ifdef _WINDOWS

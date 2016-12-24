@@ -2,6 +2,7 @@
 
 //system includes-------
 #include "math.h"
+#include <iostream>
 //----------------------
 
 //header files----------
@@ -11,13 +12,28 @@
 //----------------------
 
 // static variables ---------------
+CTower* CTower::inst = nullptr;
 //---------------------------------
 
 // creates singleton tower instance
 CTower * CTower::instance () 
 {
-	static CTower towerInstance;
-    return &towerInstance;
+    if (!inst) {
+        inst = new CTower();
+    }
+    
+//    if (inst->totalTowerObjects > 0 && inst->towerObjects)
+//    {
+//        for (int i = 0; i < inst->totalTowerObjects; i++){
+//            char val = inst->towerObjects[i];
+//            std::cout << "\n " + std::to_string(i) + ". " + std::to_string(val);
+//        }
+//    }
+    
+    return inst;
+    
+	//static CTower towerInstance;
+    //return &towerInstance;
 }
 
 // constructor
@@ -37,6 +53,11 @@ CTower::CTower()
 CTower::~CTower()
 {
 	deleteCurrentTower(); // performs neccessary destruction	
+}
+
+char CTower::GetTowerObject(int index)
+{
+    return towerObjects[index];
 }
 
 // initialise tower variables and data structures
@@ -71,7 +92,7 @@ bool CTower::initialise(int totalRows, int totalColumns,
 		towerObjects = 0;
 	}
 
-	towerObjects = new towerObject[totalTowerObjects];
+	towerObjects = new char[totalTowerObjects];
 
 	if (!towerObjects){
 		return(false);} // memory allocation failed

@@ -82,15 +82,15 @@ unsigned int ShadowMapping::Create()
         shadowMappingSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER);
         shadowMappingRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_FRAGMENT_SHADER);
         mainRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER);
-
-        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
     }
     else
     {
         oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
         oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
     }
+    
+    lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+    depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
 
 #if (_DEBUG && USE_SHADERS)
 	if (!shadowMappingVariablesAddedToDebugMenu)
@@ -127,12 +127,40 @@ unsigned int ShadowMapping::Create()
 
 	// No color output in the bound framebuffer, only depth.
 	glDrawBuffer(GL_NONE);
-
+    
+    switch (glCheckFramebufferStatus(GL_FRAMEBUFFER))
+    {
+//        case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE:
+//            break;
+//        case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME:
+//            break;
+//        case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL:
+//            break;
+//        case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE:
+//            break;
+//        case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER:
+//            break;
+//        case GL_FRAMEBUFFER_COMPLETE:
+//            break;
+//        case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+//            break;
+//        case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+//            break;
+//        case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+//            break;
+        case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+            break;
+//        case GL_FRAMEBUFFER_UNSUPPORTED:
+//            break;
+        default:
+            break;
+    }
+    
 	// Always check that our framebuffer is ok
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		return false;
-	}
+	//if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+//	{
+//		return false;
+//	}
 	
 	UseDefaultFrameBuffer();
 	return true;
@@ -234,6 +262,11 @@ void ShadowMapping::PreSceneRender()
 
 void ShadowMapping::PostSceneRender()
 {
+}
+
+unsigned int ShadowMapping::GetDepthTexture()
+{
+    return depthTexture;
 }
 
 CMatrix ShadowMapping::CalculateLightOrthographicProjection()

@@ -93,16 +93,16 @@ bool OpenGLImplementationBase::InitGL()
 #endif
 #endif
 
-    isUsingSubRoutines = true;
-    if (!shader.CreateProgram("shader.vs", "shader.fs"))
-    {
-        shader.DestroyProgram();
+//    isUsingSubRoutines = true;
+//    if (!shader.CreateProgram("shader.vs", "shader.fs"))
+//    {
+//        shader.DestroyProgram();
         isUsingSubRoutines = false;
         if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
         {
             return false;
         }
-    }
+//    }
 	
 	shader.UseProgram();
     if (isUsingSubRoutines) {
