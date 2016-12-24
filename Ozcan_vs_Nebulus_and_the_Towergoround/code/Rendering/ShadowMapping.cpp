@@ -82,15 +82,15 @@ unsigned int ShadowMapping::Create()
         shadowMappingSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER);
         shadowMappingRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_FRAGMENT_SHADER);
         mainRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER);
-
-        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
     }
     else
     {
         oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
         oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
     }
+    
+    lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+    depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
 
 #if (_DEBUG && USE_SHADERS)
 	if (!shadowMappingVariablesAddedToDebugMenu)
@@ -127,7 +127,7 @@ unsigned int ShadowMapping::Create()
 
 	// No color output in the bound framebuffer, only depth.
 	glDrawBuffer(GL_NONE);
-
+    
 	// Always check that our framebuffer is ok
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -200,10 +200,10 @@ void ShadowMapping::PostDepthTextureRender()
 {
 	Globals::Instance().modelMatrixStack.PopMatrix();
 	Globals::Instance().viewMatrixStack.PopMatrix();
-    
+	CMenu::SetPerspectiveProjectionMatrix();
+
     if (Globals::Instance().gl.IsUsingSubRoutines())
     {
-        CMenu::SetPerspectiveProjectionMatrix();
         Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, mainRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
         Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, mainRenderVertexSubRoutineIndex, GL_VERTEX_SHADER);
     }
@@ -234,6 +234,11 @@ void ShadowMapping::PreSceneRender()
 
 void ShadowMapping::PostSceneRender()
 {
+}
+
+unsigned int ShadowMapping::GetDepthTexture()
+{
+    return depthTexture;
 }
 
 CMatrix ShadowMapping::CalculateLightOrthographicProjection()
