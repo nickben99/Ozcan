@@ -21,6 +21,12 @@
 #include "Game/defines.h"
 // --------------------------
 
+//--- external variables --------
+#ifdef OSX
+extern bool quitApp;
+#endif
+//-------------------------------
+
 class CExit : public CMenuOption
 {
 	public:
@@ -34,6 +40,8 @@ class CExit : public CMenuOption
 		{
 #ifdef _WINDOWS
 			PostQuitMessage(WM_QUIT); // post a quit message to end the game
+#elif OSX
+            quitApp = true;
 #endif
 			return( true ); /*	return type true means the leaveMenu method will 
 								not be executed (this stops the curser flicking back 

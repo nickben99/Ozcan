@@ -15,6 +15,7 @@
 #include <iostream> // for std::cout
 
 GLFWwindow* osxWindow = nullptr;
+bool quitApp = false;
 
 int main()
 {
@@ -90,7 +91,7 @@ int main()
     //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
     while (!glfwWindowShouldClose(osxWindow))
     {
-        if (!game.Update()) {
+        if (!game.Update() || quitApp) {
             break;
         }
         
