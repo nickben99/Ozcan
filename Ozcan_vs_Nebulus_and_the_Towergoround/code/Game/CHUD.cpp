@@ -223,8 +223,18 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 
 		loadingBarBackgroundBuffer.SetColor(backgroundColor);
 		loadingBarForegroundBuffer.SetColor(foregroundColor);
+        
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        loadingBarBackgroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+        loadingBarForegroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
 
-		unsigned short vertexIndecisArray[] = 
+		unsigned short vertexIndecisArray[] =
 		{
 			0, 1, 2,
 			0, 2, 3
@@ -250,8 +260,18 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 
 		powerUpBarBackgroundBuffer.SetColor(backgroundColor);
 		powerUpBarForegroundBuffer.SetColor(foregroundColor);
+        
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        powerUpBarBackgroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+        powerUpBarForegroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
 
-		unsigned short vertexIndecisArray[] = 
+		unsigned short vertexIndecisArray[] =
 		{
 			0, 1, 2,
 			0, 2, 3
