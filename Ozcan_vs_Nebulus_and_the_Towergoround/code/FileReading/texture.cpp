@@ -55,7 +55,6 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	}
 
 	GLubyte	*bits = 0;					/* Bitmap RGB pixels */
-	GLenum      iHeightType = GL_TEXTURE_2D; // Texture type */
 	GLuint      texture,				/* Texture object */
 				uPixelFormat = GL_RGB;	// GL_RGBA / GL_RGB
 	unsigned short	uHeight = 256,		// height of the image
@@ -92,9 +91,6 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 #endif
 		return( 0 );} // not a supported file type
 
-	// Figure out the type of texture... 
-	if (uHeight == 1){
-		iHeightType = GL_TEXTURE_1D;}
 	// figure out the pixel format
 	if ( uBytesPerPixel == 4 ){
 		uPixelFormat = GL_RGBA;}
@@ -105,18 +101,18 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	texture = getTextureNumber(filename);
 	CHECK_GL_ERROR;
     
-	glBindTexture(iHeightType, texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 
 	CHECK_GL_ERROR;
 
     /* Set texture parameters */
-	glTexParameteri(iHeightType, GL_TEXTURE_MAG_FILTER, magfilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
 	CHECK_GL_ERROR;
-    glTexParameteri(iHeightType, GL_TEXTURE_MIN_FILTER, minfilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minfilter);
 	CHECK_GL_ERROR;
-    glTexParameteri(iHeightType, GL_TEXTURE_WRAP_S, wrap);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
 	CHECK_GL_ERROR;
-    glTexParameteri(iHeightType, GL_TEXTURE_WRAP_T, wrap);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
 	CHECK_GL_ERROR;
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	CHECK_GL_ERROR;
@@ -128,27 +124,12 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 
     if (minfilter == GL_LINEAR || minfilter == GL_NEAREST)
 	{
-        glTexImage2D( iHeightType, 0, uPixelFormat, uWidth, uHeight, 0, uPixelFormat, GL_UNSIGNED_BYTE, bits);
+        glTexImage2D( GL_TEXTURE_2D, 0, uPixelFormat, uWidth, uHeight, 0, uPixelFormat, GL_UNSIGNED_BYTE, bits);
 		CHECK_GL_ERROR;
 	}
-    else if (iHeightType == GL_TEXTURE_1D)
+    else // mipmaps required
 	{
-#ifdef _WINDOWS
-        gluBuild1DMipmaps( iHeightType, uPixelFormat, uWidth, uPixelFormat, GL_UNSIGNED_BYTE, bits);
-#endif
-#ifdef OSX
-        glGenerateMipmap( iHeightType);
-#endif
-        CHECK_GL_ERROR;
-	}
-    else
-	{
-#ifdef _WINDOWS
-        gluBuild2DMipmaps( iHeightType, uPixelFormat, uWidth, uHeight, uPixelFormat, GL_UNSIGNED_BYTE, bits);
-#endif
-#ifdef OSX
-        glGenerateMipmap( iHeightType);
-#endif
+        gluBuild2DMipmaps( GL_TEXTURE_2D, uPixelFormat, uWidth, uHeight, uPixelFormat, GL_UNSIGNED_BYTE, bits);
 		CHECK_GL_ERROR;
 	}
 
