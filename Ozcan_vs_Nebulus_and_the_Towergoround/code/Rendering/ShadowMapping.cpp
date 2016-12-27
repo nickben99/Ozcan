@@ -118,15 +118,20 @@ unsigned int ShadowMapping::Create()
 	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, textureSize, textureSize, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-		 
+
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
 
 	// No color output in the bound framebuffer, only depth.
 	glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
     
 	// Always check that our framebuffer is ok
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -201,7 +206,7 @@ void ShadowMapping::PostDepthTextureRender()
 	Globals::Instance().modelMatrixStack.PopMatrix();
 	Globals::Instance().viewMatrixStack.PopMatrix();
 	CMenu::SetPerspectiveProjectionMatrix();
-
+    
     if (Globals::Instance().gl.IsUsingSubRoutines())
     {
         Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, mainRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
