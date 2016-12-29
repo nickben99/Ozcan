@@ -674,8 +674,8 @@ void CSpriteEngine::movingObjectEnvironmentCollisionDetection(CSprite *theSprite
 	CVector boundingBoxHalfWidths = tempHalfVeloc + &(theSprite->scaledHalfBoundingBox);
 
 	// see which octree end nodes the sprite is in
-	theSprite->endNodesOccupying.clear(); // clear its current list
-	levelOctree->putSpriteIntoEndNode(&boundingBoxHalfWidths, &boundingBoxCentre, theSprite->endNodesOccupying);
+	theSprite->theEndNodes.clear(); // clear its current list
+	levelOctree->putSpriteIntoEndNode(&boundingBoxHalfWidths, &boundingBoxCentre, theSprite->theEndNodes);
 
 	// referance variables to be sent to methods below
 	GLfloat perCentOfMoveComplete = 2.0f; // initialise
@@ -724,12 +724,12 @@ void CSpriteEngine::findClosestTriangle(CSprite * sprite,
 			velocMagnitude = velocity->getMagnitude();
 
 	// go through the octree end nodes which the sprite occupys
-	int totalEndNodesOccupying = (int)sprite->endNodesOccupying.size();
+	int totalEndNodesOccupying = (int)sprite->theEndNodes.size();
 
 	// set all triangles in all end nodes occupying to not evaluated yet
 	for (int endNode = 0; endNode < totalEndNodesOccupying; endNode++)
 	{	// referance for speed and readability
-		COctree &aNode = *sprite->endNodesOccupying[endNode]; 
+		COctree &aNode = *sprite->theEndNodes[endNode];
 		int totalNodeTriangles = (int)aNode.nodeTriangles.size();
 
 		for (int nodeTriangle = 0; nodeTriangle < totalNodeTriangles; nodeTriangle++){
@@ -738,7 +738,7 @@ void CSpriteEngine::findClosestTriangle(CSprite * sprite,
 
 	for (int endNode = 0; endNode < totalEndNodesOccupying; endNode++)
 	{	// referance for speed and readability
-		COctree &aNode = *sprite->endNodesOccupying[endNode]; 
+		COctree &aNode = *sprite->theEndNodes[endNode];
 		int totalNodeTriangles = (int)aNode.nodeTriangles.size();
 
 		for (int nodeTriangle = 0; nodeTriangle < totalNodeTriangles; nodeTriangle++)

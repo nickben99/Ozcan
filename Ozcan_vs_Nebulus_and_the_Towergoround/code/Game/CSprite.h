@@ -1,12 +1,13 @@
 //CSprite.h - header for the sprite class
 
-//system includes------------
-#include "Rendering/OpenGLInclude.h"
-#include <vector>		// include this to use the vector class
-//---------------------------
-
 #ifndef _CSprite_h_
 #define _CSprite_h_
+
+#include "Rendering/OpenGLInclude.h"
+
+//system includes------------
+#include <vector>		// include this to use the vector class
+//---------------------------
 
 //header files---------
 #include "Math/CVector.h"
@@ -122,7 +123,7 @@ class CSprite
 		spriteTypes	spriteType;		// what type of sprite this is
 		SOUNDS soundPlayedThisFrame;
 		
-		std::vector<COctree*> endNodesOccupying; // the end nodes the sprite is occupying
+		std::vector<COctree*> theEndNodes; // the end nodes the sprite is occupying
 
 // specifically for steps ----------
 		float frictionalCoefficient;
