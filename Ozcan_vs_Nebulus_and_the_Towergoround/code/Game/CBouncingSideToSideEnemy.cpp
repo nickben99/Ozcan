@@ -59,7 +59,6 @@ void CBouncingSideToSideEnemy::reinitialise( void)
 // destructor
 CBouncingSideToSideEnemy::~CBouncingSideToSideEnemy()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // move the sprite

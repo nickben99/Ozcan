@@ -168,7 +168,6 @@ void CSkyBoard::draw()
 // destructor
 CSkyBoard::~CSkyBoard()
 {
-	CSprite::~CSprite(); // delete super class
 	deleteSkyBoard();
 }
 

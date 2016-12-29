@@ -32,7 +32,6 @@ CSlippyStep::CSlippyStep(CModel * aModel, int towerPosition, bool slippyStepLeft
 // destructor
 CSlippyStep::~CSlippyStep()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // collision response

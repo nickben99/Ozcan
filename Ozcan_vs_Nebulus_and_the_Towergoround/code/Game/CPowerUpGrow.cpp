@@ -20,7 +20,6 @@ CPowerUpGrow::CPowerUpGrow(CModel * aModel, char towerSegmentIdentifier)
 // destructor
 CPowerUpGrow::~CPowerUpGrow()
 {
-	CPowerUp::~CPowerUp();
 }
 
 // perform the power-ups action

@@ -89,7 +89,6 @@ void CTowerSprite::draw(int timeChange)
 // destructor
 CTowerSprite::~CTowerSprite()
 {
-	CSprite::~CSprite();
 }
 
 

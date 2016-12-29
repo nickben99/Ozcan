@@ -49,5 +49,4 @@ void CTunnel::initialise()
 // destructor
 CTunnel::~CTunnel()
 {
-	CTowerSprite::~CTowerSprite(); // call super class destructor
 }

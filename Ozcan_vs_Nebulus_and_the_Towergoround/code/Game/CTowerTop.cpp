@@ -39,5 +39,4 @@ CTowerTop::CTowerTop(CModel * aModel)
 // destructor
 CTowerTop::~CTowerTop()
 {
-	CTowerSprite::~CTowerSprite(); // call super class destructor
 }

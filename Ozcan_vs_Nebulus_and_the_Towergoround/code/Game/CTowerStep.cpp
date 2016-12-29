@@ -60,5 +60,4 @@ void CTowerStep::reinitialise()
 // destructor
 CTowerStep::~CTowerStep()
 {
-	CTowerSprite::~CTowerSprite(); // call super class destructor
 }

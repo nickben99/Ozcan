@@ -132,7 +132,6 @@ void CPowerUp::move(int timeChange, GLfloat perCentOfSecond)
 // destructor
 CPowerUp::~CPowerUp()
 {
-	CTowerStep::~CTowerStep();
 }
 
 // draw this sprite

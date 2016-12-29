@@ -29,5 +29,4 @@ void CExitScreen::initialise()
 // destructor
 CExitScreen::~CExitScreen()
 {
-	CTowerSprite::~CTowerSprite(); // call super class destructor
 }

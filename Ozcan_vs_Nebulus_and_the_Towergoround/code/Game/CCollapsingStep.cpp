@@ -62,7 +62,6 @@ void CCollapsingStep::reinitialise( void)
 // destructor
 CCollapsingStep::~CCollapsingStep()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // move the collapsing step

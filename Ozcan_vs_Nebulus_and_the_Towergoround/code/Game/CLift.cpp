@@ -55,7 +55,6 @@ CLift::CLift(CModel * aModel, int towerPosition, char LiftTopIdentifier)
 // destructor
 CLift::~CLift()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // collision response

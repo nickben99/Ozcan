@@ -60,7 +60,6 @@ void CSideToSideEnemy::reinitialise( void)
 // destructor
 CSideToSideEnemy::~CSideToSideEnemy()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // move the sprite

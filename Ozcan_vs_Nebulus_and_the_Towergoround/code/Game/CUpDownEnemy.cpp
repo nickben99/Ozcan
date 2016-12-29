@@ -48,7 +48,6 @@ void CUpDownEnemy::reinitialise( void)
 // destructor
 CUpDownEnemy::~CUpDownEnemy()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // move the sprite

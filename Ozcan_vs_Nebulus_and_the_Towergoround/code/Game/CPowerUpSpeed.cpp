@@ -22,7 +22,6 @@ CPowerUpSpeed::CPowerUpSpeed(CModel * aModel, char towerSegmentIdentifier)
 // destructor
 CPowerUpSpeed::~CPowerUpSpeed()
 {
-	CPowerUp::~CPowerUp();
 }
 
 // perform the power-ups action

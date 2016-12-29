@@ -45,5 +45,4 @@ void CTowerBottom::initialise()
 // destructor
 CTowerBottom::~CTowerBottom()
 {
-	CTowerSprite::~CTowerSprite(); // call super class destructor
 }

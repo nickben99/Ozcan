@@ -67,7 +67,6 @@ void CFireBall::reinitialise( void)
 // destructor
 CFireBall::~CFireBall()
 {
-	CSprite::~CSprite();
 }
 
 // deal with input control to the fire ball

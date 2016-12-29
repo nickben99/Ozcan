@@ -74,7 +74,7 @@ class CBufferStep : public CTowerStep
 			spriteType = SBUFFER_STEP; // set sprite type
 		}
 		
-		~CBufferStep() {CTowerStep::~CTowerStep();} // destructor
+		~CBufferStep() {} // destructor
 		// reinitialise to starting state (empty as sprites characteristics never change)
 		void reinitialise( void){}
 

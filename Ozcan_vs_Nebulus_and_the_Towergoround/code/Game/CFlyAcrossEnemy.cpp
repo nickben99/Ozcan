@@ -81,7 +81,6 @@ void CFlyAcrossEnemy::reinitialise( void)
 // destructor
 CFlyAcrossEnemy::~CFlyAcrossEnemy()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // shrink or grow the sprite (whichever is required)

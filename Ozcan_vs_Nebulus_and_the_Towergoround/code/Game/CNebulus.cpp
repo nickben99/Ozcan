@@ -120,7 +120,6 @@ void CNebulus::destroyInstance()
 // destructor
 CNebulus::~CNebulus()
 {
-	CTowerStep::~CTowerStep(); // call super class destructor
 }
 
 // deal with input control to Nebulus

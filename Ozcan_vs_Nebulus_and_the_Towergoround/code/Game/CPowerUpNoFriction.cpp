@@ -21,7 +21,6 @@ CPowerUpNoFriction::CPowerUpNoFriction(CModel * aModel, char towerSegmentIdentif
 // destructor
 CPowerUpNoFriction::~CPowerUpNoFriction()
 {
-	CPowerUp::~CPowerUp();
 }
 
 // perform the power-ups action
