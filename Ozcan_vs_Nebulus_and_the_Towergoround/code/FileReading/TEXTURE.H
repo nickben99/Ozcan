@@ -40,16 +40,16 @@ struct textureObject // struct describing each texture object
  * Make this header file work with C and C++ source code...
  */
 
-#  ifdef __cplusplus
-extern "C" {
-#  endif /* __cplusplus */
-
-#  ifdef __cplusplus
-}
-#  endif /* __cplusplus */
-
-// for seamless textures
-#define GL_CLAMP_TO_EDGE 0x812F
+//#  ifdef __cplusplus
+//extern "C" {
+//#  endif /* __cplusplus */
+//
+//#  ifdef __cplusplus
+//}
+//#  endif /* __cplusplus */
+//
+//// for seamless textures
+//#define GL_CLAMP_TO_EDGE 0x812F
 
 const int InvalidTextureID = 0;
 

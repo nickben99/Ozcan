@@ -27,9 +27,9 @@
  * Make this header file work with C and C++ source code...
  */
 
-#  ifdef __cplusplus
-extern "C" {
-#  endif /* __cplusplus */
+//#  ifdef __cplusplus
+//extern "C" {
+//#  endif /* __cplusplus */
 
 
 /*
@@ -42,8 +42,8 @@ extern "C" {
  */
 
 #ifndef _WINDOWS
-    
-#pragma pack(2)
+
+#pragma pack(push, 2)
 typedef struct                       /**** BMP file header structure ****/
     {
     unsigned short bfType;           /* Magic number for file */
@@ -52,6 +52,7 @@ typedef struct                       /**** BMP file header structure ****/
     unsigned short bfReserved2;      /* ... */
     unsigned int   bfOffBits;        /* Offset to bitmap data */
     } BITMAPFILEHEADER;
+#pragma pack(pop)
 
 #  define BF_TYPE 0x4D42             /* "MB" */
 
@@ -92,6 +93,7 @@ typedef struct                       /**** Bitmap information structure ****/
     BITMAPINFOHEADER bmiHeader;      /* Image header */
     RGBQUAD          bmiColors[256]; /* Image colormap */
     } BITMAPINFO;
+
 #endif /* !_WINDOWS */
 
 /*
@@ -108,7 +110,7 @@ extern GLubyte* LoadTarga(const char *filename, unsigned short &uHeight,
 												unsigned short &uWidth,
 												unsigned char &uBytesPerPixel );
 
-#  ifdef __cplusplus
-}
-#  endif // _WINDOWS
+//#  ifdef __cplusplus
+//}
+//#  endif /* __cplusplus */
 #endif /* !_IMAGEFILELOADERS_H_ */
