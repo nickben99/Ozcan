@@ -698,7 +698,7 @@ bool SweptSphereTriangleCollision(CVector * vertices, const CVector& sphereStart
 			return false;} // go to next triangle
 		// sphere is always in contact with the triangle plane
 		t0 = 0.0f;
-		t1 = 1.0f;
+		//t1 = 1.0f;
 	}
 	else // sphere is not running parallel with triangle plane
 	{

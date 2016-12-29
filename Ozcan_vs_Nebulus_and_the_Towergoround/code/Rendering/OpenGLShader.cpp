@@ -144,19 +144,16 @@ void OpenGLShader::SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigne
 
 unsigned int OpenGLShader::GetSubroutineUniformIndex(const char* pSubroutineUniformVariableName, GLenum shaderType)
 {
-	unsigned int* activeShaderSubRoutineUniformIndecis = NULL;
 	char** activeShaderSubRoutineUniformNames = NULL;
 	int numActiveSubroutineUniforms = 0;
 
 	if (GL_FRAGMENT_SHADER == shaderType)
 	{
-		activeShaderSubRoutineUniformIndecis = activeFragmentShaderSubRoutineUniformIndecis; 
 		activeShaderSubRoutineUniformNames = activeFragmentShaderSubRoutineUniformNames;
 		numActiveSubroutineUniforms = numActiveFragmentShaderSubroutineUniforms;
 	}
 	else if (GL_VERTEX_SHADER == shaderType)
 	{
-		activeShaderSubRoutineUniformIndecis = activeVertexShaderSubRoutineUniformIndecis; 
 		activeShaderSubRoutineUniformNames = activeVertexShaderSubRoutineUniformNames;
 		numActiveSubroutineUniforms = numActiveVertexShaderSubroutineUniforms;
 	}

@@ -307,6 +307,9 @@ bool CLevel::loadLevel(GLint theLevel)
 #ifdef _WINDOWS
 		MessageBox(0,"model loading failed","ERROR",MB_OK|MB_ICONEXCLAMATION);
 #endif
+        delete[] legendInformation;
+        legendInformation = 0;
+        
 		return(false);} // model loading failed
 
 	DrawIntroScreenLoadingBar(theHUD, 0.6f);
