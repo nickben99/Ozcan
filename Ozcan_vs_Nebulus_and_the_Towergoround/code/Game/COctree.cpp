@@ -523,9 +523,9 @@ vector<vector<unsigned short>*> COctree::indecisVector;
 
 void COctree::BuildTrianglesMeshBuffers(void)
 {
-	vector<float>* positions = new vector<float>();
-	vector<float>* normals = new vector<float>();
-	vector<float>* texCoords = new vector<float>();
+    vector<float> positions;
+    vector<float> normals;
+    vector<float> texCoords;
 
 	material *previousMaterialMemoryAddress = 0;
 	bool trianglesCompleatlyTransparent = false;
@@ -536,25 +536,22 @@ void COctree::BuildTrianglesMeshBuffers(void)
 
 		if (triangleRequired.triMaterial != previousMaterialMemoryAddress)
 		{
-			if (positions->size() > 0)
+			if (positions.size() > 0)
 			{
 				meshBuffers.push_back(new MeshBuffer());
 
-				vector<float>& arr = *positions;
-				meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], (int)positions->size(), false);
-				vector<float>& arrnormals = *normals;
-				meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], (int)normals->size(), false);
-				vector<float>& arrtexCoords = *texCoords;
-				meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], (int)texCoords->size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&positions[0], (int)positions.size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&normals[0], (int)normals.size(), false);
+				meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&texCoords[0], (int)texCoords.size(), false);
 
 				if (0 != previousMaterialMemoryAddress) 
 				{
 					meshBuffers[meshBuffers.size()-1]->SetMaterial(*previousMaterialMemoryAddress);
 				}
 
-				positions = new vector<float>();
-				normals = new vector<float>();
-				texCoords = new vector<float>();
+                positions.clear();
+                normals.clear();
+                texCoords.clear();
 			}
 
 			// set previous material memory address
@@ -567,29 +564,41 @@ void COctree::BuildTrianglesMeshBuffers(void)
 		if (true == trianglesCompleatlyTransparent){
 			continue;} //  dont draw compleatly transparent triangles
 
-		(*normals).push_back(triangleRequired.normals[0].x); (*normals).push_back(triangleRequired.normals[0].y); (*normals).push_back(triangleRequired.normals[0].z);
-		(*texCoords).push_back(triangleRequired.Vert[0]->u); (*texCoords).push_back(triangleRequired.Vert[0]->v);
-		(*positions).push_back(triangleRequired.vertices[0].x); (*positions).push_back(triangleRequired.vertices[0].y); (*positions).push_back(triangleRequired.vertices[0].z);
+		(normals).push_back(triangleRequired.normals[0].x);
+        (normals).push_back(triangleRequired.normals[0].y);
+        (normals).push_back(triangleRequired.normals[0].z);
+		(texCoords).push_back(triangleRequired.Vert[0]->u);
+        (texCoords).push_back(triangleRequired.Vert[0]->v);
+		(positions).push_back(triangleRequired.vertices[0].x);
+        (positions).push_back(triangleRequired.vertices[0].y);
+        (positions).push_back(triangleRequired.vertices[0].z);
 
-		(*normals).push_back(triangleRequired.normals[1].x); (*normals).push_back(triangleRequired.normals[1].y); (*normals).push_back(triangleRequired.normals[1].z);
-		(*texCoords).push_back(triangleRequired.Vert[1]->u); (*texCoords).push_back(triangleRequired.Vert[1]->v);
-		(*positions).push_back(triangleRequired.vertices[1].x); (*positions).push_back(triangleRequired.vertices[1].y); (*positions).push_back(triangleRequired.vertices[1].z);
+		(normals).push_back(triangleRequired.normals[1].x);
+        (normals).push_back(triangleRequired.normals[1].y);
+        (normals).push_back(triangleRequired.normals[1].z);
+		(texCoords).push_back(triangleRequired.Vert[1]->u);
+        (texCoords).push_back(triangleRequired.Vert[1]->v);
+		(positions).push_back(triangleRequired.vertices[1].x);
+        (positions).push_back(triangleRequired.vertices[1].y);
+        (positions).push_back(triangleRequired.vertices[1].z);
 
-		(*normals).push_back(triangleRequired.normals[2].x); (*normals).push_back(triangleRequired.normals[2].y); (*normals).push_back(triangleRequired.normals[2].z);
-		(*texCoords).push_back(triangleRequired.Vert[2]->u); (*texCoords).push_back(triangleRequired.Vert[2]->v);
-		(*positions).push_back(triangleRequired.vertices[2].x); (*positions).push_back(triangleRequired.vertices[2].y); (*positions).push_back(triangleRequired.vertices[2].z);
+		(normals).push_back(triangleRequired.normals[2].x);
+        (normals).push_back(triangleRequired.normals[2].y);
+        (normals).push_back(triangleRequired.normals[2].z);
+		(texCoords).push_back(triangleRequired.Vert[2]->u);
+        (texCoords).push_back(triangleRequired.Vert[2]->v);
+		(positions).push_back(triangleRequired.vertices[2].x);
+        (positions).push_back(triangleRequired.vertices[2].y);
+        (positions).push_back(triangleRequired.vertices[2].z);
 	}// end for tri
 
-	if ((*positions).size() > 0)
+	if ((positions).size() > 0)
 	{
 		meshBuffers.push_back(new MeshBuffer());
 
-		vector<float>& arr = *positions;
-		meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&arr[0], (int)positions->size(), false);
-		vector<float>& arrnormals = *normals;
-		meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&arrnormals[0], (int)normals->size(), false);
-		vector<float>& arrtexCoords = *texCoords;
-		meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&arrtexCoords[0], (int)texCoords->size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&positions[0], (int)positions.size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&normals[0], (int)normals.size(), false);
+		meshBuffers[meshBuffers.size()-1]->CreateTexCoordArray(&texCoords[0], (int)texCoords.size(), false);
 
 		if (0 != previousMaterialMemoryAddress) 
 		{
