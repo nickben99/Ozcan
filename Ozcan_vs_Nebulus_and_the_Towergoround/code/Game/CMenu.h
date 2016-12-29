@@ -1,20 +1,18 @@
 //CMenu.h - header for the menu class (includes CMenuOption)
 
-//system includes------------
-#include <vector> // include this to use the vector class
-//---------------------------
-
 #ifndef _CMenu_h_
 #define _CMenu_h_
 
 //header files---------
 #include "Math/CVector.h"
 #include "Math/CMatrix.h"
-#include "Game/Globals.h"
-#include "Audio/SoundsEnum.h"
 #include "FileReading/texture.h"
 #include "Rendering/MeshBuffer.h"
 #include "Rendering/Text.h"
+
+//system includes------------
+#include <vector> // include this to use the vector class
+//---------------------------
 
 //---------------------
 
@@ -33,7 +31,7 @@ extern HDC			hDC;
 class CMenuOption
 {
 	public:
-// private variables ------------------- 
+// private variables -------------------
 #ifdef USE_SHADERS
 		Text* text;
 #else

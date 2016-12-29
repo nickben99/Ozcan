@@ -52,7 +52,7 @@ bool CScene::initialise(char * backgroundTexture)
 			container->AddVariable(new DebugMenu::CVector4DebugMenuItem("Light pos", &lightPosition, increment, -increment));
 			container->AddVariable(new DebugMenu::CVector4DebugMenuItem("Light dir", &lightDirection, increment, -increment));
 
-			Globals::Instance().debugMenu->AddVariable(container);
+			Globals::Instance().debugMenu.AddVariable(container);
 	}
 #endif
 

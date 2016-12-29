@@ -81,7 +81,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	if (!variablesAddedToDebugMenu)
 	{
 		variablesAddedToDebugMenu = true;
-		Globals::Instance().debugMenu->AddVariable(new DebugMenu::BoolDebugMenuItem("drawShadowMap", &drawShadowMap));
+		Globals::Instance().debugMenu.AddVariable(new DebugMenu::BoolDebugMenuItem("drawShadowMap", &drawShadowMap));
 	}
 #endif
 

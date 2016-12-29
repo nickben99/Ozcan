@@ -104,7 +104,7 @@ unsigned int ShadowMapping::Create()
 		container->AddVariable(new DebugMenu::BoolDebugMenuItem("wholeSceneShadowMap", &wholeSceneShadowMap));
 		container->AddVariable(new DebugMenu::BoolDebugMenuItem("resetProjectionValues", &resetProjectionValues));
 
-		Globals::Instance().debugMenu->AddVariable(container);
+		Globals::Instance().debugMenu.AddVariable(container);
 	}
 #endif
 

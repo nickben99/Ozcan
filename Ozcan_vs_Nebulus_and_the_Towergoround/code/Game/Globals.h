@@ -24,7 +24,6 @@ class Globals
 { 
 public:
 	static Globals& Instance();
-    static void Destroy();
 	~Globals();
 
 	SoundInterface sound;
@@ -35,13 +34,14 @@ public:
 	MatrixStack viewMatrixStack;
 #if _DEBUG
 	DebugRendering debugDraw;
-	DebugMenu* debugMenu;
+	DebugMenu debugMenu;
 #endif
 
 	float windowWidth;
 	float windowHeight;
 
-	CMainMenu* mpMainMenu;	// the main menu
+    // the main menu (this needs to be a pointer so we can forward declare CMainMenu to avoid a circular dependancy)
+	CMainMenu* mpMainMenu;
 	int gameLevel; // the current level of the game being played
 
 	int (*main)(int);
@@ -53,7 +53,6 @@ public:
 #endif
 private:
 	Globals();
-    static Globals* inst;
 };
 
 #endif // ifndef _Globals_h_

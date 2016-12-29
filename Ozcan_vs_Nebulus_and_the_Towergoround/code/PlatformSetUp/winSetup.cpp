@@ -549,7 +549,6 @@ int WINAPI WinMain(	HINSTANCE, // instance
 #ifdef USE_SHADERS
 	Text::DeleteMesh();
 	Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
-	Globals::Destroy();
 #endif
 	KillGameWindow();	// destroy the window
 	return (msg.wParam); // exit the program

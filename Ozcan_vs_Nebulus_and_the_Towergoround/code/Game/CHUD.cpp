@@ -365,8 +365,8 @@ void CHUD::draw( void)
 	}
 
 #if (_DEBUG && USE_SHADERS)
-	Globals::Instance().debugMenu->Update();
-	Globals::Instance().debugMenu->Draw();
+	Globals::Instance().debugMenu.Update();
+	Globals::Instance().debugMenu.Draw();
 #endif
 
 #ifndef USE_SHADERS

@@ -6,30 +6,15 @@
 #include "Game/main.h"
 // -----------------------
 
-Globals* Globals::inst = nullptr;
-
 Globals& Globals::Instance()
 {
-    if (!inst) {
-        inst = new Globals();
-    }
-	return *inst;
-}
-
-void Globals::Destroy()
-{
-    if (inst) {
-        delete inst;
-        inst = nullptr;
-    }
+    static Globals theGlobals;
+    return theGlobals;
 }
 
 Globals::~Globals()
 {
-	delete mpMainMenu;
-#ifdef _DEBUG
-    delete debugMenu;
-#endif
+    delete mpMainMenu;
 }
 
 Globals::Globals()
@@ -37,10 +22,7 @@ Globals::Globals()
 	, windowHeight(0)
 	, gameLevel(0)
 {
-#ifdef _DEBUG
-    debugMenu = new DebugMenu();
-#endif
-	mpMainMenu = new CMainMenu();
+    mpMainMenu = new CMainMenu();
 	main = menuSystem;
 	drawMenu = 1; // used to stop the menu being drawn when the game starts
 }

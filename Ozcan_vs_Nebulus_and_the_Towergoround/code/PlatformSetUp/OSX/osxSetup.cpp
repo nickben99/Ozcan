@@ -12,8 +12,6 @@
 #include <Game/Globals.h>
 #include <Game/CMenu.h>
 #include <Game/Game.h>
-#include <iostream> // for std::cout
-
 GLFWwindow* osxWindow = nullptr;
 bool quitApp = false;
 
@@ -36,7 +34,6 @@ int main()
     
     glfwMakeContextCurrent(osxWindow);
     
-    Globals::Instance();
     if (!Globals::Instance().gl.InitGL())
     {
         Text::DeleteMesh();
@@ -50,8 +47,7 @@ int main()
     int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
     Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
     
-    bool isUsingSubRoutines4 = Globals::Instance().gl.IsUsingSubRoutines();
-    if (isUsingSubRoutines4)
+    if (Globals::Instance().gl.IsUsingSubRoutines())
     {
         Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
                                                      Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
@@ -87,8 +83,7 @@ int main()
     }
     
     Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
-    
-    //glfwSetKeyCallback(handleKeypress); //callback function to handle keypress
+
     while (!glfwWindowShouldClose(osxWindow))
     {
         if (!game.Update() || quitApp) {
@@ -109,7 +104,6 @@ int main()
     game.DeleteGameObjects(); // delete all game specific objects
     Text::DeleteMesh();
     Globals::Instance().gl.DestroyGL();
-    Globals::Destroy();
     glfwTerminate(); //terminating glfw window
     return 0;
 }
