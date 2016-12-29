@@ -58,8 +58,7 @@ void CCamera::initialise()
 	cameraChangePeriod = 1.0f;
 
 	cameraMode = FAR_OUT; // set camera mode
-	Globals::Instance().gl.GLEnable(GL_CULL_FACE); // face culling required in far out mode	
-	Globals::Instance().gl.GLDisable(GL_CULL_FACE);  ///////////////////////////////////////////////////////////////
+	Globals::Instance().gl.GLDisable(GL_CULL_FACE); // face culling required in far out mode
 
 	// the camera is initially not in a transition period
 	changingCameraMode = 0;
@@ -112,8 +111,7 @@ void CCamera::setCameraMode(cameraModes modeRequired)
 			relativeCameraHeightLERP_LENGTH = FAR_OUTrelativeCameraHeight - mFollowCam.relativeCameraHeight;
 
 			cameraMode = modeRequired; // set camera mode
-			Globals::Instance().gl.GLEnable(GL_CULL_FACE); // face culling required in far out mode
-			Globals::Instance().gl.GLDisable(GL_CULL_FACE);  ///////////////////////////////////////////////////////////////
+			Globals::Instance().gl.GLDisable(GL_CULL_FACE); // face culling required in far out mode
 
 			changingCameraMode = 0;//1; // the camera is now in a changeover period
 			cameraChangeTimer = 0.0f;
@@ -121,8 +119,7 @@ void CCamera::setCameraMode(cameraModes modeRequired)
 
 		case STATIC_REPLAY:
 			cameraMode = modeRequired; // set camera mode
-			Globals::Instance().gl.GLEnable(GL_CULL_FACE); // face culling required in far out mode
-			Globals::Instance().gl.GLDisable(GL_CULL_FACE);  ///////////////////////////////////////////////////////////////
+			Globals::Instance().gl.GLDisable(GL_CULL_FACE); // face culling required in far out mode
 
 			changingCameraMode = 0; // no change over period - instant
 			cameraChangeTimer = 0.0f;
