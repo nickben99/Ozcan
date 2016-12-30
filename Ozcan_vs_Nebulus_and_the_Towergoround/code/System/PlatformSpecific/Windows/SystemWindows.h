@@ -7,4 +7,8 @@
 
 #define VSPRINTF vsprintf_s
 
+inline void ErrorOutput(const char* text) {
+	MessageBox(0,text,"ERROR",MB_OK|MB_ICONEXCLAMATION);
+}
+
 #endif // ifndef _SystemWindows_

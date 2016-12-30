@@ -88,9 +88,7 @@ bool CLevel::loadLevel(GLint theLevel)
 
 	if (!ShadowMapping::Create())
 	{
-#ifdef _WINDOWS
-		MessageBox(0,"Could not create depth texture","ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
+        ErrorOutput("Could not create depth texture");
 		return false;
 	}
 
@@ -109,9 +107,7 @@ bool CLevel::loadLevel(GLint theLevel)
     SPRINTF(buffer, "%slevels/level%d.txt", GetDirectoryPath(), level); // create file name with path
 
 	if (!fileReader.openFile(buffer, ios::in)){
-#ifdef _WINDOWS
-		MessageBox(0,"level file could not be opened","ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
+		ErrorOutput("level file could not be opened");
 		return(false);} // return false if file could not be opened
 
 	DrawIntroScreenLoadingBar(theHUD, 0.1f);
@@ -290,9 +286,7 @@ bool CLevel::loadLevel(GLint theLevel)
 
 	// load this levels models
 	if (!theSprites.loadModels(&tempModelFileNames[0], tempNoOfModelsToLoad)){
-#ifdef _WINDOWS
-		MessageBox(0,"model loading failed","ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
+        ErrorOutput("model loading failed");
         delete[] legendInformation;
         legendInformation = 0;
         
@@ -390,9 +384,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	fileReader.closeFile();
 
 	if (!theScene.initialise(backgroundTexture)){ // do any initialisation in the scene
-#ifdef _WINDOWS
-		MessageBox(0, backgroundTexture,"ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
+        ErrorOutput(backgroundTexture);
 		return(false);} // return false if scene initialisation problems
 
 	levelOctree.getSceneDimensionsAndTriangles(&theSprites.sprites[0], 

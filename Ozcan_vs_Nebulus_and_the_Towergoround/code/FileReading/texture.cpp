@@ -18,13 +18,11 @@
 #include "texture.h"
 #include <Game/defines.h>
 #include "assert.h"
-
+#include <System/Interfaces/SystemInterface.h>
 #include <Rendering/OpenGLInclude.h>
 
 #ifdef USE_SHADERS
-
 #include <Rendering/OpenGLShader.h>
-
 #else
 #define CHECK_GL_ERROR
 #endif
@@ -84,11 +82,9 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 
 	// if bits is still null the file was neither a targa or a bitmap
 	if ( !bits ){
-#ifdef _WINDOWS
         char errorMsg[256];
-		sprintf_s( errorMsg, "%s is an unsupported file type", filename );
-        MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
-#endif
+		SPRINTF( errorMsg, "%s is an unsupported file type", filename );
+        ErrorOutput(errorMsg);
 		return( 0 );} // not a supported file type
 
 	// figure out the pixel format

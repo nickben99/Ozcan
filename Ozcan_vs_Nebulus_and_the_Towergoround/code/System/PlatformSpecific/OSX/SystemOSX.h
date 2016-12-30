@@ -7,4 +7,8 @@
 
 #define VSPRINTF vsprintf
 
+inline void ErrorOutput(const char*) {
+
+}
+
 #endif // ifndef _SystemOSX_

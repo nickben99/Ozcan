@@ -63,11 +63,9 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
     if (header.bfType != bmReversed)	/* Check for BM reversed... */
     {
         /* Not a bitmap file - return 0... */
-#ifdef _WINDOWS
         char errorMsg[256];
         SPRINTF( errorMsg, "%s has a .bmp extension, but is not a bitmap file", filename );
-        MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
-#endif
+        ErrorOutput(errorMsg);
         fclose(fp);
         return (0);
     }
@@ -423,11 +421,9 @@ GLubyte* LoadTarga(const char *filename,	unsigned short &uHeight,	// image heigh
 		file = 0;
 		return( LoadRLECompressedTarga( filename, uHeight, uWidth, uBytesPerPixel ) );}
 
-#ifdef _WINDOWS
 	char errorMsg[256];
 	SPRINTF( errorMsg, "%s has a .tga extension, but is not an uncompressed or RLE compressed targa file", filename );
-	MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
-#endif
+    ErrorOutput(errorMsg);
 	fclose( file ); // close the file
 	file = 0;
 	return( 0 );

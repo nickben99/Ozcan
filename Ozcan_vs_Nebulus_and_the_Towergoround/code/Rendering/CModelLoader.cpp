@@ -748,7 +748,7 @@ int CModelLoader::reloadTextures(CModel *thisModel)
 	for (int material = 0; material < thisModel->materialNo; material++ )
 	{
 		char filename[400];
-        SPRINTF(filename, "%smodels/model textures/", GetDirectoryPath());
+        	SPRINTF(filename, "%smodels/model textures/", GetDirectoryPath());
 		if (strlen( thisModel->materials[material].clrMapTex) > 0) // if theirs a texture
 		{
 #ifdef _WINDOWS
@@ -762,9 +762,7 @@ int CModelLoader::reloadTextures(CModel *thisModel)
                 		GL_FALSE, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_REPEAT);
 
 			if (thisModel->materials[material].clrTexBndNo <= 0){ // if the texture did not load properly
-#ifdef _WINDOWS
-                MessageBox(0,"A texture did not load","ERROR",MB_OK|MB_ICONEXCLAMATION);
-#endif
+                		ErrorOutput("A texture did not load");
 				return(0);} // loading error
 		}
 		else{ // no colour map diffuse texture
