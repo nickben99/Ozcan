@@ -14,6 +14,7 @@
 #include "Globals.h"
 #include "Game/defines.h"
 #include "Game/ReplayManager.h"
+#include <System/Interfaces/SystemInterface.h>
 //-------------------------
 
 //extern HWND hWnd;
@@ -162,12 +163,7 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 #endif
 
 	char buffer[256];
-#ifdef _WINDOWS
-    sprintf_s
-#else
-    sprintf
-#endif
-	(buffer, "%simages/introScrn1.bmp", GetDirectoryPath()); // create file name with path
+    SPRINTF(buffer, "%simages/introScrn1.bmp", GetDirectoryPath()); // create file name with path
 
 	introScreenBackground = // bind the intro screen Background texture
 		TextureLoad(buffer, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);
@@ -505,12 +501,7 @@ void CHUD::ReplayDraw()
 
 	if (wholeLevelReplay)
 	{
-#ifdef _WINDOWS
-        sprintf_s
-#else
-        sprintf
-#endif
-        (replayText, "REPLAY REPLAY - whole - %s", (repeating) ? "repeat" : "non repeat");
+        SPRINTF(replayText, "REPLAY REPLAY - whole - %s", (repeating) ? "repeat" : "non repeat");
 	}
 	else
 	{

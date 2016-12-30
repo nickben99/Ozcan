@@ -11,6 +11,7 @@
 #include "Game/Globals.h"
 #include "Game/ReplayManager.h"
 #include "Game/GameTime.h"
+#include <System/Interfaces/SystemInterface.h>
 //-------------------------
 
 //--- external variables --------
@@ -55,12 +56,7 @@ int CParticleSystem::initialiseParticleSystem()
 	if (particleTexture <= 0)
 	{ 
 		char buffer[256];
-#ifdef _WINDOWS
-        sprintf_s
-#else
-        sprintf
-#endif
-		(buffer, "%simages/particle.bmp", GetDirectoryPath()); // create file name with path
+        SPRINTF(buffer, "%simages/particle.bmp", GetDirectoryPath()); // create file name with path
 
 		particleTexture = // bind the background texture
 			TextureLoad(buffer, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);

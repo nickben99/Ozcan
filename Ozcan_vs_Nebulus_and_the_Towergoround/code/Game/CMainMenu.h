@@ -19,6 +19,7 @@
 #include "CMenu.h" // also includes CMenuOption 
 #include "CHUD.h"
 #include "Game/defines.h"
+#include <System/Interfaces/SystemInterface.h>
 // --------------------------
 
 //--- external variables --------
@@ -133,19 +134,9 @@ class CMainMenu : public CMenu
 		{
 			// load the main menus background and curser 
 			char theBackground[400];
-#ifdef _WINDOWS
-            sprintf_s
-#else
-            sprintf
-#endif
-			(theBackground, "%simages/back2.bmp", GetDirectoryPath());
+            SPRINTF(theBackground, "%simages/back2.bmp", GetDirectoryPath());
 			char theCurser[400];
-#ifdef _WINDOWS
-            sprintf_s
-#else
-            sprintf
-#endif
-            (theCurser, "%simages/select.bmp", GetDirectoryPath());
+            SPRINTF(theCurser, "%simages/select.bmp", GetDirectoryPath());
 			return( CMenu::Load(theBackground, theCurser));
 		}
 

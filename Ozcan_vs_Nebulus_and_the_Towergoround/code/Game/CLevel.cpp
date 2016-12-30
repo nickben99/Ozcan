@@ -13,6 +13,7 @@
 #include "CMenu.h"
 #include "Game/Main.h"
 #include "Rendering/ShadowMapping.h"
+#include <System/Interfaces/SystemInterface.h>
 //-------------------------
 
 // constructor
@@ -105,12 +106,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	CTextFileReader fileReader; // for file reading
 	char buffer[256]; // char buffer holds the level descriptor filename
 
-#ifdef _WINDOWS
-    sprintf_s
-#else
-    sprintf
-#endif
-    (buffer, "%slevels/level%d.txt", GetDirectoryPath(), level); // create file name with path
+    SPRINTF(buffer, "%slevels/level%d.txt", GetDirectoryPath(), level); // create file name with path
 
 	if (!fileReader.openFile(buffer, ios::in)){
 #ifdef _WINDOWS
@@ -144,12 +140,7 @@ bool CLevel::loadLevel(GLint theLevel)
 #endif
 	
 	char backgroundTexture[kBackgroundTextLen];
-#ifdef _WINDOWS
-    sprintf_s
-#else
-    sprintf
-#endif
-    (backgroundTexture, "%s%s", GetDirectoryPath(), tempBackgroundTexturePath);
+    SPRINTF(backgroundTexture, "%s%s", GetDirectoryPath(), tempBackgroundTexturePath);
 		
 	fileReader.getNextLine();
 	
@@ -264,12 +255,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	const int kStringLen = 200;
 	char path[kStringLen], tempFilename[kStringLen], tempPath[kStringLen];
 	// set the path to this levels models
-#ifdef _WINDOWS
-    sprintf_s
-#else
-    sprintf
-#endif
-    (path, "%s%d%s", "Level", level, "/");
+    SPRINTF(path, "%s%d%s", "Level", level, "/");
     defines::CopyString(tempFilename, "", kStringLen); // set up temporary variables
 	defines::CopyString(tempPath, path, kStringLen);
 	
@@ -663,12 +649,7 @@ void CLevel::collisionDetection()
             defines::CopyString(theHUD->endScreenText, "Level Completed", 256); // set text
 			theHUD->endScreenTextXScreenPerCent = 0.07f;
 			
-#ifdef _WINDOWS
-            sprintf_s
-#else
-            sprintf
-#endif
-            (theHUD->endScreenSubText,
+            SPRINTF(theHUD->endScreenSubText,
 				"Level score %d, time bonus %d, Total score %d", 
 				/*	time bonus is a per centage of 10,000 the longer the level has taken 
 					to complete the lower the time bonus */	

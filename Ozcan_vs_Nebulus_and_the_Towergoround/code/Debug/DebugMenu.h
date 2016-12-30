@@ -17,6 +17,7 @@
 #include "Rendering/Text.h"
 #include "Game/defines.h"
 #include "Math/CVector.h"
+#include <System/Interfaces/SystemInterface.h>
 //---------------------
 
 //defines--------------
@@ -153,12 +154,7 @@ public:
 
 		virtual const char* GetText()
 		{
-#ifdef _WINDOWS
-            sprintf_s
-#elif OSX
-            sprintf
-#endif
-			(displayText, "%s %f", text, *variable);
+            SPRINTF(displayText, "%s %f", text, *variable);
 			return displayText;
 		}
 
@@ -193,12 +189,7 @@ public:
 
 		virtual const char* GetText()
 		{
-#ifdef _WINDOWS
-            sprintf_s
-#elif OSX
-            sprintf
-#endif
-			(displayText, "%s %s", text, (*variable) ? "true" : "false");
+            SPRINTF(displayText, "%s %s", text, (*variable) ? "true" : "false");
 			return displayText;
 		}
 
@@ -223,12 +214,7 @@ public:
 
 		virtual const char* GetText()
 		{
-#ifdef _WINDOWS
-            sprintf_s
-#elif OSX
-            sprintf
-#endif
-			(displayText, "%s %.3f, %.3f, %.3f", text, variable->x, variable->y, variable->z);
+            SPRINTF(displayText, "%s %.3f, %.3f, %.3f", text, variable->x, variable->y, variable->z);
 			return displayText;
 		}
 
@@ -253,12 +239,7 @@ public:
 
 		virtual const char* GetText()
 		{
-#ifdef _WINDOWS
-            sprintf_s
-#elif OSX
-            sprintf
-#endif
-			(displayText, "%s %.3f, %.3f, %.3f, %.3f", text, vector4Variable->v3.x, vector4Variable->v3.y, vector4Variable->v3.z, vector4Variable->w);			
+            SPRINTF(displayText, "%s %.3f, %.3f, %.3f, %.3f", text, vector4Variable->v3.x, vector4Variable->v3.y, vector4Variable->v3.z, vector4Variable->w);			
 			return displayText;
 		}
 

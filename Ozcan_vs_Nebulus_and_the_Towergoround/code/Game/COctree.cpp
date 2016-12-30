@@ -648,12 +648,6 @@ void COctree::buildTrianglesDisplayList( void)
 
 			if (triangleRequired.triMaterial != previousMaterialMemoryAddress)
 			{
-				//if (1 == count)
-				//{
-				//	break;
-				//}
-				//++count;
-
 				// set previous material memory address
 				previousMaterialMemoryAddress = triangleRequired.triMaterial;
 

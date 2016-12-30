@@ -24,6 +24,7 @@
 #include "Game/defines.h"
 #include "Math/CMatrix.h"
 #include "Math/CVector.h"
+#include <System/Interfaces/SystemInterface.h>
 //--------------------------
 
 // GL ERROR CHECK
@@ -55,21 +56,11 @@ int OpenGLShader::CheckGLError(const char *file, int line)
 		char printOut[2048];				
 		if (sError)
 		{
-#ifdef _WINDOWS
-			sprintf_s
-#elif OSX
-			sprintf
-#endif
-			(printOut, "GL Error # %s (%s) in File %s at line: %d", sErrorCode, sError, file, line);		
+            SPRINTF(printOut, "GL Error # %s (%s) in File %s at line: %d", sErrorCode, sError, file, line);
 		}
 		else
 		{
-#ifdef _WINDOWS
-			sprintf_s
-#elif OSX
-			sprintf
-#endif
-			(printOut, "GL Error # %s in File %s at line: %d", sErrorCode, file, line);	
+            SPRINTF(printOut, "GL Error # %s in File %s at line: %d", sErrorCode, file, line);
 		}
 #ifdef _WINDOWS
 		OutputDebugString(printOut);
@@ -320,24 +311,14 @@ bool OpenGLShader::CreateProgram(const char* vertexShaderFileName, const char* f
 	char buffer[256];
 
     string vertexShader; 
-#ifdef _WINDOWS
-	sprintf_s
-#elif OSX
-	sprintf
-#endif
-	(buffer, "%scode/Shaders/%s", GetDirectoryPath(), vertexShaderFileName); // create file name with path
+    SPRINTF(buffer, "%scode/Shaders/%s", GetDirectoryPath(), vertexShaderFileName); // create file name with path
     if (!CTextFileReader::ReadFile(buffer, vertexShader)) 
 	{
         return false;
     }
 
 	string fragmentShader;
-#ifdef _WINDOWS
-	sprintf_s
-#elif OSX
-	sprintf
-#endif
-	(buffer, "%scode/Shaders/%s", GetDirectoryPath(), fragmentShaderFileName); // create file name with path
+    SPRINTF(buffer, "%scode/Shaders/%s", GetDirectoryPath(), fragmentShaderFileName); // create file name with path
     if (!CTextFileReader::ReadFile(buffer, fragmentShader)) 
 	{
         return false;
@@ -453,11 +434,10 @@ bool OpenGLShader::AddShader(GLuint shaderProgram, const char* pShaderText, GLen
         glGetShaderInfoLog(shaderObj, 1024, NULL, InfoLog);
         
 		char printOut[2048];
+        SPRINTF(printOut, "\n\nError compiling shader type %d: '%s'\n", ShaderType, InfoLog);
 #ifdef _WINDOWS
-		sprintf_s(printOut, "\n\nError compiling shader type %d: '%s'\n", ShaderType, InfoLog);		
 		OutputDebugString(printOut);
 #elif OSX
-		sprintf(printOut, "\n\nError compiling shader type %d: '%s'\n", ShaderType, InfoLog);
         std::cout << printOut;
 #endif
 		

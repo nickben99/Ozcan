@@ -20,6 +20,7 @@
 #ifdef OSX
 #include <string.h> // for memcmp
 #endif
+#include <System/Interfaces/SystemInterface.h>
 
 /*
  * 'LoadDIBitmap()' - Load a DIB/BMP file from disk.
@@ -64,7 +65,7 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
         /* Not a bitmap file - return 0... */
 #ifdef _WINDOWS
         char errorMsg[256];
-        sprintf_s( errorMsg, "%s has a .bmp extension, but is not a bitmap file", filename );
+        SPRINTF( errorMsg, "%s has a .bmp extension, but is not a bitmap file", filename );
         MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
 #endif
         fclose(fp);
@@ -424,7 +425,7 @@ GLubyte* LoadTarga(const char *filename,	unsigned short &uHeight,	// image heigh
 
 #ifdef _WINDOWS
 	char errorMsg[256];
-	sprintf_s( errorMsg, "%s has a .tga extension, but is not an uncompressed or RLE compressed targa file", filename );
+	SPRINTF( errorMsg, "%s has a .tga extension, but is not an uncompressed or RLE compressed targa file", filename );
 	MessageBox( 0, errorMsg, "ERROR",MB_OK|MB_ICONEXCLAMATION );
 #endif
 	fclose( file ); // close the file

@@ -15,6 +15,7 @@ AND TUTORIAL AT http://hsfortuna.pwp.blueyonder.co.uk
 #include "CModelLoader.h"
 #include "FileReading/texture.h" // REUSED CLASS FROM OPENGL SUPERBIBLE - sets up textures
 #include "Game/defines.h"
+#include <System/Interfaces/SystemInterface.h>
 //----------------------
 
 extern GLuint TextureLoad(const char *filename, bool alpha, GLenum minfilter, GLenum magfilter, GLenum wrap);
@@ -34,12 +35,7 @@ int CModelLoader::load(char* filename, CModel **model)
 	CTextFileReader fileReader; // used to read a text file
 	char buffer[256]; // char buffer holds the model filename
 
-#ifdef _WINDOWS
-    sprintf_s
-#else
-    sprintf
-#endif
-	(buffer, "%smodels/%s.txt", GetDirectoryPath(), filename); // create file name with path
+    SPRINTF(buffer, "%smodels/%s.txt", GetDirectoryPath(), filename); // create file name with path
 	
 	if (!fileReader.openFile(buffer, ios::in)){
 		return(false);} // return false if file could not be opened
@@ -752,12 +748,7 @@ int CModelLoader::reloadTextures(CModel *thisModel)
 	for (int material = 0; material < thisModel->materialNo; material++ )
 	{
 		char filename[400];
-#ifdef _WINDOWS
-        sprintf_s
-#else
-        sprintf
-#endif
-		(filename, "%smodels/model textures/", GetDirectoryPath());
+        SPRINTF(filename, "%smodels/model textures/", GetDirectoryPath());
 		if (strlen( thisModel->materials[material].clrMapTex) > 0) // if theirs a texture
 		{
 #ifdef _WINDOWS

@@ -11,6 +11,7 @@
 #include "FileReading/TEXTURE.H"
 #include "Game/defines.h"
 #include "Game/Globals.h"
+#include <System/Interfaces/SystemInterface.h>
 //-------------------------
 
 //--- external variables --------
@@ -266,11 +267,7 @@ int LoadTexture()
 {
 	const int BufferSize = 256;
 	char buffer[BufferSize];
-#ifdef _WINDOWS
-	sprintf_s(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
-#else
-    sprintf(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
-#endif
+	SPRINTF(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
 	return TextureLoad(buffer, GL_FALSE, GL_LINEAR, GL_NEAREST, GL_CLAMP);
 }
 

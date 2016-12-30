@@ -102,6 +102,8 @@
 
 /* Begin PBXFileReference section */
 		3C6E0DC01D330F060066B870 /* Ozcan vs Nebulus and the Towergoround */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Ozcan vs Nebulus and the Towergoround"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C73B1531E170C6900ED8458 /* SystemOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemOSX.h; path = code/System/PlatformSpecific/OSX/SystemOSX.h; sourceTree = "<group>"; };
+		3C73B1541E170C7C00ED8458 /* SystemInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemInterface.h; path = code/System/Interfaces/SystemInterface.h; sourceTree = "<group>"; };
 		3CA5ED8B1D33108E0098F0FA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3CA5ED8D1D3310FD0098F0FA /* libGLEW.1.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.13.0.dylib; path = ../../../../../usr/local/Cellar/glew/1.13.0/lib/libGLEW.1.13.0.dylib; sourceTree = "<group>"; };
 		3CA5ED8F1D3311120098F0FA /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
@@ -285,9 +287,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C4B78981E170A59004FE124 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				3C73B1511E170C4200ED8458 /* PlatformSpecific */,
+				3C73B1501E170C3800ED8458 /* Interfaces */,
+			);
+			name = System;
+			sourceTree = "<group>";
+		};
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3C4B78981E170A59004FE124 /* System */,
 				3CB28F011D84DAB400A1CB1B /* Camera */,
 				3CB28ED41D7E700500A1CB1B /* Debug */,
 				3CC2AFD81D3B365A0003005B /* Audio */,
@@ -320,6 +332,30 @@
 			);
 			name = PlatformSetup;
 			path = "Ozcan vs Nebulus and the Towergoround";
+			sourceTree = "<group>";
+		};
+		3C73B1501E170C3800ED8458 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				3C73B1541E170C7C00ED8458 /* SystemInterface.h */,
+			);
+			name = Interfaces;
+			sourceTree = "<group>";
+		};
+		3C73B1511E170C4200ED8458 /* PlatformSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3C73B1521E170C4F00ED8458 /* OSX */,
+			);
+			name = PlatformSpecific;
+			sourceTree = "<group>";
+		};
+		3C73B1521E170C4F00ED8458 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				3C73B1531E170C6900ED8458 /* SystemOSX.h */,
+			);
+			name = OSX;
 			sourceTree = "<group>";
 		};
 		3CB28EB41D7D201000A1CB1B /* PlatformSpecific */ = {
