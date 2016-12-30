@@ -131,6 +131,9 @@ inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numT
     {
         copyTo[character] = copyFrom[character];
     }
+    if (charactersToCopy < copyToSize) {
+        copyTo[charactersToCopy] = '\0';
+    }
 #endif
 }
     

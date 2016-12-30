@@ -33,13 +33,10 @@ public:
 	public:
 		DebugMenuItem(const char* textIn)
 		{
+            memset(text, '\0', sizeof(char)*TextLength);
 			if (NULL != textIn)
 			{
                 defines::strncpy(text, TextLength-1, textIn, (int)strlen(textIn));
-			}
-			else
-			{
-				text[0] = '\0';
 			}
 		}
 		
