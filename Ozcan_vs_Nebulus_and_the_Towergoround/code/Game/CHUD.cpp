@@ -291,6 +291,15 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 
 		restartScreenBackgroundBuffer.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
 		restartScreenBackgroundBuffer.SetColor(CVector4(1.0f, 1.0f, 1.0f, 180.0f/255.0f));
+        
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        restartScreenBackgroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
 
 		unsigned short vertexIndecisArray[] = 
 		{
@@ -312,7 +321,16 @@ int CHUD::loadHUDGraphicsAndFont(float width, float height)
 		endGameScreenBackgroundBuffer.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
 		endGameScreenBackgroundBuffer.SetColor(CVector4(0.0f, 0.0f, 0.0f, 1.0f));
 
-		unsigned short vertexIndecisArray[] = 
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        endGameScreenBackgroundBuffer.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+        
+		unsigned short vertexIndecisArray[] =
 		{
 			0, 1, 2,
 			0, 2, 3
@@ -355,7 +373,6 @@ void CHUD::draw( void)
 			ReplayDraw();
 			break;
 		case RESTART_SCREEN:
-			mainGameDraw(); // need to still draw the game hud on the restart screen
 			drawReStartScreen();
 			break;
 		case END_GAME:
