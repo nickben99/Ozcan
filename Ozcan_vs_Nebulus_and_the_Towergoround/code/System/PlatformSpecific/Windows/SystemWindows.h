@@ -7,6 +7,8 @@
 
 #define VSPRINTF vsprintf_s
 
+#define SSCANF sscanf_s
+
 inline void ErrorOutput(const char* text) {
 	MessageBox(0,text,"ERROR",MB_OK|MB_ICONEXCLAMATION);
 }

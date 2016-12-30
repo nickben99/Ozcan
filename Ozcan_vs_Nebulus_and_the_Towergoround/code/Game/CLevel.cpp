@@ -116,12 +116,7 @@ bool CLevel::loadLevel(GLint theLevel)
 									or a comment line */
 
 	// get the the time this level runs for
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "%d", &totalLevelTime);
+    SSCANF(fileReader.currentLineOfFile, "%d", &totalLevelTime);
 	totalLevelTime*=1000; // convert level time from seconds to milliseconds
 	fileReader.getNextLine();
 
@@ -143,22 +138,12 @@ bool CLevel::loadLevel(GLint theLevel)
 	int totalRows, totalColumns, rowHeight, columnWidth;
 
 	// get the number of rows for the scene's tower
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "%d %d",	&totalRows,
+    SSCANF(fileReader.currentLineOfFile, "%d %d",	&totalRows,
 													&rowHeight);
 	fileReader.getNextLine();
 
 	// get the number of columns for the scene's tower
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "%d %d",	&totalColumns,
+    SSCANF(fileReader.currentLineOfFile, "%d %d",	&totalColumns,
 													&columnWidth);
 	fileReader.getNextLine();
 
@@ -186,12 +171,7 @@ bool CLevel::loadLevel(GLint theLevel)
 		*legendInformation = 0;
 
 	// get the number of legend information items of sprites associated with models
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "%d", &numberOfLegendItemsToLoad);
+    SSCANF(fileReader.currentLineOfFile, "%d", &numberOfLegendItemsToLoad);
 	fileReader.getNextLine();
 
 	/*	allocate memory for legend information 
@@ -234,12 +214,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	char** tempModelFileNames = 0; //file names
 
 	// get the number of models which require loading for this level
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "%d", &tempNoOfModelsToLoad);
+    SSCANF(fileReader.currentLineOfFile, "%d", &tempNoOfModelsToLoad);
 	fileReader.getNextLine();
 
 	// allocate memory for the array of file names sent to the sprite engine
@@ -314,12 +289,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	int *nonTowerSpriteInformation = 0;
 		
 	// get number of non tower sprites required for this level
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-	(fileReader.currentLineOfFile, "%d", &tempNumberOfNonTowerSpritesToLoad);
+    SSCANF(fileReader.currentLineOfFile, "%d", &tempNumberOfNonTowerSpritesToLoad);
 	fileReader.getNextLine();
 
 	/*	allocate memory (multiplied by two as each non tower sprite has a number 

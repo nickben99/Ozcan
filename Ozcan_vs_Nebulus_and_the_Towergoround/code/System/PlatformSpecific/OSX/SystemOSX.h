@@ -7,6 +7,8 @@
 
 #define VSPRINTF vsprintf
 
+#define SSCANF sscanf
+
 inline void ErrorOutput(const char*) {
 
 }

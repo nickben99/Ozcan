@@ -45,28 +45,13 @@ int CModelLoader::load(char* filename, CModel **model)
 	fileReader.getNextLine(); /*	returns the next line which is not blank
 									or a comment line */
 	 // get total frames
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-	(fileReader.currentLineOfFile, "Frames: %d", &aModel->totalFrames);
+    SSCANF(fileReader.currentLineOfFile, "Frames: %d", &aModel->totalFrames);
 
 	fileReader.getNextLine();
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "Frame: %d", &aModel->currentFrame); // get current frame
+    SSCANF(fileReader.currentLineOfFile, "Frame: %d", &aModel->currentFrame); // get current frame
 
 	fileReader.getNextLine();
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "Meshes: %d", &aModel->meshNo); // get number of meshes
+    SSCANF(fileReader.currentLineOfFile, "Meshes: %d", &aModel->meshNo); // get number of meshes
 
 	// delete anything in the array
 	if(aModel->meshes)delete[]aModel->meshes;
@@ -113,13 +98,7 @@ int CModelLoader::load(char* filename, CModel **model)
 
 		fileReader.getNextLine();
 		// return false if no fields set
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].virticesNo);
+        res = SSCANF(fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].virticesNo);
 		if (res != 1){ /*	set virtices
 																									no for this
 																									mesh */
@@ -139,13 +118,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the vertices for this mesh
 		for (int vertex = 0; vertex < aModel->meshes[mesh].virticesNo; vertex++)
 		{
-            res =
-#ifdef _WINDOWS
-            sscanf_s
-#else
-            sscanf
-#endif
-            (fileReader.currentLineOfFile, "%d %f %f %f %f %f %d",
+            res = SSCANF(fileReader.currentLineOfFile, "%d %f %f %f %f %f %d",
              &aModel->meshes[mesh].vertices[vertex].flags,
              &aModel->meshes[mesh].vertices[vertex].originalXYZ.x,
              &aModel->meshes[mesh].vertices[vertex].originalXYZ.y,
@@ -183,13 +156,7 @@ int CModelLoader::load(char* filename, CModel **model)
 				tempBoundingBoxMostRemoteVertex.z = tempPositive.z;}
 		}
         
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].normalsNo);
+        res = SSCANF(fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].normalsNo);
 		if (res !=1){ /*	set normals
 																			no for this
 																			mesh */
@@ -209,13 +176,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the normals
 		for (int normal = 0; normal < aModel->meshes[mesh].normalsNo; normal++)
 		{
-            res =
-#ifdef _WINDOWS
-            sscanf_s
-#else
-            sscanf
-#endif
-            (fileReader.currentLineOfFile, "%f %f %f", &aModel->meshes[mesh].normals[normal].x,
+            res = SSCANF(fileReader.currentLineOfFile, "%f %f %f", &aModel->meshes[mesh].normals[normal].x,
              &aModel->meshes[mesh].normals[normal].y,
              &aModel->meshes[mesh].normals[normal].z);
 			if (res != 3)
@@ -224,13 +185,7 @@ int CModelLoader::load(char* filename, CModel **model)
 			fileReader.getNextLine();
 		}
         
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].trianglesNo);
+        res = SSCANF(fileReader.currentLineOfFile, "%d", &aModel->meshes[mesh].trianglesNo);
 		// set triangle no
 		if (res != 1){
             DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
@@ -259,13 +214,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the triangles
 		for (int triangle = 0; triangle < aModel->meshes[mesh].trianglesNo; triangle++)
 		{
-            res =
-#ifdef _WINDOWS
-            sscanf_s
-#else
-            sscanf
-#endif
-            (fileReader.currentLineOfFile, "%d %d %d %d %d %d %d %d",
+            res = SSCANF(fileReader.currentLineOfFile, "%d %d %d %d %d %d %d %d",
              &aModel->meshes[mesh].triangles[triangle].flags,
              &aModel->meshes[mesh].triangles[triangle].vert[0],
              &aModel->meshes[mesh].triangles[triangle].vert[1],
@@ -316,13 +265,7 @@ int CModelLoader::load(char* filename, CModel **model)
 	aModel->boundingSphereRadUnAnimated = tempMostRemoteVirtex.getMagnitude();
 	aModel->boundingRectangleUnAnimated = (tempBoundingBoxMostRemoteVertex*2.0f);
 	
-    int res =
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "Materials: %d", &aModel->materialNo);
+    int res = SSCANF(fileReader.currentLineOfFile, "Materials: %d", &aModel->materialNo);
 	// set material number
 	if (res != 1){
 		DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
@@ -351,13 +294,7 @@ int CModelLoader::load(char* filename, CModel **model)
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		fileReader.getNextLine();
 
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].ambient[0],
+        res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].ambient[0],
          &aModel->materials[material].ambient[1],
          &aModel->materials[material].ambient[2],
          &aModel->materials[material].ambient[3]);
@@ -366,13 +303,7 @@ int CModelLoader::load(char* filename, CModel **model)
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		fileReader.getNextLine();
 		
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].diffuse[0],
+        res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].diffuse[0],
          &aModel->materials[material].diffuse[1],
          &aModel->materials[material].diffuse[2],
          &aModel->materials[material].diffuse[3]);
@@ -382,13 +313,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 		
 		//get specular values
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].specular[0],
+        res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].specular[0],
          &aModel->materials[material].specular[1],
          &aModel->materials[material].specular[2],
          &aModel->materials[material].specular[3]);
@@ -398,13 +323,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 
 		//get emissive values
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].emissive[0],
+        res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->materials[material].emissive[0],
          &aModel->materials[material].emissive[1],
          &aModel->materials[material].emissive[2],
          &aModel->materials[material].emissive[3]);
@@ -414,13 +333,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 		
 		// get shinniness value
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f",	&aModel->materials[material].shinnines);
+        res = SSCANF(fileReader.currentLineOfFile, "%f",	&aModel->materials[material].shinnines);
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 
@@ -444,13 +357,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 		
 		// get transparency value
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%f",	&aModel->materials[material].transparency);
+        res = SSCANF(fileReader.currentLineOfFile, "%f",	&aModel->materials[material].transparency);
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		fileReader.getNextLine();
@@ -487,13 +394,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		DELETE_MODEL(aModel) fileReader.closeFile(); return(false);} // delete model and return false
 
 	// set the number of bones
-    res =
-#ifdef _WINDOWS
-    sscanf_s
-#else
-    sscanf
-#endif
-    (fileReader.currentLineOfFile, "Bones: %d", &aModel->bonesNo);
+    res = SSCANF(fileReader.currentLineOfFile, "Bones: %d", &aModel->bonesNo);
 	if (res != 1){
 		DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 	if (aModel->bonesNo > 0) // allocate memory for bone structs
@@ -540,13 +441,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 		
 		// get bone information
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d %f %f %f %f %f %f", &aModel->bones[bone].flags,
+        res = SSCANF(fileReader.currentLineOfFile, "%d %f %f %f %f %f %f", &aModel->bones[bone].flags,
          &aModel->bones[bone].posXYZ.x,
          &aModel->bones[bone].posXYZ.y,
          &aModel->bones[bone].posXYZ.z,
@@ -559,13 +454,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		fileReader.getNextLine();
 
 		// get number of position Globals::Instance().keys
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d", &aModel->bones[bone].positionKeysAmt);
+        res = SSCANF(fileReader.currentLineOfFile, "%d", &aModel->bones[bone].positionKeysAmt);
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		// allocate memory for the position Globals::Instance().keys
@@ -586,13 +475,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the position Globals::Instance().keys
 		for (int posKey = 0; posKey < aModel->bones[bone].positionKeysAmt; posKey++)
 		{
-            res =
-#ifdef _WINDOWS
-            sscanf_s
-#else
-            sscanf
-#endif
-            (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->bones[bone].posKeyFrames[posKey].time,
+            res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->bones[bone].posKeyFrames[posKey].time,
              &aModel->bones[bone].posKeyFrames[posKey].xyz.x,
              &aModel->bones[bone].posKeyFrames[posKey].xyz.y,
              &aModel->bones[bone].posKeyFrames[posKey].xyz.z
@@ -603,13 +486,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		}
 
 		// get number of rotation Globals::Instance().keys
-        res =
-#ifdef _WINDOWS
-        sscanf_s
-#else
-        sscanf
-#endif
-        (fileReader.currentLineOfFile, "%d", &aModel->bones[bone].rotationKeysAmt);
+        res = SSCANF(fileReader.currentLineOfFile, "%d", &aModel->bones[bone].rotationKeysAmt);
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		// allocate memory for the rotation Globals::Instance().keys
@@ -630,13 +507,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get all the rotation Globals::Instance().keys
 		for (int rotKey = 0; rotKey < aModel->bones[bone].rotationKeysAmt; rotKey++)
 		{
-            res =
-#ifdef _WINDOWS
-            sscanf_s
-#else
-            sscanf
-#endif
-            (fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->bones[bone].rotKeyFrames[rotKey].time,
+            res = SSCANF(fileReader.currentLineOfFile, "%f %f %f %f",	&aModel->bones[bone].rotKeyFrames[rotKey].time,
              &aModel->bones[bone].rotKeyFrames[rotKey].xyz.x,
              &aModel->bones[bone].rotKeyFrames[rotKey].xyz.y,
              &aModel->bones[bone].rotKeyFrames[rotKey].xyz.z
