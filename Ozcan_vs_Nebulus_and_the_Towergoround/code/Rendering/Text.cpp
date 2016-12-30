@@ -372,12 +372,7 @@ void Text::SetText(float xPosIn, float yPosIn, const char* string, ...)
 	va_list vlist; // va_list
 	
 	va_start(vlist, string); // set to beginning of argument list
-#ifdef _WINDOWS
-	vsprintf_s
-#else
-    vsprintf
-#endif
-    (currentText, string, vlist); // print formatted string to thisString
+    VSPRINTF(currentText, string, vlist); // print formatted string to thisString
 	va_end(vlist); // reset argument pointer
 	
 	xPos = xPosIn;
@@ -399,12 +394,7 @@ void Text::SetText(const char* string, ...)
 	va_list vlist; // va_list
 	
 	va_start(vlist, string); // set to beginning of argument list
-#ifdef _WINDOWS
-    vsprintf_s
-#else
-    vsprintf
-#endif
-	(currentText, string, vlist); // print formatted string to thisString
+    VSPRINTF(currentText, string, vlist); // print formatted string to thisString
 	va_end(vlist); // reset argument pointer
 }
 

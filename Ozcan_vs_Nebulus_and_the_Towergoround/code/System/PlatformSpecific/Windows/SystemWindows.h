@@ -5,4 +5,6 @@
 
 #define SPRINTF sprintf_s
 
+#define VSPRINTF vsprintf_s
+
 #endif // ifndef _SystemWindows_

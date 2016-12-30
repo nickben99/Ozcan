@@ -5,4 +5,6 @@
 
 #define SPRINTF sprintf
 
+#define VSPRINTF vsprintf
+
 #endif // ifndef _SystemOSX_

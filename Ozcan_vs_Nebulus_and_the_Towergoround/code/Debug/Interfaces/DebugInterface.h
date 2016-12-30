@@ -18,6 +18,8 @@
 #include "Debug/PlatformSpecific/iOS/DebugiOS.h"
 #endif
 
+#include <System/Interfaces/SystemInterface.h>
+
 class DebugInterface
 { 
 	public:
@@ -27,11 +29,7 @@ class DebugInterface
 			va_list vlist; // va_list
 	
 			va_start(vlist, debugString); // set to beginning of argument list
-#ifdef _WINDOWS
-			vsprintf_s(thisString, debugString, vlist); // print formatted string to thisString
-#else
-			vsprintf(thisString, debugString, vlist);
-#endif
+			VSPRINTF(thisString, debugString, vlist); // print formatted string to thisString
             va_end(vlist); // reset argument pointer
 			implementation.staticDebug(thisString);
 		}
@@ -47,11 +45,7 @@ class DebugInterface
 			va_list vlist; // va_list
 	
 			va_start(vlist, debugString); // set to beginning of argument list
-#ifdef _WINDOWS
-			vsprintf_s(thisString, debugString, vlist); // print formatted string to thisString
-#else
-            vsprintf(thisString, debugString, vlist); // print formatted string to thisString
-#endif
+            VSPRINTF(thisString, debugString, vlist); // print formatted string to thisString
 			va_end(vlist); // reset argument pointer
 
 			implementation.debug(thisString);
@@ -68,11 +62,7 @@ class DebugInterface
 			va_list vlist; // va_list
 	
 			va_start(vlist, debugString); // set to beginning of argument list
-#ifdef _WINDOWS
-			vsprintf_s(thisString, debugString, vlist); // print formatted string to thisString
-#else
-            vsprintf(thisString, debugString, vlist); // print formatted string to thisString
-#endif
+            VSPRINTF(thisString, debugString, vlist); // print formatted string to thisString
 			va_end(vlist); // reset argument pointer
 
 			implementation.outputToFile(thisString);
