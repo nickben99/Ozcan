@@ -6,17 +6,57 @@
 //  Copyright © 2016 Benjamin Nickson. All rights reserved.
 //
 
+#include <iostream>
+
 #include </usr/local/Cellar/glew/1.13.0/include/GL/glew.h>
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 #include "Audio/SoundsEnum.h"
 #include <Game/Globals.h>
 #include <Game/CMenu.h>
 #include <Game/Game.h>
+
 GLFWwindow* osxWindow = nullptr;
 bool quitApp = false;
 
-int main()
+void SetCurrentWorkingDirectory(int argc, char *argv[])
 {
+    bool currenlyInDebugger = argc > 1 && 0 == strcmp(argv[1], "xcodeDebugger");
+    // we only want to set the cwd when running outside the debugger. inside debugger, xcode sets
+    // our cwd for us
+    if (!currenlyInDebugger)
+    {
+        std::cout << "\n\n" << "exe path from command: " << argv[0] << "\n\n";
+        
+        const int FilePathLength = 2048;
+        char executablePath[FilePathLength];
+        
+        strcpy(executablePath, argv[0]); // get the exe path
+        
+        // the path passed in includes the exe name, so this section trims that off
+        char * lastForwardSlash = strrchr(executablePath,'/');
+        if (lastForwardSlash) {
+            *(lastForwardSlash + 1) = '\0'; // remove the exe name from end of path
+        }
+        
+        std::cout << "\n\n" << "requested new cwd: " << executablePath << "\n\n";
+        chdir(executablePath); //change cwd
+        
+        // this section prints out the new cwd which we have just set
+        char currentWorkingDirectory[FilePathLength];
+        char* cwd = getcwd(currentWorkingDirectory, FilePathLength);
+        if (cwd) {
+            std::cout << "\n\n" << "current working directory: " << cwd << "\n\n";
+        }
+        else {
+            std::cout << "\n\n" << "current working directory: NONE" << "\n\n";
+        }
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    SetCurrentWorkingDirectory(argc, argv);
+    
     if (!glfwInit())
     {
         return -1;
