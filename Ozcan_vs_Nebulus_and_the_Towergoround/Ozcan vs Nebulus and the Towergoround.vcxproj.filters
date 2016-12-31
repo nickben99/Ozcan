@@ -33,15 +33,6 @@
     <Filter Include="Math">
       <UniqueIdentifier>{bb2cb603-6855-491b-8416-abf86cf94bd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\PlatformSpecific">
-      <UniqueIdentifier>{9337530a-2c59-4f23-86ee-5e48b1196728}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\PlatformSpecific\Windows">
-      <UniqueIdentifier>{d0b1e24d-3133-4200-ac39-b4f6f1d19ad1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Interfaces">
-      <UniqueIdentifier>{36f8dee0-2393-448b-8f31-36e6a678f80c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Input\Interfaces">
       <UniqueIdentifier>{4cf03e1d-6ea2-480d-b0d8-b6c201391dc3}</UniqueIdentifier>
     </Filter>
@@ -98,6 +89,18 @@
     </Filter>
     <Filter Include="FileReading\PlatformSpecific\Windows">
       <UniqueIdentifier>{cbc9745b-46e1-412a-9aab-430324863b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{f8cd373e-8b05-499e-ad75-002e3c17d9cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Interfaces">
+      <UniqueIdentifier>{ed9bcbbf-7513-46b2-bde8-0f2e355680fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\PlatformSpecific">
+      <UniqueIdentifier>{2ee62af9-c897-4699-af01-c4f96016c02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\PlatformSpecific\Windows">
+      <UniqueIdentifier>{dab569ca-f63a-4fc9-b0fb-b4587d389665}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -594,6 +597,12 @@
     </ClInclude>
     <ClInclude Include="code\Rendering\OpenGLShader.h">
       <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="code\System\Interfaces\SystemInterface.h">
+      <Filter>System\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="code\System\PlatformSpecific\Windows\SystemWindows.h">
+      <Filter>System\PlatformSpecific\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

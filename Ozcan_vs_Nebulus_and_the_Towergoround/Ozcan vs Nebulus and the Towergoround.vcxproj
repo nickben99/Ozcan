@@ -299,6 +299,8 @@
     <ClInclude Include="code\Rendering\PlatformSpecific\Windows\OpenGLWindows.h" />
     <ClInclude Include="code\Rendering\ShadowMapping.h" />
     <ClInclude Include="code\Rendering\Text.h" />
+    <ClInclude Include="code\System\Interfaces\SystemInterface.h" />
+    <ClInclude Include="code\System\PlatformSpecific\Windows\SystemWindows.h" />
     <ClInclude Include="code\Time\Interfaces\CHighPrecisionTimerInterface.h" />
     <ClInclude Include="code\Time\Interfaces\CTimerInterface.h" />
     <ClInclude Include="code\Time\PlatformSpecific\Windows\CHighPrecisionTimerWindows.h" />
