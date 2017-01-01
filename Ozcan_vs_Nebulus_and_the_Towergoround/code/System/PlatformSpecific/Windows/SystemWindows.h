@@ -9,6 +9,8 @@
 
 #define SSCANF sscanf_s
 
+#define SSCANF_STR_PARAM(theStringParamPointer, theStringLength) theStringParamPointer, theStringLength
+
 inline void ErrorOutput(const char* text) {
 	MessageBox(0,text,"ERROR",MB_OK|MB_ICONEXCLAMATION);
 }

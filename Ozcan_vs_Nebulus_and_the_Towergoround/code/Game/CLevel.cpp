@@ -124,11 +124,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	char tempBackgroundTexturePath[kBackgroundTextLen];
 	/*	get the background texture for this level (get everything between 
 		the two quotation marks in the file) */
-#ifdef _WINDOWS
-    sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]", tempBackgroundTexturePath, kBackgroundTextLen);
-#else
-    sscanf(fileReader.currentLineOfFile, "\"%[^\"]", tempBackgroundTexturePath);
-#endif
+	SSCANF(fileReader.currentLineOfFile, "\"%[^\"]", SSCANF_STR_PARAM(tempBackgroundTexturePath, kBackgroundTextLen));
 	
 	char backgroundTexture[kBackgroundTextLen];
     SPRINTF(backgroundTexture, "%s%s", GetDirectoryPath(), tempBackgroundTexturePath);
@@ -192,15 +188,7 @@ bool CLevel::loadLevel(GLint theLevel)
 			legendCounter++)
 		{
 			// get spriteID along with corresponding modelID
-#ifdef _WINDOWS
-            sscanf_s(fileReader.currentLineOfFile, "%c %d",
-                     &temp, 1,
-                     &tempInt);
-#else
-            sscanf(fileReader.currentLineOfFile, "%c %d",
-                   &temp,
-                   &tempInt);
-#endif
+			SSCANF(fileReader.currentLineOfFile, "%c %d", SSCANF_STR_PARAM(&temp, 1), &tempInt);
             
 			legendInformation[(legendCounter * 2) + 1] = tempInt;
 			legendInformation[legendCounter * 2] = (int)temp; // cast to int
@@ -235,11 +223,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	{
 		tempModelFileNames[modelFilename] = new char[kStringLen]; // allocate memory
 		 // get filename
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "%s", tempFilename, kStringLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "%s", tempFilename);
-#endif
+		SSCANF(fileReader.currentLineOfFile, "%s", SSCANF_STR_PARAM(tempFilename, kStringLen));
 
 		// append filename to path
 #ifdef _WINDOWS
@@ -303,15 +287,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	for (int sprite = 0; sprite < tempNumberOfNonTowerSpritesToLoad; sprite++)
 	{
 		char temp; // used to get char from file before casting as int
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "%c %d",
-                 &temp, 1,
-                 &nonTowerSpriteInformation[(sprite*2)+1]);
-#else
-        sscanf(fileReader.currentLineOfFile, "%c %d",
-                 &temp,
-                 &nonTowerSpriteInformation[(sprite*2)+1]);
-#endif
+		SSCANF(fileReader.currentLineOfFile, "%c %d", SSCANF_STR_PARAM(&temp, 1), &nonTowerSpriteInformation[(sprite*2)+1]);
 		nonTowerSpriteInformation[sprite*2] = (int)temp; // cast to int
 		fileReader.getNextLine();
 	}

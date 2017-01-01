@@ -9,6 +9,8 @@
 
 #define SSCANF sscanf
 
+#define SSCANF_STR_PARAM(theStringParamPointer, theStringLength) theStringParamPointer
+
 inline void ErrorOutput(const char*) {
 
 }

@@ -83,16 +83,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get this meshes name, flags and material index.
 		// return false if any fields are not set
         
-        int res =
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\" %d %d", aModel->meshes[mesh].name, mesh::kNameStrLen,
-                 &aModel->meshes[mesh].flags,
-                 &aModel->meshes[mesh].matIndex);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\"]\" %d %d", aModel->meshes[mesh].name, &aModel->meshes[mesh].flags,
-               &aModel->meshes[mesh].matIndex);
-#endif
-
+        int res = SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\" %d %d", SSCANF_STR_PARAM(aModel->meshes[mesh].name, mesh::kNameStrLen), &aModel->meshes[mesh].flags, &aModel->meshes[mesh].matIndex);
 		if (res != 3){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 
@@ -284,12 +275,7 @@ int CModelLoader::load(char* filename, CModel **model)
 	// get all the materials
 	for (int material = 0; material < aModel->materialNo; material++)
 	{ // get material name
-        res =
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->materials[material].name, material::kStrLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->materials[material].name);
-#endif
+        res = SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(aModel->materials[material].name, material::kStrLen));
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		fileReader.getNextLine();
@@ -371,22 +357,14 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get colour map diffuse texture, get just filename at end of line (not path)
         defines::CopyString (aModel->materials[material].clrMapTex, "", sizeof(aModel->materials[material].clrMapTex)); // set to null in case no tex
 
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\\\"]", aModel->materials[material].clrMapTex, material::kStrLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\\\"]", aModel->materials[material].clrMapTex);
-#endif
+		SSCANF(fileReader.currentLineOfFile, "\"%[^\\\"]", SSCANF_STR_PARAM(aModel->materials[material].clrMapTex, material::kStrLen));
         defines::ReverseString(aModel->materials[material].clrMapTex); // reverse string so filename is not reversed
 		fileReader.getNextLine();
 
 		// get alpha map texture, initially set to null in case their's no alpha map tex
         defines::CopyString(aModel->materials[material].alphaMapTex, "", sizeof(aModel->materials[material].alphaMapTex));
 
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", &aModel->materials[material].alphaMapTex, material::kStrLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->materials[material].alphaMapTex);
-#endif
+		SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(&aModel->materials[material].alphaMapTex, material::kStrLen));
 		fileReader.getNextLine();
 	} // end for all materials
 	
@@ -421,23 +399,14 @@ int CModelLoader::load(char* filename, CModel **model)
 	for (int bone = 0; bone < aModel->bonesNo; bone++)
 	{
 		// get bone name
-        res =
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].name, bone::kStrLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].name);
-#endif
+        res = SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(aModel->bones[bone].name, bone::kStrLen));
 		if (res != 1){
 			DELETE_MODEL(aModel) fileReader.closeFile(); return(false);}
 		fileReader.getNextLine();
 
 		// get parent name, initially set to null
         defines::CopyString (aModel->bones[bone].parentName, "", sizeof(aModel->bones[bone].parentName));
-#ifdef _WINDOWS
-        sscanf_s(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].parentName, bone::kStrLen);
-#else
-        sscanf(fileReader.currentLineOfFile, "\"%[^\"]\"", aModel->bones[bone].parentName);
-#endif
+		SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(aModel->bones[bone].parentName, bone::kStrLen));
 		fileReader.getNextLine();
 		
 		// get bone information
