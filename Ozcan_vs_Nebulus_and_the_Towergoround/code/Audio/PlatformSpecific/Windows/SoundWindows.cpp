@@ -1,5 +1,3 @@
-#ifdef _WINDOWS
-
 #include "SoundWindows.h"
 #include "Game/ReplayManager.h"
 #include "Game/defines.h"
@@ -395,5 +393,3 @@ bool SoundClass::PlaySound( SOUNDS eSoundToPlay_, bool bRepeat_, bool bForground
  
 	return true;
 }
-
-#endif

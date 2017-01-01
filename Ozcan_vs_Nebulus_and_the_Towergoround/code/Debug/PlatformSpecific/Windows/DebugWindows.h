@@ -2,8 +2,6 @@
 
 #if _DEBUG
 
-#ifdef _WINDOWS
-
 #ifndef _DebugWindows_H_
 #define _DebugWindows_H_
 
@@ -27,8 +25,6 @@ class DebugImplementation
 		void printDebug();
 		void outputToFile(char * thisString);
 };
-
-#endif
 
 #endif
 

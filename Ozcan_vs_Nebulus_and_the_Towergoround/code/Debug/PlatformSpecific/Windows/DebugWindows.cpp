@@ -2,8 +2,6 @@
 
 #if _DEBUG
 
-#ifdef _WINDOWS
-
 //--- System includes ---------------
 #include <Windows.h>
 //----------------------------------
@@ -72,7 +70,5 @@ void DebugImplementation::outputToFile(char * thisString)
 
 	fileWriter.writeTextToFile(thisString); // write the output to the file
 }
-
-#endif
 
 #endif // #if _DEBUG

@@ -1,5 +1,3 @@
-#ifdef _WINDOWS
-
 #ifndef _SOUNDCLASS_H_
 #define _SOUNDCLASS_H_
 
@@ -43,5 +41,3 @@ private:
 };
  
 #endif
-
-#endif // #ifdef _WINDOWS

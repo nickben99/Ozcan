@@ -1,7 +1,5 @@
 // CKeyMap.cpp - keymap implementation class
 
-#ifdef OSX
-
 //--- System includes ---------------
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 //----------------------------------
@@ -133,5 +131,3 @@ int CKeyMap::MapToGLFW(eKeyCode key)
     }
     return GLFW_KEY_UNKNOWN;
 }
-
-#endif
