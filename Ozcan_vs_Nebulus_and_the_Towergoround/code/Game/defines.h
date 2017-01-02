@@ -1,25 +1,16 @@
 //defines.h - useful defines
 
-//system includes------------
-#include <math.h> // maths functions
-#ifdef _WINDOWS
-#include <windows.h>	// for strncpy_s
-#include <float.h> // for _isnan
-#endif
-#include <cmath> // for std::isnan
-#ifdef OSX
-#include <cstdlib>
-#include <string.h>
-#include <unistd.h> // for usleep
-#endif
-
-//---------------------------
-
 #ifndef _defines_h_
 #define _defines_h_
 
+//system includes------------
+#include <math.h> // maths functions
+#include <cmath> // for std::isnan
+//---------------------------
+
 //header files---------------
 #include "Game/Random.h"
+#include "System/Interfaces/SystemInterface.h"
 //---------------------------
 
 #define UNUSED(expr) (void)(expr)
@@ -108,78 +99,28 @@ template<typename T> inline T Clamp(const T& value, const T& min, const T& max)
 	return Min(max, Max(value, min));
 }
 
-inline bool IsNaN(const float& num)
-{
-#ifdef _WINDOWS
-    return 0 != _isnan(num);
-#endif
-    
-#ifdef OSX
-    return std::isnan(num) || std::isinf(num);
-#endif
+inline bool IsNaN(const float& num) {
+	return PlatformSpecificIsNaN(num);
 }
     
-inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numToCopy)
-{
-#ifdef _WINDOWS
-    strncpy_s(copyTo, copyToSize, copyFrom, numToCopy);
-#endif
-    
-#ifdef OSX
-    int charactersToCopy = defines::Min(copyToSize, numToCopy);
-    for (int character = 0; character < charactersToCopy; ++character)
-    {
-        copyTo[character] = copyFrom[character];
-    }
-    if (charactersToCopy < copyToSize) {
-        copyTo[charactersToCopy] = '\0';
-    }
-#endif
+inline void strncpy(char* copyTo, int copyToSize, const char* copyFrom, int numToCopy) {
+	return PlatformSpecificStrncpy(copyTo, copyToSize, copyFrom, numToCopy);
 }
     
-inline void ReverseString(char* buffer)
-{
-#ifdef _WINDOWS
-    _strrev(buffer); // reverse the latest line of file
-#else
-    char* start = buffer;
-    char* end = buffer;
-    while (*end != '\0')
-    {
-        ++end;
-    }
-    --end;
-    
-    for (; start < end; ++start, --end)
-    {
-        char tmp = *start;
-        *start = *end;
-        *end = tmp;
-    }
-#endif
+inline void ReverseString(char* buffer) {
+	return PlatformSpecificReverseString(buffer);
 }
 
-#ifdef _WINDOWS
 inline void CopyString(char* copyTo, const char* copyFrom, int copyToSize)
 {
-	strcpy_s(copyTo, copyToSize, copyFrom);
+	PlatformSpecificCopyString(copyTo, copyFrom, copyToSize);
 }
     
 inline void sleep(unsigned milliseconds)
 {
-    Sleep(milliseconds);
+	PlatformSpecificSleep(milliseconds);
 }
-#else
-inline void CopyString(char* copyTo, const char* copyFrom, int)
-{
-	strcpy(copyTo, copyFrom);
-}
-    
-inline void sleep(unsigned milliseconds)
-{
-    usleep(milliseconds * 1000); // takes microseconds
-}
-#endif
+
 }
 
 #endif // ifndef _defines_

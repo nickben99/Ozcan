@@ -1,7 +1,5 @@
 //CTimer.cpp, the timer class
 
-#ifdef OSX
-
 // ---- header files -----
 #include "CTimerOSX.h"
 #include <sys/time.h>
@@ -23,5 +21,3 @@ unsigned int CTimer::time()
     gettimeofday(&time, NULL);
     return (unsigned int)(time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
-
-#endif // #ifdef OSX

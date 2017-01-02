@@ -1,7 +1,5 @@
 //CHighPrecisionTimerWindows.cpp, the timer class
 
-#ifdef _WINDOWS
-
 // ---- header files -----
 #include "CHighPrecisionTimerWindows.h"
 // -----------------------
@@ -32,5 +30,3 @@ bool CHighPrecisionTimer::Init()
 	}
 	return sHasBeenInitialized;
 }
-
-#endif

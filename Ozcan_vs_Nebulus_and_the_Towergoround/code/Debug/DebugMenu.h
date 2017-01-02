@@ -3,15 +3,15 @@
 #ifdef _DEBUG
 #ifdef USE_SHADERS
 
+#ifndef _DebugMenu_h_
+#define _DebugMenu_h_
+
 //system includes------------
 #include <vector>
 #ifdef OSX
 #include <stdio.h>
 #endif
 //---------------------------
-
-#ifndef _DebugMenu_h_
-#define _DebugMenu_h_
 
 //header files---------
 #include "Rendering/Text.h"

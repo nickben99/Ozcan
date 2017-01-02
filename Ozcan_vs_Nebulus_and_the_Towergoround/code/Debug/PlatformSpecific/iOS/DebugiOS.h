@@ -1,7 +1,5 @@
 // DebugiOS.h
 
-#ifndef _WINDOWS
-
 #ifndef _DebugiOS_H_
 #define _DebugiOS_H_
 
@@ -22,7 +20,5 @@ class DebugImplementation
 
 //---------------------------------------------
 };
-
-#endif
 
 #endif

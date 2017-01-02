@@ -1,7 +1,5 @@
 // CKeyMap.h - header file for key map class
 
-#ifndef _WINDOWS
-
 #ifndef _CKeyMap_H_
 #define _CKeyMap_H_
 
@@ -46,7 +44,5 @@ class CKeyMap
 		void SetReplayManager(ReplayManager* pReplay);
 //---------------------------------------------
 };
-
-#endif
 
 #endif

@@ -1,5 +1,3 @@
-#ifdef OSX
-
 #ifndef _SOUNDCLASS_H_
 #define _SOUNDCLASS_H_
 
@@ -19,5 +17,3 @@ public:
 };
  
 #endif
-
-#endif // #ifdef OSX

@@ -2,8 +2,6 @@
 
 #if _DEBUG
 
-#ifdef OSX
-
 #ifndef _DebugOSX_H_
 #define _DebugOSX_H_
 
@@ -29,7 +27,5 @@ class DebugImplementation
 };
 
 #endif
-
-#endif // #ifdef OSX
 
 #endif // #if _DEBUG

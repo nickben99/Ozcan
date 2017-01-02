@@ -1,7 +1,5 @@
 // OpenGLImplementation.h
 
-#ifndef _WINDOWS
-
 #ifndef _OpenGLiOS_H_
 #define _OpenGLiOS_H_
 
@@ -22,7 +20,5 @@ class OpenGLImplementation
 
 //---------------------------------------------
 };
-
-#endif
 
 #endif

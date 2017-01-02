@@ -587,16 +587,12 @@ int CModelLoader::reloadTextures(CModel *thisModel)
 {
 	for (int material = 0; material < thisModel->materialNo; material++ )
 	{
-		char filename[400];
+		const int kFilenameBufferLen = 400;
+		char filename[kFilenameBufferLen];
         	SPRINTF(filename, "%smodels/model textures/", GetDirectoryPath());
 		if (strlen( thisModel->materials[material].clrMapTex) > 0) // if theirs a texture
 		{
-#ifdef _WINDOWS
-            strcat_s
-#else
-            strcat
-#endif
-			(filename, thisModel->materials[material].clrMapTex);
+			STRCAT(filename, kFilenameBufferLen, thisModel->materials[material].clrMapTex);
 			thisModel->materials[material].clrTexBndNo = // bind the texture
 				TextureLoad(filename,
                 		GL_FALSE, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_REPEAT);

@@ -1,7 +1,5 @@
 //CTimer.cpp, the timer class
 
-#ifdef _WINDOWS
-
 // ---- header files -----
 #include "CTimerWindows.h"
 #include <windows.h>
@@ -23,5 +21,3 @@ unsigned int CTimer::time()
 {
 	return(timeGetTime()); // return time
 }
-
-#endif // #ifdef _WINDOWS

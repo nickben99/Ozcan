@@ -2,8 +2,6 @@
 
 #if _DEBUG
 
-#ifdef OSX
-
 //--- System includes ---------------
 //----------------------------------
 
@@ -39,7 +37,5 @@ void DebugImplementation::printDebug()
 void DebugImplementation::outputToFile(char * thisString)
 {
 }
-
-#endif // #ifdef OSX
 
 #endif // #if _DEBUG

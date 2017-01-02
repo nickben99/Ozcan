@@ -1,7 +1,5 @@
 //CTimer.h, header file for CTimer.cpp
 
-#ifdef _WINDOWS
-
 //system includes---
 //------------------
 
@@ -23,5 +21,3 @@ class CTimer
 };
 
 #endif // ifndef _CTimer_h_
-
-#endif // #ifdef _WINDOWS

@@ -1,6 +1,4 @@
-// OpenGLOSX.h
-
-#ifdef _WINDOWS
+// OpenGLWindows.h
 
 #ifndef _OpenGLWindows_H_
 #define _OpenGLWindows_H_
@@ -21,7 +19,5 @@
 class OpenGLImplementation : public OpenGLImplementationBase
 {
 };
-
-#endif
 
 #endif

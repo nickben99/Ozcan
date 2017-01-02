@@ -1,7 +1,5 @@
 // CKeyMap.cpp - keymap implementation class
 
-#ifndef _WINDOWS
-
 //--- System includes ---------------
 //----------------------------------
 
@@ -50,5 +48,3 @@ bool CKeyMap::GetKeyStatus(eKeyCode, bool)
 {
 	return true;
 }
-
-#endif

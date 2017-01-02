@@ -1,5 +1,3 @@
-#ifdef OSX
-
 #include "SoundOSX.h"
 
 SoundClass::SoundClass()
@@ -26,5 +24,3 @@ bool SoundClass::PlaySound( SOUNDS, bool, bool )
 {
 	return false;
 }
-
-#endif

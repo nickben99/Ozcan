@@ -1,7 +1,5 @@
 // CKeyMap.cpp - keymap implementation class
 
-#ifdef _WINDOWS
-
 //--- System includes ---------------
 #include <stdio.h>
 #include <objbase.h>
@@ -205,5 +203,3 @@ BYTE CKeyMap::MapToDirectInput(eKeyCode key)
 	}
 	return 0;
 }
-
-#endif

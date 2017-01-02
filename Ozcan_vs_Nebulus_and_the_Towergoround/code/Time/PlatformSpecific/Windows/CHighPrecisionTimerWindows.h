@@ -1,7 +1,5 @@
 // CHighPrecisionTimerWindows.h
 
-#ifdef _WINDOWS
-
 #ifndef _CHighPrecisionTimerWindows_h_
 #define _CHighPrecisionTimerWindows_h_
 
@@ -25,5 +23,3 @@ private:
 };
 
 #endif // ifndef _CHighPrecisionTimerWindows_h_
-
-#endif

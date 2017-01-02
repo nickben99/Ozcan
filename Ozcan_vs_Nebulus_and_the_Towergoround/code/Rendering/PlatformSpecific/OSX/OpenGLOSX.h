@@ -1,7 +1,5 @@
 // OpenGLOSX.h
 
-#ifdef OSX
-
 #ifndef _OpenGLOSX_H_
 #define _OpenGLOSX_H_
 
@@ -21,7 +19,5 @@
 class OpenGLImplementation : public OpenGLImplementationBase
 {
 };
-
-#endif
 
 #endif

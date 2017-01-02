@@ -1,7 +1,5 @@
 // CKeyMap.h - header file for key map class
 
-#ifdef _WINDOWS
-
 #ifndef _CKeyMap_H_
 #define _CKeyMap_H_
 
@@ -69,7 +67,5 @@ class CKeyMap
 		bool Init();
 //---------------------------------------------
 };
-
-#endif
 
 #endif

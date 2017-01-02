@@ -1,7 +1,5 @@
 // CHighPrecisionTimeriOS.h
 
-#ifdef OSX
-
 #ifndef _CHighPrecisionTimer_h_
 #define _CHighPrecisionTimer_h_
 
@@ -20,5 +18,3 @@ private:
 };
 
 #endif // ifndef _CHighPrecisionTimerWindows_h_
-
-#endif // #ifdef OSX

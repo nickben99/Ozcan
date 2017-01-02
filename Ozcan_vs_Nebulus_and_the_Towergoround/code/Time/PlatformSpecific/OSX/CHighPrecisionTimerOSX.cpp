@@ -1,7 +1,5 @@
 //CHighPrecisionTimeriOS.cpp, the timer class
 
-#ifdef OSX
-
 // ---- header files -----
 #include "CHighPrecisionTimerOSX.h"
 // -----------------------
@@ -23,5 +21,3 @@ bool CHighPrecisionTimer::Init()
 {
 	return true;
 }
-
-#endif // #ifdef OSX

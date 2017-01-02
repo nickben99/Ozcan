@@ -1,5 +1,3 @@
-#ifndef _WINDOWS
-
 #include "SoundiOS.h"
 #include "Game/ReplayManager.h"
 #include "Game/defines.h"
@@ -28,5 +26,3 @@ bool SoundClass::PlaySound( SOUNDS, bool, bool )
 {
 	return false;
 }
-
-#endif
