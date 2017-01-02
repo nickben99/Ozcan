@@ -42,4 +42,15 @@ inline void PlatformSpecificSleep(unsigned milliseconds) {
 	Sleep(milliseconds);
 }
 
+inline bool PlatformSpecificDoesDirExists(const char* dirName)
+{
+	DWORD ftyp = GetFileAttributesA(dirName);
+	if (ftyp == INVALID_FILE_ATTRIBUTES)
+	{
+		return false;  //something is wrong with your path!
+	}
+
+	return (ftyp & FILE_ATTRIBUTE_DIRECTORY) ? true : false; // is this a directory!
+}
+
 #endif // ifndef _SystemWindows_

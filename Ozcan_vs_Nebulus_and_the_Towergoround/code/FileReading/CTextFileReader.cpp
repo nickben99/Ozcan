@@ -1,18 +1,11 @@
 //CTextFileReader.cpp, a text file reader class
 
 // system includes --------
-#ifdef _WINDOWS
-#include <windows.h>
-#endif
-
-#ifdef OSX
-#include <unistd.h> // for POSIX access
-#include <sys/stat.h> // for POSIX stat
-#endif
 //-------------------------
 
 // header files -----------
 #include "CTextFileReader.h"
+#include <System/Interfaces/SystemInterface.h>
 //-------------------------
 
 // constructor
@@ -83,32 +76,5 @@ void CTextFileReader::closeFile()
 
 bool CTextFileReader::DoesDirExists(const char* dirName)
 {
-#ifdef _WINDOWS
-	DWORD ftyp = GetFileAttributesA(dirName);
-	if (ftyp == INVALID_FILE_ATTRIBUTES)
-	{
-		return false;  //something is wrong with your path!
-	}
-
-	if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
-	{
-		return true;   // this is a directory!
-	}
-	return false;    // this is not a directory!
-#endif
-    
-#ifdef OSX
-    if( nullptr != dirName )
-    {
-        if( access(dirName, 0) == 0 )
-        {
-            struct stat status;
-            stat( dirName, &status );
-            if( status.st_mode & S_IFDIR )
-                return true;
-        }
-    }
-    // if any condition fails
-    return false;
-#endif
+	return PlatformSpecificDoesDirExists(dirName);
 }

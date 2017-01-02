@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string.h>
 #include <unistd.h> // for usleep
+#include <sys/stat.h> // for POSIX stat
 
 #define SPRINTF sprintf
 
@@ -61,6 +62,20 @@ inline void PlatformSpecificCopyString(char* copyTo, const char* copyFrom, int) 
     
 inline void PlatformSpecificSleep(unsigned milliseconds) {
     usleep(milliseconds * 1000); // takes microseconds
+}
+
+inline bool PlatformSpecificDoesDirExists(const char* dirName)
+{
+    if ((nullptr != dirName) && (access(dirName, 0) == 0))
+    {
+		struct stat status;
+		stat( dirName, &status );
+		if( status.st_mode & S_IFDIR ) {
+			return true;
+		}
+    }
+    // if any condition fails
+    return false;
 }
 
 #endif // ifndef _SystemOSX_
