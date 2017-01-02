@@ -42,12 +42,7 @@ LoadDIBitmap(const char *filename,	/* I - File to load */
 	BITMAPINFO *info;				// Bitmap information 
 
     /* Try opening the file; use "rb" mode to read this *binary* file. */
-#ifdef _WINDOWS
-	fopen_s(&fp, filename, "rb");
-#endif
-#ifdef OSX
-    fp = fopen(filename, "rb");
-#endif
+	FOPEN(fp, filename, "rb");
     if (fp == 0){
         return (0);}
 
@@ -164,12 +159,7 @@ GLubyte* LoadUncompressedTarga( const char *filename,	unsigned short &uHeight, /
 	GLubyte*	imageData; // stores the pixel data from the tga file
 
 	FILE *file = 0;
-#ifdef _WINDOWS
-    fopen_s(&file, filename, "rb"); // open the TGA file
-#endif
-#ifdef OSX
-    file = fopen(filename, "rb"); // open the TGA file
-#endif
+    FOPEN(file, filename, "rb"); // open the TGA file
 	if(	file==0 || // does file exist
 		fread(TGAcompare,1,sizeof(TGAcompare),file)!=sizeof(TGAcompare) ||	// are there 12 bytes to read?
 		memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0				||	// is it an uncompressed header?
@@ -238,12 +228,7 @@ GLubyte* LoadRLECompressedTarga( const char *filename,	unsigned short &uHeight,	
 	GLubyte*	imageData = 0; // stores the pixel data from the tga file
 
 	FILE *file = 0;
-#ifdef _WINDOWS
-    fopen_s(&file, filename, "rb"); // open the TGA file
-#endif
-#ifdef OSX
-    file = fopen(filename, "rb"); // open the TGA file
-#endif
+    FOPEN(file, filename, "rb"); // open the TGA file
 	if(	file==0 || // does the file exist?
 		fread(TGAcompare,1,sizeof(TGAcompare),file)!=sizeof(TGAcompare) ||	// are there 12 bytes to read?
 		memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0				||	// is it a compressed tga header?
@@ -395,12 +380,7 @@ GLubyte* LoadTarga(const char *filename,	unsigned short &uHeight,	// image heigh
 	GLubyte	TGAcompare[12]; // Used To Compare TGA Header
 
 	FILE *file = 0;
-#ifdef _WINDOWS
-    fopen_s(&file, filename, "rb"); // Open The TGA File
-#endif
-#ifdef OSX
-    file = fopen(filename, "rb"); // Open The TGA File
-#endif
+    FOPEN(file, filename, "rb"); // Open The TGA File
 	if(	!file ){ // if the file does not exist
 		return( 0 );} // return 0
 

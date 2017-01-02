@@ -226,11 +226,7 @@ bool CLevel::loadLevel(GLint theLevel)
 		SSCANF(fileReader.currentLineOfFile, "%s", SSCANF_STR_PARAM(tempFilename, kStringLen));
 
 		// append filename to path
-#ifdef _WINDOWS
-        strcat_s(tempPath, kStringLen, tempFilename);
-#else
-        strcat(tempPath, tempFilename);
-#endif
+        STRCAT(tempPath, kStringLen, tempFilename);
 		/*	copy tempPath (which contains the filename as well, from above commenad) 
 			to tempModelFileNames[modelFilename] */
         defines::CopyString(tempModelFileNames[modelFilename], tempPath, kStringLen);
