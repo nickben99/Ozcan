@@ -364,7 +364,7 @@ int CModelLoader::load(char* filename, CModel **model)
 		// get alpha map texture, initially set to null in case their's no alpha map tex
         defines::CopyString(aModel->materials[material].alphaMapTex, "", sizeof(aModel->materials[material].alphaMapTex));
 
-		SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(&aModel->materials[material].alphaMapTex, material::kStrLen));
+		SSCANF(fileReader.currentLineOfFile, "\"%[^\"]\"", SSCANF_STR_PARAM(aModel->materials[material].alphaMapTex, material::kStrLen));
 		fileReader.getNextLine();
 	} // end for all materials
 	

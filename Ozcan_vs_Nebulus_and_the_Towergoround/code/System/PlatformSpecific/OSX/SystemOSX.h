@@ -3,6 +3,7 @@
 #ifndef _SystemOSX_h_
 #define _SystemOSX_h_
 
+#include <cmath> // for std::isnan
 #include <cstdlib>
 #include <string.h>
 #include <unistd.h> // for usleep
@@ -24,12 +25,12 @@ inline void ErrorOutput(const char*) {
 
 }
 
-inline bool IsNaN(const float& num) {
+inline bool PlatformSpecificIsNaN(const float& num) {
     return std::isnan(num) || std::isinf(num);
 }
 
 inline void PlatformSpecificStrncpy(char* copyTo, int copyToSize, const char* copyFrom, int numToCopy) {
-    int charactersToCopy = defines::Min(copyToSize, numToCopy);
+    int charactersToCopy = (copyToSize < numToCopy) ? copyToSize : numToCopy;
     for (int character = 0; character < charactersToCopy; ++character)
     {
         copyTo[character] = copyFrom[character];

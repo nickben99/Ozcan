@@ -5,7 +5,6 @@
 
 //system includes------------
 #include <math.h> // maths functions
-#include <cmath> // for std::isnan
 //---------------------------
 
 //header files---------------
