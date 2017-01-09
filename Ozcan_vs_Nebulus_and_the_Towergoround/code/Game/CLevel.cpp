@@ -731,8 +731,8 @@ void DrawShadowMapRender()
 	MeshBuffer backgroundMesh;
 
 		// verts
-	CVector	centre(512.0f, 374.0f, 0.0f);
-	CVector dimensions(1024.0f, 748.0f, 0.0f);
+	CVector	centre(0.5f*Globals::Instance().windowWidth, 0.5f*Globals::Instance().windowHeight, 0.0f);
+	CVector dimensions(Globals::Instance().windowWidth, Globals::Instance().windowHeight, 0.0f);
 	GLfloat vertexPositionArray[] = {
 		ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f,
 		ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
