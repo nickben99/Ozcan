@@ -82,6 +82,8 @@
 		3CE82B411DD00F4B009ADBEF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B351DD00F4B009ADBEF /* Game.cpp */; };
 		3CE82B441DE9085C009ADBEF /* OpenGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B421DE9085C009ADBEF /* OpenGLShader.cpp */; };
 		3CE82B471DE91535009ADBEF /* OpenGLImplementationBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE82B451DE91535009ADBEF /* OpenGLImplementationBase.cpp */; };
+		3CED87471E2B391100942428 /* liballegro_acodec.5.2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CED872F1E2AFFE100942428 /* liballegro_acodec.5.2.2.dylib */; };
+		3CED87491E2B39A300942428 /* liballegro_audio.5.2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CED87301E2AFFE100942428 /* liballegro_audio.5.2.2.dylib */; };
 		3CFD2DE41D3C381E0005D3D0 /* CTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */; };
 		3CFD2DE71D3C3D090005D3D0 /* imageFileLoaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */; };
 		3CFD2DEA1D3C40850005D3D0 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD2DE81D3C40850005D3D0 /* texture.cpp */; };
@@ -261,6 +263,8 @@
 		3CE82B431DE9085C009ADBEF /* OpenGLShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLShader.h; path = code/Rendering/OpenGLShader.h; sourceTree = "<group>"; };
 		3CE82B451DE91535009ADBEF /* OpenGLImplementationBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLImplementationBase.cpp; path = code/Rendering/OpenGLImplementationBase.cpp; sourceTree = "<group>"; };
 		3CE82B461DE91535009ADBEF /* OpenGLImplementationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLImplementationBase.h; path = code/Rendering/OpenGLImplementationBase.h; sourceTree = "<group>"; };
+		3CED872F1E2AFFE100942428 /* liballegro_acodec.5.2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liballegro_acodec.5.2.2.dylib; path = ../../../../../usr/local/Cellar/allegro/5.2.2/lib/liballegro_acodec.5.2.2.dylib; sourceTree = "<group>"; };
+		3CED87301E2AFFE100942428 /* liballegro_audio.5.2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liballegro_audio.5.2.2.dylib; path = ../../../../../usr/local/Cellar/allegro/5.2.2/lib/liballegro_audio.5.2.2.dylib; sourceTree = "<group>"; };
 		3CFD2DE21D3C381E0005D3D0 /* CTextFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTextFileReader.cpp; path = code/FileReading/CTextFileReader.cpp; sourceTree = "<group>"; };
 		3CFD2DE31D3C381E0005D3D0 /* CTextFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTextFileReader.h; path = code/FileReading/CTextFileReader.h; sourceTree = "<group>"; };
 		3CFD2DE51D3C3D090005D3D0 /* imageFileLoaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imageFileLoaders.cpp; path = code/FileReading/imageFileLoaders.cpp; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CED87491E2B39A300942428 /* liballegro_audio.5.2.2.dylib in Frameworks */,
+				3CED87471E2B391100942428 /* liballegro_acodec.5.2.2.dylib in Frameworks */,
 				3CA5ED901D3311120098F0FA /* libglfw3.3.1.dylib in Frameworks */,
 				3CA5ED8E1D3310FD0098F0FA /* libGLEW.1.13.0.dylib in Frameworks */,
 				3CA5ED8C1D33108E0098F0FA /* OpenGL.framework in Frameworks */,
@@ -299,6 +305,8 @@
 		3C6E0DB71D330F060066B870 = {
 			isa = PBXGroup;
 			children = (
+				3CED872F1E2AFFE100942428 /* liballegro_acodec.5.2.2.dylib */,
+				3CED87301E2AFFE100942428 /* liballegro_audio.5.2.2.dylib */,
 				3C4B78981E170A59004FE124 /* System */,
 				3CB28F011D84DAB400A1CB1B /* Camera */,
 				3CB28ED41D7E700500A1CB1B /* Debug */,
@@ -949,6 +957,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/glew/1.13.0/lib,
 					/usr/local/Cellar/glfw3/3.1.2/lib,
+					/usr/local/Cellar/allegro/5.2.2/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -965,6 +974,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/glew/1.13.0/lib,
 					/usr/local/Cellar/glfw3/3.1.2/lib,
+					/usr/local/Cellar/allegro/5.2.2/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

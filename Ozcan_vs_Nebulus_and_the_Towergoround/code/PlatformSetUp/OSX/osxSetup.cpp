@@ -24,9 +24,7 @@ void SetCurrentWorkingDirectory(int argc, char *argv[])
     // we only want to set the cwd when running outside the debugger. inside debugger, xcode sets
     // our cwd for us
     if (!currenlyInDebugger)
-    {
-        std::cout << "\n\n" << "exe path from command: " << argv[0] << "\n\n";
-        
+    {        
         const int FilePathLength = 2048;
         char executablePath[FilePathLength];
         
@@ -38,18 +36,7 @@ void SetCurrentWorkingDirectory(int argc, char *argv[])
             *(lastForwardSlash + 1) = '\0'; // remove the exe name from end of path
         }
         
-        std::cout << "\n\n" << "requested new cwd: " << executablePath << "\n\n";
         chdir(executablePath); //change cwd
-        
-        // this section prints out the new cwd which we have just set
-        char currentWorkingDirectory[FilePathLength];
-        char* cwd = getcwd(currentWorkingDirectory, FilePathLength);
-        if (cwd) {
-            std::cout << "\n\n" << "current working directory: " << cwd << "\n\n";
-        }
-        else {
-            std::cout << "\n\n" << "current working directory: NONE" << "\n\n";
-        }
     }
 }
 
@@ -118,6 +105,7 @@ int main(int argc, char *argv[])
     {
         Text::DeleteMesh();
         Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+        Globals::Instance().sound.Shutdown();
         glfwTerminate(); //terminating glfw window
         return (0); // failure
     }
@@ -144,6 +132,7 @@ int main(int argc, char *argv[])
     game.DeleteGameObjects(); // delete all game specific objects
     Text::DeleteMesh();
     Globals::Instance().gl.DestroyGL();
+    Globals::Instance().sound.Shutdown();
     glfwTerminate(); //terminating glfw window
     return 0;
 }

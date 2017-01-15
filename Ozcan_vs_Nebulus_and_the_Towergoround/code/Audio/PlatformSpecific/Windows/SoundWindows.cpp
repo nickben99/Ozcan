@@ -40,68 +40,17 @@ SoundClass::SoundClass(const SoundClass&)
  
 SoundClass::~SoundClass()
 {
-	Shutdown();
 }
  
  
 bool SoundClass::Initialize()
 {
-	bool result;
-
 	// Initialize direct sound and the primary sound buffer.
-	result = InitializeDirectSound(hWnd);
-	if(!result)
-	{
-		return false;
-	}
- 
-	// Load a wave audio file onto a secondary buffer.
-	result = LoadSounds();
-	if(!result)
-	{
-		return false;
-	}
- 
-	return true;
+	return InitializeDirectSound(hWnd);
 }
 
-// load all the sounds required in the game
-bool SoundClass::LoadSounds( void )
-{
-	char buffer[256];
-	sprintf_s(buffer, "%ssounds/backgroundMusic.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_MAINMUSIC ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/MENUITEM.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_MENUCHANGE ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/MENUSEL.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_MENUSELECT ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/cannon.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_ENEMYEXPLODE ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/ammopu.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_KNOCKEDOFFPLATFORM ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/laugh.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_LOSELIFE ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/HWEAPON0.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_THROWFIREBALL ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	sprintf_s(buffer, "%ssounds/BEEP2.wav", GetDirectoryPath()); // create file name with path
-	if (!LoadWaveFile( buffer, &m_secondaryBuffer[ SOUNDS_COLLECTPOWERUP ], m_DirectSound ) ){
-		return( 0 );} // loading error
-
-	return true; // success
+bool SoundClass::LoadSound(const char* soundFile, SOUNDS id) {
+    return LoadWaveFile( soundFile, &m_secondaryBuffer[ id ], m_DirectSound );
 }
 
 void SoundClass::Shutdown()

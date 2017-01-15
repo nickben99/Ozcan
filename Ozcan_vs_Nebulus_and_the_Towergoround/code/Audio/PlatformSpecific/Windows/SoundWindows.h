@@ -19,19 +19,19 @@ public:
 	~SoundClass();
 
 	bool Initialize();
-
-	bool PlaySound( SOUNDS eSoundToPlay_, bool bRepeat_, bool bForgroundSound_ = true ); // play a sound
- 
-private:
 	void Shutdown();
+	
+	bool LoadSound(const char* soundFile, SOUNDS id);
+
+	bool PlaySound( SOUNDS eSoundToPlay_, bool bRepeat_, bool bForgroundSound_ ); // play a sound
+ 
+private:	
 
 	bool InitializeDirectSound(HWND);
 	void ShutdownDirectSound();
  
 	static bool LoadWaveFile(char*, IDirectSoundBuffer8**, IDirectSound8*);
 	void ShutdownWaveFile(IDirectSoundBuffer8**);
- 
-	bool LoadSounds( void );
  
 private:
 	IDirectSound8* m_DirectSound;

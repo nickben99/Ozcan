@@ -3,6 +3,8 @@
 
 #include <Audio/SoundsEnum.h>
 
+struct ALLEGRO_SAMPLE;
+
 class SoundClass
 {
 public:
@@ -11,9 +13,15 @@ public:
 	~SoundClass();
 
 	bool Initialize();
+    
+    void Shutdown();
+    
+    bool LoadSound(const char* sound, SOUNDS id);
 
-	bool PlaySound( SOUNDS eSoundToPlay_, bool bRepeat_, bool bForgroundSound_ = true ); // play a sound
+	bool PlaySound(SOUNDS eSoundToPlay_, bool bRepeat_, bool bForgroundSound_); // play a sound
 	
+private:
+    ALLEGRO_SAMPLE *sample[SOUNDS_COUNT];
 };
  
 #endif
