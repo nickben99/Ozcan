@@ -1,0 +1,33 @@
+Setting Up The MacOS Environment and XCode Project
+-----------------------------------------------------
+
+install homebrew (if you haven't got it):
+	go to brew.sh in chrome
+	copy installation text
+	open terminal, paste text in, press enter
+
+install glfw (if you haven't got it):
+	in terminal: brew install glfw3
+					
+install glew (if you haven't got it):
+	in terminal: brew install glew
+
+install allegro (if you haven't got iy):
+	in terminal: brew install allegro
+
+create new xcode project:
+	select osx -> application -> command line tool
+
+give your project a name, and select c++ as the language
+
+click on the project: 
+	go to 'build settings' -> 'search paths' -> 'header search paths' -> add search path: /usr/local/include - this is to include header files for glfw and glew
+
+	go to 'build phases': 
+		under 'link binaries with library' - click '+' button, search for openGL, then click 'add'
+		click '+' again, click 'add other', go to:
+			/usr/local/Cellar/glew/1.13.0/lib - select 'libGLEW.1.13.0.dylib' (the one WITHOUT the little arrow), press open
+		click '+' again, click 'add other', go to:
+			/usr/local/Cellar/glfw3/3.1.2/lib - select 'libglfw3.3.1.dylib' press open
+		click '+' again, click 'add other', go to:
+			/usr/local/Cellar/allegro/5.2.2/lib - select 'liballegro.5.2.2.dylib' press open

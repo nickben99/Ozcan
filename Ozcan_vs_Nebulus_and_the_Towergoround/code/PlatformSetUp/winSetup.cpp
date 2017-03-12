@@ -507,8 +507,9 @@ int WINAPI WinMain(	HINSTANCE, // instance
 		MessageBox(0,"Initialization Failure","ERROR",MB_OK|MB_ICONEXCLAMATION);
 #ifdef USE_SHADERS
 		Text::DeleteMesh();
-		Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+		Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window		
 #endif
+		Globals::Instance().sound.Shutdown();
 		KillGameWindow(); // kill window and exit if QueryPerformanceFrequency didn't work
 		return (0); // failure
 	}
@@ -550,6 +551,7 @@ int WINAPI WinMain(	HINSTANCE, // instance
 	Text::DeleteMesh();
 	Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
 #endif
+	Globals::Instance().sound.Shutdown();
 	KillGameWindow();	// destroy the window
 	return (msg.wParam); // exit the program
 } // end WinMain

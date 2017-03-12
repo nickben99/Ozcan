@@ -531,14 +531,14 @@ void COctree::BuildTrianglesMeshBuffers(void)
 	bool trianglesCompleatlyTransparent = false;
 	int allTrianglesCount = (int)triangles.size();
 	for (int tri = 0; tri < allTrianglesCount; tri++)
-	{	// if the triangle has not yet been drawn ths frame
+	{
 		aTriangle &triangleRequired = triangles[tri];
 
 		if (triangleRequired.triMaterial != previousMaterialMemoryAddress)
 		{
 			if (positions.size() > 0)
 			{
-				meshBuffers.push_back(new MeshBuffer());
+                meshBuffers.push_back(new MeshBuffer());
 
 				meshBuffers[meshBuffers.size()-1]->CreateVertexArray(&positions[0], (int)positions.size(), false);
 				meshBuffers[meshBuffers.size()-1]->CreateNormalArray(&normals[0], (int)normals.size(), false);
@@ -563,36 +563,20 @@ void COctree::BuildTrianglesMeshBuffers(void)
 
 		if (true == trianglesCompleatlyTransparent){
 			continue;} //  dont draw compleatly transparent triangles
-
-		(normals).push_back(triangleRequired.normals[0].x);
-        (normals).push_back(triangleRequired.normals[0].y);
-        (normals).push_back(triangleRequired.normals[0].z);
-		(texCoords).push_back(triangleRequired.Vert[0]->u);
-        (texCoords).push_back(triangleRequired.Vert[0]->v);
-		(positions).push_back(triangleRequired.vertices[0].x);
-        (positions).push_back(triangleRequired.vertices[0].y);
-        (positions).push_back(triangleRequired.vertices[0].z);
-
-		(normals).push_back(triangleRequired.normals[1].x);
-        (normals).push_back(triangleRequired.normals[1].y);
-        (normals).push_back(triangleRequired.normals[1].z);
-		(texCoords).push_back(triangleRequired.Vert[1]->u);
-        (texCoords).push_back(triangleRequired.Vert[1]->v);
-		(positions).push_back(triangleRequired.vertices[1].x);
-        (positions).push_back(triangleRequired.vertices[1].y);
-        (positions).push_back(triangleRequired.vertices[1].z);
-
-		(normals).push_back(triangleRequired.normals[2].x);
-        (normals).push_back(triangleRequired.normals[2].y);
-        (normals).push_back(triangleRequired.normals[2].z);
-		(texCoords).push_back(triangleRequired.Vert[2]->u);
-        (texCoords).push_back(triangleRequired.Vert[2]->v);
-		(positions).push_back(triangleRequired.vertices[2].x);
-        (positions).push_back(triangleRequired.vertices[2].y);
-        (positions).push_back(triangleRequired.vertices[2].z);
+        
+        for (int vert = 0; vert < 3; ++vert) {
+            normals.push_back(triangleRequired.normals[vert].x);
+            normals.push_back(triangleRequired.normals[vert].y);
+            normals.push_back(triangleRequired.normals[vert].z);
+            texCoords.push_back(triangleRequired.Vert[vert]->u);
+            texCoords.push_back(triangleRequired.Vert[vert]->v);
+            positions.push_back(triangleRequired.vertices[vert].x);
+            positions.push_back(triangleRequired.vertices[vert].y);
+            positions.push_back(triangleRequired.vertices[vert].z);
+        }
 	}// end for tri
 
-	if ((positions).size() > 0)
+	if (positions.size() > 0)
 	{
 		meshBuffers.push_back(new MeshBuffer());
 

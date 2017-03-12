@@ -133,7 +133,6 @@ bool CModel::AreDynamicBuffersInUse()
 #ifdef USE_SHADERS
 void CModel::CreateMeshBuffers()
 {
-	// draw all the meshes
 	for ( int aMesh = 0; aMesh < meshNo; aMesh++ )
 	{ 
 		mesh &thisMesh = meshes[aMesh];
