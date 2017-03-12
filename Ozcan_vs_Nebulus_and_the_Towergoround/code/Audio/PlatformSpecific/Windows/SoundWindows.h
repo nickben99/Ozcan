@@ -30,7 +30,7 @@ private:
 	bool InitializeDirectSound(HWND);
 	void ShutdownDirectSound();
  
-	static bool LoadWaveFile(char*, IDirectSoundBuffer8**, IDirectSound8*);
+	static bool LoadWaveFile(const char*, IDirectSoundBuffer8**, IDirectSound8*);
 	void ShutdownWaveFile(IDirectSoundBuffer8**);
  
 private:

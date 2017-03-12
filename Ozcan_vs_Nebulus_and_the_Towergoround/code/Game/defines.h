@@ -5,6 +5,9 @@
 
 //system includes------------
 #include <math.h> // maths functions
+#ifdef _WINDOWS
+#include <cmath> // for Abs()
+#endif
 //---------------------------
 
 //header files---------------

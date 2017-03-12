@@ -141,7 +141,7 @@ void SoundClass::ShutdownDirectSound()
 	return;
 }
 
-bool SoundClass::LoadWaveFile(char* filename, IDirectSoundBuffer8** secondaryBuffer, IDirectSound8* directSound)
+bool SoundClass::LoadWaveFile(const char* filename, IDirectSoundBuffer8** secondaryBuffer, IDirectSound8* directSound)
 {
 	int error;
 	FILE* filePtr;
