@@ -17,7 +17,12 @@ CTimer::~CTimer()
 
 unsigned int CTimer::time()
 {
+    return (unsigned int)GetTime();
+}
+
+long CTimer::GetTime()
+{
     timeval time;
     gettimeofday(&time, NULL);
-    return (unsigned int)(time.tv_sec * 1000) + (time.tv_usec / 1000);
+    return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }

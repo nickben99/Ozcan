@@ -2,19 +2,22 @@
 
 // ---- header files -----
 #include "CHighPrecisionTimerOSX.h"
+#include "CTimerOSX.h"
 // -----------------------
 
 void CHighPrecisionTimer::Start()
 {
+    timeS = CTimer::GetTime();
 }
 
 void CHighPrecisionTimer::Stop()
 {
+    timeE = CTimer::GetTime();
 }
 
 float CHighPrecisionTimer::Elapsed()
 {
-	return 0.0f;
+	return timeE - timeS;
 }
 
 bool CHighPrecisionTimer::Init()

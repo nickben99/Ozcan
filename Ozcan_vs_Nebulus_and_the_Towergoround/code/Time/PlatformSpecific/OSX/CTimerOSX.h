@@ -17,6 +17,8 @@ class CTimer
 		CTimer(); //constructor
 		~CTimer(); // destructor
 		unsigned int time(); // return the time in milliseconds
+    
+        static long GetTime();
 //-----------------------------------------------------
 };
 

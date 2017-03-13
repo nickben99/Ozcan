@@ -244,4 +244,4 @@ private:
 	OpenGLImplementation implementation;
 };
 
-#endif // ifndef _CHighPrecisionTimerInterface_h_
+#endif // ifndef OpenGLInterface

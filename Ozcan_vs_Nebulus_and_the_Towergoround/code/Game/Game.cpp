@@ -1,5 +1,7 @@
 //Game.cpp, the Game class
 
+#include <iostream>
+
 // ---- header files -----
 #include "Game.h"
 #include "Game/GameTime.h"
@@ -40,7 +42,11 @@ bool Game::Update()
 
 	timer.Stop();
 	float time = timer.Elapsed();
-	time *= 1000.0f; // convert to milliseconds
+    
+//    char printOut[2048];
+//    SPRINTF(printOut, "\n\nFrame time %f\n", time);
+//    std::cout << printOut;
+    
 	/*	get amount to stop for to ensure frame length stays approximatly 60 fps */
 	float fixedTimeDelta = static_cast<float>( GameTime::Instance().GetCurrentFixedTimeDeltaMilli() );
 	int stopTime = static_cast<int>( ((fixedTimeDelta-time) >= 0.0) ? 16.0f-time : 0.0f );

@@ -15,6 +15,8 @@ public:
 	float Elapsed();
 
 private:
+    long timeS;
+    long timeE;
 };
 
 #endif // ifndef _CHighPrecisionTimerWindows_h_

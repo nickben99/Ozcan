@@ -18,7 +18,9 @@ void CHighPrecisionTimer::Stop()
 
 float CHighPrecisionTimer::Elapsed()
 {
-	return ((float)(timeE.QuadPart - timeS.QuadPart)/(float)timerFrequency.QuadPart);
+	float time = ((float)(timeE.QuadPart - timeS.QuadPart)/(float)timerFrequency.QuadPart);
+	time *= 1000.0f; // convert to milliseconds
+	return time;
 }
 
 bool CHighPrecisionTimer::Init()
