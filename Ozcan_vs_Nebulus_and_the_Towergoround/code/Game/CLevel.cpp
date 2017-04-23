@@ -664,25 +664,26 @@ void CLevel::draw()
 	ShadowMapping::PreSceneRender();
 #endif	
 
+    if (!mGameTime.IsPaused())
+    {
+        theScene.positionCamera(mGameTime.GetTimeDeltaSeconds());
+    } // position scene
+    else
+    {
+        theScene.positionCamera(0.0f);
+    }
+        
 #if (_DEBUG && USE_SHADERS)
-	if (drawShadowMap)
-	{
-		DrawShadowMapRender();
-	}
-	else
+    if (drawShadowMap)
+    {
+        DrawShadowMapRender();
+    }
+    else
+        
 #endif
-	{
-		if (!mGameTime.IsPaused())
-		{
-			theScene.positionCamera(mGameTime.GetTimeDeltaSeconds());
-		} // position scene
-		else
-		{
-			theScene.positionCamera(0.0f);
-		}
-
-		Draw3DScene();
-	}
+    {
+        Draw3DScene();
+    }
 
 #ifdef USE_SHADERS
 	ShadowMapping::PostSceneRender();
