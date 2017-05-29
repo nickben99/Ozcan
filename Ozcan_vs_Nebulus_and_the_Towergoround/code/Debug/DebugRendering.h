@@ -31,7 +31,7 @@ public:
 	void DrawBox(const CMatrix& trans, const CVector4& color);
 
 	void InitShapesMac();
-	void DestroyShapes();
+	void DestroyShapesWin();
 
 private:
 	void InitBox();
