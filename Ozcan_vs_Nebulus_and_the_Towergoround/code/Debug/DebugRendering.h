@@ -30,7 +30,7 @@ public:
 	void DrawBox(const CVector& pos, float radius, const CVector4& color);
 	void DrawBox(const CMatrix& trans, const CVector4& color);
 
-	void InitShapes();
+	void InitShapesMac();
 	void DestroyShapes();
 
 private:
