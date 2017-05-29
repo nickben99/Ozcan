@@ -72,6 +72,7 @@ void DrawIntroScreenLoadingBar(CHUD* theHUD, float completion)
 
 #if (_DEBUG && USE_SHADERS)
 bool drawShadowMap = false;
+bool renderToShadowMap = true;
 bool variablesAddedToDebugMenu = false;
 #endif
 
@@ -83,6 +84,7 @@ bool CLevel::loadLevel(GLint theLevel)
 	{
 		variablesAddedToDebugMenu = true;
 		Globals::Instance().debugMenu.AddVariable(new DebugMenu::BoolDebugMenuItem("drawShadowMap", &drawShadowMap));
+        Globals::Instance().debugMenu.AddVariable(new DebugMenu::BoolDebugMenuItem("renderToShadowMap", &renderToShadowMap));
 	}
 #endif
 
@@ -658,7 +660,12 @@ void CLevel::draw()
 {
 #ifdef USE_SHADERS
 	ShadowMapping::PreDepthTextureRender();
-	Draw3DScene();
+#if _DEBUG
+    if (renderToShadowMap)
+#endif
+	{
+        Draw3DScene();
+    }
 	ShadowMapping::PostDepthTextureRender();
 
 	ShadowMapping::PreSceneRender();
