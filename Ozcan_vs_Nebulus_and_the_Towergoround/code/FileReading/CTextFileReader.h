@@ -13,7 +13,7 @@ using namespace std; // required to avoid problems when using fstream
 //---------------------
 
 //defines--------------
-#define BUFFER_SIZE 1024 // line length
+#define BUFFER_SIZE_WIN 1024 // line length
 //---------------------
 
 class CTextFileReader
