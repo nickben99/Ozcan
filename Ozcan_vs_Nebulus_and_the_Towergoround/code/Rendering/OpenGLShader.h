@@ -71,7 +71,7 @@ private:
 	GLuint shaderProgram;
 	GLuint compiledVertexShader;
 	GLuint compiledFragmentShader;
-	//GLuint vao;
+	GLuint vao;
 
 	int numActiveFragmentShaderSubroutineUniforms;
 	unsigned int* activeFragmentShaderSubRoutineUniformIndecis;

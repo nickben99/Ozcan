@@ -56,11 +56,11 @@ int OpenGLShader::CheckGLError(const char *file, int line)
 		char printOut[2048];				
 		if (sError)
 		{
-            SPRINTF(printOut, "GL Error # %s (%s) in File %s at line: %d", sErrorCode, sError, file, line);
+            SPRINTF(printOut, "\nGL Error # %s (%s) in File %s at line: %d", sErrorCode, sError, file, line);
 		}
 		else
 		{
-            SPRINTF(printOut, "GL Error # %s in File %s at line: %d", sErrorCode, file, line);
+            SPRINTF(printOut, "\nGL Error # %s in File %s at line: %d", sErrorCode, file, line);
 		}
 #ifdef _WINDOWS
 		OutputDebugString(printOut);
@@ -78,7 +78,7 @@ OpenGLShader::OpenGLShader()
 	: shaderProgram(0)
 	, compiledVertexShader(0)
 	, compiledFragmentShader(0)
-	//, vao(0)
+	, vao(0)
 	, numActiveFragmentShaderSubroutineUniforms(0)
 	, activeFragmentShaderSubRoutineUniformIndecis(NULL)
 	, activeFragmentShaderSubRoutineUniformNames(NULL)
@@ -296,10 +296,10 @@ void OpenGLShader::SetUniformVector4(int location, const CVector4& newValue)
 bool OpenGLShader::CreateProgram(const char* vertexShaderFileName, const char* fragmentShaderFileName)
 {
 	// Create Vertex Array Object
-//    glGenVertexArrays(1, &vao);
-//	CHECK_GL_ERROR;
-//    glBindVertexArray(vao);
-//	CHECK_GL_ERROR;
+    glGenVertexArrays(1, &vao);
+	CHECK_GL_ERROR;
+    glBindVertexArray(vao);
+	CHECK_GL_ERROR;
 
 	shaderProgram = glCreateProgram();
 	CHECK_GL_ERROR;
@@ -390,12 +390,12 @@ void OpenGLShader::DestroyProgram()
 		shaderProgram = 0;
 	}
 
-//	if (0 != vao)
-//	{
-//		glDeleteVertexArrays(1, &vao);
-//		CHECK_GL_ERROR;
-//		vao = 0;
-//	}
+	if (0 != vao)
+	{
+		glDeleteVertexArrays(1, &vao);
+		CHECK_GL_ERROR;
+		vao = 0;
+	}
 }
 
 void OpenGLShader::UseProgram()
