@@ -135,6 +135,12 @@ class CVector
 //-----------------------------------------------------------
 }; // end class CVector
 
+class CVector2 {
+    public:
+        float x;
+        float y;
+};
+
 class CVector4
 {
 	public:

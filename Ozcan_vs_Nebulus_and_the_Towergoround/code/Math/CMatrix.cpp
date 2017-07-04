@@ -31,6 +31,17 @@ CMatrix::CMatrix(float * in)
 	elements[12]=in[12]; elements[13]=in[13]; elements[14]=in[14];  elements[15]=in[15];
 }
 
+CMatrix::CMatrix(float in0, float in1, float in2, float in3,
+                 float in4, float in5, float in6, float in7,
+                 float in8, float in9, float in10, float in11,
+                 float in12, float in13, float in14, float in15)
+{
+    elements[0]=in0;	 elements[1]=in1;	  elements[2]=in2;   elements[3]=in3;
+    elements[4]=in4;	 elements[5]=in5;	  elements[6]=in6;   elements[7]=in7;
+    elements[8]=in8;	 elements[9]=in9;	  elements[10]=in10; elements[11]=in11;
+    elements[12]=in12; elements[13]=in13; elements[14]=in14;  elements[15]=in15;
+}
+
 CMatrix::CMatrix(const CQuaternion& quat)
 {
 	quaternionToMatrix(quat);

@@ -89,14 +89,14 @@ bool OpenGLImplementationBase::InitGL()
     OutputDebugString("\n");
     OutputDebugString(version);
 #elif OSX
-    std::cout << "\n" << version;
+    std::cout << "\n version: " << version;
 #endif
 #endif
 
     isUsingSubRoutines = true;
-    if (!shader.CreateProgram("shader.vs", "shader.fs"))
+    //if (!shader.CreateProgram("shader.vs", "shader.fs"))
     {
-        shader.DestroyProgram();
+        //shader.DestroyProgram();
         isUsingSubRoutines = false;
         if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
         {
@@ -122,9 +122,9 @@ bool OpenGLImplementationBase::InitGL()
 	shininessLocation = GetUniformLocation("uMaterialShininess");
 	showSpecularHighlightLocation = GetUniformLocation("uShowSpecularHighlights");
 
-	vertexPositionAttribLocation = GetAttribLocation("aVertexPosition");
-	vertexNormalAttribLocation = GetAttribLocation("aVertexNormal");
-	vertexTexCoordAttribLocation = GetAttribLocation("aTextureCoord");
+//	vertexPositionAttribLocation = GetAttribLocation("aVertexPosition");
+//	vertexNormalAttribLocation = GetAttribLocation("aVertexNormal");
+//	vertexTexCoordAttribLocation = GetAttribLocation("aTextureCoord");
 
     if (isUsingSubRoutines) {
         textureSubRoutineUniform = GetSubroutineUniformIndex("textureRender", GL_FRAGMENT_SHADER);
@@ -303,38 +303,44 @@ void OpenGLImplementationBase::VertexAttribPointer(int location, int numComponen
 
 void OpenGLImplementationBase::DisableVertexPositionAttribPointer()
 {
-	glDisableVertexAttribArray(vertexPositionAttribLocation);
+	//glDisableVertexAttribArray(vertexPositionAttribLocation);
+    glDisableVertexAttribArray(0);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexPositionAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
-	VertexAttribPointer(vertexPositionAttribLocation, NumComponents, stride, offset);
+	//VertexAttribPointer(vertexPositionAttribLocation, NumComponents, stride, offset);
+    VertexAttribPointer(0, NumComponents, stride, offset);
 }
 
 void OpenGLImplementationBase::DisableVertexNormalAttribPointer()
 {
-	glDisableVertexAttribArray(vertexNormalAttribLocation);
+	//glDisableVertexAttribArray(vertexNormalAttribLocation);
+    glDisableVertexAttribArray(1);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexNormalAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
-	VertexAttribPointer(vertexNormalAttribLocation, NumComponents, stride, offset);
+	//VertexAttribPointer(vertexNormalAttribLocation, NumComponents, stride, offset);
+    VertexAttribPointer(1, NumComponents, stride, offset);
 }
 
 void OpenGLImplementationBase::DisableVertexTextureAttribPointer()
 {
-	glDisableVertexAttribArray(vertexTexCoordAttribLocation);
+	//glDisableVertexAttribArray(vertexTexCoordAttribLocation);
+    glDisableVertexAttribArray(2);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexTextureAttribPointer(int stride)
 {
 	const int NumComponents = 2;
-	VertexAttribPointer(vertexTexCoordAttribLocation, NumComponents, stride);
+	//VertexAttribPointer(vertexTexCoordAttribLocation, NumComponents, stride);
+    VertexAttribPointer(2, NumComponents, stride);
 }
 
 void OpenGLImplementationBase::DrawElements(int numToDraw)

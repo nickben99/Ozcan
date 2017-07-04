@@ -1,3 +1,5 @@
+#version 330 core
+
 //precision mediump float;
 
 //subroutine vec3 LightingSelection();
@@ -15,10 +17,12 @@ uniform bool uTextureRender;
 //subroutine uniform MainSelection mainRender;
 uniform bool uMainRenderFragmentShader;
 
-varying vec2 vTextureCoord;
-varying vec3 vTransformedNormal;
-varying vec4 vPosition;
-varying vec4 vShadowCoord; // for shadow mapping
+in vec2 vTextureCoord;
+in vec3 vTransformedNormal;
+in vec4 vPosition;
+in vec4 vShadowCoord; // for shadow mapping
+
+out vec4 fragColor;
 
 uniform float uMaterialShininess;
 
@@ -63,7 +67,7 @@ vec2 poissonDisk[4];
 //subroutine( TextureSelection )
 vec4 RenderWithTexture()
 {
-	return texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+	return texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 }
 
 //subroutine( TextureSelection )
@@ -88,7 +92,7 @@ vec3 CalculateSceneLighting_ReleaseBuild()
 	float coordZ = (vShadowCoord.z-shadowCoordBias);
 	for (int i = 0; i < 4; i++)
 	{
-		visibility -= (uVisibilityDecrement * step(texture2D( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
+		visibility -= (uVisibilityDecrement * step(texture( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
 	}
 	
 	visibility *= float(gl_FrontFacing);
@@ -140,12 +144,12 @@ vec3 CalculateSceneLighting_DebugBuild()
 		{ 
 			for (int i=0;i<4;i++)
 			{	
-				visibility -= (uVisibilityDecrement * step(texture2D( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
+				visibility -= (uVisibilityDecrement * step(texture( uShadowMap, vShadowCoord.xy + poissonDisk[i]/700.0 ).z, coordZ));
 			}			
 		}
 		else
 		{
-			visibility -= (uVisibilityDecrement * 4.0 * step(texture2D( uShadowMap, vShadowCoord.xy ).z, coordZ));
+			visibility -= (uVisibilityDecrement * 4.0 * step(texture( uShadowMap, vShadowCoord.xy ).z, coordZ));
 		}
 	}
 	
@@ -243,7 +247,7 @@ void RenderScene()
 	} else {		
 		lightWeighting = RenderNoLighting();
 	}
-	gl_FragColor = CalculateFragmentColor_ReleaseBuild(lightWeighting);
+	fragColor = CalculateFragmentColor_ReleaseBuild(lightWeighting);
 }
 
 void main(void) 

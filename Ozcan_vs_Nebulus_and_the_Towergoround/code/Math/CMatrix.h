@@ -39,6 +39,12 @@ class CMatrix
 //----public methods----------------------------------------
 		CMatrix( void); // Constructor
 		CMatrix(float * in); // overloaded constructor
+    
+        CMatrix(float in0, float in1, float in2, float in3,
+                float in4, float in5, float in6, float in7,
+                float in8, float in9, float in10, float in11,
+                float in12, float in13, float in14, float in15);
+    
 		CMatrix(const CQuaternion& quat); // matrix from quat
 		CMatrix(const CVector& forward);
 		CMatrix(const CVector4& right, const CVector4& up, const CVector4& forward, const CVector4& translation);

@@ -15,6 +15,8 @@
 #include <Game/CMenu.h>
 #include <Game/Game.h>
 
+#include "CTest.h"
+
 GLFWwindow* osxWindow = nullptr;
 bool quitApp = false;
 
@@ -50,6 +52,12 @@ int main(int argc, char *argv[])
     }
     //glEnable(GL_DEPTH_TEST);
     
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
     int width = 1024;
     int height = 768;
     osxWindow = glfwCreateWindow( width, height, "Ozcan vs Nebulus & the Towergoround", NULL, NULL);
@@ -61,66 +69,69 @@ int main(int argc, char *argv[])
     
     glfwMakeContextCurrent(osxWindow);
     
-    if (!Globals::Instance().gl.InitGL())
-    {
-        Text::DeleteMesh();
-        Globals::Instance().gl.DestroyGL();
-        glfwTerminate(); //terminating glfw window
-        return 0;// quit if window was not created
-    }
+    InitTest();
     
-    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
-    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
-    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
-    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+//    if (!Globals::Instance().gl.InitGL())
+//    {
+//        Text::DeleteMesh();
+//        Globals::Instance().gl.DestroyGL();
+//        glfwTerminate(); //terminating glfw window
+//        return 0;// quit if window was not created
+//    }
+//    
+//    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
+//    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+//    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
+//    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+//    
+//    if (Globals::Instance().gl.IsUsingSubRoutines())
+//    {
+//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
+//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
+//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
+//    }
+//    else
+//    {
+//        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+//        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
+//        
+//        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+//        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
+//    }
+//    
+//    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+//    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+//
+//    int frameBufferWidth = 0;
+//    int frameBufferHeight = 0;
+//    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
+//    
+//    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
+//    CMenu::SetPerspectiveProjectionMatrix();
+//    
+//    Game game;
+//    if(!game.Init())
+//    {
+//        Text::DeleteMesh();
+//        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+//        Globals::Instance().sound.Shutdown();
+//        glfwTerminate(); //terminating glfw window
+//        return (0); // failure
+//    }
     
-    if (Globals::Instance().gl.IsUsingSubRoutines())
-    {
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-    }
-    else
-    {
-        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
-        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
-        
-        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
-        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
-    }
-    
-    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
-
-    int frameBufferWidth = 0;
-    int frameBufferHeight = 0;
-    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
-    
-    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
-    CMenu::SetPerspectiveProjectionMatrix();
-    
-    Game game;
-    if(!game.Init())
-    {
-        Text::DeleteMesh();
-        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
-        Globals::Instance().sound.Shutdown();
-        glfwTerminate(); //terminating glfw window
-        return (0); // failure
-    }
-    
-    Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
+    //Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
 
     while (!glfwWindowShouldClose(osxWindow))
     {
-        if (!game.Update() || quitApp) {
-            break;
-        }
+//        if (!game.Update() || quitApp) {
+//            break;
+//        }
         
 //#if _DEBUG
 //        Globals::Instance().debug.printDebug();
 //#endif
+        RenderTest();
         glfwSwapBuffers(osxWindow);
     }
 
@@ -128,11 +139,13 @@ int main(int argc, char *argv[])
     CHECK_GL_ERROR;
 #endif
     
+    DeleteTest();
+    
     // Shutdown
-    game.DeleteGameObjects(); // delete all game specific objects
-    Text::DeleteMesh();
-    Globals::Instance().gl.DestroyGL();
-    Globals::Instance().sound.Shutdown();
+//    game.DeleteGameObjects(); // delete all game specific objects
+//    Text::DeleteMesh();
+//    Globals::Instance().gl.DestroyGL();
+//    Globals::Instance().sound.Shutdown();
     glfwTerminate(); //terminating glfw window
     return 0;
 }
