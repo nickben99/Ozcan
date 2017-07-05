@@ -115,6 +115,7 @@ class CMatrix
 		CVector4 operator*(const CVector4& vect); // multiply
 		bool operator==(const CMatrix& m) const;
 		bool operator!=(const CMatrix& m) const;
+        float& operator[] (unsigned int n);
 //-----------------------------------------------------------
 }; // end class CMatrix
 

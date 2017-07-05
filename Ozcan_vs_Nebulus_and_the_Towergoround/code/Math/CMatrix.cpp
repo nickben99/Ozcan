@@ -185,6 +185,10 @@ bool CMatrix::operator==(const CMatrix& m) const
 	return true;
 }
 
+float& CMatrix::operator[] (unsigned int n) {
+    return elements[n];
+}
+
 bool CMatrix::operator!=(const CMatrix& m) const
 {
 	return !operator==(m);

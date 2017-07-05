@@ -12,6 +12,11 @@
 #include <GL/glew.h>
 #include </usr/local/Cellar/glfw3/3.1.2/include/GLFW/glfw3.h>
 
+//// Include GLM
+#include </Users/benjaminnickson/Documents/for stack overflow/Ozcan-master/Ozcan_vs_Nebulus_and_the_Towergoround/external/glm-0.9.7.1/glm/glm.hpp>
+#include </Users/benjaminnickson/Documents/for stack overflow/Ozcan-master/Ozcan_vs_Nebulus_and_the_Towergoround/external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp>
+using namespace glm;
+
 #include <Math/CVector.h>
 #include <Math/CMatrix.h>
 #include <Game/Globals.h>
@@ -418,7 +423,39 @@ GLuint normalbuffer;
 GLuint elementbuffer;
 const int textureSize = 1024;
 CVector lightInvDir(0.5f,2,2);
+glm::vec3 lightInvDirGLM(0.5f,2,2);
 GLuint VertexArrayID;
+
+struct Original {
+    // depth shader
+    GLuint depthProgramID = 0;
+    GLuint depthMatrixID = 0;
+    
+    // shadow shader
+    GLuint programID = 0;
+    GLuint TextureID = 0;
+    GLuint MatrixID = 0;
+    GLuint ViewMatrixID = 0;
+    GLuint ModelMatrixID = 0;
+    GLuint DepthBiasID = 0;
+    GLuint ShadowMapID = 0;
+    GLuint lightInvDirID = 0;
+    
+    // shadow mapping init
+    GLuint FramebufferName = 0;
+    GLuint depthTexture = 0;
+    
+    // matrices/vectors
+//    CMatrix depthProjectionMatrix;
+//    CMatrix depthViewMatrix;
+//    CMatrix depthModelMatrix;
+//    CMatrix depthMVP;
+    
+    glm::mat4 depthProjectionMatrix;
+    glm::mat4 depthViewMatrix;
+    glm::mat4 depthModelMatrix;
+    glm::mat4 depthMVP;
+} originalInst;
 
 struct Ozcan {
     GLuint theOnlyProgramID = 0;
@@ -454,58 +491,116 @@ struct Ozcan {
     GLuint depthTexture = 0;
 } ozcanInst;
 
+void OriginalLoadShaders() {
+    originalInst.depthProgramID = LoadShaders( "DepthRTTVert.glsl", "DepthRTTFrag.glsl" );
+    CHECK_GL_ERROR;
+    
+    // Create and compile our GLSL program from the shaders
+    originalInst.programID = LoadShaders( "ShadowMappingVert.glsl", "ShadowMappingFrag.glsl" );
+    CHECK_GL_ERROR;
+}
+
 void OzcanLoadShaders() {
-//    ozcanInst.theOnlyProgramID = LoadShaders( "code/Shaders/ShaderOld.vs", "code/Shaders/ShaderOld.fs" );
-//    CHECK_GL_ERROR;
-//    // Use our shader
-//    glUseProgram(ozcanInst.theOnlyProgramID);
-//    CHECK_GL_ERROR;
+    ozcanInst.theOnlyProgramID = LoadShaders( "code/Shaders/ShaderOld.vs", "code/Shaders/ShaderOld.fs" );
+    CHECK_GL_ERROR;
+    // Use our shader
+    glUseProgram(ozcanInst.theOnlyProgramID);
+    CHECK_GL_ERROR;
+}
+
+void OriginalGetUniformLocation() {
+    // Get a handle for our "MVP" uniform
+    originalInst.depthMatrixID = glGetUniformLocation(originalInst.depthProgramID, "depthMVP");
+    CHECK_GL_ERROR;
+    
+    // shadow
+    // Get a handle for our "myTextureSampler" uniform
+    originalInst.TextureID  = glGetUniformLocation(originalInst.programID, "myTextureSampler");
+    
+    // Get a handle for our "MVP" uniform
+    originalInst.MatrixID = glGetUniformLocation(originalInst.programID, "MVP");
+    originalInst.ViewMatrixID = glGetUniformLocation(originalInst.programID, "V");
+    originalInst.ModelMatrixID = glGetUniformLocation(originalInst.programID, "M");
+    originalInst.DepthBiasID = glGetUniformLocation(originalInst.programID, "DepthBiasMVP");
+    originalInst.ShadowMapID = glGetUniformLocation(originalInst.programID, "shadowMap");
+    
+    // Get a handle for our "LightPosition" uniform
+    originalInst.lightInvDirID = glGetUniformLocation(originalInst.programID, "LightInvDirection_worldspace");
 }
 
 void OzcanGetUniformLocation() {
-//    ozcanInst.textureSamplerLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uSampler"); //////
-//    
-//    ozcanInst.projectionMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uProjectionMatrix");
-//    ozcanInst.modelMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uModelMatrix");
-//    ozcanInst.viewMatrixLocation =  glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewMatrix");
-//    
-//    ozcanInst.ambientColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uAmbientColor");
-//    ozcanInst.diffuseColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingDiffuseColor");
-//    ozcanInst.specularColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingSpecularColor");
-//    ozcanInst.emissiveColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingEmissiveColor");
-//    ozcanInst.shininessLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMaterialShininess");
-//    CHECK_GL_ERROR;
-//    ozcanInst.oldCodeTextureSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uTextureRender"); /////
-//    ozcanInst.oldCodeLightingSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uLightingRender"); /////
-//    CHECK_GL_ERROR;
-//    // uniforms for rendering depth texture
-//    ozcanInst.oldCodeVertexRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderVertexShader");
-//    ozcanInst.oldCodeFragmentRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderFragmentShader");
-//    
-//    ozcanInst.lightViewProjectionMatrixUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewProjectionLightMatrix");
-//    ozcanInst.depthTextureSamplerUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uShadowMap");
-//    
-//    // point light uniforms
-//    ozcanInst.pointLightingLocationUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingLocation");
-//    CHECK_GL_ERROR;
+    ozcanInst.textureSamplerLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uSampler"); //////
     
-    OpenGLImplementation& imp = Globals::Instance().gl.implementation;
-    ozcanInst.textureSamplerLocation = imp.textureSamplerLocation;
-    ozcanInst.projectionMatrixLocation = imp.projectionMatrixLocation;
-    ozcanInst.modelMatrixLocation =Globals::Instance().gl.implementation.modelMatrixLocation;
-    ozcanInst.viewMatrixLocation =Globals::Instance().gl.implementation.viewMatrixLocation;
-    ozcanInst.ambientColorLocation =Globals::Instance().gl.implementation.ambientColorLocation;
-    ozcanInst.diffuseColorLocation =Globals::Instance().gl.implementation.diffuseColorLocation;
-    ozcanInst.specularColorLocation =Globals::Instance().gl.implementation.specularColorLocation;
-    ozcanInst.emissiveColorLocation =Globals::Instance().gl.implementation.emissiveColorLocation;
-    ozcanInst.shininessLocation =Globals::Instance().gl.implementation.shininessLocation;
-    ozcanInst.oldCodeTextureSelection = imp.oldCodeTextureSelection;
-    ozcanInst.oldCodeLightingSelection = imp.oldCodeLightingSelection;
-    ozcanInst.oldCodeVertexRenderSelector = imp.GetUniformLocation("uMainRenderVertexShader");
-    ozcanInst.oldCodeFragmentRenderSelector = imp.GetUniformLocation("uMainRenderFragmentShader");
-    ozcanInst.lightViewProjectionMatrixUniform = imp.GetUniformLocation("uViewProjectionLightMatrix");
-    ozcanInst.depthTextureSamplerUniform = imp.GetUniformLocation("uShadowMap");
-    ozcanInst.pointLightingLocationUniform = imp.GetUniformLocation("uPointLightingLocation");
+    ozcanInst.projectionMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uProjectionMatrix");
+    ozcanInst.modelMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uModelMatrix");
+    ozcanInst.viewMatrixLocation =  glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewMatrix");
+    
+    ozcanInst.ambientColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uAmbientColor");
+    ozcanInst.diffuseColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingDiffuseColor");
+    ozcanInst.specularColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingSpecularColor");
+    ozcanInst.emissiveColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingEmissiveColor");
+    ozcanInst.shininessLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMaterialShininess");
+    CHECK_GL_ERROR;
+    ozcanInst.oldCodeTextureSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uTextureRender"); /////
+    ozcanInst.oldCodeLightingSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uLightingRender"); /////
+    CHECK_GL_ERROR;
+    // uniforms for rendering depth texture
+    ozcanInst.oldCodeVertexRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderVertexShader");
+    ozcanInst.oldCodeFragmentRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderFragmentShader");
+    
+    ozcanInst.lightViewProjectionMatrixUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewProjectionLightMatrix");
+    ozcanInst.depthTextureSamplerUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uShadowMap");
+    
+    // point light uniforms
+    ozcanInst.pointLightingLocationUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingLocation");
+    CHECK_GL_ERROR;
+    
+//    OpenGLImplementation& imp = Globals::Instance().gl.implementation;
+//    ozcanInst.textureSamplerLocation = imp.textureSamplerLocation;
+//    ozcanInst.projectionMatrixLocation = imp.projectionMatrixLocation;
+//    ozcanInst.modelMatrixLocation =Globals::Instance().gl.implementation.modelMatrixLocation;
+//    ozcanInst.viewMatrixLocation =Globals::Instance().gl.implementation.viewMatrixLocation;
+//    ozcanInst.ambientColorLocation =Globals::Instance().gl.implementation.ambientColorLocation;
+//    ozcanInst.diffuseColorLocation =Globals::Instance().gl.implementation.diffuseColorLocation;
+//    ozcanInst.specularColorLocation =Globals::Instance().gl.implementation.specularColorLocation;
+//    ozcanInst.emissiveColorLocation =Globals::Instance().gl.implementation.emissiveColorLocation;
+//    ozcanInst.shininessLocation =Globals::Instance().gl.implementation.shininessLocation;
+//    ozcanInst.oldCodeTextureSelection = imp.oldCodeTextureSelection;
+//    ozcanInst.oldCodeLightingSelection = imp.oldCodeLightingSelection;
+//    ozcanInst.oldCodeVertexRenderSelector = imp.GetUniformLocation("uMainRenderVertexShader");
+//    ozcanInst.oldCodeFragmentRenderSelector = imp.GetUniformLocation("uMainRenderFragmentShader");
+//    ozcanInst.lightViewProjectionMatrixUniform = imp.GetUniformLocation("uViewProjectionLightMatrix");
+//    ozcanInst.depthTextureSamplerUniform = imp.GetUniformLocation("uShadowMap");
+//    ozcanInst.pointLightingLocationUniform = imp.GetUniformLocation("uPointLightingLocation");
+}
+
+bool OriginalInitRenderToTexture() {
+    // The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
+    glGenFramebuffers(1, &(originalInst.FramebufferName));
+    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    
+    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+    glGenTextures(1, &(originalInst.depthTexture));
+    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    CHECK_GL_ERROR;
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+    
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, originalInst.depthTexture, 0);
+    
+    // No color output in the bound framebuffer, only depth.
+    glDrawBuffer(GL_NONE);
+    
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        return false;
+    }
+    return true;
 }
 
 bool OzcanInitRenderToTexture() {
@@ -541,6 +636,70 @@ bool OzcanInitRenderToTexture() {
     return true;
 }
 
+void OriginalPreRenderDepthToTexture() {
+//    // Render to our framebuffer
+//    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+//    glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
+//    
+//    // We don't use bias in the shader, but instead we draw back faces,
+//    // which are already separated from the front faces by a small distance
+//    // (if your geometry is made this way)
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+//    
+//    // Clear the screen
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    // Use our shader
+//    glUseProgram(originalInst.depthProgramID);
+//    
+//    // Compute the MVP matrix from the light's point of view
+//    originalInst.depthProjectionMatrix = CMatrix::CreateOrthographicProjection(-30,30,-30,30,-30,40); // (-10,10,-10,10,-10,20);
+//    originalInst.depthViewMatrix = CMatrix::LookAt(lightInvDir, CVector(0,0,0), CVector(0,1,0));
+//    // or, for spot light :
+//    //glm::vec3 lightPos(5, 20, 20);
+//    //glm::mat4 depthProjectionMatrix = glm::perspective<float>(45.0f, 1.0f, 2.0f, 50.0f);
+//    //glm::mat4 depthViewMatrix = glm::lookAt(lightPos, lightPos-lightInvDir, glm::vec3(0,1,0));
+//    
+//    originalInst.depthModelMatrix = CMatrix();
+//    originalInst.depthMVP = originalInst.depthProjectionMatrix * originalInst.depthViewMatrix * originalInst.depthModelMatrix;
+//    
+//    // Send our transformation to the currently bound shader,
+//    // in the "MVP" uniform
+//    glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0]));
+    
+    // Render to our framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
+    
+    // We don't use bias in the shader, but instead we draw back faces,
+    // which are already separated from the front faces by a small distance
+    // (if your geometry is made this way)
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+    
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Use our shader
+    glUseProgram(originalInst.depthProgramID);
+    
+    // Compute the MVP matrix from the light's point of view
+    originalInst.depthProjectionMatrix = glm::ortho<float>(-30,30,-30,30,-30,40); // (-10,10,-10,10,-10,20);
+    originalInst.depthViewMatrix = glm::lookAt(lightInvDirGLM, glm::vec3(0,0,0), glm::vec3(0,1,0));
+    // or, for spot light :
+    //glm::vec3 lightPos(5, 20, 20);
+    //glm::mat4 depthProjectionMatrix = glm::perspective<float>(45.0f, 1.0f, 2.0f, 50.0f);
+    //glm::mat4 depthViewMatrix = glm::lookAt(lightPos, lightPos-lightInvDir, glm::vec3(0,1,0));
+    
+    originalInst.depthModelMatrix = glm::mat4(1.0);
+    originalInst.depthMVP = originalInst.depthProjectionMatrix * originalInst.depthViewMatrix * originalInst.depthModelMatrix;
+    
+    // Send our transformation to the currently bound shader,
+    // in the "MVP" uniform
+    glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0][0]));
+}
+
 void OzcanPreRenderDepthToTexture() {
     glBindFramebuffer(GL_FRAMEBUFFER, ozcanInst.framebufferName);
     CHECK_GL_ERROR;
@@ -556,14 +715,134 @@ void OzcanPreRenderDepthToTexture() {
     glUniformMatrix4fv(ozcanInst.modelMatrixLocation, 1, GL_FALSE, &(CMatrix().elements[0]));
 }
 
+void OriginalPreRender() {
+//    // Render to the screen
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//    glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
+//    
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+//    
+//    // Clear the screen
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    // Use our shader
+//    glUseProgram(originalInst.programID);
+//    
+//    // Compute the MVP matrix from keyboard and mouse input
+//    CMatrix ProjectionMatrix = CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+//    
+//    CVector position( -16, 8, 1 );
+//    // Initial horizontal angle : toward -Z
+//    float horizontalAngle = 1.6f;
+//    // Initial vertical angle : none
+//    float  verticalAngle = -0.40f;
+//    CVector direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
+//    
+//    CMatrix ViewMatrix = CMatrix::LookAt(position, position+direction, CVector::unitY);
+//    //ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
+//    CMatrix ModelMatrix;
+//    CMatrix MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+//    
+//    CMatrix biasMatrix(
+//                         0.5, 0.0, 0.0, 0.0,
+//                         0.0, 0.5, 0.0, 0.0,
+//                         0.0, 0.0, 0.5, 0.0,
+//                         0.5, 0.5, 0.5, 1.0
+//                         );
+//    
+//    CMatrix depthBiasMVP = biasMatrix*originalInst.depthMVP;
+//    
+//    // Send our transformation to the currently bound shader,
+//    // in the "MVP" uniform
+//    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0]);
+//    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0]);
+//    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0]);
+//    glUniformMatrix4fv(originalInst.DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0]);
+//    
+//    glUniform3f(originalInst.lightInvDirID, lightInvDir.x, lightInvDir.y, lightInvDir.z);
+//    
+//    // Bind our texture in Texture Unit 0
+//    glActiveTexture(GL_TEXTURE0);
+//    CHECK_GL_ERROR;
+//    glBindTexture(GL_TEXTURE_2D, Texture);
+//    CHECK_GL_ERROR;
+//    // Set our "myTextureSampler" sampler to user Texture Unit 0
+//    glUniform1i(originalInst.TextureID, 0);
+//    
+//    glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+//    CHECK_GL_ERROR;
+//    glUniform1i(originalInst.ShadowMapID, 1);
+    
+    // Render to the screen
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+    
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Use our shader
+    glUseProgram(originalInst.programID);
+    
+    // Compute the MVP matrix from keyboard and mouse input
+    glm::mat4 ProjectionMatrix = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    
+    glm::vec3 position( -16, 8, 1 );
+    // Initial horizontal angle : toward -Z
+    float horizontalAngle = 1.6f;
+    // Initial vertical angle : none
+    float  verticalAngle = -0.40f;
+    glm::vec3 direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
+    
+    glm::mat4 ViewMatrix = glm::lookAt(position, position+direction, glm::vec3(0, 1, 0));
+    //ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
+    glm::mat4 ModelMatrix = glm::mat4(1.0);
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    
+    glm::mat4 biasMatrix(
+                         0.5, 0.0, 0.0, 0.0,
+                         0.0, 0.5, 0.0, 0.0,
+                         0.0, 0.0, 0.5, 0.0,
+                         0.5, 0.5, 0.5, 1.0
+                         );
+    
+    glm::mat4 depthBiasMVP = biasMatrix*originalInst.depthMVP;
+    
+    // Send our transformation to the currently bound shader,
+    // in the "MVP" uniform
+    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+    glUniformMatrix4fv(originalInst.DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0][0]);
+    
+    glUniform3f(originalInst.lightInvDirID, lightInvDir.x, lightInvDir.y, lightInvDir.z);
+    
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+    CHECK_GL_ERROR;
+    glBindTexture(GL_TEXTURE_2D, Texture);
+    CHECK_GL_ERROR;
+    // Set our "myTextureSampler" sampler to user Texture Unit 0
+    glUniform1i(originalInst.TextureID, 0);
+    
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    CHECK_GL_ERROR;
+    glUniform1i(originalInst.ShadowMapID, 1);
+}
+
 void OzcanPreRender() {
     glUniformMatrix4fv(ozcanInst.projectionMatrixLocation, 1, GL_FALSE, &(CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f).elements[0]));
     
-    CVector position( 0, 0, 5 );
+    CVector position( -16, 8, 1 );
     // Initial horizontal angle : toward -Z
-    float horizontalAngle = 3.14f;
+    float horizontalAngle = 1.6f;
     // Initial vertical angle : none
-    float  verticalAngle = 0.0f;
+    float  verticalAngle = -0.40f;
     CVector direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
     glUniformMatrix4fv(ozcanInst.viewMatrixLocation, 1, GL_FALSE, &(CMatrix::LookAt(position, position+direction, CVector::unitY).elements[0]));
     glUniformMatrix4fv(ozcanInst.modelMatrixLocation, 1, GL_FALSE, &(CMatrix().elements[0]));
@@ -615,31 +894,41 @@ void OzcanPreRender() {
     glUniform1i(ozcanInst.textureSamplerLocation, 0);
 }
 
+void OriginalDelete() {
+    glDeleteProgram(originalInst.programID);
+    glDeleteProgram(originalInst.depthProgramID);
+    
+    glDeleteFramebuffers(1, &(originalInst.FramebufferName));
+    glDeleteTextures(1, &(originalInst.depthTexture));
+}
+
 void OzcanDelete() {
-    //glDeleteProgram(ozcanInst.theOnlyProgramID);
+    glDeleteProgram(ozcanInst.theOnlyProgramID);
     
     glDeleteFramebuffers(1, &(ozcanInst.framebufferName));
     glDeleteTextures(1, &(ozcanInst.depthTexture));
 }
 // ---------
 
+bool original = true;
+
 int InitTest() {
     // We would expect width and height to be 1024 and 768
     // But on MacOS X with a retina screen it'll be 1024*2 and 768*2, so we get the actual framebuffer size:
     glfwGetFramebufferSize(osxWindow, &windowWidth, &windowHeight);
     
-//    // Initialize GLEW
-//    glewExperimental = true; // Needed for core profile
-//    if (glewInit() != GLEW_OK) {
-//        fprintf(stderr, "Failed to initialize GLEW\n");
-//        getchar();
-//        glfwTerminate();
-//        return -1;
-//    }
-//    CHECK_GL_ERROR;
+    // Initialize GLEW
+    glewExperimental = true; // Needed for core profile
+    if (glewInit() != GLEW_OK) {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        getchar();
+        glfwTerminate();
+        return -1;
+    }
+    CHECK_GL_ERROR;
     
-//    const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-//    std::cout << "\n" << version;
+    const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+    std::cout << "\n" << version;
     
     // Ensure we can capture the escape key being pressed below
     //glfwSetInputMode(osxWindow, GLFW_STICKY_KEYS, GL_TRUE);
@@ -662,11 +951,16 @@ int InitTest() {
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
 
-    //glGenVertexArrays(1, &VertexArrayID);
-    //glBindVertexArray(VertexArrayID);
-
-    OzcanLoadShaders();
-    OzcanGetUniformLocation();
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
+    
+    if (original) {
+        OriginalLoadShaders();
+        OriginalGetUniformLocation();
+    } else {
+        OzcanLoadShaders();
+        OzcanGetUniformLocation();
+    }
     
     // Load the texture
     Texture = loadDDS("uvmap.DDS");
@@ -695,16 +989,25 @@ int InitTest() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
     
-    if (!OzcanInitRenderToTexture()) {
-        return -1;
+    if (original) {
+        if (!OriginalInitRenderToTexture()) {
+            return -1;
+        }
+    } else {
+        if (!OzcanInitRenderToTexture()) {
+            return -1;
+        }
     }
 
     return 0;
 }
 
 void RenderTest() {
-#ifdef false
-    OzcanPreRenderDepthToTexture();
+    if (original) {
+        OriginalPreRenderDepthToTexture();
+    } else {
+        OzcanPreRenderDepthToTexture();
+    }
 
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
@@ -728,9 +1031,13 @@ void RenderTest() {
                    );
     
     glDisableVertexAttribArray(0);
-#endif
-    OzcanPreRender();
-#ifdef false
+
+    if (original) {
+        OriginalPreRender();
+    } else {
+        OzcanPreRender();
+    }
+
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -781,7 +1088,7 @@ void RenderTest() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
-#endif
+
 }
 
 void DeleteTest() {
@@ -792,7 +1099,11 @@ void DeleteTest() {
     glDeleteBuffers(1, &elementbuffer);
     glDeleteTextures(1, &Texture);
     
-    OzcanDelete();
+    if (original) {
+        OriginalDelete();
+    } else {
+        OzcanDelete();
+    }
     
     glDeleteVertexArrays(1, &VertexArrayID);
 }
