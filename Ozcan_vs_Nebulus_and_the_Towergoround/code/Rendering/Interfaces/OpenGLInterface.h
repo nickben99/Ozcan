@@ -240,7 +240,7 @@ class OpenGLInterface
 			implementation.SetViewMatrix(mat);
 		}
 
-private:
+public:
 	OpenGLImplementation implementation;
 };
 

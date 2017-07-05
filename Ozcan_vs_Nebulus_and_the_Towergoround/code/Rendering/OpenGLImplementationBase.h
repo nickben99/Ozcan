@@ -102,7 +102,7 @@ class OpenGLImplementationBase
 		void SetShininess(float val);
 		void ShowSpecularHighlights(bool show);
 
-	private:
+	public:
 		bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 		bool CompileShaders();
 

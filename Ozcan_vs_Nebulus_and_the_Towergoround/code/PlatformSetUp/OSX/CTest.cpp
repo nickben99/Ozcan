@@ -14,6 +14,7 @@
 
 #include <Math/CVector.h>
 #include <Math/CMatrix.h>
+#include <Game/Globals.h>
 
 // GL ERROR CHECK
 int CheckGLError(const char *file, int line)
@@ -231,6 +232,7 @@ GLuint loadDDS(const char * imagepath){
         unsigned int size = ((width+3)/4)*((height+3)/4)*blockSize;
         glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height,
                                0, size, buffer + offset);
+        CHECK_GL_ERROR;
         
         offset += size;
         width  /= 2;
@@ -453,39 +455,57 @@ struct Ozcan {
 } ozcanInst;
 
 void OzcanLoadShaders() {
-    ozcanInst.theOnlyProgramID = LoadShaders( "code/Shaders/ShaderOld.vs", "code/Shaders/ShaderOld.fs" );
-    CHECK_GL_ERROR;
-    // Use our shader
-    glUseProgram(ozcanInst.theOnlyProgramID);
-    CHECK_GL_ERROR;
+//    ozcanInst.theOnlyProgramID = LoadShaders( "code/Shaders/ShaderOld.vs", "code/Shaders/ShaderOld.fs" );
+//    CHECK_GL_ERROR;
+//    // Use our shader
+//    glUseProgram(ozcanInst.theOnlyProgramID);
+//    CHECK_GL_ERROR;
 }
 
 void OzcanGetUniformLocation() {
-    ozcanInst.textureSamplerLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uSampler"); //////
+//    ozcanInst.textureSamplerLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uSampler"); //////
+//    
+//    ozcanInst.projectionMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uProjectionMatrix");
+//    ozcanInst.modelMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uModelMatrix");
+//    ozcanInst.viewMatrixLocation =  glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewMatrix");
+//    
+//    ozcanInst.ambientColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uAmbientColor");
+//    ozcanInst.diffuseColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingDiffuseColor");
+//    ozcanInst.specularColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingSpecularColor");
+//    ozcanInst.emissiveColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingEmissiveColor");
+//    ozcanInst.shininessLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMaterialShininess");
+//    CHECK_GL_ERROR;
+//    ozcanInst.oldCodeTextureSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uTextureRender"); /////
+//    ozcanInst.oldCodeLightingSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uLightingRender"); /////
+//    CHECK_GL_ERROR;
+//    // uniforms for rendering depth texture
+//    ozcanInst.oldCodeVertexRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderVertexShader");
+//    ozcanInst.oldCodeFragmentRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderFragmentShader");
+//    
+//    ozcanInst.lightViewProjectionMatrixUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewProjectionLightMatrix");
+//    ozcanInst.depthTextureSamplerUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uShadowMap");
+//    
+//    // point light uniforms
+//    ozcanInst.pointLightingLocationUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingLocation");
+//    CHECK_GL_ERROR;
     
-    ozcanInst.projectionMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uProjectionMatrix");
-    ozcanInst.modelMatrixLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uModelMatrix");
-    ozcanInst.viewMatrixLocation =  glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewMatrix");
-    
-    ozcanInst.ambientColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uAmbientColor");
-    ozcanInst.diffuseColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingDiffuseColor");
-    ozcanInst.specularColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingSpecularColor");
-    ozcanInst.emissiveColorLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingEmissiveColor");
-    ozcanInst.shininessLocation = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMaterialShininess");
-    CHECK_GL_ERROR;
-    ozcanInst.oldCodeTextureSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uTextureRender"); /////
-    ozcanInst.oldCodeLightingSelection = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uLightingRender"); /////
-    CHECK_GL_ERROR;
-    // uniforms for rendering depth texture
-    ozcanInst.oldCodeVertexRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderVertexShader");
-    ozcanInst.oldCodeFragmentRenderSelector = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uMainRenderFragmentShader");
-    
-    ozcanInst.lightViewProjectionMatrixUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uViewProjectionLightMatrix");
-    ozcanInst.depthTextureSamplerUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uShadowMap");
-    
-    // point light uniforms
-    ozcanInst.pointLightingLocationUniform = glGetUniformLocation(ozcanInst.theOnlyProgramID, "uPointLightingLocation");
-    CHECK_GL_ERROR;
+    OpenGLImplementation& imp = Globals::Instance().gl.implementation;
+    ozcanInst.textureSamplerLocation = imp.textureSamplerLocation;
+    ozcanInst.projectionMatrixLocation = imp.projectionMatrixLocation;
+    ozcanInst.modelMatrixLocation =Globals::Instance().gl.implementation.modelMatrixLocation;
+    ozcanInst.viewMatrixLocation =Globals::Instance().gl.implementation.viewMatrixLocation;
+    ozcanInst.ambientColorLocation =Globals::Instance().gl.implementation.ambientColorLocation;
+    ozcanInst.diffuseColorLocation =Globals::Instance().gl.implementation.diffuseColorLocation;
+    ozcanInst.specularColorLocation =Globals::Instance().gl.implementation.specularColorLocation;
+    ozcanInst.emissiveColorLocation =Globals::Instance().gl.implementation.emissiveColorLocation;
+    ozcanInst.shininessLocation =Globals::Instance().gl.implementation.shininessLocation;
+    ozcanInst.oldCodeTextureSelection = imp.oldCodeTextureSelection;
+    ozcanInst.oldCodeLightingSelection = imp.oldCodeLightingSelection;
+    ozcanInst.oldCodeVertexRenderSelector = imp.GetUniformLocation("uMainRenderVertexShader");
+    ozcanInst.oldCodeFragmentRenderSelector = imp.GetUniformLocation("uMainRenderFragmentShader");
+    ozcanInst.lightViewProjectionMatrixUniform = imp.GetUniformLocation("uViewProjectionLightMatrix");
+    ozcanInst.depthTextureSamplerUniform = imp.GetUniformLocation("uShadowMap");
+    ozcanInst.pointLightingLocationUniform = imp.GetUniformLocation("uPointLightingLocation");
 }
 
 bool OzcanInitRenderToTexture() {
@@ -596,7 +616,7 @@ void OzcanPreRender() {
 }
 
 void OzcanDelete() {
-    glDeleteProgram(ozcanInst.theOnlyProgramID);
+    //glDeleteProgram(ozcanInst.theOnlyProgramID);
     
     glDeleteFramebuffers(1, &(ozcanInst.framebufferName));
     glDeleteTextures(1, &(ozcanInst.depthTexture));
@@ -608,27 +628,27 @@ int InitTest() {
     // But on MacOS X with a retina screen it'll be 1024*2 and 768*2, so we get the actual framebuffer size:
     glfwGetFramebufferSize(osxWindow, &windowWidth, &windowHeight);
     
-    // Initialize GLEW
-    glewExperimental = true; // Needed for core profile
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
-        getchar();
-        glfwTerminate();
-        return -1;
-    }
-    CHECK_GL_ERROR;
+//    // Initialize GLEW
+//    glewExperimental = true; // Needed for core profile
+//    if (glewInit() != GLEW_OK) {
+//        fprintf(stderr, "Failed to initialize GLEW\n");
+//        getchar();
+//        glfwTerminate();
+//        return -1;
+//    }
+//    CHECK_GL_ERROR;
     
-    const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-    std::cout << "\n" << version;
+//    const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+//    std::cout << "\n" << version;
     
     // Ensure we can capture the escape key being pressed below
-    glfwSetInputMode(osxWindow, GLFW_STICKY_KEYS, GL_TRUE);
+    //glfwSetInputMode(osxWindow, GLFW_STICKY_KEYS, GL_TRUE);
     // Hide the mouse and enable unlimited mouvement
-    glfwSetInputMode(osxWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(osxWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     // Set the mouse at the center of the screen
-    glfwPollEvents();
-    glfwSetCursorPos(osxWindow, 1024/2, 768/2);
+    //glfwPollEvents();
+    //glfwSetCursorPos(osxWindow, 1024/2, 768/2);
     
     // Dark blue background
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -641,9 +661,9 @@ int InitTest() {
     
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
-    
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
+
+    //glGenVertexArrays(1, &VertexArrayID);
+    //glBindVertexArray(VertexArrayID);
 
     OzcanLoadShaders();
     OzcanGetUniformLocation();
@@ -676,15 +696,16 @@ int InitTest() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
     
     if (!OzcanInitRenderToTexture()) {
-        return false;
+        return -1;
     }
-    
+
     return 0;
 }
 
 void RenderTest() {
+#ifdef false
     OzcanPreRenderDepthToTexture();
-    
+
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -707,9 +728,9 @@ void RenderTest() {
                    );
     
     glDisableVertexAttribArray(0);
-    
+#endif
     OzcanPreRender();
-    
+#ifdef false
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -760,6 +781,7 @@ void RenderTest() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+#endif
 }
 
 void DeleteTest() {

@@ -14,11 +14,14 @@
 #include <Game/Globals.h>
 #include <Game/CMenu.h>
 #include <Game/Game.h>
+#include <FileReading/TEXTURE.H>
 
 #include "CTest.h"
 
 GLFWwindow* osxWindow = nullptr;
 bool quitApp = false;
+
+extern GLuint TextureLoad(const char *filename, bool alpha, GLenum minfilter, GLenum magfilter, GLenum wrap);
 
 void SetCurrentWorkingDirectory(int argc, char *argv[])
 {
@@ -40,6 +43,156 @@ void SetCurrentWorkingDirectory(int argc, char *argv[])
         
         chdir(executablePath); //change cwd
     }
+}
+
+void DrawTex()
+{
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// clear screen and depth buffer
+    Globals::Instance().viewMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    Globals::Instance().modelMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    
+    // set the screen to orthographic view
+    CMenu::setToOrthograthicView();
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // blend type (for transparency)
+    Globals::Instance().gl.GLEnable(GL_BLEND); // enable blending (for transparency)
+    
+    MeshBuffer backgroundMesh;
+    
+    // verts
+    CVector	centre(0.75f*Globals::Instance().windowWidth, 0.75f*Globals::Instance().windowHeight, 0.0f);
+    CVector dimensions(Globals::Instance().windowWidth*0.5f, Globals::Instance().windowHeight*0.5f, 0.0f);
+    GLfloat vertexPositionArray[] = {
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f
+    };
+    backgroundMesh.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+    
+    float vertexTexCoordsArray[] =
+    {
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
+    };
+    
+    backgroundMesh.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+    
+    unsigned short vertexIndecisArray[] =
+    {
+        0, 1, 2,
+        0, 2, 3
+    };
+    backgroundMesh.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+    //backgroundMesh.SetColor(CVector4(1.0f, 0.0f, 0.0f, 1.0f));
+    backgroundMesh.SetTexture(4);
+    
+    backgroundMesh.Draw();
+    
+    // set the screen back to perspective view
+    CMenu::setToPerspectiveView();
+}
+
+void DrawTex2()
+{
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// clear screen and depth buffer
+    Globals::Instance().viewMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    Globals::Instance().modelMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    
+    // set the screen to orthographic view
+    CMenu::setToOrthograthicView();
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // blend type (for transparency)
+    Globals::Instance().gl.GLEnable(GL_BLEND); // enable blending (for transparency)
+    
+    MeshBuffer backgroundMesh;
+    
+    // verts
+    CVector	centre(0.25f*Globals::Instance().windowWidth, 0.25f*Globals::Instance().windowHeight, 0.0f);
+    CVector dimensions(Globals::Instance().windowWidth*0.5f, Globals::Instance().windowHeight*0.5f, 0.0f);
+    GLfloat vertexPositionArray[] = {
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f
+    };
+    backgroundMesh.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+    
+    float vertexTexCoordsArray[] =
+    {
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
+    };
+    
+    backgroundMesh.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+    
+    unsigned short vertexIndecisArray[] =
+    {
+        0, 1, 2,
+        0, 2, 3
+    };
+    backgroundMesh.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+    //backgroundMesh.SetColor(CVector4(1.0f, 0.0f, 0.0f, 1.0f));
+    backgroundMesh.SetTexture(5);
+    
+    backgroundMesh.Draw();
+    
+    // set the screen back to perspective view
+    CMenu::setToPerspectiveView();
+}
+
+void DrawTex3()
+{
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// clear screen and depth buffer
+    Globals::Instance().viewMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    Globals::Instance().modelMatrixStack.LoadIdentity(); // reset the current modelview matrix
+    
+    // set the screen to orthographic view
+    CMenu::setToOrthograthicView();
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // blend type (for transparency)
+    Globals::Instance().gl.GLEnable(GL_BLEND); // enable blending (for transparency)
+    
+    MeshBuffer backgroundMesh;
+    
+    // verts
+    CVector	centre(0.25f*Globals::Instance().windowWidth, 0.75f*Globals::Instance().windowHeight, 0.0f);
+    CVector dimensions(Globals::Instance().windowWidth*0.5f, Globals::Instance().windowHeight*0.5f, 0.0f);
+    GLfloat vertexPositionArray[] = {
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x - dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y + dimensions.y*0.5f), 0.0f,
+        ToShaderUIX(centre.x + dimensions.x*0.5f), ToShaderUIY(centre.y - dimensions.y*0.5f), 0.0f
+    };
+    backgroundMesh.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+    
+    float vertexTexCoordsArray[] =
+    {
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
+    };
+    
+    backgroundMesh.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+    
+    unsigned short vertexIndecisArray[] =
+    {
+        0, 1, 2,
+        0, 2, 3
+    };
+    backgroundMesh.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+    //backgroundMesh.SetColor(CVector4(1.0f, 0.0f, 0.0f, 1.0f));
+    backgroundMesh.SetTexture(6);
+    
+    backgroundMesh.Draw();
+    
+    // set the screen back to perspective view
+    CMenu::setToPerspectiveView();
 }
 
 int main(int argc, char *argv[])
@@ -69,58 +222,60 @@ int main(int argc, char *argv[])
     
     glfwMakeContextCurrent(osxWindow);
     
-    InitTest();
+    if (!Globals::Instance().gl.InitGL())
+    {
+        Text::DeleteMesh();
+        Globals::Instance().gl.DestroyGL();
+        glfwTerminate(); //terminating glfw window
+        return 0;// quit if window was not created
+    }
     
-//    if (!Globals::Instance().gl.InitGL())
-//    {
-//        Text::DeleteMesh();
-//        Globals::Instance().gl.DestroyGL();
-//        glfwTerminate(); //terminating glfw window
-//        return 0;// quit if window was not created
-//    }
-//    
-//    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
-//    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
-//    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
-//    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
-//    
-//    if (Globals::Instance().gl.IsUsingSubRoutines())
-//    {
-//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
-//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
-//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-//    }
-//    else
-//    {
-//        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
-//        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
-//        
-//        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
-//        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
-//    }
-//    
-//    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-//    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
-//
-//    int frameBufferWidth = 0;
-//    int frameBufferHeight = 0;
-//    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
-//    
-//    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
-//    CMenu::SetPerspectiveProjectionMatrix();
-//    
-//    Game game;
-//    if(!game.Init())
-//    {
-//        Text::DeleteMesh();
-//        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
-//        Globals::Instance().sound.Shutdown();
-//        glfwTerminate(); //terminating glfw window
-//        return (0); // failure
-//    }
+    if (0 != InitTest()) {
+        return 0;
+    }
+
+    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
+    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
+    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
     
-    //Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
+    if (Globals::Instance().gl.IsUsingSubRoutines())
+    {
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
+    }
+    else
+    {
+        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
+        
+        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
+    }
+
+    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+
+    int frameBufferWidth = 0;
+    int frameBufferHeight = 0;
+    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
+
+    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
+    CMenu::SetPerspectiveProjectionMatrix();
+    
+    Game game;
+    if(!game.Init())
+    {
+        Text::DeleteMesh();
+        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+        Globals::Instance().sound.Shutdown();
+        glfwTerminate(); //terminating glfw window
+        return (0); // failure
+    }
+    
+    Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
 
     while (!glfwWindowShouldClose(osxWindow))
     {
@@ -128,10 +283,20 @@ int main(int argc, char *argv[])
 //            break;
 //        }
         
+        //Globals::Instance().keys.Update();
+        
 //#if _DEBUG
 //        Globals::Instance().debug.printDebug();
 //#endif
         RenderTest();
+        //DrawTex();
+        //DrawTex2();
+        //DrawTex3();
+        
+        if (!game.Update() || quitApp) {
+            break;
+        }
+        
         glfwSwapBuffers(osxWindow);
     }
 
