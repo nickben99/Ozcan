@@ -567,18 +567,28 @@ void CMatrix::SetUp(const CVector4& newUp)
 
 CMatrix CMatrix::CreateOrthographicProjection(float left, float right, float bottom, float top, float nearPlane, float farPlane)
 {
+//    tmat4x4<T, defaultp> Result(1);
+//    Result[0][0] = static_cast<T>(2) / (right - left);
+//    Result[1][1] = static_cast<T>(2) / (top - bottom);
+//    Result[2][2] = - static_cast<T>(2) / (zFar - zNear);
+//    Result[3][0] = - (right + left) / (right - left);
+//    Result[3][1] = - (top + bottom) / (top - bottom);
+//    Result[3][2] = - (zFar + zNear) / (zFar - zNear);
+    
+    
+    
     float a = 2.0f / (right - left);
     float b = 2.0f / (top - bottom);
     float c = -2.0f / (farPlane - nearPlane);
-    float tx = (right + left) / (right - left);
-    float ty = (top + bottom) / (top - bottom);
-    float tz = (farPlane + nearPlane) / (farPlane - nearPlane);
+    float tx = -(right + left) / (right - left);
+    float ty = -(top + bottom) / (top - bottom);
+    float tz = -(farPlane + nearPlane) / (farPlane - nearPlane);
 
 	CMatrix m;
-	m.elements[0]=a;		m.elements[1]=0.0f;		m.elements[2]=0.0f;		m.elements[3]=tx;
-	m.elements[4]=0.0f;		m.elements[5]=b;		m.elements[6]=0.0f;		m.elements[7]=ty;
-	m.elements[8]=0.0f;		m.elements[9]=0.0f;		m.elements[10]=c;		m.elements[11]=tz;
-	m.elements[12]=0.0f;	m.elements[13]=0.0f;	m.elements[14]=0.0f;	m.elements[15]=1.0f;
+	m.elements[0]=a;		m.elements[1]=0.0f;		m.elements[2]=0.0f;		m.elements[3]=0.0f;
+	m.elements[4]=0.0f;		m.elements[5]=b;		m.elements[6]=0.0f;		m.elements[7]=0.0f;
+	m.elements[8]=0.0f;		m.elements[9]=0.0f;		m.elements[10]=c;		m.elements[11]=0.0f;
+	m.elements[12]=tx;	m.elements[13]=ty;	m.elements[14]=tz;	m.elements[15]=1.0f;
 	return m;
 }
 
