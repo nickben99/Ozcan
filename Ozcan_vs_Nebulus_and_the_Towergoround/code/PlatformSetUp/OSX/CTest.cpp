@@ -426,6 +426,8 @@ CVector lightInvDir(0.5f,2,2);
 glm::vec3 lightInvDirGLM(0.5f,2,2);
 GLuint VertexArrayID;
 
+#define mymath
+
 struct Original {
     // depth shader
     GLuint depthProgramID = 0;
@@ -445,16 +447,18 @@ struct Original {
     GLuint FramebufferName = 0;
     GLuint depthTexture = 0;
     
+#ifdef mymath
     // matrices/vectors
-//    CMatrix depthProjectionMatrix;
-//    CMatrix depthViewMatrix;
-//    CMatrix depthModelMatrix;
-//    CMatrix depthMVP;
-    
+    CMatrix depthProjectionMatrix;
+    CMatrix depthViewMatrix;
+    CMatrix depthModelMatrix;
+    CMatrix depthMVP;
+#else
     glm::mat4 depthProjectionMatrix;
     glm::mat4 depthViewMatrix;
     glm::mat4 depthModelMatrix;
     glm::mat4 depthMVP;
+#endif
 } originalInst;
 
 struct Ozcan {
@@ -636,38 +640,55 @@ bool OzcanInitRenderToTexture() {
     return true;
 }
 
+CMatrix ToCMatrix(const glm::mat4& mat) {
+    return CMatrix(mat[0].x, mat[0].y, mat[0].z, mat[0].w,
+                   mat[1].x, mat[1].y, mat[1].z, mat[1].w,
+                   mat[2].x, mat[2].y, mat[2].z, mat[2].w,
+                   mat[3].x, mat[3].y, mat[3].z, mat[3].w);
+}
+
+glm::mat4 ToGlm(const CMatrix& inMat) {
+    glm::mat4 mat;
+    mat[0] = glm::vec4( inMat[0], inMat[1], inMat[2], inMat[3] );
+    mat[1] = glm::vec4( inMat[4], inMat[5], inMat[6], inMat[7] );
+    mat[2] = glm::vec4( inMat[8], inMat[9], inMat[10], inMat[11] );
+    mat[3] = glm::vec4( inMat[12], inMat[13], inMat[14], inMat[15] );
+    return mat;
+}
+
 void OriginalPreRenderDepthToTexture() {
-//    // Render to our framebuffer
-//    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
-//    glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
-//    
-//    // We don't use bias in the shader, but instead we draw back faces,
-//    // which are already separated from the front faces by a small distance
-//    // (if your geometry is made this way)
-//    glEnable(GL_CULL_FACE);
-//    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
-//    
-//    // Clear the screen
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    // Use our shader
-//    glUseProgram(originalInst.depthProgramID);
-//    
-//    // Compute the MVP matrix from the light's point of view
-//    originalInst.depthProjectionMatrix = CMatrix::CreateOrthographicProjection(-30,30,-30,30,-30,40); // (-10,10,-10,10,-10,20);
-//    originalInst.depthViewMatrix = CMatrix::LookAt(lightInvDir, CVector(0,0,0), CVector(0,1,0));
-//    // or, for spot light :
-//    //glm::vec3 lightPos(5, 20, 20);
-//    //glm::mat4 depthProjectionMatrix = glm::perspective<float>(45.0f, 1.0f, 2.0f, 50.0f);
-//    //glm::mat4 depthViewMatrix = glm::lookAt(lightPos, lightPos-lightInvDir, glm::vec3(0,1,0));
-//    
-//    originalInst.depthModelMatrix = CMatrix();
-//    originalInst.depthMVP = originalInst.depthProjectionMatrix * originalInst.depthViewMatrix * originalInst.depthModelMatrix;
-//    
-//    // Send our transformation to the currently bound shader,
-//    // in the "MVP" uniform
-//    glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0]));
+#ifdef mymath
+    // Render to our framebuffer
+    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
     
+    // We don't use bias in the shader, but instead we draw back faces,
+    // which are already separated from the front faces by a small distance
+    // (if your geometry is made this way)
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+    
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Use our shader
+    glUseProgram(originalInst.depthProgramID);
+    
+    // Compute the MVP matrix from the light's point of view
+    originalInst.depthProjectionMatrix = CMatrix::CreateOrthographicProjection(-30,30,-30,30,-30,40);// (-10,10,-10,10,-10,20);
+    originalInst.depthViewMatrix = CMatrix::LookAt(lightInvDir, CVector(0,0,0), CVector(0,1,0));
+    // or, for spot light :
+    //glm::vec3 lightPos(5, 20, 20);
+    //glm::mat4 depthProjectionMatrix = glm::perspective<float>(45.0f, 1.0f, 2.0f, 50.0f);
+    //glm::mat4 depthViewMatrix = glm::lookAt(lightPos, lightPos-lightInvDir, glm::vec3(0,1,0));
+    
+    originalInst.depthModelMatrix = CMatrix();
+    originalInst.depthMVP = originalInst.depthProjectionMatrix * originalInst.depthViewMatrix * originalInst.depthModelMatrix;
+    
+    // Send our transformation to the currently bound shader,
+    // in the "MVP" uniform
+    glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0]));
+#else
     // Render to our framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
     glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
@@ -698,6 +719,7 @@ void OriginalPreRenderDepthToTexture() {
     // Send our transformation to the currently bound shader,
     // in the "MVP" uniform
     glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0][0]));
+#endif
 }
 
 void OzcanPreRenderDepthToTexture() {
@@ -716,65 +738,66 @@ void OzcanPreRenderDepthToTexture() {
 }
 
 void OriginalPreRender() {
-//    // Render to the screen
-//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//    glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
-//    
-//    glEnable(GL_CULL_FACE);
-//    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
-//    
-//    // Clear the screen
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    // Use our shader
-//    glUseProgram(originalInst.programID);
-//    
-//    // Compute the MVP matrix from keyboard and mouse input
-//    CMatrix ProjectionMatrix = CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-//    
-//    CVector position( -16, 8, 1 );
-//    // Initial horizontal angle : toward -Z
-//    float horizontalAngle = 1.6f;
-//    // Initial vertical angle : none
-//    float  verticalAngle = -0.40f;
-//    CVector direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
-//    
-//    CMatrix ViewMatrix = CMatrix::LookAt(position, position+direction, CVector::unitY);
-//    //ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
-//    CMatrix ModelMatrix;
-//    CMatrix MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
-//    
-//    CMatrix biasMatrix(
-//                         0.5, 0.0, 0.0, 0.0,
-//                         0.0, 0.5, 0.0, 0.0,
-//                         0.0, 0.0, 0.5, 0.0,
-//                         0.5, 0.5, 0.5, 1.0
-//                         );
-//    
-//    CMatrix depthBiasMVP = biasMatrix*originalInst.depthMVP;
-//    
-//    // Send our transformation to the currently bound shader,
-//    // in the "MVP" uniform
-//    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0]);
-//    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0]);
-//    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0]);
-//    glUniformMatrix4fv(originalInst.DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0]);
-//    
-//    glUniform3f(originalInst.lightInvDirID, lightInvDir.x, lightInvDir.y, lightInvDir.z);
-//    
-//    // Bind our texture in Texture Unit 0
-//    glActiveTexture(GL_TEXTURE0);
-//    CHECK_GL_ERROR;
-//    glBindTexture(GL_TEXTURE_2D, Texture);
-//    CHECK_GL_ERROR;
-//    // Set our "myTextureSampler" sampler to user Texture Unit 0
-//    glUniform1i(originalInst.TextureID, 0);
-//    
-//    glActiveTexture(GL_TEXTURE1);
-//    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
-//    CHECK_GL_ERROR;
-//    glUniform1i(originalInst.ShadowMapID, 1);
+#ifdef mymath
+    // Render to the screen
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
     
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+    
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Use our shader
+    glUseProgram(originalInst.programID);
+    
+    // Compute the MVP matrix from keyboard and mouse input
+    CMatrix ProjectionMatrix = CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    
+    CVector position( -16, 8, 1 );
+    // Initial horizontal angle : toward -Z
+    float horizontalAngle = 1.6f;
+    // Initial vertical angle : none
+    float  verticalAngle = -0.40f;
+    CVector direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
+
+    CMatrix ViewMatrix = CMatrix::LookAt(position, position+direction, CVector::unitY);
+    //ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
+    CMatrix ModelMatrix;
+    CMatrix MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    
+    CMatrix biasMatrix(
+                         0.5, 0.0, 0.0, 0.0,
+                         0.0, 0.5, 0.0, 0.0,
+                         0.0, 0.0, 0.5, 0.0,
+                         0.5, 0.5, 0.5, 1.0
+                         );
+    
+    CMatrix depthBiasMVP = biasMatrix*originalInst.depthMVP;
+    
+    // Send our transformation to the currently bound shader,
+    // in the "MVP" uniform
+    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0]);
+    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0]);
+    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0]);
+    glUniformMatrix4fv(originalInst.DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0]);
+    
+    glUniform3f(originalInst.lightInvDirID, lightInvDir.x, lightInvDir.y, lightInvDir.z);
+    
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+    CHECK_GL_ERROR;
+    glBindTexture(GL_TEXTURE_2D, Texture);
+    CHECK_GL_ERROR;
+    // Set our "myTextureSampler" sampler to user Texture Unit 0
+    glUniform1i(originalInst.TextureID, 0);
+    
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    CHECK_GL_ERROR;
+    glUniform1i(originalInst.ShadowMapID, 1);
+#else
     // Render to the screen
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
@@ -833,6 +856,7 @@ void OriginalPreRender() {
     glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
     CHECK_GL_ERROR;
     glUniform1i(originalInst.ShadowMapID, 1);
+#endif
 }
 
 void OzcanPreRender() {

@@ -189,6 +189,10 @@ float& CMatrix::operator[] (unsigned int n) {
     return elements[n];
 }
 
+const float& CMatrix::operator[] (unsigned int n) const {
+    return elements[n];
+}
+
 bool CMatrix::operator!=(const CMatrix& m) const
 {
 	return !operator==(m);
@@ -574,15 +578,15 @@ CMatrix CMatrix::CreateOrthographicProjection(float left, float right, float bot
     float a = 2.0f / (right - left);
     float b = 2.0f / (top - bottom);
     float c = -2.0f / (farPlane - nearPlane);
-    float tx = (right + left) / (right - left);
-    float ty = (top + bottom) / (top - bottom);
-    float tz = (farPlane + nearPlane) / (farPlane - nearPlane);
+    float tx = -(right + left) / (right - left);
+    float ty = -(top + bottom) / (top - bottom);
+    float tz = -(farPlane + nearPlane) / (farPlane - nearPlane);
 
 	CMatrix m;
-	m.elements[0]=a;		m.elements[1]=0.0f;		m.elements[2]=0.0f;		m.elements[3]=tx;
-	m.elements[4]=0.0f;		m.elements[5]=b;		m.elements[6]=0.0f;		m.elements[7]=ty;
-	m.elements[8]=0.0f;		m.elements[9]=0.0f;		m.elements[10]=c;		m.elements[11]=tz;
-	m.elements[12]=0.0f;	m.elements[13]=0.0f;	m.elements[14]=0.0f;	m.elements[15]=1.0f;
+    m.elements[0]=a;	m.elements[1]=0.0f;	m.elements[2]=0.0f;	m.elements[3]=0.0f;
+    m.elements[4]=0.0f;	m.elements[5]=b;	m.elements[6]=0.0f;	m.elements[7]=0.0f;
+    m.elements[8]=0.0f;	m.elements[9]=0.0f;	m.elements[10]=c;	m.elements[11]=0.0f;
+    m.elements[12]=tx;	m.elements[13]=ty;	m.elements[14]=tz;	m.elements[15]=1.0f;
 	return m;
 }
 

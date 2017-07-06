@@ -116,6 +116,7 @@ class CMatrix
 		bool operator==(const CMatrix& m) const;
 		bool operator!=(const CMatrix& m) const;
         float& operator[] (unsigned int n);
+        const float& operator[] (unsigned int n) const;
 //-----------------------------------------------------------
 }; // end class CMatrix
 
