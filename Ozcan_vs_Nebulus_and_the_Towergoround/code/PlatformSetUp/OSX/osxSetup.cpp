@@ -222,80 +222,151 @@ int main(int argc, char *argv[])
     
     glfwMakeContextCurrent(osxWindow);
     
-//    if (!Globals::Instance().gl.InitGL())
-//    {
-//        Text::DeleteMesh();
-//        Globals::Instance().gl.DestroyGL();
-//        glfwTerminate(); //terminating glfw window
-//        return 0;// quit if window was not created
-//    }
-    
-    if (0 != InitTest()) {
-        return 0;
+    bool runDemo = false;
+    bool loadShadersInCTest = false;
+
+    if (!runDemo || !loadShadersInCTest) {
+        if (!Globals::Instance().gl.InitGL())
+        {
+            Text::DeleteMesh();
+            Globals::Instance().gl.DestroyGL();
+            glfwTerminate(); //terminating glfw window
+            return 0;// quit if window was not created
+        }
     }
+    
+    //if (runDemo) {
+        if (0 != InitTest(loadShadersInCTest)) {
+            return 0;
+        }
+    //}
 
-//    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
-//    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
-//    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
-//    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
-//    
-//    if (Globals::Instance().gl.IsUsingSubRoutines())
-//    {
-//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
-//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-//        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
-//                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-//    }
-//    else
-//    {
-//        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
-//        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
+    Game* game = nullptr;
+    MeshBuffer backgroundMesh;
+
+        // load texture
+        char theBackground[400];
+        SPRINTF(theBackground, "%simages/back2.bmp", GetDirectoryPath());
+        
+        int background = // bind the background texture
+        TextureLoad(theBackground, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);
+        
+        if (background <= 0){ // if their were problems loading the background
+            return (0);} // unsuccesful load
+        
+        // verts
+        float mult = 0.25f;
+        GLfloat vertexPositionArray[] = {
+            -1024.0f*mult, -687.0f*mult, 0.0f,
+            -1024.0f*mult, 687.0f*mult, 0.0f,
+            1024.0f*mult, 687.0f*mult, 0.0f,
+            1024.0f*mult, -687.0f*mult, 0.0f
+        };
+        
+        backgroundMesh.CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+        
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        backgroundMesh.CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+
+        float vertexNormalArray[] =
+        {
+            0.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            1.0f, 0.0f, 0.0f
+        };
+        backgroundMesh.CreateNormalArray(vertexNormalArray, sizeof(vertexNormalArray) / sizeof(float));
+        
+        
+        unsigned short vertexIndecisArray[] =
+        {
+            0, 1, 2,
+            0, 2, 3
+        };
+        backgroundMesh.CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+        backgroundMesh.SetTexture(background);
+    
+    if (!runDemo) {
+        int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation(Globals::Instance().gl.IsUsingSubRoutines() ? "uModelMatrix" : "M");
+        Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+        Globals::Instance().modelMatrixStack.LoadIdentity();
+        int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation(Globals::Instance().gl.IsUsingSubRoutines() ? "uViewMatrix" : "V");
+        Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+        Globals::Instance().viewMatrixStack.LoadIdentity();
+    
+        if (Globals::Instance().gl.IsUsingSubRoutines())
+        {
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
+                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
+            
+            int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+            Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+        }
+        else
+        {
+//            int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+//            Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
 //        
-//        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
-//        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
-//    }
-//
-//    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-//    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
-//
-//    int frameBufferWidth = 0;
-//    int frameBufferHeight = 0;
-//    glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
-//
-//    Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
-//    CMenu::SetPerspectiveProjectionMatrix();
-//    
-//    Game game;
-//    if(!game.Init())
-//    {
-//        Text::DeleteMesh();
-//        Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
-//        Globals::Instance().sound.Shutdown();
-//        glfwTerminate(); //terminating glfw window
-//        return (0); // failure
-//    }
-//    
-//    Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
+//            int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+//            Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
+            
+            int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("DepthBiasMVP");
+            Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+            
+            int lightInvDirection = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
+            Globals::Instance().gl.SetUniformVector3(lightInvDirection, CVector::unitY);
+            
+            int shadowMap = Globals::Instance().gl.GetUniformLocation("shadowMap");
+            Globals::Instance().gl.SetUniformInt(shadowMap, 1);
+        }
 
+        int frameBufferWidth = 0;
+        int frameBufferHeight = 0;
+        glfwGetFramebufferSize(osxWindow, &frameBufferWidth, &frameBufferHeight);
+
+        Globals::Instance().gl.ReSizeGLScene(frameBufferWidth, frameBufferHeight);
+        CMenu::SetPerspectiveProjectionMatrix();
+    
+        game = new Game();
+        if(!game->Init())
+        {
+            Text::DeleteMesh();
+            Globals::Instance().gl.DestroyGL(); // must be donw before killing the game window
+            Globals::Instance().sound.Shutdown();
+            glfwTerminate(); //terminating glfw window
+            return (0); // failure
+        }
+    
+        Globals::Instance().sound.PlaySound( SOUNDS_MAINMUSIC, true, false ); //start repeatedly playing main music
+    }
+    
     while (!glfwWindowShouldClose(osxWindow))
     {
-//        if (!game.Update() || quitApp) {
-//            break;
-//        }
-        
-        Globals::Instance().keys.Update();
+        if (!runDemo) {
+            if (!game->Update() || quitApp) {
+                break;
+            }
+        }
         
 //#if _DEBUG
-        Globals::Instance().debug.printDebug();
+        //Globals::Instance().debug.printDebug();
 //#endif
-        RenderTest();
-        //DrawTex();
-        //DrawTex2();
-        //DrawTex3();
-        
-//        if (!game.Update() || quitApp) {
-//            break;
-//        }
+        if (runDemo) {
+            Globals::Instance().keys.Update();
+            RenderTest();
+            
+            // render mesh buffer
+            SetOrtho();
+            backgroundMesh.Draw();
+        }
         
         glfwSwapBuffers(osxWindow);
     }
@@ -312,5 +383,10 @@ int main(int argc, char *argv[])
 //    Globals::Instance().gl.DestroyGL();
 //    Globals::Instance().sound.Shutdown();
     glfwTerminate(); //terminating glfw window
+    
+    if (!runDemo) {
+        delete game;
+    }
+    
     return 0;
 }

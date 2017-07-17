@@ -7,16 +7,16 @@ layout(location = 2) in vec3 vertexNormal_modelspace;
 
 // Output data ; will be interpolated for each fragment.
 out vec2 UV;
-out vec3 Position_worldspace;
+//out vec3 Position_worldspace;
 out vec3 Normal_cameraspace;
 out vec3 EyeDirection_cameraspace;
 out vec3 LightDirection_cameraspace;
 out vec4 ShadowCoord;
 
 // Values that stay constant for the whole mesh.
-uniform mat4 MVP;
-uniform mat4 V;
-uniform mat4 M;
+uniform mat4 MVP; // projection (orth/persp) * lookAt * model transform
+uniform mat4 V; // look at matrix
+uniform mat4 M; // the position of the modal
 uniform vec3 LightInvDirection_worldspace;
 uniform mat4 DepthBiasMVP;
 
@@ -29,7 +29,7 @@ void main(){
 	ShadowCoord = DepthBiasMVP * M * vec4(vertexPosition_modelspace,1); // mofidied form: DepthBiasMVP * vec4(vertexPosition_modelspace,1);
 	
 	// Position of the vertex, in worldspace : M * position
-	Position_worldspace = (M * vec4(vertexPosition_modelspace,1)).xyz;
+	//Position_worldspace = (M * vec4(vertexPosition_modelspace,1)).xyz;
 	
 	// Vector that goes from the vertex to the camera, in camera space.
 	// In camera space, the camera is at the origin (0,0,0).

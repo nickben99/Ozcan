@@ -9,13 +9,17 @@ in vec3 LightDirection_cameraspace;
 in vec4 ShadowCoord;
 
 // Ouput data
-layout(location = 0) out vec3 color;
+layout(location = 0) out vec4 color;
 
 // Values that stay constant for the whole mesh.
 uniform sampler2D myTextureSampler;
-uniform mat4 MV;
+//uniform mat4 MV;
 uniform vec3 LightPosition_worldspace;
 uniform sampler2DShadow shadowMap;
+
+uniform bool uLightingRender;
+uniform bool uTextureRender;
+uniform vec4 uPointLightingEmissiveColor;
 
 vec2 poissonDisk[16] = vec2[]( 
    vec2( -0.94201624, -0.39906216 ), 
@@ -43,14 +47,29 @@ float random(vec3 seed, int i){
 	return fract(sin(dot_product) * 43758.5453);
 }
 
-void main(){
+vec4 getBaseColor() {
+	vec4 fragmentColor = vec4(1.0, 1.0, 1.0, 1.0);
+	if (uTextureRender) {
+		fragmentColor = texture( myTextureSampler, UV );
+	}
+	
+	fragmentColor *= uPointLightingEmissiveColor;	
+	return fragmentColor;	 
+}
 
+void RenderFlat()
+{
+	color = getBaseColor();
+}
+
+void RenderLighting()
+{
 	// Light emission properties
 	vec3 LightColor = vec3(1,1,1);
 	float LightPower = 1.0f;
 	
 	// Material properties
-	vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;
+	vec3 MaterialDiffuseColor = getBaseColor().rgb;
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
 	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
 
@@ -109,7 +128,7 @@ void main(){
 	// if ( texture( shadowMap, (ShadowCoord.xy/ShadowCoord.w) ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
 	// if ( textureProj( shadowMap, ShadowCoord.xyw ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
 	
-	color = 
+	vec3 colorTemp = 
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
@@ -117,4 +136,13 @@ void main(){
 		// Specular : reflective highlight, like a mirror
 		visibility * MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5);
 
+	color = vec4(colorTemp, uPointLightingEmissiveColor.a);
+}
+
+void main(){
+	if (uLightingRender) {
+		RenderLighting();
+	} else {		
+		RenderFlat();
+	}
 }

@@ -65,30 +65,30 @@ class OpenGLInterface
 			implementation.ShowSpecularHighlights(show);
 		}
 
-		bool HasBeenInitialized()
-		{
-			return implementation.HasBeenInitialized();
-		}
+//		bool HasBeenInitialized()
+//		{
+//			return implementation.HasBeenInitialized();
+//		}
     
         bool IsUsingSubRoutines()
         {
             return implementation.IsUsingSubRoutines();
         }
 
-		void UseProgram()
-		{
-			return implementation.UseProgram();
-		}
+//		void UseProgram()
+//		{
+//			return implementation.UseProgram();
+//		}
 
-		void StopUsingProgram()
-		{
-			return implementation.StopUsingProgram();
-		}
+//		void StopUsingProgram()
+//		{
+//			return implementation.StopUsingProgram();
+//		}
 
-		int GetShaderProgram()
-		{
-			return implementation.GetShaderProgram();
-		}
+//		int GetShaderProgram()
+//		{
+//			return implementation.GetShaderProgram();
+//		}
 
 		int GetUniformLocation(const char* pUniformVariableName)
 		{

@@ -4,7 +4,9 @@
 struct GLFWwindow;
 extern GLFWwindow* osxWindow;
 
-int InitTest();
+int InitTest(bool load);
+void SetOrtho();
+void DrawOrtho();
 void RenderTest();
 void DeleteTest();
 

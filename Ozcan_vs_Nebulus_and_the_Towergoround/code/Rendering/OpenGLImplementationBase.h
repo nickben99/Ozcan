@@ -10,6 +10,7 @@
 
 //--- Header files --------------
 #include <Rendering/OpenGLShader.h>
+#include <Math/CMatrix.h>
 //-------------------------------
 
 //--- external variables --------
@@ -38,10 +39,10 @@ class OpenGLImplementationBase
 
 #ifdef USE_SHADERS
         bool IsUsingSubRoutines();
-		bool HasBeenInitialized();
-		void UseProgram();
-		void StopUsingProgram();
-		int GetShaderProgram();
+		//bool HasBeenInitialized();
+		//void UseProgram();
+//		void StopUsingProgram();
+//		int GetShaderProgram();
 
 		int GetUniformLocation(const char* pUniformVariableName);
 		unsigned int GetSubroutineUniformIndex(const char* pSubroutineUniformName, unsigned int shaderType);		
@@ -105,37 +106,101 @@ class OpenGLImplementationBase
 	public:
 		bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 		bool CompileShaders();
+    
+        enum CompiledShaderProgram {
+            Render = 0,
+            Depth
+        };
+    
+        struct DepthShaderParams {
+    
+        } depthShaderParams;
+    
+        struct RenderingShaderParams {
+            unsigned int useTextureSubFunctionLocation;
+            unsigned int noTextureSubFunctionLocation;
+            
+            int textureSamplerLocation;
+            
+            unsigned int useLightingSubFunctionLocation;
+            unsigned int noLightingSubFunctionLocation;
+            
+            int projectionMatrixLocation;
+            int modelMatrixLocation;
+            int viewMatrixLocation;
+            int vertexPositionAttribLocation;
+            int vertexNormalAttribLocation;
+            int vertexTexCoordAttribLocation;
+            int ambientColorLocation;
+            int diffuseColorLocation;
+            int specularColorLocation;
+            int emissiveColorLocation;
+            int shininessLocation;
+            int showSpecularHighlightLocation;
+            
+            int textureSubRoutineUniform;
+            int colorSubRoutineUniform;
+            int lightingSubRoutineUniform;
+        } renderingShaderParams;
+    
+        struct RenderingShaderParamsAlt {
+            int textureSamplerLocation;
+            int MVPMatrixLocation; // projection * view * model
+            int MMatrixLocation; // model matrix
+            int VMatrixLocation; //  view matrix
+            
+            int vertexPositionAttribLocation = 0;
+            int vertexTexCoordAttribLocation = 1;
+            int vertexNormalAttribLocation = 2;
+            
+            int emissiveColorLocation;
+            
+            int oldCodeTextureSelection;
+            int oldCodeLightingSelection;
+            
+            CMatrix projectionMatrix;
+            CMatrix lookAtViewMatrix;
+            CMatrix modelMatrix;
+        } renderingShaderParamsAlt;
 
-		OpenGLShader shader;
+        OpenGLShader depthShader;
+        OpenGLShader renderingShader;
+    
+		OpenGLShader* currentShader;
 
-		unsigned int useTextureSubFunctionLocation;
-		unsigned int noTextureSubFunctionLocation;
+		//unsigned int useTextureSubFunctionLocation;
+		//unsigned int noTextureSubFunctionLocation;
 
-		int textureSamplerLocation;
+		//int textureSamplerLocation;
 		
-		unsigned int useLightingSubFunctionLocation;
-		unsigned int noLightingSubFunctionLocation;
+		//unsigned int useLightingSubFunctionLocation;
+		//unsigned int noLightingSubFunctionLocation;
 
-		int projectionMatrixLocation;
-		int modelMatrixLocation;
-		int viewMatrixLocation;
-		int vertexPositionAttribLocation;
-		int vertexNormalAttribLocation;
-		int vertexTexCoordAttribLocation;
-		int ambientColorLocation;
-		int diffuseColorLocation;
-		int specularColorLocation;
-		int emissiveColorLocation;
-		int shininessLocation;
-		int showSpecularHighlightLocation;
-		bool hasBeenInitialized;
+		//int projectionMatrixLocation;
+		//int modelMatrixLocation;
+		//int viewMatrixLocation;
+    
+		//int vertexPositionAttribLocation;
+		//int vertexNormalAttribLocation;
+		//int vertexTexCoordAttribLocation;
+    
+		//int ambientColorLocation;
+		//int diffuseColorLocation;
+//		int specularColorLocation;
+//		int emissiveColorLocation;
+//		int shininessLocation;
+//		int showSpecularHighlightLocation;
+    
+//		bool hasBeenInitialized;
 		 
-		int textureSubRoutineUniform;
-        int oldCodeTextureSelection;
-		int colorSubRoutineUniform;
-		int lightingSubRoutineUniform;
-        int oldCodeLightingSelection;
+		//int textureSubRoutineUniform;
+        //int oldCodeTextureSelection;
+		//int colorSubRoutineUniform;
+		//int lightingSubRoutineUniform;
+        //int oldCodeLightingSelection;
+    
         bool isUsingSubRoutines;
+        GLuint vao;
 #endif
     
 };

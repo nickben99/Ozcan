@@ -27,37 +27,63 @@ const int InvalidLocation = -1;
 
 OpenGLImplementationBase::OpenGLImplementationBase()
 #ifdef USE_SHADERS
-	: useTextureSubFunctionLocation(0)
-	, noTextureSubFunctionLocation(0)
-
-	, textureSamplerLocation(InvalidLocation)
+	: //useTextureSubFunctionLocation(0)
+    // noTextureSubFunctionLocation(0)
+    //textureSamplerLocation(InvalidLocation)
 	
-	, useLightingSubFunctionLocation(0)
-	, noLightingSubFunctionLocation(0)
+	//useLightingSubFunctionLocation(0)
+	//noLightingSubFunctionLocation(0)
 
-	, projectionMatrixLocation(InvalidLocation)
-	, modelMatrixLocation(InvalidLocation)
-	, viewMatrixLocation(InvalidLocation)
-	, vertexPositionAttribLocation(InvalidLocation)
-	, vertexNormalAttribLocation(InvalidLocation)
-	, vertexTexCoordAttribLocation(InvalidLocation)
-	, ambientColorLocation(InvalidLocation)
-	, diffuseColorLocation(InvalidLocation)
-	, specularColorLocation(InvalidLocation)
-	, emissiveColorLocation(InvalidLocation)
-	, shininessLocation(InvalidLocation)
-	, showSpecularHighlightLocation(InvalidLocation)
-	, hasBeenInitialized(false)
+	//projectionMatrixLocation(InvalidLocation)
+	//modelMatrixLocation(InvalidLocation)
+	// viewMatrixLocation(InvalidLocation)
+	//vertexPositionAttribLocation(InvalidLocation)
+	//, vertexNormalAttribLocation(InvalidLocation)
+	//, vertexTexCoordAttribLocation(InvalidLocation)
+	//ambientColorLocation(InvalidLocation)
+	//diffuseColorLocation(InvalidLocation)
+	//specularColorLocation(InvalidLocation)
+	// emissiveColorLocation(InvalidLocation)
+	// shininessLocation(InvalidLocation)
+	//showSpecularHighlightLocation(InvalidLocation)
+//	, hasBeenInitialized(false)
 
-	, textureSubRoutineUniform(0)
-    , oldCodeTextureSelection(0)
-	, colorSubRoutineUniform(0)
-	, lightingSubRoutineUniform(0)
-    , oldCodeLightingSelection(0)
-    , isUsingSubRoutines(true)
+	//textureSubRoutineUniform(0)
+    //, oldCodeTextureSelection(0)
+	//, colorSubRoutineUniform(0)
+	//, lightingSubRoutineUniform(0)
+    //, oldCodeLightingSelection(0)
+    isUsingSubRoutines(true)
 #endif
 {
-
+    renderingShaderParams.useTextureSubFunctionLocation = 0;
+    renderingShaderParams.noTextureSubFunctionLocation = 0;
+    renderingShaderParams.textureSamplerLocation = InvalidLocation;
+    renderingShaderParams.useLightingSubFunctionLocation = 0;
+    renderingShaderParams.noLightingSubFunctionLocation = 0;
+    renderingShaderParams.projectionMatrixLocation = InvalidLocation;
+    renderingShaderParams.modelMatrixLocation = InvalidLocation;
+    renderingShaderParams.viewMatrixLocation = InvalidLocation;
+    renderingShaderParams.vertexPositionAttribLocation = InvalidLocation;
+    renderingShaderParams.vertexNormalAttribLocation = InvalidLocation;
+    renderingShaderParams.vertexTexCoordAttribLocation = InvalidLocation;
+    renderingShaderParams.ambientColorLocation = InvalidLocation;
+    renderingShaderParams.diffuseColorLocation = InvalidLocation;
+    renderingShaderParams.specularColorLocation = InvalidLocation;
+    renderingShaderParams.emissiveColorLocation = InvalidLocation;
+    renderingShaderParams.shininessLocation = InvalidLocation;
+    renderingShaderParams.showSpecularHighlightLocation = InvalidLocation;
+    renderingShaderParams.textureSubRoutineUniform = 0;
+    renderingShaderParams.colorSubRoutineUniform = 0;
+    renderingShaderParams.lightingSubRoutineUniform = 0;
+    
+    renderingShaderParamsAlt.textureSamplerLocation = InvalidLocation;
+    renderingShaderParamsAlt.MVPMatrixLocation = InvalidLocation;
+    renderingShaderParamsAlt.MMatrixLocation = InvalidLocation;
+    renderingShaderParamsAlt.VMatrixLocation = InvalidLocation;
+    renderingShaderParamsAlt.oldCodeTextureSelection = 0;
+    renderingShaderParamsAlt.oldCodeLightingSelection = 0;
+    renderingShaderParamsAlt.emissiveColorLocation = InvalidLocation;
 }
 
 OpenGLImplementationBase::~OpenGLImplementationBase()
@@ -73,7 +99,7 @@ bool OpenGLImplementationBase::IsUsingSubRoutines()
 
 bool OpenGLImplementationBase::InitGL()									
 {
-	hasBeenInitialized = true;
+//	hasBeenInitialized = true;
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	CHECK_GL_ERROR;
@@ -92,165 +118,197 @@ bool OpenGLImplementationBase::InitGL()
     std::cout << "\n version: " << version;
 #endif
 #endif
+    
+    glGenVertexArrays(1, &vao);
+    CHECK_GL_ERROR;
+    glBindVertexArray(vao);
+    CHECK_GL_ERROR;
 
     isUsingSubRoutines = true;
-    //if (!shader.CreateProgram("shader.vs", "shader.fs"))
+    if (!renderingShader.CreateProgram("shader.vs", "shader.fs"))
     {
-        //shader.DestroyProgram();
+        renderingShader.DestroyProgram();
         isUsingSubRoutines = false;
-        if (!shader.CreateProgram("shaderOld.vs", "shaderOld.fs"))
-        {
+        if (!renderingShader.CreateProgram("ShadowMappingVert.glsl", "ShadowMappingFrag.glsl")) {
+            return false;
+        }
+        
+        if (!depthShader.CreateProgram("DepthRTTVert.glsl", "DepthRTTFrag.glsl")) {
             return false;
         }
     }
 	
-	shader.UseProgram();
+    renderingShader.UseProgram();
     if (isUsingSubRoutines) {
-        shader.CacheSubroutineUniforms();
+        renderingShader.CacheSubroutineUniforms();
     }
 
-	textureSamplerLocation = GetUniformLocation("uSampler");
-	
-	projectionMatrixLocation = GetUniformLocation("uProjectionMatrix");
-	modelMatrixLocation = GetUniformLocation("uModelMatrix");
-	viewMatrixLocation =  GetUniformLocation("uViewMatrix");
-
-	ambientColorLocation = GetUniformLocation("uAmbientColor");
-	diffuseColorLocation = GetUniformLocation("uPointLightingDiffuseColor");
-	specularColorLocation = GetUniformLocation("uPointLightingSpecularColor");
-	emissiveColorLocation = GetUniformLocation("uPointLightingEmissiveColor");
-	shininessLocation = GetUniformLocation("uMaterialShininess");
-	showSpecularHighlightLocation = GetUniformLocation("uShowSpecularHighlights");
-
-//	vertexPositionAttribLocation = GetAttribLocation("aVertexPosition");
-//	vertexNormalAttribLocation = GetAttribLocation("aVertexNormal");
-//	vertexTexCoordAttribLocation = GetAttribLocation("aTextureCoord");
-
     if (isUsingSubRoutines) {
-        textureSubRoutineUniform = GetSubroutineUniformIndex("textureRender", GL_FRAGMENT_SHADER);
-        colorSubRoutineUniform = GetSubroutineUniformIndex("colorRender", GL_FRAGMENT_SHADER);
-        lightingSubRoutineUniform = GetSubroutineUniformIndex("lightingRender", GL_FRAGMENT_SHADER);
+        renderingShaderParams.textureSamplerLocation = GetUniformLocation("uSampler");
+        renderingShaderParams.projectionMatrixLocation = GetUniformLocation("uProjectionMatrix");
+        renderingShaderParams.modelMatrixLocation = GetUniformLocation("uModelMatrix");
+        renderingShaderParams.viewMatrixLocation =  GetUniformLocation("uViewMatrix");
+        
+        renderingShaderParams.vertexPositionAttribLocation = GetAttribLocation("aVertexPosition");
+        renderingShaderParams.vertexNormalAttribLocation = GetAttribLocation("aVertexNormal");
+        renderingShaderParams.vertexTexCoordAttribLocation = GetAttribLocation("aTextureCoord");
+        
+        renderingShaderParams.showSpecularHighlightLocation = GetUniformLocation("uShowSpecularHighlights");
+        renderingShaderParams.ambientColorLocation = GetUniformLocation("uAmbientColor");
+        renderingShaderParams.diffuseColorLocation = GetUniformLocation("uPointLightingDiffuseColor");
+        renderingShaderParams.specularColorLocation = GetUniformLocation("uPointLightingSpecularColor");
+        renderingShaderParams.emissiveColorLocation = GetUniformLocation("uPointLightingEmissiveColor");
+        renderingShaderParams.shininessLocation = GetUniformLocation("uMaterialShininess");
+        
+        renderingShaderParams.textureSubRoutineUniform = GetSubroutineUniformIndex("textureRender", GL_FRAGMENT_SHADER);
+        renderingShaderParams.colorSubRoutineUniform = GetSubroutineUniformIndex("colorRender", GL_FRAGMENT_SHADER);
+        renderingShaderParams.lightingSubRoutineUniform = GetSubroutineUniformIndex("lightingRender", GL_FRAGMENT_SHADER);
 
         GLint o = 0;
-        glGetProgramStageiv(shader.GetShaderProgram(), GL_FRAGMENT_SHADER, GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, &o);
+        glGetProgramStageiv(renderingShader.GetShaderProgram(), GL_FRAGMENT_SHADER, GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, &o);
         CHECK_GL_ERROR;
 
-        useTextureSubFunctionLocation = GetSubroutineIndex("RenderWithTexture", GL_FRAGMENT_SHADER);
-        noTextureSubFunctionLocation = GetSubroutineIndex("RenderNOTexture", GL_FRAGMENT_SHADER);
-        noLightingSubFunctionLocation = GetSubroutineIndex("RenderNoLighting", GL_FRAGMENT_SHADER);
+        renderingShaderParams.useTextureSubFunctionLocation = GetSubroutineIndex("RenderWithTexture", GL_FRAGMENT_SHADER);
+        renderingShaderParams.noTextureSubFunctionLocation = GetSubroutineIndex("RenderNOTexture", GL_FRAGMENT_SHADER);
+        renderingShaderParams.noLightingSubFunctionLocation = GetSubroutineIndex("RenderNoLighting", GL_FRAGMENT_SHADER);
 
 #ifdef _DEBUG
-        useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_DebugBuild", GL_FRAGMENT_SHADER);
-        shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+        renderingShaderParams.useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_DebugBuild", GL_FRAGMENT_SHADER);
+        renderingShader.SetSubroutineUniformIndex(renderingShaderParams.colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #else
-        useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
-        shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+        renderingShaderParams.useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
+        renderingShader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #endif
-
-        shader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
-        shader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
+        renderingShader.SetSubroutineUniformIndex(renderingShaderParams.textureSubRoutineUniform, renderingShaderParams.noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
+        renderingShader.SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
     }
     else
     {
-        oldCodeTextureSelection = GetUniformLocation("uTextureRender");
-        SetUniformBool(oldCodeTextureSelection, false);
+        renderingShaderParamsAlt.textureSamplerLocation = GetUniformLocation("myTextureSampler");
+        renderingShaderParamsAlt.MVPMatrixLocation = GetUniformLocation("MVP");
+        renderingShaderParamsAlt.MMatrixLocation = GetUniformLocation("M");
+        renderingShaderParamsAlt.VMatrixLocation = GetUniformLocation("V");
         
-        oldCodeLightingSelection = GetUniformLocation("uLightingRender");
-        SetUniformBool(oldCodeLightingSelection, true);
+        renderingShaderParamsAlt.oldCodeTextureSelection = GetUniformLocation("uTextureRender");
+        //SetUniformBool(renderingShaderParamsAlt.oldCodeTextureSelection, false);
+        
+        renderingShaderParamsAlt.oldCodeLightingSelection = GetUniformLocation("uLightingRender");
+        //SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, true);
+        
+        renderingShaderParamsAlt.emissiveColorLocation = GetUniformLocation("uPointLightingEmissiveColor");
     }
 	return true;
 }
 
 void OpenGLImplementationBase::DestroyGL()
 {
-	shader.DestroyProgram();
+	renderingShader.DestroyProgram();
+    depthShader.DestroyProgram();
+    
+    if (0 != vao)
+    {
+        glDeleteVertexArrays(1, &vao);
+        CHECK_GL_ERROR;
+        vao = 0;
+    }
 }
 
-bool OpenGLImplementationBase::HasBeenInitialized()
-{
-	return hasBeenInitialized;
-}
+//bool OpenGLImplementationBase::HasBeenInitialized()
+//{
+//	return hasBeenInitialized;
+//}
 
-void OpenGLImplementationBase::UseProgram()
-{
-	shader.UseProgram();
-}
+//void OpenGLImplementationBase::UseProgram()
+//{
+//	shader.UseProgram();
+//}
 
-void OpenGLImplementationBase::StopUsingProgram()
-{
-	glUseProgram(0);
-	CHECK_GL_ERROR;
-}
+//void OpenGLImplementationBase::StopUsingProgram()
+//{
+//	glUseProgram(0);
+//	CHECK_GL_ERROR;
+//}
 
-int OpenGLImplementationBase::GetShaderProgram()
-{
-	return shader.GetShaderProgram();
-}
+//int OpenGLImplementationBase::GetShaderProgram()
+//{
+//	return shader.GetShaderProgram();
+//}
 
 int OpenGLImplementationBase::GetUniformLocation(const char* pUniformVariableName)
 {
-	return shader.GetUniformLocation(pUniformVariableName);
+	return renderingShader.GetUniformLocation(pUniformVariableName);
 }
 
 unsigned int OpenGLImplementationBase::GetSubroutineUniformIndex(const char* pSubroutineUniformVariableName, unsigned int shaderType)
 {
-	return shader.GetSubroutineUniformIndex(pSubroutineUniformVariableName, shaderType);
+	return renderingShader.GetSubroutineUniformIndex(pSubroutineUniformVariableName, shaderType);
 }
 
 void OpenGLImplementationBase::SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType)
 {
-	shader.SetSubroutineUniformIndex(subRoutineUniformIndex, subRoutineIndex, shaderType, true, false);
+	renderingShader.SetSubroutineUniformIndex(subRoutineUniformIndex, subRoutineIndex, shaderType, true, false);
 }
 
 int OpenGLImplementationBase::GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType)
 {
-	return shader.GetSubroutineIndex(pSubRoutineName, shaderType);
+	return renderingShader.GetSubroutineIndex(pSubRoutineName, shaderType);
 }
 
 int OpenGLImplementationBase::GetAttribLocation(const char* pUniformVariableName)
 {
-	return shader.GetAttribLocation(pUniformVariableName);
+	return renderingShader.GetAttribLocation(pUniformVariableName);
 }
 
 void OpenGLImplementationBase::SetUniformFloat(int location, float newValue)
 {
-	shader.SetUniformFloat(location, newValue);
+    OpenGLShader::SetUniformFloat(location, newValue);
 }
 
 void OpenGLImplementationBase::SetUniformBool(int location, bool newValue)
 {
-	shader.SetUniformBool(location, newValue);
+	OpenGLShader::SetUniformBool(location, newValue);
 }
 
 void OpenGLImplementationBase::SetUniformInt(int location, int newValue)
 {
-	shader.SetUniformInt(location, newValue);
+	OpenGLShader::SetUniformInt(location, newValue);
 }
 
 void OpenGLImplementationBase::SetUniformMatrix(int location, const CMatrix& mat)
 {
-	shader.SetUniformMatrix(location, mat);
+    if (IsUsingSubRoutines()) {
+        OpenGLShader::SetUniformMatrix(location, mat);
+    } else {
+        if (renderingShaderParamsAlt.MMatrixLocation == location) {
+            SetModelMatrix(mat);
+        } else if (renderingShaderParamsAlt.VMatrixLocation == location) {
+            SetViewMatrix(mat);
+        } else {
+            OpenGLShader::SetUniformMatrix(location, mat);
+        }
+    }
 }
 
 void OpenGLImplementationBase::SetUniformVector3(int location, const CVector& vect)
 {
-	shader.SetUniformVector3(location, vect);
+	OpenGLShader::SetUniformVector3(location, vect);
 }
 
 void OpenGLImplementationBase::SetUniformVector4(int location, const CVector4& vect)
 {
-	shader.SetUniformVector4(location, vect);
+	OpenGLShader::SetUniformVector4(location, vect);
 }
 
 void OpenGLImplementationBase::UseTextureDefault(int textureIndex)
 {
-	UseTexture(0, textureIndex, textureSamplerLocation);
     if (isUsingSubRoutines) {
-        SetSubroutineUniformIndex(textureSubRoutineUniform, useTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+        UseTexture(0, textureIndex, renderingShaderParams.textureSamplerLocation);
+        SetSubroutineUniformIndex(renderingShaderParams.textureSubRoutineUniform, renderingShaderParams.useTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
     }
     else
     {
-        SetUniformBool(oldCodeTextureSelection, true);
+        UseTexture(0, textureIndex, renderingShaderParamsAlt.textureSamplerLocation);
+        SetUniformBool(renderingShaderParamsAlt.oldCodeTextureSelection, true);
     }
 }
 
@@ -272,11 +330,11 @@ void OpenGLImplementationBase::UseTexture(int textureBindLayer, int textureIndex
 void OpenGLImplementationBase::DontUseDefaultTexture()
 {
     if (isUsingSubRoutines) {
-        SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
+        SetSubroutineUniformIndex(renderingShaderParams.textureSubRoutineUniform, renderingShaderParams.noTextureSubFunctionLocation, GL_FRAGMENT_SHADER);
     }
     else
     {
-        SetUniformBool(oldCodeTextureSelection, false);
+        SetUniformBool(renderingShaderParamsAlt.oldCodeTextureSelection, false);
     }
 }
 
@@ -303,50 +361,44 @@ void OpenGLImplementationBase::VertexAttribPointer(int location, int numComponen
 
 void OpenGLImplementationBase::DisableVertexPositionAttribPointer()
 {
-	//glDisableVertexAttribArray(vertexPositionAttribLocation);
-    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexPositionAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
-	//VertexAttribPointer(vertexPositionAttribLocation, NumComponents, stride, offset);
-    VertexAttribPointer(0, NumComponents, stride, offset);
+	VertexAttribPointer(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation, NumComponents, stride, offset);
 }
 
 void OpenGLImplementationBase::DisableVertexNormalAttribPointer()
 {
-	//glDisableVertexAttribArray(vertexNormalAttribLocation);
-    glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(IsUsingSubRoutines() ? renderingShaderParams.vertexNormalAttribLocation : renderingShaderParamsAlt.vertexNormalAttribLocation);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexNormalAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
-	//VertexAttribPointer(vertexNormalAttribLocation, NumComponents, stride, offset);
-    VertexAttribPointer(1, NumComponents, stride, offset);
+    VertexAttribPointer(IsUsingSubRoutines() ? renderingShaderParams.vertexNormalAttribLocation : renderingShaderParamsAlt.vertexNormalAttribLocation, NumComponents, stride, offset);
 }
 
 void OpenGLImplementationBase::DisableVertexTextureAttribPointer()
 {
-	//glDisableVertexAttribArray(vertexTexCoordAttribLocation);
-    glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(IsUsingSubRoutines() ? renderingShaderParams.vertexTexCoordAttribLocation : renderingShaderParamsAlt.vertexTexCoordAttribLocation);
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexTextureAttribPointer(int stride)
 {
 	const int NumComponents = 2;
-	//VertexAttribPointer(vertexTexCoordAttribLocation, NumComponents, stride);
-    VertexAttribPointer(2, NumComponents, stride);
+	VertexAttribPointer(IsUsingSubRoutines() ? renderingShaderParams.vertexTexCoordAttribLocation : renderingShaderParamsAlt.vertexTexCoordAttribLocation, NumComponents, stride);
 }
 
 void OpenGLImplementationBase::DrawElements(int numToDraw)
 {
 	glDrawElements( GL_TRIANGLES, numToDraw, GL_UNSIGNED_SHORT, 0);
-	CHECK_GL_ERROR;	
+	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::DrawArrays(int numToDraw)
@@ -357,47 +409,79 @@ void OpenGLImplementationBase::DrawArrays(int numToDraw)
 
 void OpenGLImplementationBase::SetProjectionMatrix(const CMatrix& mat)
 {
-	SetUniformMatrix(projectionMatrixLocation, mat);
+    if (isUsingSubRoutines) {
+        SetUniformMatrix(renderingShaderParams.projectionMatrixLocation, mat);
+    } else {
+        renderingShaderParamsAlt.projectionMatrix = mat;
+        CMatrix MVP = renderingShaderParamsAlt.projectionMatrix * renderingShaderParamsAlt.lookAtViewMatrix * renderingShaderParamsAlt.modelMatrix;
+        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.MVPMatrixLocation, MVP);
+    }
 }
 
 void OpenGLImplementationBase::SetModelMatrix(const CMatrix& mat)
 {
-	SetUniformMatrix(modelMatrixLocation, mat);
+    if (isUsingSubRoutines) {
+        SetUniformMatrix(renderingShaderParams.modelMatrixLocation, mat);
+    } else {
+        renderingShaderParamsAlt.modelMatrix = mat;
+        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.MMatrixLocation, mat);
+        SetProjectionMatrix(renderingShaderParamsAlt.projectionMatrix);
+    }
 }
 
 void OpenGLImplementationBase::SetViewMatrix(const CMatrix& mat)
 {
-	SetUniformMatrix(viewMatrixLocation, mat);
+    if (isUsingSubRoutines) {
+        SetUniformMatrix(renderingShaderParams.viewMatrixLocation, mat);
+    } else {
+        renderingShaderParamsAlt.lookAtViewMatrix = mat;
+        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.VMatrixLocation, mat);
+        SetProjectionMatrix(renderingShaderParamsAlt.projectionMatrix);
+    }
 }
 
 void OpenGLImplementationBase::SetAmbientColor(const CVector& color)
 {
-	SetUniformVector3(ambientColorLocation, color);
+    if (IsUsingSubRoutines()) {
+        SetUniformVector3(renderingShaderParams.ambientColorLocation, color);
+    }
 }
 
 void OpenGLImplementationBase::SetDiffuseColor(const CVector& color)
 {
-	SetUniformVector3(diffuseColorLocation, color);
+    if (IsUsingSubRoutines()) {
+        SetUniformVector3(renderingShaderParams.diffuseColorLocation, color);
+    }
 }
 
 void OpenGLImplementationBase::SetSpecularColor(const CVector& color)
 {
-	SetUniformVector3(specularColorLocation, color);
+    if (IsUsingSubRoutines()) {
+        SetUniformVector3(renderingShaderParams.specularColorLocation, color);
+    }
 }
 
 void OpenGLImplementationBase::SetEmissiveColor(const CVector4& color)
 {
-	SetUniformVector4(emissiveColorLocation, color);
+    if (IsUsingSubRoutines()) {
+        SetUniformVector4(renderingShaderParams.emissiveColorLocation, color);
+    } else {
+        SetUniformVector4(renderingShaderParamsAlt.emissiveColorLocation, color);
+    }
 }
 
 void OpenGLImplementationBase::SetShininess(float val)
 {
-	SetUniformFloat(shininessLocation, val);
+    if (IsUsingSubRoutines()) {
+        SetUniformFloat(renderingShaderParams.shininessLocation, val);
+    }
 }
 
 void OpenGLImplementationBase::ShowSpecularHighlights(bool show)
 {
-	SetUniformBool(showSpecularHighlightLocation, show);
+    if (IsUsingSubRoutines()) {
+        SetUniformBool(renderingShaderParams.showSpecularHighlightLocation, show);
+    }
 }
 
 #else
@@ -470,11 +554,11 @@ void OpenGLImplementationBase::GLEnable(unsigned int identifier)
 	{
 		case GL_LIGHTING:
             if (isUsingSubRoutines) {
-                SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+                SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.useLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
             }
             else
             {
-                SetUniformBool(oldCodeLightingSelection, true);
+                SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, true);
             }
 			break;
 		default: 
@@ -493,11 +577,11 @@ void OpenGLImplementationBase::GLDisable(unsigned int identifier)
 	{
 		case GL_LIGHTING:
             if (isUsingSubRoutines) {
-                SetSubroutineUniformIndex(lightingSubRoutineUniform, noLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
+                SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.noLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
             }
             else
             {
-                SetUniformBool(oldCodeLightingSelection, false);
+                SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, false);
             }
             
 			break;

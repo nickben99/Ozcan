@@ -20,6 +20,8 @@ using namespace glm;
 #include <Math/CVector.h>
 #include <Math/CMatrix.h>
 #include <Game/Globals.h>
+#include <FileReading/TEXTURE.H>
+#include <Game/CMenu.h>
 
 // GL ERROR CHECK
 int CheckGLError(const char *file, int line)
@@ -431,21 +433,26 @@ GLuint VertexArrayID;
 struct Original {
     // depth shader
     GLuint depthProgramID = 0;
-    GLuint depthMatrixID = 0;
+    GLuint depthMatrixID = 0; // depthMVP, depth orthographic projection * depth look at * model(identity)
     
     // shadow shader
     GLuint programID = 0;
     GLuint TextureID = 0;
-    GLuint MatrixID = 0;
-    GLuint ViewMatrixID = 0;
-    GLuint ModelMatrixID = 0;
-    GLuint DepthBiasID = 0;
+    GLuint MatrixID = 0; // MVP, projection * look at * model
+    GLuint ViewMatrixID = 0; // look at matrix
+    GLuint ModelMatrixID = 0; // the model's transform
+    GLuint DepthBiasID = 0; // bias matrix * depthMVP (depthMatrixID in depth shader)
     GLuint ShadowMapID = 0;
     GLuint lightInvDirID = 0;
     
     // shadow mapping init
     GLuint FramebufferName = 0;
     GLuint depthTexture = 0;
+    
+    // extra new params
+    GLuint oldCodeTextureSelection = 0;
+    GLuint oldCodeLightingSelection = 0;
+    GLuint emissiveColorLocation = 0;
     
 #ifdef mymath
     // matrices/vectors
@@ -484,7 +491,7 @@ struct Ozcan {
     GLuint oldCodeVertexRenderSelector = 0;
     GLuint oldCodeFragmentRenderSelector = 0;
     
-    GLuint lightViewProjectionMatrixUniform = 0;
+    GLuint lightViewProjectionMatrixUniform = 0; // DepthBiasID in original
     GLuint depthTextureSamplerUniform = 0;
     
     // lighting uniforms
@@ -496,11 +503,11 @@ struct Ozcan {
 } ozcanInst;
 
 void OriginalLoadShaders() {
-    originalInst.depthProgramID = LoadShaders( "DepthRTTVert.glsl", "DepthRTTFrag.glsl" );
+    originalInst.depthProgramID = LoadShaders( "code/Shaders/DepthRTTVert.glsl", "code/Shaders/DepthRTTFrag.glsl" );
     CHECK_GL_ERROR;
     
     // Create and compile our GLSL program from the shaders
-    originalInst.programID = LoadShaders( "ShadowMappingVert.glsl", "ShadowMappingFrag.glsl" );
+    originalInst.programID = LoadShaders( "code/Shaders/ShadowMappingVert.glsl", "code/Shaders/ShadowMappingFrag.glsl" );
     CHECK_GL_ERROR;
 }
 
@@ -512,24 +519,50 @@ void OzcanLoadShaders() {
     CHECK_GL_ERROR;
 }
 
+bool loadedShadersLocally = true;
 void OriginalGetUniformLocation() {
-    // Get a handle for our "MVP" uniform
-    originalInst.depthMatrixID = glGetUniformLocation(originalInst.depthProgramID, "depthMVP");
-    CHECK_GL_ERROR;
+    if (loadedShadersLocally) {
+        // Get a handle for our "MVP" uniform
+        originalInst.depthMatrixID = glGetUniformLocation(originalInst.depthProgramID, "depthMVP");
+        CHECK_GL_ERROR;
     
-    // shadow
-    // Get a handle for our "myTextureSampler" uniform
-    originalInst.TextureID  = glGetUniformLocation(originalInst.programID, "myTextureSampler");
+        // shadow
+        // Get a handle for our "myTextureSampler" uniform
+        originalInst.TextureID = glGetUniformLocation(originalInst.programID, "myTextureSampler");
     
-    // Get a handle for our "MVP" uniform
-    originalInst.MatrixID = glGetUniformLocation(originalInst.programID, "MVP");
-    originalInst.ViewMatrixID = glGetUniformLocation(originalInst.programID, "V");
-    originalInst.ModelMatrixID = glGetUniformLocation(originalInst.programID, "M");
-    originalInst.DepthBiasID = glGetUniformLocation(originalInst.programID, "DepthBiasMVP");
-    originalInst.ShadowMapID = glGetUniformLocation(originalInst.programID, "shadowMap");
+        // Get a handle for our "MVP" uniform
+        originalInst.MatrixID = glGetUniformLocation(originalInst.programID, "MVP");
+        originalInst.ViewMatrixID = glGetUniformLocation(originalInst.programID, "V");
+        originalInst.ModelMatrixID = glGetUniformLocation(originalInst.programID, "M");
+        originalInst.DepthBiasID = glGetUniformLocation(originalInst.programID, "DepthBiasMVP");
+        originalInst.ShadowMapID = glGetUniformLocation(originalInst.programID, "shadowMap");
     
-    // Get a handle for our "LightPosition" uniform
-    originalInst.lightInvDirID = glGetUniformLocation(originalInst.programID, "LightInvDirection_worldspace");
+        // Get a handle for our "LightPosition" uniform
+        originalInst.lightInvDirID = glGetUniformLocation(originalInst.programID, "LightInvDirection_worldspace");
+    
+        // extra new params
+        originalInst.oldCodeTextureSelection = glGetUniformLocation(originalInst.programID, "uTextureRender");
+        originalInst.oldCodeLightingSelection = glGetUniformLocation(originalInst.programID, "uLightingRender");
+        originalInst.emissiveColorLocation = glGetUniformLocation(originalInst.programID, "uPointLightingEmissiveColor");
+    }
+    else
+    {
+        OpenGLImplementation& imp = Globals::Instance().gl.implementation;
+        originalInst.programID = imp.renderingShader.GetShaderProgram();
+        originalInst.depthProgramID = imp.depthShader.GetShaderProgram();
+    
+        originalInst.depthMatrixID = glGetUniformLocation(originalInst.depthProgramID, "depthMVP");
+        originalInst.TextureID = imp.renderingShaderParamsAlt.textureSamplerLocation;
+        originalInst.MatrixID = imp.renderingShaderParamsAlt.MVPMatrixLocation;
+        originalInst.ViewMatrixID = imp.renderingShaderParamsAlt.VMatrixLocation;
+        originalInst.ModelMatrixID = imp.renderingShaderParamsAlt.MMatrixLocation;
+        originalInst.DepthBiasID = glGetUniformLocation(originalInst.programID, "DepthBiasMVP");
+        originalInst.ShadowMapID = glGetUniformLocation(originalInst.programID, "shadowMap");
+        originalInst.lightInvDirID = glGetUniformLocation(originalInst.programID, "LightInvDirection_worldspace");
+        originalInst.oldCodeTextureSelection = imp.renderingShaderParamsAlt.oldCodeTextureSelection;
+        originalInst.oldCodeLightingSelection = imp.renderingShaderParamsAlt.oldCodeLightingSelection;
+        originalInst.emissiveColorLocation = imp.renderingShaderParamsAlt.emissiveColorLocation;
+    }
 }
 
 void OzcanGetUniformLocation() {
@@ -752,6 +785,11 @@ void OriginalPreRender() {
     // Use our shader
     glUseProgram(originalInst.programID);
     
+    // extra params
+    glUniform1i(originalInst.oldCodeTextureSelection, 1);
+    glUniform1i(originalInst.oldCodeLightingSelection, 1);
+    glUniform4f(originalInst.emissiveColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+    
     // Compute the MVP matrix from keyboard and mouse input
     CMatrix ProjectionMatrix = CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     
@@ -934,25 +972,30 @@ void OzcanDelete() {
 }
 // ---------
 
+int InitOrtho(); //prototype
+
 bool original = true;
 
-int InitTest() {
+int InitTest(bool load) {
+    loadedShadersLocally = load;
     // We would expect width and height to be 1024 and 768
     // But on MacOS X with a retina screen it'll be 1024*2 and 768*2, so we get the actual framebuffer size:
     glfwGetFramebufferSize(osxWindow, &windowWidth, &windowHeight);
     
-    // Initialize GLEW
-    glewExperimental = true; // Needed for core profile
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
-        getchar();
-        glfwTerminate();
-        return -1;
-    }
-    CHECK_GL_ERROR;
+    if (loadedShadersLocally) {
+        // Initialize GLEW
+        glewExperimental = true; // Needed for core profile
+        if (glewInit() != GLEW_OK) {
+            fprintf(stderr, "Failed to initialize GLEW\n");
+            getchar();
+            glfwTerminate();
+            return -1;
+        }
+        CHECK_GL_ERROR;
     
-    const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-    std::cout << "\n" << version;
+        const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+        std::cout << "\n" << version;
+    }
     
     // Ensure we can capture the escape key being pressed below
     //glfwSetInputMode(osxWindow, GLFW_STICKY_KEYS, GL_TRUE);
@@ -975,11 +1018,15 @@ int InitTest() {
     // Cull triangles which normal is not towards the camera
     glEnable(GL_CULL_FACE);
 
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
+    if (loadedShadersLocally) {
+        glGenVertexArrays(1, &VertexArrayID);
+        glBindVertexArray(VertexArrayID);
+    }
     
     if (original) {
-        OriginalLoadShaders();
+        if (loadedShadersLocally) {
+            OriginalLoadShaders();
+        }
         OriginalGetUniformLocation();
     } else {
         OzcanLoadShaders();
@@ -1023,6 +1070,86 @@ int InitTest() {
         }
     }
 
+    return 0;//InitOrtho();
+}
+
+extern GLuint TextureLoad(const char *filename, bool alpha, GLenum minfilter, GLenum magfilter, GLenum wrap);
+MeshBuffer* backgroundMesh = nullptr;
+bool useMeshBuffer = true;
+
+int InitOrtho() {
+    if (!backgroundMesh) {
+        backgroundMesh = new MeshBuffer();
+        
+    // load texture
+        char theBackground[400];
+        SPRINTF(theBackground, "%simages/back2.bmp", GetDirectoryPath());
+    
+        int background = // bind the background texture
+        TextureLoad(theBackground, GL_FALSE, GL_LINEAR, GL_LINEAR, GL_REPEAT);
+    
+        if (background <= 0){ // if their were problems loading the background
+            return (-1);} // unsuccesful load
+        
+        // verts
+        float mult = 0.25f;
+        GLfloat vertexPositionArray[] = {
+            -1024.0f*mult, -687.0f*mult, 0.0f,
+            -1024.0f*mult, 687.0f*mult, 0.0f,
+            1024.0f*mult, 687.0f*mult, 0.0f,
+            1024.0f*mult, -687.0f*mult, 0.0f
+        };
+        
+        float vertexTexCoordsArray[] =
+        {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        };
+        
+        float vertexNormalArray[] =
+        {
+            0.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            1.0f, 0.0f, 0.0f
+        };
+        
+        unsigned short vertexIndecisArray[] =
+        {
+            0, 1, 2,
+            0, 2, 3
+        };
+        
+//        if (!useMeshBuffer)
+//        {
+//            glGenBuffers(1, (unsigned int*)&backgroundMesh->vertexArrayBuffer);
+//            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->vertexArrayBuffer);
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositionArray) * sizeof(float), vertexPositionArray, GL_STATIC_DRAW);
+//            
+//            glGenBuffers(1, (unsigned int*)&backgroundMesh->texCoordArrayBuffer);
+//            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->texCoordArrayBuffer);
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(vertexTexCoordsArray) * sizeof(float), vertexTexCoordsArray, GL_STATIC_DRAW);
+//            
+//            glGenBuffers(1, (unsigned int*)&backgroundMesh->normalArrayBuffer);
+//            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->normalArrayBuffer);
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(vertexNormalArray) * sizeof(float), vertexNormalArray, GL_STATIC_DRAW);
+//            
+//            // Generate a buffer for the indices as well
+//            glGenBuffers(1, (unsigned int*)&backgroundMesh->indexArrayBuffer);
+//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, backgroundMesh->indexArrayBuffer);
+//            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertexIndecisArray) * sizeof(unsigned short),vertexIndecisArray, GL_STATIC_DRAW);
+//        }
+//        else
+//        {
+            backgroundMesh->CreateVertexArray(vertexPositionArray, sizeof(vertexPositionArray) / sizeof(float));
+            backgroundMesh->CreateTexCoordArray(vertexTexCoordsArray, sizeof(vertexTexCoordsArray) / sizeof(float));
+            backgroundMesh->CreateNormalArray(vertexNormalArray, sizeof(vertexNormalArray) / sizeof(float));
+            backgroundMesh->CreateIndexArray(vertexIndecisArray, sizeof(vertexIndecisArray) / sizeof(unsigned short));
+        //}
+        backgroundMesh->SetTexture(background);
+    }
     return 0;
 }
 
@@ -1113,6 +1240,117 @@ void RenderTest() {
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
 
+    //SetOrtho();
+    //DrawOrtho();
+}
+
+void SetOrtho() {
+    float halfWindowWidth = windowWidth/2;
+    float halfWindowHeight = windowHeight/2;
+    CMatrix ProjectionMatrix = CMatrix::CreateOrthographicProjection(-halfWindowWidth, halfWindowWidth, halfWindowHeight, -halfWindowHeight, -100.0f, 100.0f);
+    
+    CMatrix ViewMatrix;
+    CMatrix ModelMatrix;
+    CMatrix MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    
+    // Send our transformation to the currently bound shader,
+    // in the "MVP" uniform
+    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0]);
+    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0]);
+    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0]);
+    
+    glUniform1i(originalInst.oldCodeLightingSelection, 0);
+}
+
+void DrawOrtho() {
+    if (backgroundMesh) {
+        if (useMeshBuffer) {
+            // Bind our texture in Texture Unit 0
+//            glActiveTexture(GL_TEXTURE0);
+//            CHECK_GL_ERROR;
+//            glBindTexture(GL_TEXTURE_2D, backgroundMesh->texture);
+//            CHECK_GL_ERROR;
+//            // Set our "myTextureSampler" sampler to user Texture Unit 0
+//            glUniform1i(originalInst.TextureID, 0);
+            
+            backgroundMesh->Draw();
+        }
+        else
+        {
+            // Bind our texture in Texture Unit 0
+            glActiveTexture(GL_TEXTURE0);
+            CHECK_GL_ERROR;
+            glBindTexture(GL_TEXTURE_2D, backgroundMesh->texture);
+            CHECK_GL_ERROR;
+            // Set our "myTextureSampler" sampler to user Texture Unit 0
+            glUniform1i(originalInst.TextureID, 0);
+            
+            // 1rst attribute buffer : vertices
+            glEnableVertexAttribArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->vertexArrayBuffer);
+            glVertexAttribPointer(
+                                  0,                  // attribute
+                                  3,                  // size
+                                  GL_FLOAT,           // type
+                                  GL_FALSE,           // normalized?
+                                  0,                  // stride
+                                  (void*)0            // array buffer offset
+                                  );
+            
+            //Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, backgroundMesh->vertexArrayBuffer);
+            //Globals::Instance().gl.SetVertexPositionAttribPointer();
+            
+            
+            // 2nd attribute buffer : UVs
+            glEnableVertexAttribArray(1);
+            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->texCoordArrayBuffer);
+            glVertexAttribPointer(
+                                  1,                                // attribute
+                                  2,                                // size
+                                  GL_FLOAT,                         // type
+                                  GL_FALSE,                         // normalized?
+                                  0,                                // stride
+                                  (void*)0                          // array buffer offset
+                                  );
+
+            //Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, backgroundMesh->texCoordArrayBuffer);
+            //Globals::Instance().gl.SetVertexTextureAttribPointer();
+            
+//            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->texCoordArrayBuffer);
+//            glEnableVertexAttribArray(vertexTexCoordAttribLocation);
+//            CHECK_GL_ERROR;
+//            const GLvoid* offsetPointer = (const GLvoid*)(long)offset;
+//            glVertexAttribPointer(location, numComponents, GL_FLOAT, GL_FALSE, stride, offsetPointer);
+//            CHECK_GL_ERROR;
+            
+            // 3rd attribute buffer : normals
+            glEnableVertexAttribArray(2);
+            glBindBuffer(GL_ARRAY_BUFFER, backgroundMesh->normalArrayBuffer);
+            glVertexAttribPointer(
+                                  2,                                // attribute
+                                  3,                                // size
+                                  GL_FLOAT,                         // type
+                                  GL_FALSE,                         // normalized?
+                                  0,                                // stride
+                                  (void*)0                          // array buffer offset
+                                  );
+            
+            // Index buffer
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, backgroundMesh->indexArrayBuffer);
+            
+            // Draw the triangles !
+            glDrawElements(
+                           GL_TRIANGLES,      // mode
+                           (int)6,    // count
+                           GL_UNSIGNED_SHORT, // type
+                           (void*)0           // element array buffer offset
+                           );
+            
+            glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(1);
+            glDisableVertexAttribArray(2);
+        }
+    }
 }
 
 void DeleteTest() {

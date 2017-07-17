@@ -43,12 +43,12 @@ class OpenGLShader
 		int GetAttribLocation(const char* pUniformVariableName);
 
 		void SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, GLenum shaderType, bool flushIfChanged, bool forceFlush);
-		void SetUniformFloat(int location, float newValue);
-		void SetUniformBool(int location, bool newValue);
-		void SetUniformInt(int location, int newValue);
-		void SetUniformMatrix(int location, const CMatrix& newValue);
-		void SetUniformVector3(int location, const CVector& newValue);
-		void SetUniformVector4(int location, const CVector4& newValue);
+		static void SetUniformFloat(int location, float newValue);
+		static void SetUniformBool(int location, bool newValue);
+		static void SetUniformInt(int location, int newValue);
+		static void SetUniformMatrix(int location, const CMatrix& newValue);
+		static void SetUniformVector3(int location, const CVector& newValue);
+		static void SetUniformVector4(int location, const CVector4& newValue);
 
 		bool CreateProgram(const char* vertexShader, const char* fragmentShader);
 		void DestroyProgram();
@@ -71,7 +71,7 @@ private:
 	GLuint shaderProgram;
 	GLuint compiledVertexShader;
 	GLuint compiledFragmentShader;
-	GLuint vao;
+	//GLuint vao;
 
 	int numActiveFragmentShaderSubroutineUniforms;
 	unsigned int* activeFragmentShaderSubRoutineUniformIndecis;
