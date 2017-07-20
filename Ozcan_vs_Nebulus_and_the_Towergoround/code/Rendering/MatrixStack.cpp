@@ -32,9 +32,15 @@ MatrixStack::~MatrixStack()
 {
 }
 
+
+
 void MatrixStack::SetMatrixLocation(int loc)
 {
 	matrixLocation = loc;
+}
+
+int MatrixStack::GetMatrixLocation() {
+    return matrixLocation;
 }
 
 void MatrixStack::LoadIdentity()

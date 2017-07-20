@@ -30,19 +30,24 @@
 //---static variable declerations ---
 unsigned int ShadowMapping::frameBuffer = 0;
 unsigned int ShadowMapping::depthTexture = 0;
+unsigned int ShadowMapping::depthMMatrixLocation = 0;
+unsigned int ShadowMapping::depthMatrixID = 0;
 
 int ShadowMapping::shadowMappingVertexSubroutineUniform = -1;
 int ShadowMapping::shadowMappingVertexRenderSubRoutineIndex = -1;
 int ShadowMapping::mainRenderVertexSubRoutineIndex = -1;
-int ShadowMapping::oldCodeVertexRenderSelector = -1;
+//int ShadowMapping::oldCodeVertexRenderSelector = -1;
 
 int ShadowMapping::shadowMappingSubroutineUniform = -1;
 int ShadowMapping::shadowMappingRenderSubRoutineIndex = -1;
 int ShadowMapping::mainRenderSubRoutineIndex = -1;
-int ShadowMapping::oldCodeFragmentRenderSelector = -1;
+//int ShadowMapping::oldCodeFragmentRenderSelector = -1;
 
 int ShadowMapping::lightViewProjectionMatrixUniform = -1;
 int ShadowMapping::depthTextureSamplerUniform = -1;
+
+unsigned int ShadowMapping::renderingModelMatrixLocation = -1;
+unsigned int ShadowMapping::lightInvDirLocation = -1;
 //-----------------------------------
 
 ShadowMapping::ShadowMapping()
@@ -72,6 +77,8 @@ bool shadowMappingVariablesAddedToDebugMenu = false;
 unsigned int ShadowMapping::Create()
 {
 	Destroy(); // delete anything hanging around
+    
+    Globals::Instance().gl.UseRenderProgram();
 	
     if (Globals::Instance().gl.IsUsingSubRoutines())
     {
@@ -82,65 +89,82 @@ unsigned int ShadowMapping::Create()
         shadowMappingSubroutineUniform = Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER);
         shadowMappingRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("MainShadowMapCreation", GL_FRAGMENT_SHADER);
         mainRenderSubRoutineIndex = Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER);
+        
+        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
     }
     else
     {
-        oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
-        oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+        //oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
+        //oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
+        
+        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("DepthBiasMVP");
+        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("shadowMap");
+        lightInvDirLocation = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
+        
+        Globals::Instance().gl.UseCreateDepthTextureProgram();
+        depthMatrixID = Globals::Instance().gl.GetUniformLocation("depthMVP");
+        depthMMatrixLocation = Globals::Instance().gl.GetUniformLocation("modelMat");
     }
     
-    lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-    depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
+//    lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+//    depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
 
 #if (_DEBUG && USE_SHADERS)
 	if (!shadowMappingVariablesAddedToDebugMenu)
 	{
-		shadowMappingVariablesAddedToDebugMenu = true;
-		DebugMenu::DebugMenuItemContainer* container = new DebugMenu::DebugMenuItemContainer("Shadow Mapping");
-		container->AddVariable(new DebugMenu::FloatDebugMenuItem("horizontal proj", &horizontalProjection, 1.0f, -1.0f));
-		container->AddVariable(new DebugMenu::FloatDebugMenuItem("virtical proj", &virticalProjection, 1.0f, -1.0f));
-		container->AddVariable(new DebugMenu::FloatDebugMenuItem("forward proj", &forwardProjection, 1.0f, -1.0f));
-
-		container->AddVariable(new DebugMenu::BoolDebugMenuItem("wholeSceneShadowMap", &wholeSceneShadowMap));
-		container->AddVariable(new DebugMenu::BoolDebugMenuItem("resetProjectionValues", &resetProjectionValues));
-
-		Globals::Instance().debugMenu.AddVariable(container);
+//		shadowMappingVariablesAddedToDebugMenu = true;
+//		DebugMenu::DebugMenuItemContainer* container = new DebugMenu::DebugMenuItemContainer("Shadow Mapping");
+//		container->AddVariable(new DebugMenu::FloatDebugMenuItem("horizontal proj", &horizontalProjection, 1.0f, -1.0f));
+//		container->AddVariable(new DebugMenu::FloatDebugMenuItem("virtical proj", &virticalProjection, 1.0f, -1.0f));
+//		container->AddVariable(new DebugMenu::FloatDebugMenuItem("forward proj", &forwardProjection, 1.0f, -1.0f));
+//
+//		container->AddVariable(new DebugMenu::BoolDebugMenuItem("wholeSceneShadowMap", &wholeSceneShadowMap));
+//		container->AddVariable(new DebugMenu::BoolDebugMenuItem("resetProjectionValues", &resetProjectionValues));
+//
+//		Globals::Instance().debugMenu.AddVariable(container);
 	}
 #endif
-
-	// The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
-	glGenFramebuffers(1, &frameBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer); // start using our new frame buffer
-
-	// Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-	//depthTexture = getTextureNumber("shadow mapping texture");
-    glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, textureSize, textureSize, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
     
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+    //
+    // done in ctest.cpp
+    //
 
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
-
-	// No color output in the bound framebuffer, only depth.
-	glDrawBuffer(GL_NONE);
-    glReadBuffer(GL_NONE);
+//	// The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
+//	glGenFramebuffers(1, &frameBuffer);
+//	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer); // start using our new frame buffer
+//
+//	// Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+//	//depthTexture = getTextureNumber("shadow mapping texture");
+//    glGenTextures(1, &depthTexture);
+//	glBindTexture(GL_TEXTURE_2D, depthTexture);
+//	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, textureSize, textureSize, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+//
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+//    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+//    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+//    
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+//
+//	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
+//
+//	// No color output in the bound framebuffer, only depth.
+//	glDrawBuffer(GL_NONE);
+//    glReadBuffer(GL_NONE);
+//    
+//	// Always check that our framebuffer is ok
+//	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+//	{
+//		return false;
+//	}
+//	
+//	UseDefaultFrameBuffer();
     
-	// Always check that our framebuffer is ok
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		return false;
-	}
-	
-	UseDefaultFrameBuffer();
+    Globals::Instance().gl.UseRenderProgram();
 	return true;
 }
 
@@ -151,17 +175,21 @@ void ShadowMapping::UseDefaultFrameBuffer()
 
 void ShadowMapping::Destroy()
 {
-	if (0 != depthTexture)
-	{
-		deleteTexture(depthTexture);
-		depthTexture = 0;
-	}
-
-	if (0 != frameBuffer)
-	{
-		glDeleteFramebuffers(1, &frameBuffer);
-		frameBuffer = 0;
-	}	
+    //
+    // done in ctest.cpp
+    //
+    
+//	if (0 != depthTexture)
+//	{
+//		deleteTexture(depthTexture);
+//		depthTexture = 0;
+//	}
+//
+//	if (0 != frameBuffer)
+//	{
+//		glDeleteFramebuffers(1, &frameBuffer);
+//		frameBuffer = 0;
+//	}	
 }
 
 void ShadowMapping::PreDepthTextureRender()
@@ -183,29 +211,54 @@ void ShadowMapping::PreDepthTextureRender()
     {
         Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingSubroutineUniform, shadowMappingRenderSubRoutineIndex, GL_FRAGMENT_SHADER);
         Globals::Instance().gl.SetSubroutineUniformIndex(shadowMappingVertexSubroutineUniform, shadowMappingVertexRenderSubRoutineIndex, GL_VERTEX_SHADER);
+        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        Globals::Instance().gl.SetProjectionMatrix(CalculateLightOrthographicProjection());
+        
+        Globals::Instance().viewMatrixStack.PushMatrix();
+        Globals::Instance().viewMatrixStack.LoadIdentity();
+        Globals::Instance().viewMatrixStack.MultMatrix(CalculateLightLookAtMatrix());
+        
+        Globals::Instance().modelMatrixStack.PushMatrix();
+        Globals::Instance().modelMatrixStack.LoadIdentity();
     }
     else
     {
-        Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, true);
-        Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, true);
+        //Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, true);
+        //Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, true);
+        
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+        
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        Globals::Instance().gl.UseCreateDepthTextureProgram();
+        
+        CMatrix depthMVP = CalculateLightOrthographicProjection() * CalculateLightLookAtMatrix();
+        Globals::Instance().gl.SetUniformMatrix(depthMatrixID, depthMVP);
+        
+        Globals::Instance().modelMatrixStack.PushMatrix();
+        renderingModelMatrixLocation = Globals::Instance().modelMatrixStack.GetMatrixLocation();
+        Globals::Instance().modelMatrixStack.SetMatrixLocation(depthMMatrixLocation);
+        Globals::Instance().modelMatrixStack.LoadIdentity();
+        
+        MeshBuffer::depthTextureRender = true;
     }
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	Globals::Instance().gl.SetProjectionMatrix(CalculateLightOrthographicProjection());
-
-	Globals::Instance().viewMatrixStack.PushMatrix();
-	Globals::Instance().viewMatrixStack.LoadIdentity();
-	Globals::Instance().viewMatrixStack.MultMatrix(CalculateLightLookAtMatrix());
-
-	Globals::Instance().modelMatrixStack.PushMatrix();
-	Globals::Instance().modelMatrixStack.LoadIdentity();
 }
 
 void ShadowMapping::PostDepthTextureRender()
 {
+    MeshBuffer::depthTextureRender = false;
+    
+    if (!Globals::Instance().gl.IsUsingSubRoutines()) {
+        Globals::Instance().gl.UseRenderProgram();
+    }
+    
+    Globals::Instance().modelMatrixStack.SetMatrixLocation(renderingModelMatrixLocation);
 	Globals::Instance().modelMatrixStack.PopMatrix();
-	Globals::Instance().viewMatrixStack.PopMatrix();
+	//Globals::Instance().viewMatrixStack.PopMatrix();
 	CMenu::SetPerspectiveProjectionMatrix();
     
     if (Globals::Instance().gl.IsUsingSubRoutines())
@@ -215,12 +268,12 @@ void ShadowMapping::PostDepthTextureRender()
     }
     else
     {
-        Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, false);
-        Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, false);
+        //Globals::Instance().gl.SetUniformBool(oldCodeVertexRenderSelector, false);
+        //Globals::Instance().gl.SetUniformBool(oldCodeFragmentRenderSelector, false);
     }
 
-	glViewport(0, 0, (int)Globals::Instance().windowWidth, (int)Globals::Instance().windowHeight); 
-	UseDefaultFrameBuffer();
+    UseDefaultFrameBuffer();
+	glViewport(0, 0, (int)Globals::Instance().windowWidth, (int)Globals::Instance().windowHeight);
 }
 
 void ShadowMapping::PreSceneRender()
@@ -235,7 +288,74 @@ void ShadowMapping::PreSceneRender()
 	CMatrix lightMVP = biasMatrix * CalculateLightOrthographicProjection() * CalculateLightLookAtMatrix();
 
 	Globals::Instance().gl.SetUniformMatrix(lightViewProjectionMatrixUniform, lightMVP);
-	Globals::Instance().gl.UseTexture(1, depthTexture, depthTextureSamplerUniform); 
+	Globals::Instance().gl.UseTexture(1, depthTexture, depthTextureSamplerUniform);
+    
+    // -----------------------
+    
+    // Render to the screen
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//    glViewport(0,0,windowWidth,windowHeight); // Render on the whole framebuffer, complete from the lower left corner to the upper right
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // Cull back-facing triangles -> draw only front-facing triangles
+    
+    // Clear the screen
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Use our shader
+    //glUseProgram(originalInst.programID);
+    
+//    // extra params
+//    glUniform1i(originalInst.oldCodeTextureSelection, 1);
+//    glUniform1i(originalInst.oldCodeLightingSelection, 1);
+//    glUniform4f(originalInst.emissiveColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+    
+    // Compute the MVP matrix from keyboard and mouse input
+//    CMatrix ProjectionMatrix = CMatrix::CreatePerspectiveProjection(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+//    
+//    CVector position( -16, 8, 1 );
+//    // Initial horizontal angle : toward -Z
+//    float horizontalAngle = 1.6f;
+//    // Initial vertical angle : none
+//    float  verticalAngle = -0.40f;
+//    CVector direction(cos(verticalAngle) * sin(horizontalAngle), sin(verticalAngle), cos(verticalAngle) * cos(horizontalAngle));
+//    
+//    CMatrix ViewMatrix = CMatrix::LookAt(position, position+direction, CVector::unitY);
+//    //ViewMatrix = glm::lookAt(glm::vec3(14,6,4), glm::vec3(0,1,0), glm::vec3(0,1,0));
+//    CMatrix ModelMatrix;
+//    CMatrix MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+//    
+//    CMatrix biasMatrix(
+//                       0.5, 0.0, 0.0, 0.0,
+//                       0.0, 0.5, 0.0, 0.0,
+//                       0.0, 0.0, 0.5, 0.0,
+//                       0.5, 0.5, 0.5, 1.0
+//                       );
+//    
+//    CMatrix depthBiasMVP = biasMatrix*originalInst.depthMVP;
+//    
+//    // Send our transformation to the currently bound shader,
+//    // in the "MVP" uniform
+//    glUniformMatrix4fv(originalInst.MatrixID, 1, GL_FALSE, &MVP[0]);
+//    glUniformMatrix4fv(originalInst.ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0]);
+//    glUniformMatrix4fv(originalInst.ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0]);
+//    glUniformMatrix4fv(originalInst.DepthBiasID, 1, GL_FALSE, &depthBiasMVP[0]);
+    
+    CVector lightInvDir = -Globals::Instance().currentLevel.theScene.GetLightDirection();
+    glUniform3f(lightInvDirLocation, lightInvDir.x, lightInvDir.y, lightInvDir.z);
+    
+//    // Bind our texture in Texture Unit 0
+//    glActiveTexture(GL_TEXTURE0);
+//    CHECK_GL_ERROR;
+//    glBindTexture(GL_TEXTURE_2D, Texture);
+//    CHECK_GL_ERROR;
+//    // Set our "myTextureSampler" sampler to user Texture Unit 0
+//    glUniform1i(originalInst.TextureID, 0);
+    
+//    glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
+//    CHECK_GL_ERROR;
+//    glUniform1i(originalInst.ShadowMapID, 1);
 }
 
 void ShadowMapping::PostSceneRender()

@@ -22,6 +22,7 @@ using namespace glm;
 #include <Game/Globals.h>
 #include <FileReading/TEXTURE.H>
 #include <Game/CMenu.h>
+#include <Rendering/ShadowMapping.h>
 
 // GL ERROR CHECK
 int CheckGLError(const char *file, int line)
@@ -434,6 +435,7 @@ struct Original {
     // depth shader
     GLuint depthProgramID = 0;
     GLuint depthMatrixID = 0; // depthMVP, depth orthographic projection * depth look at * model(identity)
+    GLuint depthMMatrixLocation = 0;
     
     // shadow shader
     GLuint programID = 0;
@@ -446,8 +448,8 @@ struct Original {
     GLuint lightInvDirID = 0;
     
     // shadow mapping init
-    GLuint FramebufferName = 0;
-    GLuint depthTexture = 0;
+    //GLuint FramebufferName = 0;
+    //GLuint depthTexture = 0;
     
     // extra new params
     GLuint oldCodeTextureSelection = 0;
@@ -562,6 +564,8 @@ void OriginalGetUniformLocation() {
         originalInst.oldCodeTextureSelection = imp.renderingShaderParamsAlt.oldCodeTextureSelection;
         originalInst.oldCodeLightingSelection = imp.renderingShaderParamsAlt.oldCodeLightingSelection;
         originalInst.emissiveColorLocation = imp.renderingShaderParamsAlt.emissiveColorLocation;
+        
+        originalInst.depthMMatrixLocation = glGetUniformLocation(originalInst.depthProgramID, "modelMat");
     }
 }
 
@@ -613,25 +617,31 @@ void OzcanGetUniformLocation() {
 
 bool OriginalInitRenderToTexture() {
     // The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
-    glGenFramebuffers(1, &(originalInst.FramebufferName));
-    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    glGenFramebuffers(1, &(ShadowMapping::frameBuffer));
+    glBindFramebuffer(GL_FRAMEBUFFER, ShadowMapping::frameBuffer);
     
     // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-    glGenTextures(1, &(originalInst.depthTexture));
-    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    glGenTextures(1, &(ShadowMapping::depthTexture));
+    glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
     CHECK_GL_ERROR;
     glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // GL_CLAMP_TO_BORDER in my version
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // GL_CLAMP_TO_BORDER in my version
+    
+    // these two lines were in my version
+    //GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    //glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
     
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, originalInst.depthTexture, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ShadowMapping::depthTexture, 0);
     
     // No color output in the bound framebuffer, only depth.
     glDrawBuffer(GL_NONE);
+    //glReadBuffer(GL_NONE); // my version had this line
     
     // Always check that our framebuffer is ok
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -692,7 +702,7 @@ glm::mat4 ToGlm(const CMatrix& inMat) {
 void OriginalPreRenderDepthToTexture() {
 #ifdef mymath
     // Render to our framebuffer
-    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, ShadowMapping::frameBuffer);
     glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
     
     // We don't use bias in the shader, but instead we draw back faces,
@@ -721,9 +731,10 @@ void OriginalPreRenderDepthToTexture() {
     // Send our transformation to the currently bound shader,
     // in the "MVP" uniform
     glUniformMatrix4fv(originalInst.depthMatrixID, 1, GL_FALSE, &(originalInst.depthMVP[0]));
+    glUniformMatrix4fv(originalInst.depthMMatrixLocation, 1, GL_FALSE, &(originalInst.depthModelMatrix[0]));
 #else
     // Render to our framebuffer
-    glBindFramebuffer(GL_FRAMEBUFFER, originalInst.FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, ShadowMapping::framebuffer);
     glViewport(0,0,textureSize,textureSize); // Render on the whole framebuffer, complete from the lower left corner to the upper right
     
     // We don't use bias in the shader, but instead we draw back faces,
@@ -832,7 +843,7 @@ void OriginalPreRender() {
     glUniform1i(originalInst.TextureID, 0);
     
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
     CHECK_GL_ERROR;
     glUniform1i(originalInst.ShadowMapID, 1);
 #else
@@ -891,7 +902,7 @@ void OriginalPreRender() {
     glUniform1i(originalInst.TextureID, 0);
     
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, originalInst.depthTexture);
+    glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
     CHECK_GL_ERROR;
     glUniform1i(originalInst.ShadowMapID, 1);
 #endif
@@ -960,8 +971,10 @@ void OriginalDelete() {
     glDeleteProgram(originalInst.programID);
     glDeleteProgram(originalInst.depthProgramID);
     
-    glDeleteFramebuffers(1, &(originalInst.FramebufferName));
-    glDeleteTextures(1, &(originalInst.depthTexture));
+    glDeleteFramebuffers(1, &(ShadowMapping::frameBuffer));
+    ShadowMapping::frameBuffer = 0;
+    glDeleteTextures(1, &(ShadowMapping::depthTexture));
+    ShadowMapping::depthTexture = 0;
 }
 
 void OzcanDelete() {

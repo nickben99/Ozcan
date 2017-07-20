@@ -90,6 +90,14 @@ class OpenGLInterface
 //			return implementation.GetShaderProgram();
 //		}
 
+        void UseRenderProgram() {
+            implementation.UseRenderProgram();
+        }
+    
+        void UseCreateDepthTextureProgram() {
+            implementation.UseCreateDepthTextureProgram();
+        }
+    
 		int GetUniformLocation(const char* pUniformVariableName)
 		{
 			return implementation.GetUniformLocation(pUniformVariableName);
@@ -230,15 +238,15 @@ class OpenGLInterface
 			implementation.SetProjectionMatrix(mat);
 		}
 
-		void SetModelMatrix(const CMatrix& mat)
-		{
-			implementation.SetModelMatrix(mat);
-		}
+//		void SetModelMatrix(const CMatrix& mat)
+//		{
+//			implementation.SetModelMatrix(mat);
+//		}
 
-		void SetViewMatrix(const CMatrix& mat)
-		{
-			implementation.SetViewMatrix(mat);
-		}
+//		void SetViewMatrix(const CMatrix& mat)
+//		{
+//			implementation.SetViewMatrix(mat);
+//		}
 
 public:
 	OpenGLImplementation implementation;

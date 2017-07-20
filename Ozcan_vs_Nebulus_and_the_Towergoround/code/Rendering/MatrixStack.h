@@ -29,6 +29,7 @@ public:
 	~MatrixStack();
 
 	void SetMatrixLocation(int loc);
+    int GetMatrixLocation();
 
 	void LoadIdentity();
 	void MultMatrix(const CMatrix& mat);

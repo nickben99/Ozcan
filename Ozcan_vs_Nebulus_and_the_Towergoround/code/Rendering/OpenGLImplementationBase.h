@@ -43,6 +43,9 @@ class OpenGLImplementationBase
 		//void UseProgram();
 //		void StopUsingProgram();
 //		int GetShaderProgram();
+    
+        void UseRenderProgram();
+        void UseCreateDepthTextureProgram();
 
 		int GetUniformLocation(const char* pUniformVariableName);
 		unsigned int GetSubroutineUniformIndex(const char* pSubroutineUniformName, unsigned int shaderType);		
@@ -107,13 +110,8 @@ class OpenGLImplementationBase
 		bool AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 		bool CompileShaders();
     
-        enum CompiledShaderProgram {
-            Render = 0,
-            Depth
-        };
-    
         struct DepthShaderParams {
-    
+            int vertexPositionAttribLocation = 0;
         } depthShaderParams;
     
         struct RenderingShaderParams {

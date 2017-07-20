@@ -21,6 +21,7 @@
 //-------------------------------
 
 //---static variable declerations ---
+bool MeshBuffer::depthTextureRender = false;
 //-----------------------------------
 
 const int NumColorElements = 4;
@@ -141,8 +142,10 @@ void MeshBuffer::DrawBuffer(int numVertsToDraw)
 
 void MeshBuffer::DrawSingleArray(int numVertsToDraw)
 {
-	EnableMaterialColors();
-	EnableTexture();
+    if (!depthTextureRender) {
+        EnableMaterialColors();
+        EnableTexture();
+    }
 
 	int vertSize = sizeof(CVector);
 	int normalSize = sizeof(CVector);
@@ -154,14 +157,18 @@ void MeshBuffer::DrawSingleArray(int numVertsToDraw)
 	int vertOffset = textureCoordSize + normalSize;
 
     Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffer);
-    Globals::Instance().gl.SetVertexTextureAttribPointer(stride);
-    Globals::Instance().gl.SetVertexNormalAttribPointer(stride, normalOffset);
+    if (!depthTextureRender) {
+        Globals::Instance().gl.SetVertexTextureAttribPointer(stride);
+        Globals::Instance().gl.SetVertexNormalAttribPointer(stride, normalOffset);
+    }
     Globals::Instance().gl.SetVertexPositionAttribPointer(stride, vertOffset);
 
 	DrawBuffer(numVertsToDraw);
 
-	Globals::Instance().gl.DisableVertexTextureAttribPointer();
-    Globals::Instance().gl.DisableVertexNormalAttribPointer();
+    if (!depthTextureRender) {
+        Globals::Instance().gl.DisableVertexTextureAttribPointer();
+        Globals::Instance().gl.DisableVertexNormalAttribPointer();
+    }
     Globals::Instance().gl.DisableVertexPositionAttribPointer();
 }
 
@@ -170,31 +177,35 @@ void MeshBuffer::DrawSeperateArrays(int numVertsToDraw)
 	Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffer);
 	Globals::Instance().gl.SetVertexPositionAttribPointer();
 	
-	EnableMaterialColors(); // colors
+    if (!depthTextureRender) {
+        EnableMaterialColors(); // colors
+    }
 	
-	if (-1 != normalArrayBuffer)
+	if (-1 != normalArrayBuffer && !depthTextureRender)
 	{
 		// normals
 		Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, normalArrayBuffer);
 		Globals::Instance().gl.SetVertexNormalAttribPointer();
 	}
 
-	if (-1 != texCoordArrayBuffer)
+	if (-1 != texCoordArrayBuffer && !depthTextureRender)
 	{
 		// tex coords	
 		Globals::Instance().gl.BindBuffer(GL_ARRAY_BUFFER, texCoordArrayBuffer);
 		Globals::Instance().gl.SetVertexTextureAttribPointer();
 	}
 
-	EnableTexture();	
+    if (!depthTextureRender) {
+        EnableTexture();
+    }
 	DrawBuffer(numVertsToDraw);
 
-	if (-1 != texCoordArrayBuffer)
+	if (-1 != texCoordArrayBuffer && !depthTextureRender)
 	{
 		Globals::Instance().gl.DisableVertexTextureAttribPointer();
 	}
 
-	if (-1 != normalArrayBuffer)
+	if (-1 != normalArrayBuffer && !depthTextureRender)
 	{
 		Globals::Instance().gl.DisableVertexNormalAttribPointer();
 	}

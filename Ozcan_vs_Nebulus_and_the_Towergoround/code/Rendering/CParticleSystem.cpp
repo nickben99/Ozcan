@@ -197,17 +197,24 @@ void CParticleSystem::draw( void)
 		return;
 	}
 
-	Globals::Instance().gl.GLEnable(GL_BLEND);	// enable blending
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE); /*	use GL_ONE type blending rather than 
+    if (!MeshBuffer::depthTextureRender) {
+        Globals::Instance().gl.GLEnable(GL_BLEND);	// enable blending
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE); /*	use GL_ONE type blending rather than
 											GL_ONE_MINUS_SRC_ALPHA as used in the 
 											rest of the programme */
 #ifdef USE_SHADERS
-	Globals::Instance().gl.GLEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, particleTexture); // set the texture to be used
-#endif	
-	Globals::Instance().gl.GLDisable(GL_LIGHTING);
-	Globals::Instance().gl.GLDisable(GL_DEPTH_TEST); /*	disable depth testing (essential for rendering 
+        //
+        // the texture should be set in MeshBuffer::Draw()
+        //
+//        Globals::Instance().gl.GLEnable(GL_TEXTURE_2D);
+//        glBindTexture(GL_TEXTURE_2D, particleTexture); // set the texture to be used
+//        CHECK_GL_ERROR;
+#endif
+        Globals::Instance().gl.GLDisable(GL_LIGHTING);
+        Globals::Instance().gl.GLDisable(GL_DEPTH_TEST); /*	disable depth testing (essential for rendering
 									particles correctly) */
+    }
+    
 	// draw all the particles
 	for (int i = 0; i < MAX_PARTICLES; i++)
 	{
@@ -248,6 +255,9 @@ void CParticleSystem::draw( void)
 			Globals::Instance().modelMatrixStack.PopMatrix(); // go back to previous matrix
 		}
 	}
-	Globals::Instance().gl.GLEnable(GL_LIGHTING); // re enable lighting
-	Globals::Instance().gl.GLEnable(GL_DEPTH_TEST);
+    
+    if (!MeshBuffer::depthTextureRender) {
+        Globals::Instance().gl.GLEnable(GL_LIGHTING); // re enable lighting
+        Globals::Instance().gl.GLEnable(GL_DEPTH_TEST);
+    }
 }

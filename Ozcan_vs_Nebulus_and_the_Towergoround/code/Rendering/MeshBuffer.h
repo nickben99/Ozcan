@@ -50,7 +50,9 @@ public:
 	void CreateTexCoordArray(float* pArray, int numElements, bool isDynamic = false);
 	void UpdateTexCoordArray(float* pArray);
 
-	void CreateIndexArray(unsigned short* pArray, int numElements);			
+	void CreateIndexArray(unsigned short* pArray, int numElements);
+    
+    static bool depthTextureRender;
 
 private:
 	void DrawSingleArray(int numVertsToDraw);

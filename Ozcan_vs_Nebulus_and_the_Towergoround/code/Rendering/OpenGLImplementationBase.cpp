@@ -138,7 +138,7 @@ bool OpenGLImplementationBase::InitGL()
         }
     }
 	
-    renderingShader.UseProgram();
+    UseRenderProgram();
     if (isUsingSubRoutines) {
         renderingShader.CacheSubroutineUniforms();
     }
@@ -234,29 +234,39 @@ void OpenGLImplementationBase::DestroyGL()
 //	return shader.GetShaderProgram();
 //}
 
+void OpenGLImplementationBase::UseRenderProgram() {
+    renderingShader.UseProgram();
+    currentShader = &renderingShader;
+}
+
+void OpenGLImplementationBase::UseCreateDepthTextureProgram() {
+    depthShader.UseProgram();
+    currentShader = &depthShader;
+}
+
 int OpenGLImplementationBase::GetUniformLocation(const char* pUniformVariableName)
 {
-	return renderingShader.GetUniformLocation(pUniformVariableName);
+	return currentShader->GetUniformLocation(pUniformVariableName);
 }
 
 unsigned int OpenGLImplementationBase::GetSubroutineUniformIndex(const char* pSubroutineUniformVariableName, unsigned int shaderType)
 {
-	return renderingShader.GetSubroutineUniformIndex(pSubroutineUniformVariableName, shaderType);
+	return currentShader->GetSubroutineUniformIndex(pSubroutineUniformVariableName, shaderType);
 }
 
 void OpenGLImplementationBase::SetSubroutineUniformIndex(int subRoutineUniformIndex, unsigned int subRoutineIndex, unsigned int shaderType)
 {
-	renderingShader.SetSubroutineUniformIndex(subRoutineUniformIndex, subRoutineIndex, shaderType, true, false);
+	currentShader->SetSubroutineUniformIndex(subRoutineUniformIndex, subRoutineIndex, shaderType, true, false);
 }
 
 int OpenGLImplementationBase::GetSubroutineIndex(const char* pSubRoutineName, unsigned int shaderType)
 {
-	return renderingShader.GetSubroutineIndex(pSubRoutineName, shaderType);
+	return currentShader->GetSubroutineIndex(pSubRoutineName, shaderType);
 }
 
 int OpenGLImplementationBase::GetAttribLocation(const char* pUniformVariableName)
 {
-	return renderingShader.GetAttribLocation(pUniformVariableName);
+	return currentShader->GetAttribLocation(pUniformVariableName);
 }
 
 void OpenGLImplementationBase::SetUniformFloat(int location, float newValue)
@@ -279,13 +289,16 @@ void OpenGLImplementationBase::SetUniformMatrix(int location, const CMatrix& mat
     if (IsUsingSubRoutines()) {
         OpenGLShader::SetUniformMatrix(location, mat);
     } else {
-        if (renderingShaderParamsAlt.MMatrixLocation == location) {
-            SetModelMatrix(mat);
-        } else if (renderingShaderParamsAlt.VMatrixLocation == location) {
-            SetViewMatrix(mat);
-        } else {
-            OpenGLShader::SetUniformMatrix(location, mat);
+        if (currentShader == &renderingShader) {
+            if (renderingShaderParamsAlt.MMatrixLocation == location) {
+                SetModelMatrix(mat);
+                return;
+            } else if (renderingShaderParamsAlt.VMatrixLocation == location) {
+                SetViewMatrix(mat);
+                return;
+            }
         }
+        OpenGLShader::SetUniformMatrix(location, mat);
     }
 }
 
@@ -361,14 +374,22 @@ void OpenGLImplementationBase::VertexAttribPointer(int location, int numComponen
 
 void OpenGLImplementationBase::DisableVertexPositionAttribPointer()
 {
-    glDisableVertexAttribArray(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation);
+    if (currentShader == &depthShader) {
+        glDisableVertexAttribArray(depthShaderParams.vertexPositionAttribLocation);
+    } else {
+        glDisableVertexAttribArray(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation);
+    }
 	CHECK_GL_ERROR;
 }
 
 void OpenGLImplementationBase::SetVertexPositionAttribPointer(int stride, int offset)
 {
 	const int NumComponents = 3;
-	VertexAttribPointer(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation, NumComponents, stride, offset);
+    if (currentShader == &depthShader) {
+        VertexAttribPointer(depthShaderParams.vertexPositionAttribLocation, NumComponents, stride, offset);
+    } else {
+        VertexAttribPointer(IsUsingSubRoutines() ? renderingShaderParams.vertexPositionAttribLocation : renderingShaderParamsAlt.vertexPositionAttribLocation, NumComponents, stride, offset);
+    }
 }
 
 void OpenGLImplementationBase::DisableVertexNormalAttribPointer()
@@ -556,13 +577,14 @@ void OpenGLImplementationBase::GLEnable(unsigned int identifier)
             if (isUsingSubRoutines) {
                 SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.useLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
             }
-            else
+            else if (currentShader == &renderingShader)
             {
                 SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, true);
             }
 			break;
 		default: 
 			glEnable(identifier);
+            CHECK_GL_ERROR;
 			break;
 	}
 #else
@@ -579,7 +601,7 @@ void OpenGLImplementationBase::GLDisable(unsigned int identifier)
             if (isUsingSubRoutines) {
                 SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.noLightingSubFunctionLocation, GL_FRAGMENT_SHADER);
             }
-            else
+            else if (currentShader == &renderingShader)
             {
                 SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, false);
             }
@@ -587,6 +609,7 @@ void OpenGLImplementationBase::GLDisable(unsigned int identifier)
 			break;
 		default:
 			glDisable(identifier);
+            CHECK_GL_ERROR;
 			break;
 	}
 #else
