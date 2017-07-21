@@ -177,7 +177,7 @@ bool OpenGLImplementationBase::InitGL()
         renderingShader.SetSubroutineUniformIndex(renderingShaderParams.colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #else
         renderingShaderParams.useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
-        renderingShader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+        renderingShader.SetSubroutineUniformIndex(renderingShaderParams.colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #endif
         renderingShader.SetSubroutineUniformIndex(renderingShaderParams.textureSubRoutineUniform, renderingShaderParams.noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
         renderingShader.SetSubroutineUniformIndex(renderingShaderParams.lightingSubRoutineUniform, renderingShaderParams.useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
