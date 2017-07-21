@@ -103,12 +103,17 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	CHECK_GL_ERROR;
 
     /* Set texture parameters */
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
+	CHECK_GL_ERROR;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minfilter);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
-//    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     CHECK_GL_ERROR;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
+    CHECK_GL_ERROR;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
+    CHECK_GL_ERROR;
+    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    //CHECK_GL_ERROR;
+
     /*
      * Set texture image; if the minification filter uses mip-mapping
      * then use gluBuild2D/1DMipmaps() to load the texture...

@@ -534,7 +534,7 @@ void CNebulus::collisionResponse(CSprite * collidedWith,
 		case SFLY_ACROSS_ENEMY:
 		case SUP_DOWN_ENEMY: // Nebulus has hit the up down enemy
 		{
-			//ShootOut();
+			ShootOut();
 			break;
 		}// end case SUP_DOWN_ENEMY
 		case SEXIT_SCREEN: // nebulus has completed the level

@@ -486,12 +486,6 @@ void CHUD::GetPowerUpBarDimensionsAndColor(float& left, float& right, float& top
 
 void CHUD::ReplayDraw()
 {
-	GLboolean wasTextureEnabled = glIsEnabled(GL_TEXTURE_2D); 
-	if (wasTextureEnabled)
-	{
-		Globals::Instance().gl.GLDisable(GL_TEXTURE_2D); // disable texturing
-	}
-	
 	const int NumReplayTextChars = 128;
 	char replayText[NumReplayTextChars];
 
@@ -539,11 +533,6 @@ void CHUD::ReplayDraw()
 
 	Globals::Instance().gl.GLDisable(GL_BLEND);
 #endif
-
-	if (wasTextureEnabled)
-	{
-		Globals::Instance().gl.GLEnable(GL_TEXTURE_2D); // disable blending
-	}
 }
 
 // run the main game drawing code
