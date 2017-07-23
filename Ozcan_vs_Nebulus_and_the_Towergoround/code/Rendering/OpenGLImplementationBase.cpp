@@ -186,15 +186,10 @@ bool OpenGLImplementationBase::InitGL()
     {
         renderingShaderParamsAlt.textureSamplerLocation = GetUniformLocation("myTextureSampler");
         renderingShaderParamsAlt.MVPMatrixLocation = GetUniformLocation("MVP");
-        renderingShaderParamsAlt.MMatrixLocation = GetUniformLocation("M");
-        renderingShaderParamsAlt.VMatrixLocation = GetUniformLocation("V");
-        
+        renderingShaderParamsAlt.MMatrixLocation = GetUniformLocation("uModelMatrix");
+        renderingShaderParamsAlt.VMatrixLocation = GetUniformLocation("uViewMatrix");
         renderingShaderParamsAlt.oldCodeTextureSelection = GetUniformLocation("uTextureRender");
-        //SetUniformBool(renderingShaderParamsAlt.oldCodeTextureSelection, false);
-        
         renderingShaderParamsAlt.oldCodeLightingSelection = GetUniformLocation("uLightingRender");
-        //SetUniformBool(renderingShaderParamsAlt.oldCodeLightingSelection, true);
-        
         renderingShaderParamsAlt.emissiveColorLocation = GetUniformLocation("uPointLightingEmissiveColor");
     }
 	return true;
