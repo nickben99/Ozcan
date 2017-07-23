@@ -65,30 +65,12 @@ class OpenGLInterface
 			implementation.ShowSpecularHighlights(show);
 		}
 
-//		bool HasBeenInitialized()
-//		{
-//			return implementation.HasBeenInitialized();
-//		}
     
         bool IsUsingSubRoutines()
         {
             return implementation.IsUsingSubRoutines();
         }
 
-//		void UseProgram()
-//		{
-//			return implementation.UseProgram();
-//		}
-
-//		void StopUsingProgram()
-//		{
-//			return implementation.StopUsingProgram();
-//		}
-
-//		int GetShaderProgram()
-//		{
-//			return implementation.GetShaderProgram();
-//		}
 
         void UseRenderProgram() {
             implementation.UseRenderProgram();
@@ -238,17 +220,8 @@ class OpenGLInterface
 			implementation.SetProjectionMatrix(mat);
 		}
 
-//		void SetModelMatrix(const CMatrix& mat)
-//		{
-//			implementation.SetModelMatrix(mat);
-//		}
 
-//		void SetViewMatrix(const CMatrix& mat)
-//		{
-//			implementation.SetViewMatrix(mat);
-//		}
-
-public:
+private:
 	OpenGLImplementation implementation;
 };
 

@@ -3,11 +3,14 @@
 #ifndef _SystemOSX_h_
 #define _SystemOSX_h_
 
+#include <stdarg.h> // for va_list variable length parameter list
+#include <stdio.h> // for vsprintf_s
 #include <cmath> // for std::isnan
 #include <cstdlib>
 #include <string.h>
 #include <unistd.h> // for usleep
 #include <sys/stat.h> // for POSIX stat
+#include <iostream> // for cout
 
 #define SPRINTF sprintf
 
@@ -23,6 +26,18 @@
 
 inline void ErrorOutput(const char*) {
 
+}
+
+inline void ToConsole(const char* debugString, ...) {
+
+    char thisString[256];
+    va_list vlist; // va_list
+
+    va_start(vlist, debugString); // set to beginning of argument list
+    VSPRINTF(thisString, debugString, vlist); // print formatted string to thisString
+    va_end(vlist); // reset argument pointer
+            
+    std::cout << thisString;
 }
 
 inline bool PlatformSpecificIsNaN(const float& num) {

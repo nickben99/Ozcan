@@ -68,7 +68,7 @@ private:
 		return *this;
 	}
 
-public:
+private:
 	int vertexArrayBuffer,
 		normalArrayBuffer,
 		texCoordArrayBuffer,

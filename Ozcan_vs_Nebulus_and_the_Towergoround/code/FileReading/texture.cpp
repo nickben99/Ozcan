@@ -105,34 +105,24 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
 	CHECK_GL_ERROR;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minfilter);
-    CHECK_GL_ERROR;
+	CHECK_GL_ERROR;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
-    CHECK_GL_ERROR;
+	CHECK_GL_ERROR;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
     CHECK_GL_ERROR;
-    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    //CHECK_GL_ERROR;
 
     /*
      * Set texture image; if the minification filter uses mip-mapping
      * then use gluBuild2D/1DMipmaps() to load the texture...
      */
 
-//    if (minfilter == GL_LINEAR || minfilter == GL_NEAREST)
-//	{
-        glTexImage2D( GL_TEXTURE_2D, 0, uPixelFormat, uWidth, uHeight, 0, uPixelFormat, GL_UNSIGNED_BYTE, bits);
-		CHECK_GL_ERROR;
-//	}
-//    else // mipmaps required
-//	{
-//        gluBuild2DMipmaps( GL_TEXTURE_2D, uPixelFormat, uWidth, uHeight, uPixelFormat, GL_UNSIGNED_BYTE, bits);
-//		CHECK_GL_ERROR;
-//	}
+     glTexImage2D( GL_TEXTURE_2D, 0, uPixelFormat, uWidth, uHeight, 0, uPixelFormat, GL_UNSIGNED_BYTE, bits);
+	 CHECK_GL_ERROR;
 
     // Free the bitmap and return... 
     free(bits);
 	bits = 0;
-//#endif
+
     return (texture);
    }
 

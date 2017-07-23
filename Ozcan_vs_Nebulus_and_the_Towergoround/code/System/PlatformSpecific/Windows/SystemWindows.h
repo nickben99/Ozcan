@@ -3,6 +3,9 @@
 #ifndef _SystemWindows_h_
 #define _SystemWindows_h_
 
+#include <stdarg.h> // for va_list variable length parameter list
+#include <stdio.h> // for vsprintf_s
+
 #include <windows.h> // for strncpy_s
 #include <float.h> // for _isnan
 
@@ -20,6 +23,18 @@
 
 inline void ErrorOutput(const char* text) {
 	MessageBox(0,text,"ERROR",MB_OK|MB_ICONEXCLAMATION);
+}
+
+inline void ToConsole(const char* debugString, ...) {
+
+    char thisString[256];
+    va_list vlist; // va_list
+
+    va_start(vlist, debugString); // set to beginning of argument list
+    VSPRINTF(thisString, debugString, vlist); // print formatted string to thisString
+    va_end(vlist); // reset argument pointer
+            
+	OutputDebugString(thisString);
 }
 
 inline bool PlatformSpecificIsNaN(const float& num) {

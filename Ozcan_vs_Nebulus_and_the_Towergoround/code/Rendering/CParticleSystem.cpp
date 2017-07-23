@@ -201,14 +201,7 @@ void CParticleSystem::draw( void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE); /*	use GL_ONE type blending rather than
 											GL_ONE_MINUS_SRC_ALPHA as used in the 
 											rest of the programme */
-#ifdef USE_SHADERS
-        //
-        // the texture should be set in MeshBuffer::Draw()
-        //
-//        Globals::Instance().gl.GLEnable(GL_TEXTURE_2D);
-//        glBindTexture(GL_TEXTURE_2D, particleTexture); // set the texture to be used
-//        CHECK_GL_ERROR;
-#endif
+
     if (!MeshBuffer::depthTextureRender) {
         Globals::Instance().gl.GLDisable(GL_LIGHTING);
     }
