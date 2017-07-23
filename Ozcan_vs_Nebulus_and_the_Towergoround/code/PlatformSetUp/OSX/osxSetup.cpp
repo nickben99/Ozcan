@@ -16,8 +16,6 @@
 #include <Game/Game.h>
 #include <FileReading/TEXTURE.H>
 
-#include "CTest.h"
-
 GLFWwindow* osxWindow = nullptr;
 bool quitApp = false;
 
@@ -236,9 +234,9 @@ int main(int argc, char *argv[])
     }
     
     //if (runDemo) {
-        if (0 != InitTest(loadShadersInCTest)) {
-            return 0;
-        }
+//        if (0 != InitTest(loadShadersInCTest)) {
+//            return 0;
+//        }
     //}
 
     Game* game = nullptr;
@@ -361,10 +359,10 @@ int main(int argc, char *argv[])
 //#endif
         if (runDemo) {
             Globals::Instance().keys.Update();
-            RenderTest();
+            //RenderTest();
             
             // render mesh buffer
-            SetOrtho();
+            //SetOrtho();
             backgroundMesh.Draw();
         }
         
@@ -375,7 +373,7 @@ int main(int argc, char *argv[])
     CHECK_GL_ERROR;
 #endif
     
-    DeleteTest();
+    //DeleteTest();
     
     // Shutdown
 //    game.DeleteGameObjects(); // delete all game specific objects

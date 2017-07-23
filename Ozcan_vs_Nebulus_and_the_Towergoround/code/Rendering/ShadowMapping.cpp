@@ -74,6 +74,41 @@ bool resetProjectionValues = false;
 bool shadowMappingVariablesAddedToDebugMenu = false;
 #endif
 
+bool CreateDepthTexture() {
+    // The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
+    glGenFramebuffers(1, &(ShadowMapping::frameBuffer));
+    glBindFramebuffer(GL_FRAMEBUFFER, ShadowMapping::frameBuffer);
+    
+    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+    glGenTextures(1, &(ShadowMapping::depthTexture));
+    glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
+    CHECK_GL_ERROR;
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER); // GL_CLAMP_TO_BORDER in my version
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER); // GL_CLAMP_TO_BORDER in my version
+    
+    // these two lines were in my version
+    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+    
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, ShadowMapping::depthTexture, 0);
+    
+    // No color output in the bound framebuffer, only depth.
+    glDrawBuffer(GL_NONE);
+    //glReadBuffer(GL_NONE); // my version had this line
+    
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        return false;
+    }
+    return true;
+}
+
 unsigned int ShadowMapping::Create()
 {
 	Destroy(); // delete anything hanging around
@@ -126,43 +161,11 @@ unsigned int ShadowMapping::Create()
 	}
 #endif
     
-    //
-    // done in ctest.cpp
-    //
-
-//	// The framebuffer, which regroups 0, 1, or more textures, and 0 or 1 depth buffer.
-//	glGenFramebuffers(1, &frameBuffer);
-//	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer); // start using our new frame buffer
-//
-//	// Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-//	//depthTexture = getTextureNumber("shadow mapping texture");
-//    glGenTextures(1, &depthTexture);
-//	glBindTexture(GL_TEXTURE_2D, depthTexture);
-//	glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, textureSize, textureSize, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
-//
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-//    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-//    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-//    
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-//
-//	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
-//
-//	// No color output in the bound framebuffer, only depth.
-//	glDrawBuffer(GL_NONE);
-//    glReadBuffer(GL_NONE);
-//    
-//	// Always check that our framebuffer is ok
-//	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-//	{
-//		return false;
-//	}
-//	
-//	UseDefaultFrameBuffer();
+    if (!CreateDepthTexture()) {
+        return false;
+    }
+    
+	UseDefaultFrameBuffer();
     
     Globals::Instance().gl.UseRenderProgram();
 	return true;
