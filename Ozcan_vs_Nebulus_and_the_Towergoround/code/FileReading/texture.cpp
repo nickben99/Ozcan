@@ -94,8 +94,7 @@ TextureLoad(const char      *filename, /* I - Bitmap file to load */
     /*	use getTextureNumber() to generate an unsigned int then 
 		glBindTexture will bring the texture into scope and glTexImage2D 
 		will allocate the bitmap to the texture */
-	//texture = getTextureNumber(filename);
-    glGenTextures(1, &texture);
+	texture = getTextureNumber(filename);
 	CHECK_GL_ERROR;
     
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -175,6 +174,7 @@ int getTextureNumber(const char* filename)
 			texture.currentlyInUse = 1; // the texture object is now in use
             memset(texture.texturePath, '\0', sizeof(char)*textureObject::MaxBuffer);
             defines::strncpy(texture.texturePath, textureObject::MaxBuffer-1, filename, (int)strlen(filename));
+            glGenTextures(1, &(texture.ID));
 			return((int)texture.ID); // free slot found
 		}
 	}
@@ -187,10 +187,8 @@ int getTextureNumber(const char* filename)
 	texture.currentlyInUse = 1; // now in use
     memset(texture.texturePath, '\0', sizeof(char)*textureObject::MaxBuffer);
     defines::strncpy(texture.texturePath, textureObject::MaxBuffer-1, filename, (int)strlen(filename));
-	/*	assign ID as +1 e.g element 0 will have ID 1, 1 ID 2 and so on as 
-		texture objects start at 1 */
-	texture.ID = (totalTextures+1); 
-
+    // texture objects start at 1
+	glGenTextures(1, &(texture.ID));
 	return( texture.ID );
 }
 
@@ -202,21 +200,24 @@ void deleteTexture(int theTexture)
 	// get the amount of textures
 	unsigned int totalTextures = (int)textureObjects.size();
 
-	if( (textureToDelete <= InvalidTextureID) || 
-		(textureToDelete > (totalTextures))){
+	if (textureToDelete <= InvalidTextureID) {
 		return;} // out of bounds
 
-	textureObject &textureObj = textureObjects[(textureToDelete-1)];
-	// check the texture is in use
-	if (textureObj.currentlyInUse > 0)
-	{
-		--textureObj.currentlyInUse;
-		if (0 == textureObj.currentlyInUse)
-		{
-			glDeleteTextures(1, &textureToDelete); // delete the texture (textureToDelete must be constant unsigned int pointer)
-			textureObj.texturePath[0] = '\0';
-		}
-	}
+    // go through vector and find the first free slot
+    for (int tex = 0; tex < totalTextures; tex++)
+    {
+        textureObject &textureObj = textureObjects[tex];
+        // check the texture is in use
+        if (textureObj.currentlyInUse > 0 && textureObj.ID == textureToDelete)
+        {
+            --textureObj.currentlyInUse;
+            if (0 == textureObj.currentlyInUse)
+            {
+                glDeleteTextures(1, &textureToDelete); // delete the texture (textureToDelete must be constant unsigned int pointer)
+                textureObj.texturePath[0] = '\0';
+            }
+        }
+    }
 }
 
 // clear the texture vector

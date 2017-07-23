@@ -80,7 +80,7 @@ bool CreateDepthTexture() {
     glBindFramebuffer(GL_FRAMEBUFFER, ShadowMapping::frameBuffer);
     
     // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-    glGenTextures(1, &(ShadowMapping::depthTexture));
+    ShadowMapping::depthTexture = getTextureNumber("shadow mapping texture");
     glBindTexture(GL_TEXTURE_2D, ShadowMapping::depthTexture);
     CHECK_GL_ERROR;
     glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
@@ -178,21 +178,17 @@ void ShadowMapping::UseDefaultFrameBuffer()
 
 void ShadowMapping::Destroy()
 {
-    //
-    // done in ctest.cpp
-    //
-    
-//	if (0 != depthTexture)
-//	{
-//		deleteTexture(depthTexture);
-//		depthTexture = 0;
-//	}
-//
-//	if (0 != frameBuffer)
-//	{
-//		glDeleteFramebuffers(1, &frameBuffer);
-//		frameBuffer = 0;
-//	}	
+	if (0 != depthTexture)
+	{
+		deleteTexture(depthTexture);
+		depthTexture = 0;
+	}
+
+	if (0 != frameBuffer)
+	{
+		glDeleteFramebuffers(1, &frameBuffer);
+		frameBuffer = 0;
+	}
 }
 
 void ShadowMapping::PreDepthTextureRender()
