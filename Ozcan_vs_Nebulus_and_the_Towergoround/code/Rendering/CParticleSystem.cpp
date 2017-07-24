@@ -197,8 +197,8 @@ void CParticleSystem::draw( void)
 		return;
 	}
 
-    Globals::Instance().gl.GLEnable(GL_BLEND);	// enable blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE); /*	use GL_ONE type blending rather than
+	Globals::Instance().gl.GLEnable(GL_BLEND);	// enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE); /*	use GL_ONE type blending rather than 
 											GL_ONE_MINUS_SRC_ALPHA as used in the 
 											rest of the programme */
 

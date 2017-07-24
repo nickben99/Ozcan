@@ -36,7 +36,8 @@ public:
     
     static unsigned int GetDepthTexture();
 
-public:
+private:
+    static bool CreateDepthTexture();
 	static void UseDefaultFrameBuffer();
 	static CMatrix CalculateLightOrthographicProjection();
 	static CMatrix CalculateLightLookAtMatrix();
@@ -49,12 +50,10 @@ public:
 	static int shadowMappingVertexSubroutineUniform;
 	static int shadowMappingVertexRenderSubRoutineIndex;
 	static int mainRenderVertexSubRoutineIndex;
-    //static int oldCodeVertexRenderSelector;
 
 	static int shadowMappingSubroutineUniform;
 	static int shadowMappingRenderSubRoutineIndex;
 	static int mainRenderSubRoutineIndex;
-    //static int oldCodeFragmentRenderSelector;
 
 	static int lightViewProjectionMatrixUniform;
 	static int depthTextureSamplerUniform;
