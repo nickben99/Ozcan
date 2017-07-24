@@ -78,12 +78,16 @@ OpenGLImplementationBase::OpenGLImplementationBase()
     renderingShaderParams.lightingSubRoutineUniform = 0;
     
     renderingShaderParamsAlt.textureSamplerLocation = InvalidLocation;
-    renderingShaderParamsAlt.MVPMatrixLocation = InvalidLocation;
+    renderingShaderParamsAlt.projectionMatrixLocation = InvalidLocation;
     renderingShaderParamsAlt.MMatrixLocation = InvalidLocation;
     renderingShaderParamsAlt.VMatrixLocation = InvalidLocation;
     renderingShaderParamsAlt.oldCodeTextureSelection = 0;
     renderingShaderParamsAlt.oldCodeLightingSelection = 0;
     renderingShaderParamsAlt.emissiveColorLocation = InvalidLocation;
+    renderingShaderParamsAlt.shininessLocation = InvalidLocation;
+    renderingShaderParamsAlt.ambientColorLocation = InvalidLocation;
+    renderingShaderParamsAlt.specularColorLocation = InvalidLocation;
+    renderingShaderParamsAlt.diffuseColorLocation = InvalidLocation;
 }
 
 OpenGLImplementationBase::~OpenGLImplementationBase()
@@ -129,6 +133,7 @@ bool OpenGLImplementationBase::InitGL()
     {
         renderingShader.DestroyProgram();
         isUsingSubRoutines = false;
+        //if (!renderingShader.CreateProgram("shaderOld.vs", "shaderOld.fs")) {
         if (!renderingShader.CreateProgram("ShadowMappingVert.glsl", "ShadowMappingFrag.glsl")) {
             return false;
         }
@@ -184,13 +189,17 @@ bool OpenGLImplementationBase::InitGL()
     }
     else
     {
-        renderingShaderParamsAlt.textureSamplerLocation = GetUniformLocation("myTextureSampler");
-        renderingShaderParamsAlt.MVPMatrixLocation = GetUniformLocation("MVP");
+        renderingShaderParamsAlt.textureSamplerLocation = GetUniformLocation("uSampler");
+        renderingShaderParamsAlt.projectionMatrixLocation = GetUniformLocation("uProjectionMatrix");
         renderingShaderParamsAlt.MMatrixLocation = GetUniformLocation("uModelMatrix");
         renderingShaderParamsAlt.VMatrixLocation = GetUniformLocation("uViewMatrix");
         renderingShaderParamsAlt.oldCodeTextureSelection = GetUniformLocation("uTextureRender");
         renderingShaderParamsAlt.oldCodeLightingSelection = GetUniformLocation("uLightingRender");
         renderingShaderParamsAlt.emissiveColorLocation = GetUniformLocation("uPointLightingEmissiveColor");
+        renderingShaderParamsAlt.specularColorLocation = GetUniformLocation("uPointLightingSpecularColor");
+        renderingShaderParamsAlt.shininessLocation = GetUniformLocation("uMaterialShininess");
+        renderingShaderParamsAlt.ambientColorLocation = GetUniformLocation("uAmbientColor");
+        renderingShaderParamsAlt.diffuseColorLocation = GetUniformLocation("uPointLightingDiffuseColor");
     }
 	return true;
 }
@@ -281,20 +290,7 @@ void OpenGLImplementationBase::SetUniformInt(int location, int newValue)
 
 void OpenGLImplementationBase::SetUniformMatrix(int location, const CMatrix& mat)
 {
-    if (IsUsingSubRoutines()) {
-        OpenGLShader::SetUniformMatrix(location, mat);
-    } else {
-        if (currentShader == &renderingShader) {
-            if (renderingShaderParamsAlt.MMatrixLocation == location) {
-                SetModelMatrix(mat);
-                return;
-            } else if (renderingShaderParamsAlt.VMatrixLocation == location) {
-                SetViewMatrix(mat);
-                return;
-            }
-        }
-        OpenGLShader::SetUniformMatrix(location, mat);
-    }
+    OpenGLShader::SetUniformMatrix(location, mat);
 }
 
 void OpenGLImplementationBase::SetUniformVector3(int location, const CVector& vect)
@@ -428,31 +424,7 @@ void OpenGLImplementationBase::SetProjectionMatrix(const CMatrix& mat)
     if (isUsingSubRoutines) {
         SetUniformMatrix(renderingShaderParams.projectionMatrixLocation, mat);
     } else {
-        renderingShaderParamsAlt.projectionMatrix = mat;
-        CMatrix MVP = renderingShaderParamsAlt.projectionMatrix * renderingShaderParamsAlt.lookAtViewMatrix * renderingShaderParamsAlt.modelMatrix;
-        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.MVPMatrixLocation, MVP);
-    }
-}
-
-void OpenGLImplementationBase::SetModelMatrix(const CMatrix& mat)
-{
-    if (isUsingSubRoutines) {
-        SetUniformMatrix(renderingShaderParams.modelMatrixLocation, mat);
-    } else {
-        renderingShaderParamsAlt.modelMatrix = mat;
-        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.MMatrixLocation, mat);
-        SetProjectionMatrix(renderingShaderParamsAlt.projectionMatrix);
-    }
-}
-
-void OpenGLImplementationBase::SetViewMatrix(const CMatrix& mat)
-{
-    if (isUsingSubRoutines) {
-        SetUniformMatrix(renderingShaderParams.viewMatrixLocation, mat);
-    } else {
-        renderingShaderParamsAlt.lookAtViewMatrix = mat;
-        OpenGLShader::SetUniformMatrix(renderingShaderParamsAlt.VMatrixLocation, mat);
-        SetProjectionMatrix(renderingShaderParamsAlt.projectionMatrix);
+        SetUniformMatrix(renderingShaderParamsAlt.projectionMatrixLocation, mat);
     }
 }
 
@@ -460,6 +432,8 @@ void OpenGLImplementationBase::SetAmbientColor(const CVector& color)
 {
     if (IsUsingSubRoutines()) {
         SetUniformVector3(renderingShaderParams.ambientColorLocation, color);
+    } else {
+        SetUniformVector3(renderingShaderParamsAlt.ambientColorLocation, color);
     }
 }
 
@@ -467,6 +441,8 @@ void OpenGLImplementationBase::SetDiffuseColor(const CVector& color)
 {
     if (IsUsingSubRoutines()) {
         SetUniformVector3(renderingShaderParams.diffuseColorLocation, color);
+    } else {
+        SetUniformVector3(renderingShaderParamsAlt.diffuseColorLocation, color);
     }
 }
 
@@ -474,6 +450,8 @@ void OpenGLImplementationBase::SetSpecularColor(const CVector& color)
 {
     if (IsUsingSubRoutines()) {
         SetUniformVector3(renderingShaderParams.specularColorLocation, color);
+    } else {
+        SetUniformVector3(renderingShaderParamsAlt.specularColorLocation, color);
     }
 }
 
@@ -490,6 +468,8 @@ void OpenGLImplementationBase::SetShininess(float val)
 {
     if (IsUsingSubRoutines()) {
         SetUniformFloat(renderingShaderParams.shininessLocation, val);
+    } else {
+        SetUniformFloat(renderingShaderParamsAlt.shininessLocation, val);
     }
 }
 

@@ -81,7 +81,7 @@ void SetShaderParams()
 	Globals::Instance().gl.SetUniformFloat(Globals::Instance().gl.GetUniformLocation("uVisibilityDecrement"), visibilityDecrement);
 
 #ifdef _DEBUG
-	//Globals::Instance().gl.SetUniformBool(Globals::Instance().gl.GetUniformLocation("uShowSpecularHighlights"), showSpecularHighlights);
+	Globals::Instance().gl.SetUniformBool(Globals::Instance().gl.GetUniformLocation("uShowSpecularHighlights"), showSpecularHighlights);
 	Globals::Instance().gl.SetUniformBool(Globals::Instance().gl.GetUniformLocation("uPoisson"), usePoisson);
 	Globals::Instance().gl.SetUniformBool(Globals::Instance().gl.GetUniformLocation("uUseAmbient"), uUseAmbient);
 	Globals::Instance().gl.SetUniformBool(Globals::Instance().gl.GetUniformLocation("uUseDiffuse"), uUseDiffuse);

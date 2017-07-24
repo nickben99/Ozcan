@@ -1,25 +1,54 @@
 #version 330 core
 
 // Interpolated values from the vertex shaders
-in vec2 UV;
-in vec3 Position_worldspace;
-in vec3 Normal_cameraspace;
+in vec2 vTextureCoord;
+//in vec3 Position_worldspace;
+in vec3 vTransformedNormal;
 in vec3 EyeDirection_cameraspace;
 in vec3 LightDirection_cameraspace;
-in vec4 ShadowCoord;
+in vec4 vShadowCoord;
 
 // Ouput data
 layout(location = 0) out vec4 color;
 
 // Values that stay constant for the whole mesh.
-uniform sampler2D myTextureSampler;
+uniform sampler2D uSampler;
 //uniform mat4 MV;
-uniform vec3 LightPosition_worldspace;
-uniform sampler2DShadow shadowMap;
+//uniform vec3 LightPosition_worldspace;
+uniform sampler2DShadow uShadowMap;
 
 uniform bool uLightingRender;
 uniform bool uTextureRender;
 uniform vec4 uPointLightingEmissiveColor;
+
+uniform float uMaterialShininess;
+uniform vec3 uAmbientColor;
+uniform vec3 uPointLightingLocation;
+uniform vec3 uPointLightingSpecularColor;
+uniform vec3 uPointLightingDiffuseColor;
+uniform float shadowCoordBias;
+uniform float uVisibilityDecrement;
+
+// DEBUG PARAMS --------------------------------------------------------------------------------------------------------
+uniform bool uIsDebugRendering; // debug spheres/boxes etc
+uniform bool uShowSpecularHighlights;
+uniform bool uPoisson;
+
+uniform bool uUseAmbient;
+uniform bool uUseDiffuse;
+uniform bool uUseEmmissive;
+
+uniform bool uUseMaterialShininessOverride;
+uniform float materialShininessOverride;
+uniform bool uUseAmbientOverride;
+uniform vec3 uAmbientOverride;
+uniform bool uUseDiffuseOverride;
+uniform vec3 uDiffuseOverride;
+uniform bool uUseEmmissiveOverride;
+uniform vec4 uEmmissiveOverride;
+uniform bool uUseSpecularOverride;
+uniform vec3 uSpecularOverride;
+// DEBUG PARAMS ----------------------------------------------------------------------------------------------------------
 
 vec2 poissonDisk[16] = vec2[]( 
    vec2( -0.94201624, -0.39906216 ), 
@@ -50,7 +79,7 @@ float random(vec3 seed, int i){
 vec4 getBaseColor() {
 	vec4 fragmentColor = vec4(1.0, 1.0, 1.0, 1.0);
 	if (uTextureRender) {
-		fragmentColor = texture( myTextureSampler, UV );
+		fragmentColor = texture( uSampler, vTextureCoord );
 	}
 	
 	fragmentColor *= uPointLightingEmissiveColor;	
@@ -77,7 +106,7 @@ void RenderLighting()
 	//float distance = length( LightPosition_worldspace - Position_worldspace );
 
 	// Normal of the computed fragment, in camera space
-	vec3 n = normalize( Normal_cameraspace );
+	vec3 n = normalize( vTransformedNormal );
 	// Direction of the light (from the fragment to the light)
 	vec3 l = normalize( LightDirection_cameraspace );
 	// Cosine of the angle between the normal and the light direction, 
@@ -121,12 +150,12 @@ void RenderLighting()
 		
 		// being fully in the shadow will eat up 4*0.2 = 0.8
 		// 0.2 potentially remain, which is quite dark.
-		visibility -= 0.2*(1.0-texture( shadowMap, vec3(ShadowCoord.xy + poissonDisk[index]/700.0,  (ShadowCoord.z-bias)/ShadowCoord.w) ));
+		visibility -= 0.2*(1.0-texture( uShadowMap, vec3(vShadowCoord.xy + poissonDisk[index]/700.0,  (vShadowCoord.z-bias)/vShadowCoord.w) ));
 	}
 
 	// For spot lights, use either one of these lines instead.
-	// if ( texture( shadowMap, (ShadowCoord.xy/ShadowCoord.w) ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
-	// if ( textureProj( shadowMap, ShadowCoord.xyw ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
+	// if ( texture( uShadowMap, (vShadowCoord.xy/vShadowCoord.w) ).z  <  (vShadowCoord.z-bias)/vShadowCoord.w )
+	// if ( textureProj( uShadowMap, vShadowCoord.xyw ).z  <  (vShadowCoord.z-bias)/vShadowCoord.w )
 	
 	vec3 colorTemp = 
 		// Ambient : simulates indirect lighting

@@ -133,8 +133,8 @@ unsigned int ShadowMapping::Create()
         //oldCodeVertexRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
         //oldCodeFragmentRenderSelector = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
         
-        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("DepthBiasMVP");
-        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("shadowMap");
+        lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
+        depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
         lightInvDirLocation = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
         
         Globals::Instance().gl.UseCreateDepthTextureProgram();
@@ -348,7 +348,7 @@ void ShadowMapping::PreSceneRender()
 //    CHECK_GL_ERROR;
 //    glBindTexture(GL_TEXTURE_2D, Texture);
 //    CHECK_GL_ERROR;
-//    // Set our "myTextureSampler" sampler to user Texture Unit 0
+//    // Set our "uSampler" sampler to user Texture Unit 0
 //    glUniform1i(originalInst.TextureID, 0);
     
 //    glActiveTexture(GL_TEXTURE1);

@@ -96,8 +96,6 @@ class OpenGLImplementationBase
 		void DisableVertexTextureAttribPointer();
 
 		void SetProjectionMatrix(const CMatrix& mat);
-		void SetModelMatrix(const CMatrix& mat);
-		void SetViewMatrix(const CMatrix& mat);
 
 		void SetAmbientColor(const CVector& color);
 		void SetDiffuseColor(const CVector& color);
@@ -143,7 +141,7 @@ class OpenGLImplementationBase
     
         struct RenderingShaderParamsAlt {
             int textureSamplerLocation;
-            int MVPMatrixLocation; // projection * view * model
+            int projectionMatrixLocation; // projection
             int MMatrixLocation; // model matrix
             int VMatrixLocation; //  view matrix
             
@@ -152,6 +150,10 @@ class OpenGLImplementationBase
             int vertexNormalAttribLocation = 2;
             
             int emissiveColorLocation;
+            int specularColorLocation;
+            int diffuseColorLocation;
+            int shininessLocation;
+            int ambientColorLocation;
             
             int oldCodeTextureSelection;
             int oldCodeLightingSelection;
