@@ -98,11 +98,11 @@ bool OpenGLImplementationBase::InitGL()
     {
         renderingShader.DestroyProgram();
         isUsingSubRoutines = false;
-        if (!renderingShader.CreateProgram("shaderOld.vs", "shaderOld.fs")) { // alt "ShadowMappingVert.glsl", "ShadowMappingFrag.glsl"
+        if (!renderingShader.CreateProgram("shaderOld.vs", "shaderOld.fs")) { // alt "shaderOldVertAlt.glsl", "shaderOldFragAlt.glsl"
             return false;
         }
         
-        if (!depthShader.CreateProgram("DepthRTTVert.glsl", "DepthRTTFrag.glsl")) {
+        if (!depthShader.CreateProgram("depthVert.glsl", "depthFrag.glsl")) {
             return false;
         }
     }
