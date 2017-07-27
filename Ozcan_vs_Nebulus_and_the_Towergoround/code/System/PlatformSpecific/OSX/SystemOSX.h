@@ -29,7 +29,7 @@ inline void ErrorOutput(const char*) {
 }
 
 inline void ToConsole(const char* debugString, ...) {
-
+#ifdef _DEBUG
     char thisString[2048];
     va_list vlist; // va_list
 
@@ -38,6 +38,7 @@ inline void ToConsole(const char* debugString, ...) {
     va_end(vlist); // reset argument pointer
             
     std::cout << thisString;
+#endif
 }
 
 inline bool PlatformSpecificIsNaN(const float& num) {
