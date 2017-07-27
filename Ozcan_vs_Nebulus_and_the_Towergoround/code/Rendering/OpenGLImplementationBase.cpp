@@ -44,6 +44,7 @@ OpenGLImplementationBase::OpenGLImplementationBase()
 	, emissiveColorLocation(InvalidLocation)
 	, shininessLocation(InvalidLocation)
 	, showSpecularHighlightLocation(InvalidLocation)
+	, hasBeenInitialized(false)
 
 	, textureSubRoutineUniform(0)
     , oldCodeTextureSelection(0)
@@ -69,6 +70,7 @@ bool OpenGLImplementationBase::IsUsingSubRoutines()
 
 bool OpenGLImplementationBase::InitGL()									
 {
+	hasBeenInitialized = true;
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	CHECK_GL_ERROR;
@@ -80,12 +82,7 @@ bool OpenGLImplementationBase::InitGL()
 
 #ifdef _DEBUG
 	const char* version = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-#ifdef _WINDOWS
-    OutputDebugString("\n");
-    OutputDebugString(version);
-#elif OSX
-    std::cout << "\n version: " << version;
-#endif
+	ToConsole("\nversion: %s", version);
 #endif
     
     glGenVertexArrays(1, &vao);
@@ -147,11 +144,14 @@ bool OpenGLImplementationBase::InitGL()
         renderingShader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_DebugBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #else
         useLightingSubFunctionLocation = GetSubroutineIndex("CalculateSceneLighting_ReleaseBuild", GL_FRAGMENT_SHADER);
-        shader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
+		renderingShader.SetSubroutineUniformIndex(colorSubRoutineUniform, GetSubroutineIndex("CalculateFragmentColor_ReleaseBuild", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER, false, false);
 #endif
 
         renderingShader.SetSubroutineUniformIndex(textureSubRoutineUniform, noTextureSubFunctionLocation, GL_FRAGMENT_SHADER, false, false);
         renderingShader.SetSubroutineUniformIndex(lightingSubRoutineUniform, useLightingSubFunctionLocation, GL_FRAGMENT_SHADER, true, true); // <== last one has true for forceFlush
+
+		SetSubroutineUniformIndex(GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER), GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
+		SetSubroutineUniformIndex(GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER), GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
     }
     else
     {
@@ -160,7 +160,12 @@ bool OpenGLImplementationBase::InitGL()
         
         oldCodeLightingSelection = GetUniformLocation("uLightingRender");
         SetUniformBool(oldCodeLightingSelection, true);
+
+		SetUniformVector3(GetUniformLocation("LightInvDirection_worldspace"), CVector::unitY);
+		SetUniformInt(GetUniformLocation("uShadowMap"), 1);
     }
+	Globals::Instance().gl.SetUniformMatrix(GetUniformLocation("uViewProjectionLightMatrix"), CMatrix());
+
 	return true;
 }
 
@@ -175,6 +180,11 @@ void OpenGLImplementationBase::DestroyGL()
         CHECK_GL_ERROR;
         vao = 0;
     }
+}
+
+bool OpenGLImplementationBase::HasBeenInitialized()
+{
+	return hasBeenInitialized;
 }
 
 void OpenGLImplementationBase::UseRenderProgram() {

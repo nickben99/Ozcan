@@ -38,7 +38,7 @@ class OpenGLImplementationBase
 
 #ifdef USE_SHADERS
         bool IsUsingSubRoutines();
-    
+		bool HasBeenInitialized();
         void UseRenderProgram();
         void UseCreateDepthTextureProgram();
 
@@ -128,6 +128,8 @@ class OpenGLImplementationBase
 		int emissiveColorLocation;
 		int shininessLocation;
 		int showSpecularHighlightLocation;
+		bool hasBeenInitialized;
+		 
 		int textureSubRoutineUniform;
         int oldCodeTextureSelection;
 		int colorSubRoutineUniform;

@@ -65,6 +65,10 @@ class OpenGLInterface
 			implementation.ShowSpecularHighlights(show);
 		}
 
+		bool HasBeenInitialized()
+		{
+			return implementation.HasBeenInitialized();
+		}
     
         bool IsUsingSubRoutines()
         {

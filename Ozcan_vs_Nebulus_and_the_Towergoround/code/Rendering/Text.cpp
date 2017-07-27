@@ -268,7 +268,12 @@ int LoadTexture()
 	const int BufferSize = 256;
 	char buffer[BufferSize];
 	SPRINTF(buffer, "%simages/spritefont32.bmp", GetDirectoryPath()); // create file name with path
+#ifdef _WINDOWS
+	return TextureLoad(buffer, GL_FALSE, GL_NEAREST, GL_NEAREST, GL_CLAMP);
+#elif OSX
 	return TextureLoad(buffer, GL_FALSE, GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE);
+#endif
+
 }
 
 void Text::CreateMesh()

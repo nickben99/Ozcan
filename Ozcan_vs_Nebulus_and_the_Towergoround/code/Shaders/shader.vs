@@ -9,6 +9,7 @@ uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewProjectionLightMatrix;
+uniform vec3 LightInvDirection_worldspace;
 
 varying vec2 vTextureCoord;
 varying vec3 vTransformedNormal;

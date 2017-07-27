@@ -30,7 +30,7 @@ inline void ErrorOutput(const char*) {
 
 inline void ToConsole(const char* debugString, ...) {
 
-    char thisString[256];
+    char thisString[2048];
     va_list vlist; // va_list
 
     va_start(vlist, debugString); // set to beginning of argument list

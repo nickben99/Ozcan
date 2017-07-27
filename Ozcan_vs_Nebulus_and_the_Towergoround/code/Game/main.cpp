@@ -200,8 +200,6 @@ int gameMain(int level)
 // the menu system
 int menuSystem(int) // parameter is not used
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// clear screen and depth buffer
 	Globals::Instance().viewMatrixStack.LoadIdentity(); // reset the current view matrix
 	Globals::Instance().modelMatrixStack.LoadIdentity(); // reset the current model matrix

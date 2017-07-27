@@ -194,7 +194,7 @@ void deleteTexture(int theTexture)
 		return;} // out of bounds
 
     // go through vector and find the first free slot
-    for (int tex = 0; tex < totalTextures; tex++)
+    for (unsigned int tex = 0; tex < totalTextures; tex++)
     {
         textureObject &textureObj = textureObjects[tex];
         // check the texture is in use

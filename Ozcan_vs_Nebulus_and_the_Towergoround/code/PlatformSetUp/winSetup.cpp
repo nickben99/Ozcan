@@ -452,9 +452,10 @@ int WINAPI WinMain(	HINSTANCE, // instance
 	BOOL	done = FALSE; // Bool variable to exit game loop
 
 	// ask the user for screen mode preferance
-	if (MessageBox(0,"Would You Like To Play In Fullscreen? (Recommended)", 
-		"Screen Settings (Ozcan vs Nebulus & The Towergoround)",MB_YESNO|MB_ICONQUESTION)==IDNO){
-		fullscreen=false;} // windowed mode
+	//if (MessageBox(0,"Would You Like To Play In Fullscreen? (Recommended)", 
+	//	"Screen Settings (Ozcan vs Nebulus & The Towergoround)",MB_YESNO|MB_ICONQUESTION)==IDNO){
+	//	fullscreen=false;} // windowed mode
+	fullscreen = false;
 	
 	if (!CreateGameWindow())
 	{
@@ -473,29 +474,12 @@ int WINAPI WinMain(	HINSTANCE, // instance
 		return 0;// quit if window was not created
 	}
 
-    int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
-    Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
-    
-    int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
-    Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
-    if (Globals::Instance().gl.IsUsingSubRoutines())
-    {
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-    }
-    else
-    {
-        int mainRenderVertexShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderVertexShader");
-        Globals::Instance().gl.SetUniformBool(mainRenderVertexShaderLocation, false);
-        
-        int mainRenderFragmentShaderLocation = Globals::Instance().gl.GetUniformLocation("uMainRenderFragmentShader");
-        Globals::Instance().gl.SetUniformBool(mainRenderFragmentShaderLocation, false);
-    }
-    
-    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
+	int modelMatrixLocation = Globals::Instance().gl.GetUniformLocation("uModelMatrix");
+	Globals::Instance().modelMatrixStack.SetMatrixLocation(modelMatrixLocation);
+	Globals::Instance().modelMatrixStack.LoadIdentity();
+	int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
+	Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
+	Globals::Instance().viewMatrixStack.LoadIdentity();
 
 #ifdef USE_SHADERS
 	CMenu::SetPerspectiveProjectionMatrix();

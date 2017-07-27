@@ -81,25 +81,6 @@ int main(int argc, char *argv[])
     int viewMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewMatrix");
     Globals::Instance().viewMatrixStack.SetMatrixLocation(viewMatrixLocation);
     Globals::Instance().viewMatrixStack.LoadIdentity();
-    
-    if (Globals::Instance().gl.IsUsingSubRoutines())
-    {
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_FRAGMENT_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_FRAGMENT_SHADER), GL_FRAGMENT_SHADER);
-        Globals::Instance().gl.SetSubroutineUniformIndex(Globals::Instance().gl.GetSubroutineUniformIndex("mainRender", GL_VERTEX_SHADER),
-                                                     Globals::Instance().gl.GetSubroutineIndex("RenderScene", GL_VERTEX_SHADER), GL_VERTEX_SHADER);
-    }
-    else
-    {            
-        int lightInvDirection = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
-        Globals::Instance().gl.SetUniformVector3(lightInvDirection, CVector::unitY);
-            
-        int shadowMap = Globals::Instance().gl.GetUniformLocation("uShadowMap");
-        Globals::Instance().gl.SetUniformInt(shadowMap, 1);
-    }
-
-    int viewProjectionLightMatrixLocation = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
-    Globals::Instance().gl.SetUniformMatrix(viewProjectionLightMatrixLocation, CMatrix());
 
     int frameBufferWidth = 0;
     int frameBufferHeight = 0;

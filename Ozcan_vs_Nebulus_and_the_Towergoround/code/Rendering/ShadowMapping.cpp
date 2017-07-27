@@ -44,8 +44,8 @@ int ShadowMapping::mainRenderSubRoutineIndex = -1;
 int ShadowMapping::lightViewProjectionMatrixUniform = -1;
 int ShadowMapping::depthTextureSamplerUniform = -1;
 
-unsigned int ShadowMapping::renderingModelMatrixLocation = -1;
-unsigned int ShadowMapping::lightInvDirLocation = -1;
+unsigned int ShadowMapping::renderingModelMatrixLocation = 0;
+unsigned int ShadowMapping::lightInvDirLocation = 0;
 //-----------------------------------
 
 ShadowMapping::ShadowMapping()
@@ -122,14 +122,13 @@ unsigned int ShadowMapping::Create()
     }
     else
     {
-        lightInvDirLocation = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
-        
         Globals::Instance().gl.UseCreateDepthTextureProgram();
         depthMatrixID = Globals::Instance().gl.GetUniformLocation("depthMVP");
         depthMMatrixLocation = Globals::Instance().gl.GetUniformLocation("modelMat");
 		Globals::Instance().gl.UseRenderProgram();
     }
     
+    lightInvDirLocation = Globals::Instance().gl.GetUniformLocation("LightInvDirection_worldspace");
     lightViewProjectionMatrixUniform = Globals::Instance().gl.GetUniformLocation("uViewProjectionLightMatrix");
     depthTextureSamplerUniform = Globals::Instance().gl.GetUniformLocation("uShadowMap");
 

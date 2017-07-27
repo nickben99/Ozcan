@@ -59,6 +59,8 @@ class OpenGLShader
 		static int CheckGLError(const char *file, int line);
 
 	private:
+		static bool AddShader(const char* pShaderText, GLuint shaderObj);
+
 		void CacheSubRoutineUniforms(unsigned int*& activeShaderSubRoutineUniformIndecis, char**& activeShaderSubRoutineUniformNames, 
 									int& numActiveSubroutineUniforms, GLenum ShaderType);
 		void DeleteSubRoutineCache();
