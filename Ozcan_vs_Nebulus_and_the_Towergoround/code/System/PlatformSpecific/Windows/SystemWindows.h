@@ -25,8 +25,8 @@ inline void ErrorOutput(const char* text) {
 	MessageBox(0,text,"ERROR",MB_OK|MB_ICONEXCLAMATION);
 }
 
-inline void ToConsole(const char* debugString, ...) {
 #ifdef _DEBUG
+inline void ToConsole(const char* debugString, ...) {
     char thisString[2048];
     va_list vlist; // va_list
 
@@ -35,8 +35,11 @@ inline void ToConsole(const char* debugString, ...) {
     va_end(vlist); // reset argument pointer
             
 	OutputDebugString(thisString);
-#endif
 }
+#else
+inline void ToConsole(const char*, ...) {
+}
+#endif
 
 inline bool PlatformSpecificIsNaN(const float& num) {
 	return 0 != _isnan(num);
