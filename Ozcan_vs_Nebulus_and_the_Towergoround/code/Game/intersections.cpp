@@ -576,6 +576,12 @@ bool lineSectionPlaneCollision(	CVector * triangleVertex, const CVector& lineSta
 CVector planeIntersectionPoint(CVector *planeNormal, const CVector& startLine, const CVector& endLine, 
 							  float distance)
 {
+	//
+	//
+	// see CPlane.h PlaneIntersectionPoint() for a potentially better, more correct version of this function
+	//
+	//
+
 	CVector intersectionPoint, unitLine;	
 	float numeratorDistance = 0.0f, denominatorAngle = 0.0f, dist = 0.0f;
 

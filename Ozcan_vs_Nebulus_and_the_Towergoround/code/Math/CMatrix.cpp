@@ -405,37 +405,7 @@ CQuaternion CMatrix::matrixToQuaternion()
 // multiply vector by the inverse of this matrix
 CVector CMatrix::multiplyVectorInverseMatrix(CVector *vect)
 {
-	float init[16];
-
-	init[0] = elements[0];
-	init[1] = elements[4];
-	init[2] = elements[8];
-	init[3] = 0.0f;
-
-	init[4] = elements[1];
-	init[5] = elements[5];
-	init[6] = elements[9];
-	init[7] = 0.0f;
-	
-	init[8] = elements[2];
-	init[9] = elements[6];
-	init[10] = elements[10];
-	init[11] = 0.0f;
-
-	init[12] =	(-elements[12]*init[0]) +
-				(-elements[13]*init[4]) +
-				(-elements[14]*init[8]);
-	init[13] =	(-elements[12]*init[1]) +
-				(-elements[13]*init[5]) +
-				(-elements[14]*init[9]);
-	init[14] =	(-elements[12]*init[2]) +
-				(-elements[13]*init[6]) +
-				(-elements[14]*init[10]);
-	init[15] = 1.0f;
-
-	CMatrix inverseMatrix(&init[0]);
-
-	return(inverseMatrix.multiplyVector(vect));
+	return(GetInverseTransformMatrix().multiplyVector(vect));
 }
 
 // create scaling matrix
@@ -614,14 +584,25 @@ CMatrix CMatrix::CreatePerspectiveProjection(float left, float right, float bott
 	return m;
 }
 
+CMatrix CMatrix::GetInverseTransformMatrix()
+{
+	// transpose just rotation part of matrix, leaving position as 0,0,0
+	CMatrix inverseMatrix = getInverseRotationMatrix(); // inverse is the same as transpose for rotation matrix
+
+	// get the inverse eye position (negative eye position) in the local space of the original matrix 
+	// by doting the negativePos with each of the original matrix basis vectors
+	CVector negativePos = -getMatrixTranslation().v3;
+	inverseMatrix.rows.position[0] = right().v3.dotProduct(negativePos);
+	inverseMatrix.rows.position[1] = up().v3.dotProduct(negativePos);
+	inverseMatrix.rows.position[2] = forward().v3.dotProduct(negativePos);
+
+	return inverseMatrix;
+}
+
 CMatrix CMatrix::LookAt(const CVector& eye, const CVector& target, const CVector& up)
 {
 	CMatrix rotationMat;
-	rotationMat.CreateMatrix(eye-target, up);
-	rotationMat = rotationMat.getInverseRotationMatrix();
-
-	CMatrix translationMat;
-	translationMat.SetMatrixTranslation(CVector4(-eye, 1.0f));
-
-	return rotationMat * translationMat;
+	rotationMat.CreateMatrix(eye - target, up); // forward will point in wrong direction - this is correct
+	rotationMat.SetMatrixTranslation(CVector4(eye, 1.0f));
+	return rotationMat.GetInverseTransformMatrix();
 }

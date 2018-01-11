@@ -90,6 +90,8 @@ class CMatrix
 									CVector *look, CVector *position);
 		bool CreateMatrix(const CVector& forward, const CVector& up = CVector::unitY);
 		CMatrix Transposed() const;
+
+		CMatrix GetInverseTransformMatrix();
 		
 		CVector4 right() const;
 		CVector4 up() const;
